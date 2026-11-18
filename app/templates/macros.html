@@ -1,0 +1,119 @@
+{# Inline SVG sprite and small display macros. No external assets. #}
+{% macro icon(name, size=16, class_name="") -%}
+<svg class="icon {{ class_name }}" width="{{ size }}" height="{{ size }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+{%- if name == "overview" -%}
+<rect x="3" y="3" width="7" height="7" rx="1.2"/><rect x="14" y="3" width="7" height="7" rx="1.2"/><rect x="3" y="14" width="7" height="7" rx="1.2"/><rect x="14" y="14" width="7" height="7" rx="1.2"/>
+{%- elif name == "intake" -%}
+<path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/><path d="M10 13h7M10 17h5"/>
+{%- elif name == "plan" -%}
+<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4.5V3h6v1.5"/><path d="M9 10h6M9 14h6M9 18h4"/>
+{%- elif name == "review" -%}
+<rect x="3" y="3" width="18" height="18" rx="3"/><path d="m7 12 3 3 7-7"/>
+{%- elif name == "value" -%}
+<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>
+{%- elif name == "about" -%}
+<circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/>
+{%- elif name == "arrow-right" -%}
+<path d="M5 12h14"/><path d="m13 6 6 6-6 6"/>
+{%- elif name == "arrow-up-right" -%}
+<path d="M7 17 17 7"/><path d="M8 7h9v9"/>
+{%- elif name == "chevron-left" -%}
+<path d="m15 18-6-6 6-6"/>
+{%- elif name == "chevron-right" -%}
+<path d="m9 18 6-6-6-6"/>
+{%- elif name == "alert" -%}
+<path d="M12 3 2.8 20h18.4z"/><path d="M12 9v5"/><path d="M12 17h.01"/>
+{%- elif name == "lock" -%}
+<rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>
+{%- elif name == "check" -%}
+<path d="m5 12 4 4L19 6"/>
+{%- elif name == "x" -%}
+<path d="m6 6 12 12M18 6 6 18"/>
+{%- elif name == "file" -%}
+<path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/>
+{%- elif name == "clock" -%}
+<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>
+{%- elif name == "users" -%}
+<circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0"/><path d="M16 5.5a3 3 0 0 1 0 5.8"/><path d="M18 14.5a5 5 0 0 1 3 4.5"/>
+{%- elif name == "shield" -%}
+<path d="M12 3 5 6v6c0 4 3 6.5 7 9 4-2.5 7-5 7-9V6z"/><path d="m9 12 2 2 4-4"/>
+{%- elif name == "database" -%}
+<ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v7c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12v7c0 1.7 3.6 3 8 3s8-1.3 8-3v-7"/>
+{%- elif name == "search" -%}
+<circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 4.5 4.5"/>
+{%- elif name == "rotate" -%}
+<path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/>
+{%- elif name == "external" -%}
+<path d="M14 4h6v6"/><path d="m20 4-9 9"/><path d="M18 14v5H5V6h5"/>
+{%- elif name == "dot" -%}
+<circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/>
+{%- elif name == "minus" -%}
+<path d="M5 12h14"/>
+{%- elif name == "inbox" -%}
+<path d="M4 4h16v16H4z"/><path d="M4 14h5l1.5 2h3L15 14h5"/>
+{%- elif name == "link" -%}
+<path d="M10 13a5 5 0 0 0 7 0l2-2a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-2 2a5 5 0 0 0 7 7l1-1"/>
+{%- else -%}
+<circle cx="12" cy="12" r="8"/>
+{%- endif -%}
+</svg>
+{%- endmacro %}
+
+
+{% macro pill(label, tone="neutral", title="") -%}
+<span class="badge badge-{{ tone }}"{% if title %} title="{{ title }}"{% endif %}><span class="badge-dot"></span>{{ label }}</span>
+{%- endmacro %}
+
+
+{% macro status_badge(value, extra="") -%}
+{%- set key = (value|string)|lower -%}
+{%- set tone = "neutral" -%}
+{%- if key in ["approved", "received", "complete", "pass", "success", "cited"] -%}
+  {%- set tone = "success" -%}
+{%- elif key in ["blocked", "fail", "high", "rejected", "uncited"] -%}
+  {%- set tone = "danger" -%}
+{%- elif key in ["pending", "waiting on client", "waiting on custodian", "open", "warn", "medium"] -%}
+  {%- set tone = "warn" -%}
+{%- elif key in ["in flight", "in progress", "in_review", "mitigating", "accent"] -%}
+  {%- set tone = "accent" -%}
+{%- endif -%}
+<span class="badge badge-{{ tone }} {{ extra }}"><span class="badge-dot"></span>{{ value|status_label }}</span>
+{%- endmacro %}
+
+
+{% macro severity_badge(value) -%}
+{{ status_badge(value) }}
+{%- endmacro %}
+
+
+{% macro result_badge(value) -%}
+{{ status_badge(value) }}
+{%- endmacro %}
+
+
+{% macro confidence_bar(value) -%}
+{%- set width = ((value|float) * 100)|round(0)|int -%}
+<span class="conf" title="Display confidence {{ value|pct }}">
+  <span class="conf-track"><span class="conf-fill{% if (value|float) < 0.8 %} is-low{% endif %}" style="width: {{ width }}%"></span></span>
+  <span class="conf-value">{{ value|pct }}</span>
+</span>
+{%- endmacro %}
+
+
+{% macro empty_state(title, body, icon_name="file") -%}
+<div class="empty">
+  <span class="empty-icon">{{ icon(icon_name, 20) }}</span>
+  <h3>{{ title }}</h3>
+  <p>{{ body }}</p>
+</div>
+{%- endmacro %}
+
+
+{% macro placeholder_link(label, note="Placeholder link in this build.") -%}
+<span class="link-placeholder" title="{{ note }}">{{ label }}</span>
+{%- endmacro %}
+
+
+{% macro estimate_badge() -%}
+<span class="badge badge-outline estimate">Modelled estimate</span>
+{%- endmacro %}

@@ -1,0 +1,256 @@
+{% extends "base.html" %}
+{% from "macros.html" import icon, status_badge, empty_state %}
+{% block title %}Plan · Transition Copilot{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <p class="eyebrow">Plan · the work</p>
+    <h1>Transition plan</h1>
+    <p class="lede">One plan for {{ view.summary.accounts }} accounts: transfer path, next due, signature load, and the risks that stop a clean transfer. The default view is wave 1.</p>
+  </div>
+  <div class="page-meta">
+    <span class="meta-chip">As of {{ as_of|date_long }}</span>
+    <span class="meta-chip">Day {{ book.day_number or 16 }} of {{ book.days_total or 45 }}</span>
+  </div>
+</div>
+
+<section class="stat-strip" aria-label="Plan summary">
+  <div class="stat">
+    <span class="stat-label">Wave 1 accounts</span>
+    <span class="stat-value">{{ view.summary.wave1 }}</span>
+    <span class="stat-sub">of {{ view.summary.accounts }} in the book</span>
+  </div>
+  <div class="stat">
+    <span class="stat-label">Signatures due</span>
+    <span class="stat-value">{{ view.summary.signatures }}</span>
+    <span class="stat-sub">{{ view.largest_household.signatures if view.largest_household else 0 }} in the largest packet</span>
+  </div>
+  <div class="stat">
+    <span class="stat-label">NIGO risks</span>
+    <span class="stat-value">{{ view.summary.risks }}</span>
+    <span class="stat-sub">{{ view.summary.risks_high }} high severity</span>
+  </div>
+  <div class="stat">
+    <span class="stat-label">Consent pending</span>
+    <span class="stat-value">{{ view.summary.pending_consent }}</span>
+    <span class="stat-sub">households with client work held</span>
+  </div>
+  <div class="stat">
+    <span class="stat-label">Tasks</span>
+    <span class="stat-value">{{ view.summary.tasks }}</span>
+    <span class="stat-sub">{{ view.summary.tasks_complete }} complete · {{ view.summary.tasks_blocked }} blocked</span>
+  </div>
+  <div class="stat">
+    <span class="stat-label">Target live</span>
+    <span class="stat-value stat-value-date">{{ book.target_live_at|date_long }}</span>
+    <span class="stat-sub">{{ book.days_left or 30 }} days left</span>
+  </div>
+</section>
+
+<section class="section" id="critical-path">
+  <div class="card path-panel">
+    <div class="card-head">
+      <div>
+        <p class="card-kicker">Critical path</p>
+        <h2 class="card-title">Signature to live</h2>
+      </div>
+      <div class="path-head-right">
+        {% if view.upcoming %}
+        <span class="path-next">Next milestone<br><strong>{{ view.upcoming.phase|phase_label }}, {{ view.upcoming.due_at|date_short }}</strong></span>
+        {% endif %}
+        <span class="badge badge-accent">Day {{ book.day_number or 16 }}</span>
+      </div>
+    </div>
+    <div class="path-endpoints">
+      <span><span class="path-end-label">Signature</span> {{ book.signed_at|date_long }}</span>
+      <span><span class="path-end-label">Target live</span> {{ book.target_live_at|date_long }}</span>
+    </div>
+    <div class="path-strip">
+      {% for phase in view.phases %}
+      <div class="path-step {{ 'is-blocked' if phase.blocked else ('is-done' if phase.total and phase.complete == phase.total else '') }}">
+        <span class="path-dot"></span>
+        <span class="path-date">{{ phase.first_due|date_range(phase.last_due) }}</span>
+        <span class="path-name">{{ phase.phase|phase_label }}</span>
+        <span class="path-meta">
+          {% if phase.blocked %}{{ phase.blocked }} blocked{% elif phase.complete %}{{ phase.complete }} of {{ phase.total }} done{% else %}{{ phase.total }} tasks{% endif %}
+        </span>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="path-note">
+      <span>{{ icon("clock", 13) }} ACATS validation is 3 business days. The bottleneck is before it: account opening, document collection, signatures, and hard-case approvals that run into weeks 3 to 6.</span>
+      <a class="text-link" href="/plan#risks">Read the risks {{ icon("arrow-right", 12) }}</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="accounts">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">Accounts</p>
+      <h2>{{ view.summary.accounts_in_view }} of {{ view.summary.accounts }} accounts in view</h2>
+    </div>
+    <span class="section-note">Click a risk below to highlight its account row.</span>
+  </div>
+
+  <div class="filters" aria-label="Plan filters">
+    <div class="filter-row">
+      <span class="filter-label">Wave</span>
+      <div class="seg">
+        <a href="/plan?wave=1&status={{ view.status|urlencode }}#accounts" class="{{ 'is-active' if view.wave == '1' }}">Wave 1 <span class="count">{{ view.summary.wave1 }}</span></a>
+        <a href="/plan?wave=2&status={{ view.status|urlencode }}#accounts" class="{{ 'is-active' if view.wave == '2' }}">Wave 2 <span class="count">{{ view.summary.wave2 }}</span></a>
+        <a href="/plan?wave=all&status={{ view.status|urlencode }}#accounts" class="{{ 'is-active' if view.wave == 'all' }}">All <span class="count">{{ view.summary.accounts }}</span></a>
+      </div>
+    </div>
+    <div class="filter-row filter-row-status">
+      <span class="filter-label">Status</span>
+      <div class="status-chips">
+        <a href="/plan?wave={{ view.wave }}&status=all#accounts" class="status-chip {{ 'is-active' if view.status == 'all' }}">All <span>{{ view.summary.wave_accounts }}</span></a>
+        {% for option in view.statuses %}
+        <a href="/plan?wave={{ view.wave }}&status={{ option|urlencode }}#accounts" class="status-chip {{ 'is-active' if view.status == option }}">{{ option|status_label }} <span>{{ view.summary.wave_status_counts.get(option, 0) }}</span></a>
+        {% endfor %}
+      </div>
+    </div>
+    {% if view.status != 'all' or view.wave != '1' %}
+    <a class="filter-clear" href="/plan?wave=1&status=all#accounts">Clear filters</a>
+    {% endif %}
+  </div>
+
+  <div class="card card-flush">
+    {% if view.accounts %}
+    <div class="table-wrap">
+      <table class="data-table accounts-table">
+        <thead>
+          <tr>
+            <th scope="col">Household</th>
+            <th scope="col">Custodian</th>
+            <th scope="col">Account type</th>
+            <th scope="col">Transfer path</th>
+            <th scope="col">Status</th>
+            <th scope="col">Hard case</th>
+            <th scope="col" class="num-cell">Signatures</th>
+            <th scope="col">Owner</th>
+            <th scope="col">Next due</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for account in view.accounts %}
+          <tr id="acct-{{ account.id }}" data-account="{{ account.id }}">
+            <td>
+              <span class="cell-main">{{ account.household_name }}</span>
+              <span class="cell-sub"><span class="mono">{{ account.id }}</span> · {{ account.masked_number }}</span>
+              {% if account.risk_count %}
+              <span class="cell-risk">{{ account.risk_count }} risk{{ '' if account.risk_count == 1 else 's' }}</span>
+              {% endif %}
+            </td>
+            <td>{{ account.custodian }}</td>
+            <td>
+              <span class="cell-main cell-main-small">{{ account.account_type }}</span>
+              <span class="cell-sub">{{ account.registration }}</span>
+            </td>
+            <td><span class="tag">{{ account.transfer_path }}</span></td>
+            <td>{{ status_badge(account.status) }}</td>
+            <td>
+              {% if account.hard_case %}
+              <span class="badge badge-outline hard-case">{{ account.hard_case }}</span>
+              {% else %}
+              <span class="muted">Standard</span>
+              {% endif %}
+            </td>
+            <td class="num-cell"><span class="num">{{ account.signature_count }}</span></td>
+            <td><span class="cell-main cell-main-small">{{ account.owner|owner_label or 'Unassigned' }}</span></td>
+            <td>
+              <span class="cell-main cell-main-small">{{ account.next_due|date_short }}</span>
+              <span class="cell-sub">{{ account.next_phase|phase_label }}</span>
+              {% if account.is_overdue %}<span class="overdue-flag">overdue</span>{% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    {{ empty_state("No accounts match this filter", "Try wave 1 with all statuses, or clear the status filter.", "inbox") }}
+    {% endif %}
+  </div>
+</section>
+
+<section class="section plan-bottom">
+  <div class="card signature-card" id="signatures">
+    <div class="card-head">
+      <div>
+        <p class="card-kicker">Signature chase</p>
+        <h2 class="card-title">Signature and form packet load</h2>
+      </div>
+      <span class="badge badge-outline">Estimate</span>
+    </div>
+    <div class="sig-summary">
+      <div>
+        <span class="sig-value">{{ view.summary.signatures }}</span>
+        <span class="sig-label">Signatures required</span>
+      </div>
+      <div>
+        <span class="sig-value">{{ view.summary.pending_consent }}</span>
+        <span class="sig-label">Households pending consent</span>
+      </div>
+      <div>
+        <span class="sig-value">{{ view.largest_household.signatures if view.largest_household else 0 }}</span>
+        <span class="sig-label">Largest packet</span>
+      </div>
+    </div>
+    <div class="sig-list">
+      {% for household in households_by_load %}
+      <div class="sig-row">
+        <div class="sig-who">
+          <span class="sig-name">{{ household.display_name }}</span>
+          <span class="sig-meta">{{ household.account_count }} account{{ '' if household.account_count == 1 else 's' }}</span>
+        </div>
+        <div class="sig-bar"><span style="width: {{ ((household.signatures / view.signature_max) * 100)|round(0)|int if view.signature_max else 0 }}%"></span></div>
+        <span class="sig-count">{{ household.signatures }}</span>
+        {{ status_badge(household.consent_status) }}
+      </div>
+      {% endfor %}
+    </div>
+    <div class="sig-foot">Estimate from registration and form requirements. Not collected signatures.</div>
+  </div>
+
+  <div class="card risk-card" id="risks">
+    <div class="card-head">
+      <div>
+        <p class="card-kicker">NIGO risk list</p>
+        <h2 class="card-title">{{ view.risks|length }} risk{{ '' if view.risks|length == 1 else 's' }} in view</h2>
+      </div>
+      <span class="badge badge-warn">{{ view.risks|selectattr('severity', 'equalto', 'high')|list|length }} high</span>
+    </div>
+    {% if view.risks %}
+    <div class="risk-list">
+      {% for risk in view.risks %}
+      <div class="risk-item risk-{{ risk.severity }}" role="button" tabindex="0" data-risk-account="{{ risk.account_id }}" id="risk-{{ risk.id }}" aria-label="Highlight {{ risk.account_id }} in the account table">
+        <div class="risk-top">
+          {{ status_badge(risk.severity) }}
+          <span class="risk-account"><span class="mono">{{ risk.account_id }}</span> · {{ risk.household_name }}</span>
+          <span class="risk-id">{{ risk.id }}</span>
+          {{ status_badge(risk.status) }}
+        </div>
+        <p class="risk-reason">{{ risk.reason }}</p>
+        <dl class="risk-meta">
+          <div>
+            <dt>Rule reference</dt>
+            <dd>{{ risk.rule_ref }}</dd>
+          </div>
+          <div>
+            <dt>Clears with</dt>
+            <dd>{{ risk.clears_with }}</dd>
+          </div>
+        </dl>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="risk-foot">Rule references are synthetic. Click a risk to highlight its row.</div>
+    {% else %}
+    {{ empty_state("No risks in this view", "Wave 2 accounts have not been risk-assessed yet. Switch to wave 1 or clear the status filter.", "shield") }}
+    {% endif %}
+  </div>
+</section>
+<div class="toast" id="plan-toast" role="status" hidden></div>
+{% endblock %}

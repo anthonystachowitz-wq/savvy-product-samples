@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+{% from "macros.html" import icon, placeholder_link %}
+{% block title %}Overview · Transition Copilot{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <p class="eyebrow">Work sample · November 2026</p>
+    <h1>Transition Copilot</h1>
+    <p class="lede">The operations layer for a registered investment adviser onboarding an adviser's book. One record, one plan, one approval trail.</p>
+  </div>
+  <div class="page-meta">
+    <span class="meta-chip">Synthetic book · {{ stats.accounts }} accounts</span>
+    <a class="btn btn-primary" href="/intake?tour=1">Start the guided tour {{ icon("arrow-right", 14) }}</a>
+  </div>
+</div>
+
+<section class="hero-grid">
+  <div class="card thesis">
+    <p class="card-kicker">The thesis</p>
+    <p class="prose">An adviser joins with a book built somewhere else. The transfer itself is not the hard part. Account opening, form packets, signatures, consent, and reconciliation are.</p>
+    <p class="prose">This sample shows one book moving through that work. Six documents and a CRM export become a household record with confidence and flags. The record becomes a plan and a risk list. Every outgoing draft waits for a named approver and an evidence file.</p>
+    <p class="prose">It is a product sample, not a live service. There is no custodian connection and no client data. The default run makes no model call.</p>
+    <div class="thesis-foot">
+      <span class="thesis-foot-item">{{ icon("file", 14) }} Messy book in</span>
+      <span class="thesis-foot-sep">/</span>
+      <span class="thesis-foot-item">{{ icon("plan", 14) }} Named work out</span>
+      <span class="thesis-foot-sep">/</span>
+      <span class="thesis-foot-item">{{ icon("shield", 14) }} Approval on record</span>
+    </div>
+  </div>
+
+  <aside class="card book-card">
+    <div class="card-head">
+      <div>
+        <p class="card-kicker">The seeded book</p>
+        <h2 class="book-name">{{ book.advisor_name or "Dana Whitfield" }}</h2>
+      </div>
+      <span class="badge badge-neutral">Synthetic</span>
+    </div>
+    <p class="book-firm">Leaving {{ book.firm_from or "Meridian Private Wealth" }} for the receiving RIA</p>
+    <div class="book-stats">
+      <div>
+        <span class="book-stat-value">{{ book.household_count or 12 }}</span>
+        <span class="book-stat-label">Households</span>
+      </div>
+      <div>
+        <span class="book-stat-value">{{ book.account_count or 18 }}</span>
+        <span class="book-stat-label">Accounts</span>
+      </div>
+      <div>
+        <span class="book-stat-value">{{ book.aum_total|money }}</span>
+        <span class="book-stat-label">Book assets</span>
+      </div>
+      <div>
+        <span class="book-stat-value">{{ stats.hard_cases }}</span>
+        <span class="book-stat-label">Hard cases</span>
+      </div>
+    </div>
+    <div class="book-progress">
+      <div class="book-progress-head">
+        <span>Target live {{ book.target_live_at|date_long }}</span>
+        <span>{{ book.days_left or 30 }} days left</span>
+      </div>
+      <div class="progress"><span style="width: {{ (((book.day_number or 0) / (book.days_total or 45)) * 100)|round(0)|int }}%"></span></div>
+      <div class="book-progress-meta">
+        <span>Signed {{ book.signed_at|date_long }}</span>
+        <span>Day {{ book.day_number or 16 }} of {{ book.days_total or 45 }}</span>
+      </div>
+    </div>
+    <div class="book-custodians">
+      {% for custodian in book.custodians %}
+      <span class="chip chip-quiet">{{ custodian }}</span>
+      {% endfor %}
+    </div>
+    <div class="book-lead">Transition lead <strong>{{ book.transition_lead or "Priya Raman" }}</strong></div>
+  </aside>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">The three claims</p>
+      <h2>What the sample is trying to prove</h2>
+    </div>
+    <span class="section-note">Each claim has a screen and a number behind it.</span>
+  </div>
+  <div class="claim-grid">
+    {% for claim in claims %}
+    <a class="claim-card" href="{{ claim.href }}">
+      <div class="claim-top">
+        <span class="claim-number">{{ claim.number }}</span>
+        <span class="claim-label">{{ claim.label }}</span>
+      </div>
+      <h3>{{ claim.title }}</h3>
+      <p>{{ claim.body }}</p>
+      <div class="claim-foot">
+        <span class="claim-proof">{{ claim.proof }}</span>
+        <span class="claim-link">{{ claim.link }} {{ icon("arrow-right", 13) }}</span>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">The flow</p>
+      <h2>Four screens, one record</h2>
+    </div>
+    <a class="text-link" href="/about">How it is built {{ icon("arrow-right", 13) }}</a>
+  </div>
+  <div class="flow">
+    {% for step in flow %}
+    <a class="flow-step" href="{{ step.href }}">
+      <span class="flow-number">{{ step.number }}</span>
+      <span class="flow-title">{{ step.title }}</span>
+      <span class="flow-caption">{{ step.caption }}</span>
+      <span class="flow-meta">{{ step.meta }}</span>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="section reading-grid">
+  <div class="card">
+    <div class="card-head">
+      <div>
+        <p class="card-kicker">If you have three minutes</p>
+        <h2 class="card-title">What to look at first</h2>
+      </div>
+    </div>
+    <ul class="reading-list">
+      {% for item in reading %}
+      <li>
+        <a href="{{ item.href }}">
+          <span class="reading-title">{{ item.title }} {{ icon("arrow-right", 13) }}</span>
+          <span class="reading-body">{{ item.body }}</span>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  <aside class="card about-card">
+    <p class="card-kicker">About this sample</p>
+    <p class="prose prose-small">This is an unofficial concept built from public information. It is not a Savvy product, it does not connect to a custodian, and every name and account is invented.</p>
+    <div class="about-links">
+      {{ placeholder_link("Product brief", "Placeholder. Add the published brief URL before sharing.") }}
+      {{ placeholder_link("Repository", "Placeholder. Add the repository URL before sharing.") }}
+    </div>
+    <div class="about-card-foot">
+      <a class="btn" href="/about">Read about this sample {{ icon("arrow-right", 13) }}</a>
+      <a class="btn btn-ghost" href="/review/draft-1#evidence">Open the blocked draft</a>
+    </div>
+  </aside>
+</section>
+{% endblock %}

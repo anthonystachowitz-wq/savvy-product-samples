@@ -1,0 +1,286 @@
+{% extends "base.html" %}
+{% from "macros.html" import icon, status_badge, estimate_badge, empty_state %}
+{% block title %}Value and evals · Transition Copilot{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <p class="eyebrow">Value · the arithmetic</p>
+    <h1>Value and evals</h1>
+    <p class="lede">An account-based hours model and an extraction eval. Every figure below is a modelled estimate or a seeded book count. The arithmetic is on the page so it can be checked.</p>
+  </div>
+  <div class="page-meta">
+    <span class="meta-chip">As of {{ as_of|date_long }}</span>
+    <span class="meta-chip">{{ report.field_count if report else 51 }} labelled extraction fields</span>
+  </div>
+</div>
+
+<section class="value-cards" id="hours" aria-label="Hours model">
+  <article class="card value-card">
+    <div class="value-card-top">
+      <span class="value-label">Baseline per transition</span>
+      {{ estimate_badge() }}
+    </div>
+    <div class="value-number">{{ model.baseline_hours|num }}<span class="value-unit">hours</span></div>
+    <p class="value-formula">{{ model.accounts }} accounts x 45 min / 60 + {{ model.planning_hours }} planning hours</p>
+    <p class="value-note">The reference book is {{ model.clients }} clients at {{ model.accounts_per_client }} accounts each.</p>
+  </article>
+
+  <article class="card value-card">
+    <div class="value-card-top">
+      <span class="value-label">Hours returned</span>
+      {{ estimate_badge() }}
+    </div>
+    <div class="value-number">{{ model.low_hours }}<span class="value-unit">to</span>{{ model.high_hours }}<span class="value-unit">hours</span></div>
+    <p class="value-formula">435 hours x 25% to 35% = 109 to 152 hours</p>
+    <p class="value-note">Rounded to the nearest hour. 25 to 35 percent is the modelled reduction range.</p>
+  </article>
+
+  <article class="card value-card">
+    <div class="value-card-top">
+      <span class="value-label">Working days returned</span>
+      {{ estimate_badge() }}
+    </div>
+    <div class="value-number">{{ model.low_days }}<span class="value-unit">to</span>{{ model.high_days }}<span class="value-unit">days</span></div>
+    <p class="value-formula">109 / 8 = 14 days · 152 / 8 = 19 days</p>
+    <p class="value-note">At eight working hours a day, before any other operating constraint.</p>
+  </article>
+
+  <article class="card value-card">
+    <div class="value-card-top">
+      <span class="value-label">Annual at {{ model.annual_transitions }} transitions</span>
+      {{ estimate_badge() }}
+    </div>
+    <div class="value-number">{{ model.annual_low|num }}<span class="value-unit">to</span>{{ model.annual_high|num }}<span class="value-unit">hours</span></div>
+    <p class="value-formula">109 x 40 = 4,360 · 152 x 40 = 6,080</p>
+    <p class="value-note">A planning model for one adviser pipeline, not a claim about a firm's results.</p>
+  </article>
+</section>
+
+<section class="section value-grid">
+  <div class="card formula-card">
+    <div class="card-head">
+      <div>
+        <p class="card-kicker">The model</p>
+        <h2 class="card-title">Formula table</h2>
+      </div>
+      {{ estimate_badge() }}
+    </div>
+    <div class="table-wrap formula-wrap">
+      <table class="data-table formula-table">
+        <thead>
+          <tr>
+            <th scope="col" class="step-cell">Step</th>
+            <th scope="col">Formula</th>
+            <th scope="col">Result</th>
+            <th scope="col">Basis</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in formula_rows %}
+          <tr>
+            <td class="step-cell">{{ row.step }}</td>
+            <td><span class="formula-name">{{ row.name }}</span><span class="formula-text">{{ row.formula }}</span></td>
+            <td><span class="formula-result">{{ row.result }}</span></td>
+            <td class="formula-basis">{{ row.basis }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="formula-foot">
+      The reference book is {{ model.clients }} clients at {{ model.accounts_per_client }} accounts each. The 45 minutes per account and {{ model.planning_hours }} hours of planning are assumptions from the research pass, not a stopwatch study. All results are rounded to the nearest hour or day.
+    </div>
+  </div>
+
+  <aside class="card assumptions-card">
+    <div class="card-head">
+      <div>
+        <p class="card-kicker">Inputs</p>
+        <h2 class="card-title">Assumptions</h2>
+      </div>
+      <span class="badge badge-outline">Visible by design</span>
+    </div>
+    <dl class="assumption-list">
+      <div><dt>Clients in the reference book</dt><dd>{{ model.clients }}</dd></div>
+      <div><dt>Accounts per client</dt><dd>{{ model.accounts_per_client }}</dd></div>
+      <div><dt>Accounts in scope</dt><dd>{{ model.accounts }}</dd></div>
+      <div><dt>Manual minutes per account</dt><dd>{{ model.minutes_per_account }}</dd></div>
+      <div><dt>Planning and reconciliation</dt><dd>{{ model.planning_hours }} hours</dd></div>
+      <div><dt>Reduction range</dt><dd>25% to 35%</dd></div>
+      <div><dt>Transitions per year</dt><dd>{{ model.annual_transitions }}</dd></div>
+    </dl>
+    <div class="assumption-note">
+      <p class="mini-label">What the model does not claim</p>
+      <ul class="plain-list">
+        <li>No time study. The minutes are an input, not a measurement.</li>
+        <li>No public NIGO rate exists. The plan instruments risk from day one instead of inventing one.</li>
+        <li>No public days-to-first-funded series exists. The 45-day target is a seeded planning window.</li>
+        <li>Vendor retention data is account-level, not asset-level. This page does not use it as a claim.</li>
+      </ul>
+    </div>
+  </aside>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">Seeded book</p>
+      <h2>What the demo actually contains</h2>
+    </div>
+    <span class="section-note">Counts from app.db, not performance measurements.</span>
+  </div>
+  <div class="indicator-strip">
+    {% for indicator in indicators %}
+    <div class="indicator">
+      <span class="indicator-label">{{ indicator.label }}</span>
+      <span class="indicator-value">{{ indicator.value|num }}</span>
+      <span class="indicator-sub">{{ indicator.sub }}</span>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="section" id="eval">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">Extraction evaluation</p>
+      <h2>Does the extractor match the labels?</h2>
+    </div>
+    {% if report %}
+    <span class="section-note">{{ eval_path_display }} · {{ eval_data.mtime }}</span>
+    {% else %}
+    <span class="section-note">No report found at {{ eval_path_display }}</span>
+    {% endif %}
+  </div>
+
+  {% if report %}
+  <div class="card eval-card">
+    <div class="eval-top">
+      <div class="eval-score">
+        <span class="eval-score-label">Accuracy</span>
+        <span class="eval-score-value">{{ accuracy_pct }}%</span>
+        <span class="eval-score-note">In-sample check against hand-written synthetic labels. Not a generalization estimate.</span>
+      </div>
+      <div class="eval-stats">
+        <div>
+          <span class="eval-stat-value">{{ report.field_count }}</span>
+          <span class="eval-stat-label">Fields labelled</span>
+        </div>
+        <div>
+          <span class="eval-stat-value">{{ report.correct_count }}</span>
+          <span class="eval-stat-label">Correct</span>
+        </div>
+        <div>
+          <span class="eval-stat-value">{{ report.field_count - report.correct_count }}</span>
+          <span class="eval-stat-label">Failures</span>
+        </div>
+        <div>
+          <span class="eval-stat-value">{{ report.documents_evaluated }}</span>
+          <span class="eval-stat-label">Documents</span>
+        </div>
+      </div>
+    </div>
+    <div class="eval-meta">
+      <span><strong>Method:</strong> {{ report.method }}</span>
+      <span><strong>Run at:</strong> {{ report.run_at|datetime_short }}</span>
+      <span><strong>Labels:</strong> {{ report.labels_path }}</span>
+    </div>
+    {% if report_notes %}
+    <div class="eval-note">
+      {{ icon("info", 13) }}
+      <span>{% for note in report_notes %}{{ note }}{% if not loop.last %} {% endif %}{% endfor %}</span>
+    </div>
+    {% endif %}
+  </div>
+
+  <div class="card card-flush eval-table-card">
+    <div class="eval-table-head">
+      <div>
+        <h3>Per-field results</h3>
+        <span class="muted">{{ per_field|length }} fields · {{ report.correct_count }} matched</span>
+      </div>
+      <span class="badge badge-neutral">Generated from the report file</span>
+    </div>
+    <div class="table-wrap eval-wrap">
+      <table class="data-table eval-table">
+        <thead>
+          <tr>
+            <th scope="col">Document</th>
+            <th scope="col">Field</th>
+            <th scope="col">Expected</th>
+            <th scope="col">Actual</th>
+            <th scope="col" class="match-cell">Match</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in per_field %}
+          <tr>
+            <td><span class="mono">{{ row.document_id }}</span></td>
+            <td>{{ row.field|replace('_', ' ')|replace('FLAG: ', 'Flag: ') }}</td>
+            <td class="eval-value">{{ row.expected }}</td>
+            <td class="eval-value">{{ row.actual if row.actual else 'Not found' }}</td>
+            <td class="match-cell">
+              {% if row.match %}
+              <span class="badge badge-success"><span class="badge-dot"></span>Match</span>
+              {% else %}
+              <span class="badge badge-danger"><span class="badge-dot"></span>Miss</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="eval-bottom">
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <p class="card-kicker">Failures</p>
+          <h3 class="card-title">{{ failures|length }} field{{ '' if failures|length == 1 else 's' }} did not match</h3>
+        </div>
+      </div>
+      {% if failures %}
+      <div class="table-wrap failure-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>Document</th><th>Field</th><th>Expected</th><th>Actual</th></tr>
+          </thead>
+          <tbody>
+            {% for row in failures %}
+            <tr>
+              <td><span class="mono">{{ row.document_id }}</span></td>
+              <td>{{ row.field|replace('_', ' ')|replace('FLAG: ', 'Flag: ') }}</td>
+              <td>{{ row.expected }}</td>
+              <td>{{ row.actual }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <p class="eval-empty-fail">{{ icon("check", 14) }} No failed fields in this run.</p>
+      {% endif %}
+    </div>
+    <div class="card eval-method-card">
+      <p class="card-kicker">Rerun</p>
+      <h3 class="card-title">The report is a file, not a live call</h3>
+      <p class="card-note">The value page reads <span class="mono">data/eval/report.json</span>. To regenerate it:</p>
+      <pre class="terminal"><code>python3 scripts/run_eval.py</code></pre>
+      <p class="card-note">The script writes the field count, correct count, accuracy, per-field results, and failures. Refresh this page after it runs.</p>
+      <a class="text-link" href="/about#compliance">Read the limitations {{ icon("arrow-right", 12) }}</a>
+    </div>
+  </div>
+
+  {% else %}
+  <div class="card eval-empty">
+    <div class="eval-empty-icon">{{ icon("file", 22) }}</div>
+    <h3>No evaluation report yet</h3>
+    <p>The page reads <span class="mono">data/eval/report.json</span>. It is not present in this checkout, so there is no number to show. Run the evaluation once and refresh:</p>
+    <pre class="terminal"><code>python3 scripts/run_eval.py</code></pre>
+    <p class="eval-empty-note">The report will show field count, correct count, accuracy, a per-field table, and any failures. The labels are synthetic and the check is in-sample.</p>
+  </div>
+  {% endif %}
+</section>
+{% endblock %}

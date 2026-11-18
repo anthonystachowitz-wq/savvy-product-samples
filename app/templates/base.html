@@ -1,0 +1,140 @@
+{% from "macros.html" import icon %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Transition Copilot, an unofficial product work sample for RIA book transitions. Synthetic data only.">
+  <title>{% block title %}Transition Copilot{% endblock %}</title>
+  <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+  <link rel="stylesheet" href="/static/app.css">
+  <script defer src="/static/app.js"></script>
+</head>
+<body>
+  <div class="disclaimer" role="note">
+    <div class="disclaimer-main">
+      {{ icon("info", 13) }}
+      <span>Unofficial concept, not affiliated with Savvy. All synthetic data. Built only from public information.</span>
+    </div>
+    <span class="disclaimer-meta">Work sample · November 2026</span>
+  </div>
+
+  <aside class="sidebar">
+    <a class="brand" href="/" aria-label="Transition Copilot overview">
+      <span class="brand-mark" aria-hidden="true">
+        <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
+          <rect x="0.5" y="0.5" width="29" height="29" rx="7" fill="#EFF6FF" stroke="#BFDBFE"/>
+          <path d="M8 10h8.5M8 15h9.5M8 20h6.5" stroke="#1D4ED8" stroke-width="1.7" stroke-linecap="round"/>
+          <path d="m18.5 7.5 3.5 3-3.5 3" stroke="#1D4ED8" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <span class="brand-text">
+        <span class="brand-name">Transition Copilot</span>
+        <span class="brand-sub">RIA transition operations</span>
+      </span>
+    </a>
+
+    <nav class="nav" aria-label="Primary">
+      <span class="nav-label">Workspace</span>
+      <a href="/" class="{{ 'is-active' if active == 'overview' }}" {% if active == 'overview' %}aria-current="page"{% endif %}>
+        {{ icon("overview") }}<span>Overview</span>
+      </a>
+      <a href="/intake" class="{{ 'is-active' if active == 'intake' }}" {% if active == 'intake' %}aria-current="page"{% endif %}>
+        {{ icon("intake") }}<span>Intake</span>
+      </a>
+      <a href="/plan" class="{{ 'is-active' if active == 'plan' }}" {% if active == 'plan' %}aria-current="page"{% endif %}>
+        {{ icon("plan") }}<span>Plan</span>
+        {% if nav_counts.plan %}<span class="nav-badge">{{ nav_counts.plan }}</span>{% endif %}
+      </a>
+      <a href="/review" class="{{ 'is-active' if active == 'review' }}" {% if active == 'review' %}aria-current="page"{% endif %}>
+        {{ icon("review") }}<span>Review</span>
+        {% if nav_counts.review %}<span class="nav-badge">{{ nav_counts.review }}</span>{% endif %}
+      </a>
+      <a href="/value" class="{{ 'is-active' if active == 'value' }}" {% if active == 'value' %}aria-current="page"{% endif %}>
+        {{ icon("value") }}<span>Value</span>
+      </a>
+      <a href="/about" class="{{ 'is-active' if active == 'about' }}" {% if active == 'about' %}aria-current="page"{% endif %}>
+        {{ icon("about") }}<span>About</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-context">
+      <div class="context-label">Seeded book</div>
+      <div class="context-name">{{ book.advisor_name or "Dana Whitfield" }}</div>
+      <div class="context-firm">{{ book.firm_from or "Meridian Private Wealth" }}</div>
+      <div class="context-row">
+        <span>{{ book.household_count or 12 }} households</span>
+        <span>{{ book.account_count or 18 }} accounts</span>
+      </div>
+      <div class="context-row context-aum">{{ book.aum_total|money }}</div>
+      <div class="context-progress" title="Day {{ book.day_number }} of {{ book.days_total }}">
+        <span style="width: {{ (((book.day_number or 0) / (book.days_total or 45)) * 100)|round(0)|int }}%"></span>
+      </div>
+      <div class="context-progress-meta">
+        <span>Day {{ book.day_number or 16 }} of {{ book.days_total or 45 }}</span>
+        <span>{{ book.days_left or 30 }} days left</span>
+      </div>
+      <div class="context-divider"></div>
+      <div class="context-small">Target live {{ book.target_live_at|date_long }}</div>
+      <div class="context-small">Transition lead {{ book.transition_lead or "Priya Raman" }}</div>
+    </div>
+
+    <div class="sidebar-foot">
+      <span class="status-dot"></span>
+      <span>As of {{ as_of|date_long }}</span>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="content">
+      {% if flash.message %}
+      <div class="notice notice-success" role="status">
+        {{ icon("check", 15) }}
+        <span>{{ flash.message }}</span>
+      </div>
+      {% endif %}
+      {% if flash.error %}
+      <div class="notice notice-danger" role="alert">
+        {{ icon("alert", 15) }}
+        <span>{{ flash.error }}</span>
+      </div>
+      {% endif %}
+
+      {% block content %}{% endblock %}
+
+      <footer class="site-footer">
+        <div class="footer-left">
+          <p class="footer-line">Transition Copilot is a work sample. Data is synthetic and generated from <span class="mono">data/book.json</span> plus six documents. No client data.</p>
+          <p class="footer-line">Unofficial concept. Not affiliated with Savvy. Policy references are synthetic.</p>
+        </div>
+        <div class="footer-right">
+          <div class="footer-links">
+            <a href="/about">About this sample</a>
+            <span class="link-placeholder" title="Placeholder. Add the published URL before sharing.">Product brief</span>
+            <span class="link-placeholder" title="Placeholder. Add the published URL before sharing.">Repository</span>
+          </div>
+          <div class="footer-links footer-actions">
+            <span class="mono">As of {{ as_of|date_long }}</span>
+            <form method="post" action="/reset" class="reset-form" data-confirm="Reset demo state? This clears draft approvals, consent changes, and audit events. The data files are not changed.">
+              <button type="submit" class="link-button">Reset demo</button>
+            </form>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </main>
+
+  <aside class="tour" aria-label="Guided tour">
+    <div class="tour-head">
+      <span class="tour-title">Guided tour <span class="tour-count">{{ tour.current }} / {{ tour.total }}</span></span>
+      <div class="tour-actions">
+        <a class="btn btn-sm tour-button" href="{{ tour.prev_url }}" title="{{ tour.prev_label }}">{{ icon("chevron-left", 12) }} Prev</a>
+        <a class="btn btn-sm btn-primary tour-button" href="{{ tour.next_url }}" title="{{ tour.next_label }}">{{ 'Restart' if tour.is_last else 'Next' }} {{ icon("chevron-right", 12) }}</a>
+        <button type="button" class="tour-close" data-tour-close aria-label="Hide the guided tour" title="Hide the guided tour">&times;</button>
+      </div>
+    </div>
+    <p class="tour-caption" title="{{ tour.step.caption }}">{{ tour.step.caption }}</p>
+  </aside>
+</body>
+</html>

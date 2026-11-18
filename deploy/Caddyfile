@@ -1,0 +1,8 @@
+{$DEMO_DOMAIN} {
+	encode gzip
+	header {
+		X-Robots-Tag "noindex, nofollow, noarchive"
+		-Server
+	}
+	reverse_proxy web:8000
+}

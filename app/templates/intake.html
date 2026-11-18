@@ -1,0 +1,262 @@
+{% extends "base.html" %}
+{% from "macros.html" import icon, status_badge, confidence_bar, empty_state %}
+{% block title %}Intake · Transition Copilot{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <p class="eyebrow">Intake · the book</p>
+    <h1>Book intake</h1>
+    <p class="lede">Six documents, a CRM export, and two custodians, resolved into one household and account record. Every field keeps its confidence and its source line.</p>
+  </div>
+  <div class="page-meta">
+    <span class="meta-chip">As of {{ as_of|date_long }}</span>
+    <span class="meta-chip">Day {{ book.day_number or 16 }} of {{ book.days_total or 45 }}</span>
+  </div>
+</div>
+
+<section class="stat-strip" aria-label="Book summary">
+  <div class="stat">
+    <span class="stat-label">Households</span>
+    <span class="stat-value">{{ stats.households }}</span>
+    <span class="stat-sub">Across 12 relationships</span>
+  </div>
+  <div class="stat">
+    <span class="stat-label">Accounts</span>
+    <span class="stat-value">{{ stats.accounts }}</span>
+    <span class="stat-sub">12 in wave 1, 6 in wave 2</span>
+  </div>
+  <div class="stat">
+    <span class="stat-label">Book assets</span>
+    <span class="stat-value">{{ book.aum_total|money }}</span>
+    <span class="stat-sub">USD, from the book record</span>
+  </div>
+  <div class="stat">
+    <span class="stat-label">Target live</span>
+    <span class="stat-value stat-value-date">{{ book.target_live_at|date_long }}</span>
+    <span class="stat-sub">{{ book.days_left or 30 }} days left</span>
+  </div>
+  <div class="stat">
+    <span class="stat-label">Custodians</span>
+    <span class="stat-value">{{ book.custodians|length }}</span>
+    <span class="stat-sub">Alder Clearing, Morrow Trust</span>
+  </div>
+  <div class="stat">
+    <span class="stat-label">Hard cases</span>
+    <span class="stat-value">{{ stats.hard_cases }}</span>
+    <span class="stat-sub">One per account, all in wave 1</span>
+  </div>
+</section>
+
+<section class="intake-top">
+  <div class="card protocol-card" id="protocol">
+    <div class="card-head">
+      <div>
+        <p class="card-kicker">Broker Protocol</p>
+        <h2 class="card-title">Protocol permissions</h2>
+      </div>
+      <div class="head-badges">
+        <span class="badge badge-neutral">Received {{ book.protocol.received_at|date_long }}</span>
+        <span class="badge badge-accent">{{ book.protocol.permitted_fields|length }} fields</span>
+      </div>
+    </div>
+    <p class="card-note">Data arrived with the resignation letter. These five fields may be used. Nothing else moves with the adviser.</p>
+    <div class="protocol-fields">
+      {% for field in book.protocol.permitted_fields %}
+      <div class="protocol-field">
+        <span class="protocol-check">{{ icon("check", 13) }}</span>
+        <div>
+          <span class="protocol-name">{{ field.field_name }}</span>
+          <span class="protocol-note">{{ field.field_note }}</span>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="protocol-restrictions">
+      <p class="mini-label">Blocked until consent</p>
+      {% for restriction in book.protocol.restrictions %}
+      <div class="restriction">{{ icon("x", 12) }}<span>{{ restriction }}</span></div>
+      {% endfor %}
+    </div>
+    <div class="protocol-consent-note">
+      <p class="mini-label">Consent rule</p>
+      <p>A client-facing draft stays blocked until a signed consent is recorded for that household. The consent action is logged in the audit trail.</p>
+    </div>
+    <div class="protocol-foot">
+      <span>{{ book.protocol.source_note }}</span>
+    </div>
+  </div>
+
+  <div class="card consent-card" id="consent">
+    <div class="card-head">
+      <div>
+        <p class="card-kicker">Client contact</p>
+        <h2 class="card-title">Household consent</h2>
+      </div>
+      <span class="badge badge-warn">{{ consent.pending }} pending</span>
+    </div>
+    <div class="consent-summary">
+      <div class="consent-bar" aria-hidden="true">
+        <span class="consent-seg consent-received" style="width: {{ (consent.received / consent.total * 100)|round(1) }}%"></span>
+        <span class="consent-seg consent-pending" style="width: {{ (consent.pending / consent.total * 100)|round(1) }}%"></span>
+        <span class="consent-seg consent-not-required" style="width: {{ (consent.not_required / consent.total * 100)|round(1) }}%"></span>
+      </div>
+      <div class="consent-legend">
+        <span><i class="legend-dot legend-received"></i>{{ consent.received }} received</span>
+        <span><i class="legend-dot legend-pending"></i>{{ consent.pending }} pending</span>
+        <span><i class="legend-dot legend-not-required"></i>{{ consent.not_required }} not required</span>
+      </div>
+    </div>
+    <div class="consent-grid">
+      {% for household in households %}
+      <div class="consent-cell {{ 'is-pending' if household.consent_status == 'pending' }}">
+        <span class="consent-name" title="{{ household.display_name }}">{{ household.display_name }}</span>
+        {{ status_badge(household.consent_status) }}
+      </div>
+      {% endfor %}
+    </div>
+    <div class="consent-foot">
+      <span>{{ icon("lock", 12) }} {{ consent.pending }} households pending. {{ stats.draft_blocked }} client draft{{ '' if stats.draft_blocked == 1 else 's' }} blocked.</span>
+      {% if stats.draft_blocked %}
+      <a href="/review/draft-1#evidence">Review the blocked draft {{ icon("arrow-right", 12) }}</a>
+      {% else %}
+      <a href="/review">Open the review queue {{ icon("arrow-right", 12) }}</a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<section class="section" id="documents">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">Source material</p>
+      <h2>Source documents</h2>
+    </div>
+    <span class="section-note">{{ stats.documents }} files · {{ stats.fields }} fields · {{ stats.findings }} hard findings</span>
+  </div>
+  <div class="doc-tabs">
+    {% for document in documents %}
+    <a class="doc-tab {{ 'is-active' if document.id == selected_id }}" href="/intake?doc={{ document.id }}#viewer">
+      <span class="doc-tab-id">{{ document.id }}</span>
+      <span class="doc-tab-title">{{ document.title }}</span>
+      <span class="doc-tab-meta">{{ document.kind|kind_label }} · {{ document.received_at|date_short }}</span>
+      <span class="doc-tab-counts"><span>{{ document.field_count }} fields</span><span>{{ document.flag_count }} flags</span></span>
+    </a>
+    {% endfor %}
+  </div>
+
+  {% if view %}
+  <div class="viewer" id="viewer">
+    <div class="viewer-pane viewer-doc">
+      <div class="viewer-head">
+        <div>
+          <span class="viewer-kicker">Source document</span>
+          <span class="viewer-title">{{ view.document.title }}</span>
+          <span class="viewer-sub">{{ view.document.filename }} · {{ view.document.custodian }} · received {{ view.document.received_at|date_long }}</span>
+        </div>
+        <span class="viewer-method">{{ view.document.method }}</span>
+      </div>
+      <div class="doc-body" id="doc-body" title="Statement lines keep their original spacing. Scroll sideways to read long holdings rows.">
+        {% for line in view.lines %}
+        <div class="doc-line {{ 'has-src' if line.has_source }}" data-line="{{ line.number }}" data-fields="{{ line.field_ids|join(',') }}">
+          <span class="ln">{{ line.number }}</span><span class="lt">{{ line.text if line.text else ' ' }}</span>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="doc-foot">
+        <span>{{ view.lines|length }} lines · hover a field to locate it</span>
+        <button type="button" class="link-button subtle" id="clear-highlight" hidden>Clear highlight</button>
+      </div>
+    </div>
+
+    <div class="viewer-pane viewer-fields">
+      <div class="viewer-head">
+        <div>
+          <span class="viewer-kicker">Extracted fields</span>
+          <span class="viewer-title">{{ view.field_count }} fields <span class="muted">/ {{ view.flag_count }} flag{{ '' if view.flag_count == 1 else 's' }}</span></span>
+          <span class="viewer-sub">Average confidence {{ view.avg_confidence|pct(0) }} · {{ view.matched_fields }} of {{ view.field_count }} mapped to a source line</span>
+        </div>
+      </div>
+      <div class="fields-search">
+        <label class="sr-only" for="field-search">Filter extracted fields</label>
+        <span class="search-icon">{{ icon("search", 13) }}</span>
+        <input id="field-search" type="search" placeholder="Filter fields" autocomplete="off">
+        <span class="fields-count" id="field-count-shown">{{ view.field_count }}</span>
+      </div>
+      {% if view.field_count %}
+      <div class="fields-scroll" id="fields-scroll">
+        {% for group in view.groups %}
+        <div class="field-group" data-group>
+          <div class="field-group-label">{{ group.name }} <span>{{ group.fields|length }}</span></div>
+          {% for field in group.fields %}
+          <div class="field-row" role="button" tabindex="0" data-field-index="{{ field.index }}" data-lines="{{ field.line_attr }}" aria-label="Highlight source for {{ field.field_name|human_field }}">
+            <div class="field-main">
+              <span class="field-name">{{ field.field_name|human_field }}</span>
+              <span class="field-value">{{ field.value|field_value(field.field_name) }}</span>
+              {% if field.flag_label %}
+              <span class="field-flag badge badge-{{ 'danger' if field.flag_severity == 'high' else 'warn' }}"><span class="badge-dot"></span>{{ field.flag_label }}</span>
+              {% endif %}
+            </div>
+            {{ confidence_bar(field.confidence) }}
+          </div>
+          {% endfor %}
+        </div>
+        {% endfor %}
+      </div>
+      <div class="fields-foot">
+        <span>Confidence is a display of evidence strength, not a calibrated probability.</span>
+      </div>
+      {% else %}
+      {{ empty_state("No fields extracted", "This document did not return any fields. The source text is still available on the left.", "file") }}
+      {% endif %}
+    </div>
+  </div>
+  {% endif %}
+</section>
+
+<section class="section" id="findings">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">Rules layer</p>
+      <h2>Hard findings</h2>
+    </div>
+    <div class="section-head-right">
+      <span class="section-note">{{ findings|length }} findings across 5 documents · {{ high_findings|length }} high · {{ medium_findings|length }} medium</span>
+      <a class="text-link" href="/plan#risks">Open the plan risks {{ icon("arrow-right", 13) }}</a>
+    </div>
+  </div>
+  <div class="findings-grid">
+    {% for finding in findings %}
+    <article class="finding finding-{{ finding.severity }}">
+      <div class="finding-head">
+        {{ status_badge(finding.severity) }}
+        <h3>{{ finding.label }}</h3>
+        <span class="tag">{{ finding.document_id }}</span>
+      </div>
+      <p class="finding-detail">{{ finding.detail }}</p>
+      <dl class="finding-meta">
+        <div>
+          <dt>Account</dt>
+          <dd><span class="mono">{{ finding.account_id }}</span> · {{ finding.household_name }}</dd>
+        </div>
+        <div>
+          <dt>Source</dt>
+          <dd>{{ finding.source_field }} · {{ finding.document_title }}</dd>
+        </div>
+        <div>
+          <dt>Rule reference</dt>
+          <dd>{{ finding.rule_ref }}</dd>
+        </div>
+        <div>
+          <dt>Clears with</dt>
+          <dd>{{ finding.clears_with }}</dd>
+        </div>
+      </dl>
+      <div class="finding-foot">
+        {{ status_badge(finding.status) }}
+        <a class="text-link" href="/plan?wave=1&status=all#risk-{{ finding.risk_id }}">Risk {{ finding.risk_id }} in the plan {{ icon("arrow-right", 12) }}</a>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

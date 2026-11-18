@@ -1,0 +1,247 @@
+{% extends "base.html" %}
+{% from "macros.html" import icon, status_badge, placeholder_link %}
+{% block title %}About · Transition Copilot{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <p class="eyebrow">About · the sample</p>
+    <h1>About this sample</h1>
+    <p class="lede">A working product sample for one RIA transition workflow. It is not a Savvy product and it does not touch real client data.</p>
+  </div>
+  <div class="page-meta">
+    <span class="meta-chip">Unofficial concept</span>
+    <span class="meta-chip">November 2026</span>
+  </div>
+</div>
+
+<section class="section about-intro">
+  <div class="card prose-card">
+    <p class="prose">Transition Copilot is a concept for the operations layer an RIA needs when an adviser joins with a book built somewhere else. The sample starts with six synthetic documents and a CRM export. It ends with a plan, a review queue, and an evidence trail.</p>
+    <p class="prose">This page lists what runs, what is simulated, where the guardrails are, and what is missing. The sample is built so those claims can be checked against the data and the code.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">Provenance</p>
+      <h2>What is real and what is simulated</h2>
+    </div>
+    <span class="section-note">All data is synthetic. The software is real.</span>
+  </div>
+  <div class="about-grid">
+    <div class="card about-list-card">
+      <div class="card-head">
+        <div>
+          <p class="card-kicker">What is real</p>
+          <h3 class="card-title">Runs in this build</h3>
+        </div>
+        <span class="badge badge-success">Working</span>
+      </div>
+      <ul class="check-list-plain">
+        {% for item in real %}
+        <li>{{ icon("check", 13) }}<span>{{ item }}</span></li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="card about-list-card">
+      <div class="card-head">
+        <div>
+          <p class="card-kicker">What is simulated</p>
+          <h3 class="card-title">Invented for the demo</h3>
+        </div>
+        <span class="badge badge-neutral">Synthetic</span>
+      </div>
+      <ul class="check-list-plain muted-list">
+        {% for item in simulated %}
+        <li>{{ icon("x", 13) }}<span>{{ item }}</span></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="ai">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">How the AI is used</p>
+      <h2>Deterministic by default, live by choice</h2>
+    </div>
+    <span class="section-note">No model call was made for this seeded state.</span>
+  </div>
+  <div class="ai-grid">
+    <div class="card">
+      <div class="ai-points">
+        {% for title, body in ai_points %}
+        <div class="ai-point">
+          <span class="ai-point-mark">{{ loop.index }}</span>
+          <div>
+            <h3>{{ title }}</h3>
+            <p>{{ body }}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <aside class="card model-path-card">
+      <p class="card-kicker">This run</p>
+      <h3 class="card-title">Where a model is in the loop</h3>
+      <table class="mini-table">
+        <thead><tr><th>Step</th><th>Path</th><th>Model call</th></tr></thead>
+        <tbody>
+          <tr><td>Extraction</td><td>Rule-based parser</td><td>No</td></tr>
+          <tr><td>Draft assembly</td><td>Seeded fact templates</td><td>No</td></tr>
+          <tr><td>Policy checks</td><td>Rule checks</td><td>No</td></tr>
+          <tr><td>Approval</td><td>Named human role</td><td>No</td></tr>
+          <tr><td>Eval</td><td>Deterministic run</td><td>No</td></tr>
+        </tbody>
+      </table>
+      <p class="card-note">A cached provider and an optional live path exist behind <span class="mono">app/llm.py</span>. The cache replays a recorded run by key so the screen cannot drift between reviewers. Nothing on this page depends on a model being available.</p>
+    </aside>
+  </div>
+</section>
+
+<section class="section" id="compliance">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">Compliance map</p>
+      <h2>Five controls, one screen</h2>
+    </div>
+    <span class="section-note">Synthetic policy references. Not legal advice.</span>
+  </div>
+  <div class="card card-flush">
+    <table class="data-table compliance-table">
+      <thead>
+        <tr>
+          <th scope="col">Control</th>
+          <th scope="col">What the product does</th>
+          <th scope="col">What it does not do</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in compliance %}
+        <tr>
+          <th scope="row">{{ item.title }}</th>
+          <td>{{ item.does }}</td>
+          <td class="muted">{{ item.does_not }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">Limitations</p>
+      <h2>What this sample does not do</h2>
+    </div>
+    <span class="section-note">Read before judging the product surface.</span>
+  </div>
+  <div class="card limitations-card">
+    <ul class="limitations-list">
+      {% for item in limitations %}
+      <li>{{ icon("minus", 12) }}<span>{{ item }}</span></li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+<section class="section">
+  <div class="callout callout-warm">
+    <div class="callout-icon">{{ icon("info", 18) }}</div>
+    <div>
+      <h3>Not affiliated with Savvy</h3>
+      <p>This is an unofficial concept built only from public information. It is not endorsed by, connected to, or supported by Savvy. If you represent Savvy and want it removed, contact me through the repository and I will take it down.</p>
+      <div class="callout-links">
+        {{ placeholder_link("Repository", "Placeholder. Add the repository URL before sharing.") }}
+        {{ placeholder_link("Product brief", "Placeholder. Add the brief URL before sharing.") }}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="builder-grid">
+    <div class="card builder-card">
+      <div class="builder-head">
+        <span class="avatar">AS</span>
+        <div>
+          <p class="card-kicker">Who built this</p>
+          <h3 class="card-title">Anthony Stachowitz</h3>
+          <p class="builder-role">Product management work sample · November 2026</p>
+        </div>
+      </div>
+      <p class="prose prose-small">I built this to show how I think about transition operations. The record comes first. The plan follows from the record. The approval trail is part of the workflow, not a report added at the end.</p>
+      <p class="prose prose-small">I did not work at Savvy and did not use any non-public Savvy information. The data is generated, the custodians are fictional, and the policy references are synthetic. The brief covers the market context, the competition, and the decisions I would defend in a review.</p>
+      <div class="builder-links">
+        {{ placeholder_link("Product brief", "Placeholder. Add the brief URL before sharing.") }}
+        {{ placeholder_link("Repository", "Placeholder. Add the repository URL before sharing.") }}
+      </div>
+    </div>
+
+    <aside class="card engine-card">
+      <div class="card-head">
+        <div>
+          <p class="card-kicker">Build details</p>
+          <h3 class="card-title">What rendered this state</h3>
+        </div>
+        {% if engine.mode == 'pipeline' %}
+        <span class="badge badge-success">Pipeline</span>
+        {% elif engine.mode == 'fallback' %}
+        <span class="badge badge-danger">Fallback</span>
+        {% else %}
+        <span class="badge badge-warn">{{ engine.mode|status_label }}</span>
+        {% endif %}
+      </div>
+      <p class="card-note">The web app tries the real pipeline first. A missing or failing capability falls back to <span class="mono">app/fallbacks.py</span> and is labelled here. Eval is read from <span class="mono">data/eval/report.json</span>, not run on each request.</p>
+      <table class="mini-table engine-table">
+        <thead><tr><th>Capability</th><th>Source</th></tr></thead>
+        <tbody>
+          {% for key, label in sources.items() %}
+          <tr>
+            <td>{{ label }}</td>
+            <td>
+              {% if engine.sources.get(key) == 'pipeline' %}
+              <span class="badge badge-success">Pipeline</span>
+              {% elif engine.sources.get(key) == 'fallback' %}
+              <span class="badge badge-danger">Fallback</span>
+              {% else %}
+              <span class="badge badge-neutral">{{ engine.sources.get(key, 'Unknown') }}</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% if engine.notes or engine.runtime_fallbacks %}
+      <details class="engine-details">
+        <summary>Build notes ({{ (engine.notes|length) + (engine.runtime_fallbacks|length) }})</summary>
+        {% if engine.notes %}
+        <p class="mini-label">Seeding notes</p>
+        {% for note in engine.notes %}
+        <p>{{ note }}</p>
+        {% endfor %}
+        {% endif %}
+        {% if engine.runtime_fallbacks %}
+        <p class="mini-label">Runtime fallbacks</p>
+        {% for item in engine.runtime_fallbacks %}
+        <p><span class="mono">{{ item.capability }}</span>: {{ item.error }}</p>
+        {% endfor %}
+        {% endif %}
+      </details>
+      {% endif %}
+      <div class="engine-meta">
+        <span>Python {{ python_version }}</span>
+        <span>SQLite {{ sqlite_version }}</span>
+        <span class="mono">{{ db_path }}</span>
+      </div>
+      <div class="engine-meta">
+        <span>Data: <span class="mono">{{ data_path }}</span></span>
+      </div>
+      <p class="card-note">The book and document files are read at seed. The eval report is read when the value page loads. Reset clears only <span class="mono">app.db</span> and reseeds. It never writes under <span class="mono">data/</span>.</p>
+    </aside>
+  </div>
+</section>
+{% endblock %}
