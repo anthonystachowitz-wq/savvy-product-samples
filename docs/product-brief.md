@@ -11,7 +11,7 @@ I built a working slice of the workflow that fixes that, with the policy checks 
 
 ## What I read before building
 
-Your job board, read as a roadmap: six roles in onboarding, transition, and advisor experience, plus published KPIs in those postings for time to assets transitioned, signed-not-started rate, onboarding CSAT, and NIGO reporting ([job board](https://jobs.ashbyhq.com/savvy)).
+Your job board, read as a roadmap: six roles in onboarding, transition, and advisor experience. The postings publish the KPIs for time to assets transitioned, signed-not-started rate, onboarding CSAT, and enablement completion, and the transition specialist owns root-cause reviews on NIGOs ([job board](https://jobs.ashbyhq.com/savvy)).
 
 A new enterprise line, from the product marketing posting: "We've spent the last few years building AI to run these workflows inside our own firm. Now we're bringing that product to market for enterprise RIAs and wealth firms." It is sold as an outcome, in operating hours returned and EBITDA margin.
 
@@ -25,7 +25,7 @@ Transition sits at the intersection of Savvy's growth engine and its new product
 
 It also produces the asset Savvy already treats as the moat. The complete household record has to start somewhere. Today it starts in a spreadsheet during transition. Making transition the first place the record gets built means every new book lands structured, reconciled, and auditable instead of being cleaned up months later.
 
-The competitive picture is real. Docupace runs transitions with in-house specialists, Skience and Advisor360 sell onboarding and account opening, Dispatch and Jump are shipping AI-assisted transitions now, Nevis is Schwab-part-owned and goes live for Schwab RIAs in Q1 2027, and Avantos raised a Series A with Vanguard, Guardian, and SEI behind it. Savvy's edge is not features. It is that Savvy is the customer, can price against its own cost baseline, and can prove hours returned inside its own RIA before asking another firm to believe it.
+The competitive picture is real. Docupace runs transitions with in-house specialists, Skience and Advisor360 sell onboarding and account opening, Dispatch and Jump are shipping AI-assisted transitions now, Nevis is part-owned by Schwab and goes live for Schwab RIAs in Q1 2027, and Avantos raised a Series A with Vanguard, Guardian, and SEI behind it. Savvy's edge is not features. It is that Savvy is the customer, can price against its own cost baseline, and can prove hours returned inside its own RIA before asking another firm to believe it.
 
 ## What I built
 
@@ -33,7 +33,7 @@ A working prototype, not a deck. One seeded book: 12 households, 18 accounts, ei
 
 **Intake.** Synthetic statements and a CRM export become a structured household and account record, with confidence per field, missing-data flags, and a hard-case list. It also shows what the workflow is allowed to know: the five Broker Protocol fields, and which households have not consented yet.
 
-**Plan.** Per-account form packets, signature counts, owners, and due dates, sequenced against the real clocks. ACATS is a short step at the end. The signature chase is the plan. NIGO risks carry the reason and what clears them.
+**Plan.** Per-account form packets, signature counts, owners, and due dates, sequenced against the real clocks. ACATS is a short step at the end. Most of the plan is chasing signatures. NIGO risks carry the reason and what clears them.
 
 **Review.** Client updates, custodian cover letters, and internal digests sit in a queue. Each draft carries its claims with sources, a policy check against advice language, promised timing, and protocol consent, and an evidence file with approver, timestamp, audience, and retention. Nothing sends without a human. Every action writes to an audit trail.
 
@@ -61,7 +61,7 @@ The advice line. Client drafts explain status, next steps, and documents require
 
 Protocol consent. No client-facing draft for a household without consent. That is a hard block in the workflow, not a warning.
 
-Records. Communications about a client's accounts are firm records. The vendor keeps nothing. The firm keeps and exports everything it needs for five years, and the demo shows the retention field.
+Records. Communications about a client's accounts are firm records. The vendor keeps nothing for itself. The firm keeps and exports everything it needs for five years, and the demo shows the retention field.
 
 Trust with the transition team. Specialists are the users, and a tool that feels like surveillance fails. The product should remove the signature chase, not add a manager's dashboard.
 
@@ -82,4 +82,4 @@ No custodian integrations, no direct client access, no advice, no pricing page, 
 
 Internal first: fewer hours per transition, more books per specialist, faster time to revenue. Then the enterprise module: sell the same workflow into firms that do not have Savvy's operations team, price against operating hours returned, and use Savvy's own RIA as the reference deployment. The proof is the same either way, and Savvy is one of the few companies that can generate it from its own P&L.
 
-If any of this is wrong, I would like to hear which part. That is the job.
+If any of this is wrong, I would like to hear which part.

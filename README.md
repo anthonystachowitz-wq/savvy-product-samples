@@ -73,10 +73,13 @@ Requires Python 3.10 or newer.
 
 ```bash
 python3 -m pip install -r requirements.txt
-python3 -m uvicorn app.main:app --reload --port 8000
+make run            # or: python3 -m uvicorn app.main:app --reload --port 8000
 ```
 
-Open http://127.0.0.1:8000.
+Open http://127.0.0.1:8000. The app seeds a local `app.db` on first request
+from the files in `data/`. `make reset` clears it; `make test` runs the suite;
+`make eval` regenerates the extraction report. `/healthz` reports the engine
+path and the seeded book.
 
 ### Rebuild the synthetic dataset
 
