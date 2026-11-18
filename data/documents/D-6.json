@@ -1,0 +1,6 @@
+{
+  "id": "D-6",
+  "title": "Halden Life variable annuity contract summary",
+  "kind": "annuity_summary",
+  "body_text": "SPECIMEN - SYNTHETIC DATA - NOT A REAL ANNUITY CONTRACT\nANNUITY CONTRACT SUMMARY\nIssuer: Halden Life Insurance Company\nContract number: xxxx-8820\nContract owner: Elena Voss\nAnnuitant: Elena Voss\nContract type: Variable annuity, non-qualified\nIssue date: 2018-06-30\nContract value: USD 1,300,000.00\nSurrender charge: 3.0% of contract value through 2028-06-30\nFree withdrawal: 10% of contract value per year\nDeath benefit: Return of contract value\n1035 exchange: Eligible; receiving carrier acceptance required\nQualified plan: No\n\nSUBACCOUNTS\nHAL-EQ Halden Equity Index Subaccount\nHAL-BAL Halden Balanced Subaccount\nHAL-BOND Halden Core Bond Subaccount\nHAL-INTL Halden International Subaccount\nHAL-FIX Halden Fixed Account\n\nNotes\n- Surrender charge applies to amounts withdrawn above the free withdrawal allowance.\n- A 1035 exchange preserves tax deferral if the receiving carrier accepts the contract.\n- This summary is synthetic and was prepared for a product demonstration."
+}

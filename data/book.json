@@ -1,0 +1,2941 @@
+{
+  "book": {
+    "id": "book-whitfield",
+    "advisor_name": "Dana Whitfield",
+    "firm_from": "Meridian Private Wealth",
+    "transition_lead": "Priya Raman",
+    "signed_at": "2026-11-03",
+    "target_live_at": "2026-12-18",
+    "aum_total": 42300000,
+    "household_count": 12,
+    "custodians": [
+      "Alder Clearing",
+      "Morrow Trust"
+    ],
+    "protocol": {
+      "received_at": "2026-11-03",
+      "permitted_fields": [
+        "Client name",
+        "Address",
+        "Phone",
+        "Email",
+        "Account title"
+      ],
+      "restrictions": [
+        "No client contact before resignation",
+        "Protocol data may be used only for transition preparation until client consent",
+        "No solicitation"
+      ],
+      "source_note": "Broker Protocol: five permitted data elements, submitted with the resignation letter"
+    }
+  },
+  "households": [
+    {
+      "id": "H-1042",
+      "display_name": "Rowan Household",
+      "aum": 6180000,
+      "relationship": "Client since 2016",
+      "notes": "Two generations of accounts",
+      "consent_status": "received"
+    },
+    {
+      "id": "H-1043",
+      "display_name": "Calloway Household",
+      "aum": 4250000,
+      "relationship": "Client since 2009",
+      "notes": "Brother is trustee; EIN pending",
+      "consent_status": "pending"
+    },
+    {
+      "id": "H-1044",
+      "display_name": "Barrett Household",
+      "aum": 1875000,
+      "relationship": "Client since 2021",
+      "notes": "Inherited from a parent in 2021",
+      "consent_status": "pending"
+    },
+    {
+      "id": "H-1045",
+      "display_name": "Voss Household",
+      "aum": 3940000,
+      "relationship": "Client since 2014",
+      "notes": "TOD brokerage plus a non-qualified annuity",
+      "consent_status": "pending"
+    },
+    {
+      "id": "H-1046",
+      "display_name": "Sato Household",
+      "aum": 1260000,
+      "relationship": "Client since 2019",
+      "notes": "Single Roth IRA",
+      "consent_status": "received"
+    },
+    {
+      "id": "H-1047",
+      "display_name": "Delgado Household",
+      "aum": 2890000,
+      "relationship": "Client since 2012",
+      "notes": "Former employer plan rollover in progress",
+      "consent_status": "received"
+    },
+    {
+      "id": "H-1048",
+      "display_name": "Okafor Household",
+      "aum": 1430000,
+      "relationship": "Client since 2018",
+      "notes": "Parent is custodian for one minor",
+      "consent_status": "received"
+    },
+    {
+      "id": "H-1049",
+      "display_name": "Lindqvist Household",
+      "aum": 5120000,
+      "relationship": "Client since 2010",
+      "notes": "Margin account with listed options",
+      "consent_status": "received"
+    },
+    {
+      "id": "H-1050",
+      "display_name": "Ferraro Household",
+      "aum": 7460000,
+      "relationship": "Client since 2007",
+      "notes": "LP interest plus a brokerage account",
+      "consent_status": "received"
+    },
+    {
+      "id": "H-1051",
+      "display_name": "Nakamura Household",
+      "aum": 1980000,
+      "relationship": "Client since 2020",
+      "notes": "TOD registration; beneficiary on file",
+      "consent_status": "received"
+    },
+    {
+      "id": "H-1052",
+      "display_name": "Petrov Household",
+      "aum": 3310000,
+      "relationship": "Client since 2015",
+      "notes": "Retirement assets only",
+      "consent_status": "received"
+    },
+    {
+      "id": "H-1053",
+      "display_name": "Achterberg Household",
+      "aum": 2605000,
+      "relationship": "Client since 2024",
+      "notes": "New account opening in wave 2",
+      "consent_status": "not required"
+    }
+  ],
+  "accounts": [
+    {
+      "id": "A-2201",
+      "household_id": "H-1042",
+      "custodian": "Alder Clearing",
+      "account_type": "Joint brokerage",
+      "registration": "JTWROS",
+      "masked_number": "xxxx-4471",
+      "transfer_path": "ACAT",
+      "status": "in flight",
+      "hard_case": "",
+      "hard_case_note": "",
+      "wave": 1,
+      "signature_count": 2
+    },
+    {
+      "id": "A-2202",
+      "household_id": "H-1042",
+      "custodian": "Morrow Trust",
+      "account_type": "Revocable living trust",
+      "registration": "Revocable trust",
+      "masked_number": "xxxx-3390",
+      "transfer_path": "ACAT",
+      "status": "waiting on client",
+      "hard_case": "",
+      "hard_case_note": "",
+      "wave": 1,
+      "signature_count": 5
+    },
+    {
+      "id": "A-2203",
+      "household_id": "H-1043",
+      "custodian": "Alder Clearing",
+      "account_type": "Irrevocable trust",
+      "registration": "Irrevocable trust",
+      "masked_number": "xxxx-7715",
+      "transfer_path": "non-ACAT",
+      "status": "waiting on client",
+      "hard_case": "Irrevocable trust",
+      "hard_case_note": "Trust dated 2022-03-18; trustee certification and EIN pending",
+      "wave": 1,
+      "signature_count": 6
+    },
+    {
+      "id": "A-2204",
+      "household_id": "H-1044",
+      "custodian": "Morrow Trust",
+      "account_type": "Inherited IRA",
+      "registration": "Inherited IRA",
+      "masked_number": "xxxx-2084",
+      "transfer_path": "ACAT",
+      "status": "in flight",
+      "hard_case": "Inherited IRA",
+      "hard_case_note": "Beneficiary IRA opened in 2022 after the account owner died in 2021",
+      "wave": 1,
+      "signature_count": 5
+    },
+    {
+      "id": "A-2205",
+      "household_id": "H-1045",
+      "custodian": "Alder Clearing",
+      "account_type": "Individual brokerage (TOD)",
+      "registration": "TOD",
+      "masked_number": "xxxx-6128",
+      "transfer_path": "ACAT",
+      "status": "in flight",
+      "hard_case": "Proprietary mutual fund share class",
+      "hard_case_note": "Meridian Select Class C shares are proprietary and cannot transfer in kind",
+      "wave": 1,
+      "signature_count": 3
+    },
+    {
+      "id": "A-2206",
+      "household_id": "H-1045",
+      "custodian": "Morrow Trust",
+      "account_type": "Variable annuity",
+      "registration": "Individual",
+      "masked_number": "xxxx-8820",
+      "transfer_path": "in-kind review",
+      "status": "waiting on client",
+      "hard_case": "Variable annuity with a 1035 question",
+      "hard_case_note": "Non-qualified contract issued by Halden Life; 1035 exchange under review",
+      "wave": 1,
+      "signature_count": 4
+    },
+    {
+      "id": "A-2207",
+      "household_id": "H-1046",
+      "custodian": "Alder Clearing",
+      "account_type": "Roth IRA",
+      "registration": "Roth IRA",
+      "masked_number": "xxxx-5540",
+      "transfer_path": "ACAT",
+      "status": "not started",
+      "hard_case": "",
+      "hard_case_note": "",
+      "wave": 2,
+      "signature_count": 3
+    },
+    {
+      "id": "A-2208",
+      "household_id": "H-1047",
+      "custodian": "Morrow Trust",
+      "account_type": "Traditional IRA",
+      "registration": "IRA",
+      "masked_number": "xxxx-9187",
+      "transfer_path": "ACAT",
+      "status": "in flight",
+      "hard_case": "",
+      "hard_case_note": "",
+      "wave": 1,
+      "signature_count": 3
+    },
+    {
+      "id": "A-2209",
+      "household_id": "H-1047",
+      "custodian": "Morrow Trust",
+      "account_type": "Rollover IRA (held-away 401k)",
+      "registration": "IRA",
+      "masked_number": "xxxx-9246",
+      "transfer_path": "rollover",
+      "status": "waiting on client",
+      "hard_case": "Held-away 401k",
+      "hard_case_note": "Plan recordkept by Northline Retirement Services; rollover approval pending",
+      "wave": 1,
+      "signature_count": 3
+    },
+    {
+      "id": "A-2210",
+      "household_id": "H-1048",
+      "custodian": "Alder Clearing",
+      "account_type": "UTMA custodial",
+      "registration": "UTMA",
+      "masked_number": "xxxx-3372",
+      "transfer_path": "ACAT",
+      "status": "waiting on custodian",
+      "hard_case": "UTMA",
+      "hard_case_note": "Parent is custodian for the minor; UTMA certification required",
+      "wave": 1,
+      "signature_count": 3
+    },
+    {
+      "id": "A-2211",
+      "household_id": "H-1048",
+      "custodian": "Alder Clearing",
+      "account_type": "Individual brokerage",
+      "registration": "Individual",
+      "masked_number": "xxxx-3418",
+      "transfer_path": "ACAT",
+      "status": "not started",
+      "hard_case": "",
+      "hard_case_note": "",
+      "wave": 2,
+      "signature_count": 2
+    },
+    {
+      "id": "A-2212",
+      "household_id": "H-1049",
+      "custodian": "Alder Clearing",
+      "account_type": "Joint brokerage (margin)",
+      "registration": "JTWROS",
+      "masked_number": "xxxx-7780",
+      "transfer_path": "in-kind review",
+      "status": "blocked",
+      "hard_case": "Margin account with options",
+      "hard_case_note": "Margin agreement and listed options; in-kind review required",
+      "wave": 1,
+      "signature_count": 4
+    },
+    {
+      "id": "A-2213",
+      "household_id": "H-1050",
+      "custodian": "Morrow Trust",
+      "account_type": "Limited partnership interest",
+      "registration": "Individual",
+      "masked_number": "xxxx-4450",
+      "transfer_path": "assignment",
+      "status": "blocked",
+      "hard_case": "LP alternative interest",
+      "hard_case_note": "Kestrel Ridge Fund II units require general partner consent to assign",
+      "wave": 1,
+      "signature_count": 6
+    },
+    {
+      "id": "A-2214",
+      "household_id": "H-1050",
+      "custodian": "Morrow Trust",
+      "account_type": "Individual brokerage",
+      "registration": "Individual",
+      "masked_number": "xxxx-4519",
+      "transfer_path": "ACAT",
+      "status": "not started",
+      "hard_case": "",
+      "hard_case_note": "",
+      "wave": 2,
+      "signature_count": 2
+    },
+    {
+      "id": "A-2215",
+      "household_id": "H-1051",
+      "custodian": "Alder Clearing",
+      "account_type": "Individual brokerage (TOD)",
+      "registration": "TOD",
+      "masked_number": "xxxx-6635",
+      "transfer_path": "ACAT",
+      "status": "not started",
+      "hard_case": "",
+      "hard_case_note": "",
+      "wave": 2,
+      "signature_count": 3
+    },
+    {
+      "id": "A-2216",
+      "household_id": "H-1052",
+      "custodian": "Alder Clearing",
+      "account_type": "Traditional IRA",
+      "registration": "IRA",
+      "masked_number": "xxxx-2814",
+      "transfer_path": "ACAT",
+      "status": "waiting on custodian",
+      "hard_case": "",
+      "hard_case_note": "",
+      "wave": 1,
+      "signature_count": 3
+    },
+    {
+      "id": "A-2217",
+      "household_id": "H-1053",
+      "custodian": "Alder Clearing",
+      "account_type": "Individual brokerage",
+      "registration": "Individual",
+      "masked_number": "xxxx-5906",
+      "transfer_path": "ACAT",
+      "status": "not started",
+      "hard_case": "",
+      "hard_case_note": "",
+      "wave": 2,
+      "signature_count": 2
+    },
+    {
+      "id": "A-2218",
+      "household_id": "H-1053",
+      "custodian": "Morrow Trust",
+      "account_type": "Individual brokerage",
+      "registration": "Individual",
+      "masked_number": "xxxx-6401",
+      "transfer_path": "new account",
+      "status": "not started",
+      "hard_case": "",
+      "hard_case_note": "",
+      "wave": 2,
+      "signature_count": 2
+    }
+  ],
+  "positions": [
+    {
+      "id": "P-1",
+      "account_id": "A-2201",
+      "symbol": "VTI",
+      "name": "Total market ETF",
+      "quantity": 3120,
+      "value": 853164,
+      "cost_basis": 642500,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-2",
+      "account_id": "A-2201",
+      "symbol": "VXUS",
+      "name": "Total international ETF",
+      "quantity": 2450,
+      "value": 174440,
+      "cost_basis": 151300,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-3",
+      "account_id": "A-2201",
+      "symbol": "BND",
+      "name": "Total bond market ETF",
+      "quantity": 4800,
+      "value": 354480,
+      "cost_basis": 371900,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-4",
+      "account_id": "A-2201",
+      "symbol": "VEA",
+      "name": "Developed markets ETF",
+      "quantity": 6250,
+      "value": 365000,
+      "cost_basis": 318750,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-5",
+      "account_id": "A-2201",
+      "symbol": "NBMI",
+      "name": "Northbridge Materials",
+      "quantity": 1200,
+      "value": 100980,
+      "cost_basis": 78400,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-6",
+      "account_id": "A-2201",
+      "symbol": "CHSY",
+      "name": "Calder Health Systems",
+      "quantity": 900,
+      "value": 119340,
+      "cost_basis": 96100,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-7",
+      "account_id": "A-2201",
+      "symbol": "CASH",
+      "name": "Cash and cash equivalents",
+      "quantity": 1,
+      "value": 178914.44,
+      "cost_basis": 178914.44,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-8",
+      "account_id": "A-2202",
+      "symbol": "VTI",
+      "name": "Total market ETF",
+      "quantity": 6400,
+      "value": 1750080,
+      "cost_basis": 1386000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-9",
+      "account_id": "A-2202",
+      "symbol": "VXUS",
+      "name": "Total international ETF",
+      "quantity": 4200,
+      "value": 299040,
+      "cost_basis": 268500,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-10",
+      "account_id": "A-2202",
+      "symbol": "BND",
+      "name": "Total bond market ETF",
+      "quantity": 7200,
+      "value": 531720,
+      "cost_basis": 548200,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-11",
+      "account_id": "A-2202",
+      "symbol": "VWO",
+      "name": "Emerging markets ETF",
+      "quantity": 5400,
+      "value": 265410,
+      "cost_basis": 232900,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-12",
+      "account_id": "A-2202",
+      "symbol": "HBFX",
+      "name": "Halcyon Balanced Fund, Class A",
+      "quantity": 26000,
+      "value": 998920,
+      "cost_basis": 921400,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-13",
+      "account_id": "A-2202",
+      "symbol": "CASH",
+      "name": "Cash and cash equivalents",
+      "quantity": 1,
+      "value": 188511.56,
+      "cost_basis": 188511.56,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-14",
+      "account_id": "A-2203",
+      "symbol": "VTI",
+      "name": "Total market ETF",
+      "quantity": 7100,
+      "value": 1941495,
+      "cost_basis": 1530000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-15",
+      "account_id": "A-2203",
+      "symbol": "BND",
+      "name": "Total bond market ETF",
+      "quantity": 8500,
+      "value": 627725,
+      "cost_basis": 641000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-16",
+      "account_id": "A-2203",
+      "symbol": "VXUS",
+      "name": "Total international ETF",
+      "quantity": 5200,
+      "value": 370240,
+      "cost_basis": 330000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-17",
+      "account_id": "A-2203",
+      "symbol": "CHSY",
+      "name": "Calder Health Systems",
+      "quantity": 3400,
+      "value": 450840,
+      "cost_basis": 301000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-18",
+      "account_id": "A-2203",
+      "symbol": "HBFX",
+      "name": "Halcyon Balanced Fund, Class A",
+      "quantity": 19000,
+      "value": 729980,
+      "cost_basis": 680000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-19",
+      "account_id": "A-2203",
+      "symbol": "CASH",
+      "name": "Cash and cash equivalents",
+      "quantity": 1,
+      "value": 129720,
+      "cost_basis": 129720,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-20",
+      "account_id": "A-2204",
+      "symbol": "VTI",
+      "name": "Total market ETF",
+      "quantity": 3600,
+      "value": 984420,
+      "cost_basis": 812000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-21",
+      "account_id": "A-2204",
+      "symbol": "VXUS",
+      "name": "Total international ETF",
+      "quantity": 2600,
+      "value": 185120,
+      "cost_basis": 162000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-22",
+      "account_id": "A-2204",
+      "symbol": "BND",
+      "name": "Total bond market ETF",
+      "quantity": 4200,
+      "value": 310170,
+      "cost_basis": 289000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-23",
+      "account_id": "A-2204",
+      "symbol": "VEA",
+      "name": "Developed markets ETF",
+      "quantity": 3400,
+      "value": 198560,
+      "cost_basis": 171000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-24",
+      "account_id": "A-2204",
+      "symbol": "NBMI",
+      "name": "Northbridge Materials",
+      "quantity": 800,
+      "value": 67320,
+      "cost_basis": 54000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-25",
+      "account_id": "A-2204",
+      "symbol": "CASH",
+      "name": "Cash and cash equivalents",
+      "quantity": 1,
+      "value": 129410,
+      "cost_basis": 129410,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-26",
+      "account_id": "A-2205",
+      "symbol": "VTI",
+      "name": "Total market ETF",
+      "quantity": 4100,
+      "value": 1121145,
+      "cost_basis": 900000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-27",
+      "account_id": "A-2205",
+      "symbol": "VXUS",
+      "name": "Total international ETF",
+      "quantity": 2900,
+      "value": 206480,
+      "cost_basis": 178000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-28",
+      "account_id": "A-2205",
+      "symbol": "BND",
+      "name": "Total bond market ETF",
+      "quantity": 5200,
+      "value": 384020,
+      "cost_basis": 396000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-29",
+      "account_id": "A-2205",
+      "symbol": "MSGF",
+      "name": "Meridian Select Growth Fund, Class C",
+      "quantity": 24000,
+      "value": 644160,
+      "cost_basis": 590000,
+      "transferable": false,
+      "note": "Class C shares are proprietary to Meridian Private Wealth"
+    },
+    {
+      "id": "P-30",
+      "account_id": "A-2205",
+      "symbol": "CHSY",
+      "name": "Calder Health Systems",
+      "quantity": 1200,
+      "value": 159120,
+      "cost_basis": 128000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-31",
+      "account_id": "A-2205",
+      "symbol": "CASH",
+      "name": "Cash and cash equivalents",
+      "quantity": 1,
+      "value": 125075,
+      "cost_basis": 125075,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-32",
+      "account_id": "A-2206",
+      "symbol": "HAL-EQ",
+      "name": "Halden Equity Index Subaccount",
+      "quantity": 12500,
+      "value": 535000,
+      "cost_basis": 420000,
+      "transferable": false,
+      "note": "Contract exchange only; 1035 review required"
+    },
+    {
+      "id": "P-33",
+      "account_id": "A-2206",
+      "symbol": "HAL-BAL",
+      "name": "Halden Balanced Subaccount",
+      "quantity": 9600,
+      "value": 301920,
+      "cost_basis": 260000,
+      "transferable": false,
+      "note": "Contract exchange only; 1035 review required"
+    },
+    {
+      "id": "P-34",
+      "account_id": "A-2206",
+      "symbol": "HAL-BOND",
+      "name": "Halden Core Bond Subaccount",
+      "quantity": 4800,
+      "value": 130320,
+      "cost_basis": 115000,
+      "transferable": false,
+      "note": "Contract exchange only; 1035 review required"
+    },
+    {
+      "id": "P-35",
+      "account_id": "A-2206",
+      "symbol": "HAL-INTL",
+      "name": "Halden International Subaccount",
+      "quantity": 7400,
+      "value": 185740,
+      "cost_basis": 160000,
+      "transferable": false,
+      "note": "Contract exchange only; 1035 review required"
+    },
+    {
+      "id": "P-36",
+      "account_id": "A-2206",
+      "symbol": "HAL-FIX",
+      "name": "Halden Fixed Account",
+      "quantity": 1,
+      "value": 147020,
+      "cost_basis": 150000,
+      "transferable": false,
+      "note": "Contract exchange only; 1035 review required"
+    },
+    {
+      "id": "P-37",
+      "account_id": "A-2207",
+      "symbol": "VTI",
+      "name": "Total market ETF",
+      "quantity": 2200,
+      "value": 601590,
+      "cost_basis": 480000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-38",
+      "account_id": "A-2207",
+      "symbol": "VXUS",
+      "name": "Total international ETF",
+      "quantity": 1600,
+      "value": 113920,
+      "cost_basis": 96000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-39",
+      "account_id": "A-2207",
+      "symbol": "BND",
+      "name": "Total bond market ETF",
+      "quantity": 2400,
+      "value": 177240,
+      "cost_basis": 162000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-40",
+      "account_id": "A-2207",
+      "symbol": "VWO",
+      "name": "Emerging markets ETF",
+      "quantity": 1900,
+      "value": 93385,
+      "cost_basis": 74000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-41",
+      "account_id": "A-2207",
+      "symbol": "CHSY",
+      "name": "Calder Health Systems",
+      "quantity": 800,
+      "value": 106080,
+      "cost_basis": 82000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-42",
+      "account_id": "A-2207",
+      "symbol": "NBMI",
+      "name": "Northbridge Materials",
+      "quantity": 600,
+      "value": 50490,
+      "cost_basis": 41000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-43",
+      "account_id": "A-2207",
+      "symbol": "CASH",
+      "name": "Cash and cash equivalents",
+      "quantity": 1,
+      "value": 117295,
+      "cost_basis": 117295,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-44",
+      "account_id": "A-2208",
+      "symbol": "VTI",
+      "name": "Total market ETF",
+      "quantity": 2800,
+      "value": 765660,
+      "cost_basis": 610000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-45",
+      "account_id": "A-2208",
+      "symbol": "VXUS",
+      "name": "Total international ETF",
+      "quantity": 2100,
+      "value": 149520,
+      "cost_basis": 130000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-46",
+      "account_id": "A-2208",
+      "symbol": "BND",
+      "name": "Total bond market ETF",
+      "quantity": 3200,
+      "value": 236320,
+      "cost_basis": 220000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-47",
+      "account_id": "A-2208",
+      "symbol": "VEA",
+      "name": "Developed markets ETF",
+      "quantity": 2600,
+      "value": 151840,
+      "cost_basis": 129000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-48",
+      "account_id": "A-2208",
+      "symbol": "HBFX",
+      "name": "Halcyon Balanced Fund, Class A",
+      "quantity": 5000,
+      "value": 192100,
+      "cost_basis": 178000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-49",
+      "account_id": "A-2208",
+      "symbol": "CASH",
+      "name": "Cash and cash equivalents",
+      "quantity": 1,
+      "value": 144560,
+      "cost_basis": 144560,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-50",
+      "account_id": "A-2209",
+      "symbol": "VTI",
+      "name": "Total market ETF",
+      "quantity": 2400,
+      "value": 656280,
+      "cost_basis": 520000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-51",
+      "account_id": "A-2209",
+      "symbol": "BND",
+      "name": "Total bond market ETF",
+      "quantity": 2800,
+      "value": 206780,
+      "cost_basis": 185000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-52",
+      "account_id": "A-2209",
+      "symbol": "HBFX",
+      "name": "Halcyon Balanced Fund, Class A",
+      "quantity": 4000,
+      "value": 153680,
+      "cost_basis": 140000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-53",
+      "account_id": "A-2209",
+      "symbol": "CASH",
+      "name": "Cash and cash equivalents",
+      "quantity": 1,
+      "value": 233260,
+      "cost_basis": 233260,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-54",
+      "account_id": "A-2210",
+      "symbol": "VTI",
+      "name": "Total market ETF",
+      "quantity": 1500,
+      "value": 410175,
+      "cost_basis": 330000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-55",
+      "account_id": "A-2210",
+      "symbol": "VXUS",
+      "name": "Total international ETF",
+      "quantity": 1000,
+      "value": 71200,
+      "cost_basis": 60000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-56",
+      "account_id": "A-2210",
+      "symbol": "BND",
+      "name": "Total bond market ETF",
+      "quantity": 1600,
+      "value": 118160,
+      "cost_basis": 110000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-57",
+      "account_id": "A-2210",
+      "symbol": "VEA",
+      "name": "Developed markets ETF",
+      "quantity": 1400,
+      "value": 81760,
+      "cost_basis": 69000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-58",
+      "account_id": "A-2210",
+      "symbol": "CHSY",
+      "name": "Calder Health Systems",
+      "quantity": 500,
+      "value": 66300,
+      "cost_basis": 52000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-59",
+      "account_id": "A-2210",
+      "symbol": "CASH",
+      "name": "Cash and cash equivalents",
+      "quantity": 1,
+      "value": 32405,
+      "cost_basis": 32405,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-60",
+      "account_id": "A-2211",
+      "symbol": "VTI",
+      "name": "Total market ETF",
+      "quantity": 1200,
+      "value": 328140,
+      "cost_basis": 260000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-61",
+      "account_id": "A-2211",
+      "symbol": "VXUS",
+      "name": "Total international ETF",
+      "quantity": 800,
+      "value": 56960,
+      "cost_basis": 48000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-62",
+      "account_id": "A-2211",
+      "symbol": "BND",
+      "name": "Total bond market ETF",
+      "quantity": 1100,
+      "value": 81235,
+      "cost_basis": 74000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-63",
+      "account_id": "A-2211",
+      "symbol": "NBMI",
+      "name": "Northbridge Materials",
+      "quantity": 900,
+      "value": 75735,
+      "cost_basis": 61000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-64",
+      "account_id": "A-2211",
+      "symbol": "VEA",
+      "name": "Developed markets ETF",
+      "quantity": 900,
+      "value": 52560,
+      "cost_basis": 44000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-65",
+      "account_id": "A-2211",
+      "symbol": "CASH",
+      "name": "Cash and cash equivalents",
+      "quantity": 1,
+      "value": 55370,
+      "cost_basis": 55370,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-66",
+      "account_id": "A-2212",
+      "symbol": "VTI",
+      "name": "Total market ETF",
+      "quantity": 12000,
+      "value": 3281400,
+      "cost_basis": 2450000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-67",
+      "account_id": "A-2212",
+      "symbol": "VXUS",
+      "name": "Total international ETF",
+      "quantity": 5500,
+      "value": 391600,
+      "cost_basis": 340000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-68",
+      "account_id": "A-2212",
+      "symbol": "BND",
+      "name": "Total bond market ETF",
+      "quantity": 6000,
+      "value": 443100,
+      "cost_basis": 410000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-69",
+      "account_id": "A-2212",
+      "symbol": "CHSY",
+      "name": "Calder Health Systems",
+      "quantity": 3000,
+      "value": 397800,
+      "cost_basis": 310000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-70",
+      "account_id": "A-2212",
+      "symbol": "HBFX",
+      "name": "Halcyon Balanced Fund, Class A",
+      "quantity": 12000,
+      "value": 461040,
+      "cost_basis": 420000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-71",
+      "account_id": "A-2212",
+      "symbol": "VTI2701C280",
+      "name": "VTI Jan 2027 280 call",
+      "quantity": 25,
+      "value": 36500,
+      "cost_basis": 18000,
+      "transferable": false,
+      "note": "Listed option; expires 2027-01-15"
+    },
+    {
+      "id": "P-72",
+      "account_id": "A-2212",
+      "symbol": "CASH",
+      "name": "Cash and cash equivalents",
+      "quantity": 1,
+      "value": 108560,
+      "cost_basis": 108560,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-73",
+      "account_id": "A-2213",
+      "symbol": "KRVF2",
+      "name": "Kestrel Ridge Value Fund II, LP",
+      "quantity": 3000,
+      "value": 3150000,
+      "cost_basis": 3000000,
+      "transferable": false,
+      "note": "Assignment requires general partner consent; restriction through 2027-06-30"
+    },
+    {
+      "id": "P-74",
+      "account_id": "A-2213",
+      "symbol": "VTI",
+      "name": "Total market ETF",
+      "quantity": 500,
+      "value": 136725,
+      "cost_basis": 96000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-75",
+      "account_id": "A-2213",
+      "symbol": "BND",
+      "name": "Total bond market ETF",
+      "quantity": 1200,
+      "value": 88620,
+      "cost_basis": 80000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-76",
+      "account_id": "A-2213",
+      "symbol": "CASH",
+      "name": "Cash and cash equivalents",
+      "quantity": 1,
+      "value": 224655,
+      "cost_basis": 224655,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-77",
+      "account_id": "A-2214",
+      "symbol": "VTI",
+      "name": "Total market ETF",
+      "quantity": 6200,
+      "value": 1695390,
+      "cost_basis": 1380000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-78",
+      "account_id": "A-2214",
+      "symbol": "VXUS",
+      "name": "Total international ETF",
+      "quantity": 4000,
+      "value": 284800,
+      "cost_basis": 250000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-79",
+      "account_id": "A-2214",
+      "symbol": "BND",
+      "name": "Total bond market ETF",
+      "quantity": 5500,
+      "value": 406175,
+      "cost_basis": 385000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-80",
+      "account_id": "A-2214",
+      "symbol": "VEA",
+      "name": "Developed markets ETF",
+      "quantity": 4800,
+      "value": 280320,
+      "cost_basis": 240000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-81",
+      "account_id": "A-2214",
+      "symbol": "HBFX",
+      "name": "Halcyon Balanced Fund, Class A",
+      "quantity": 20000,
+      "value": 768400,
+      "cost_basis": 700000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-82",
+      "account_id": "A-2214",
+      "symbol": "CHSY",
+      "name": "Calder Health Systems",
+      "quantity": 1500,
+      "value": 198900,
+      "cost_basis": 152000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-83",
+      "account_id": "A-2214",
+      "symbol": "CASH",
+      "name": "Cash and cash equivalents",
+      "quantity": 1,
+      "value": 226015,
+      "cost_basis": 226015,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-84",
+      "account_id": "A-2215",
+      "symbol": "VTI",
+      "name": "Total market ETF",
+      "quantity": 4000,
+      "value": 1093800,
+      "cost_basis": 890000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-85",
+      "account_id": "A-2215",
+      "symbol": "VXUS",
+      "name": "Total international ETF",
+      "quantity": 2300,
+      "value": 163760,
+      "cost_basis": 140000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-86",
+      "account_id": "A-2215",
+      "symbol": "BND",
+      "name": "Total bond market ETF",
+      "quantity": 3000,
+      "value": 221550,
+      "cost_basis": 200000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-87",
+      "account_id": "A-2215",
+      "symbol": "VEA",
+      "name": "Developed markets ETF",
+      "quantity": 2600,
+      "value": 151840,
+      "cost_basis": 128000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-88",
+      "account_id": "A-2215",
+      "symbol": "CHSY",
+      "name": "Calder Health Systems",
+      "quantity": 1100,
+      "value": 145860,
+      "cost_basis": 120000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-89",
+      "account_id": "A-2215",
+      "symbol": "CASH",
+      "name": "Cash and cash equivalents",
+      "quantity": 1,
+      "value": 203190,
+      "cost_basis": 203190,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-90",
+      "account_id": "A-2216",
+      "symbol": "VTI",
+      "name": "Total market ETF",
+      "quantity": 5400,
+      "value": 1476630,
+      "cost_basis": 1250000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-91",
+      "account_id": "A-2216",
+      "symbol": "VXUS",
+      "name": "Total international ETF",
+      "quantity": 3600,
+      "value": 256320,
+      "cost_basis": 210000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-92",
+      "account_id": "A-2216",
+      "symbol": "BND",
+      "name": "Total bond market ETF",
+      "quantity": 4800,
+      "value": 354480,
+      "cost_basis": 330000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-93",
+      "account_id": "A-2216",
+      "symbol": "VEA",
+      "name": "Developed markets ETF",
+      "quantity": 4000,
+      "value": 233600,
+      "cost_basis": 200000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-94",
+      "account_id": "A-2216",
+      "symbol": "HBFX",
+      "name": "Halcyon Balanced Fund, Class A",
+      "quantity": 15000,
+      "value": 576300,
+      "cost_basis": 540000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-95",
+      "account_id": "A-2216",
+      "symbol": "NBMI",
+      "name": "Northbridge Materials",
+      "quantity": 2500,
+      "value": 210375,
+      "cost_basis": 180000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-96",
+      "account_id": "A-2216",
+      "symbol": "CASH",
+      "name": "Cash and cash equivalents",
+      "quantity": 1,
+      "value": 202295,
+      "cost_basis": 202295,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-97",
+      "account_id": "A-2217",
+      "symbol": "VTI",
+      "name": "Total market ETF",
+      "quantity": 4500,
+      "value": 1230525,
+      "cost_basis": 1020000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-98",
+      "account_id": "A-2217",
+      "symbol": "VXUS",
+      "name": "Total international ETF",
+      "quantity": 3000,
+      "value": 213600,
+      "cost_basis": 185000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-99",
+      "account_id": "A-2217",
+      "symbol": "BND",
+      "name": "Total bond market ETF",
+      "quantity": 4000,
+      "value": 295400,
+      "cost_basis": 280000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-100",
+      "account_id": "A-2217",
+      "symbol": "VWO",
+      "name": "Emerging markets ETF",
+      "quantity": 2500,
+      "value": 122875,
+      "cost_basis": 105000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-101",
+      "account_id": "A-2217",
+      "symbol": "HBFX",
+      "name": "Halcyon Balanced Fund, Class A",
+      "quantity": 10000,
+      "value": 384200,
+      "cost_basis": 350000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-102",
+      "account_id": "A-2217",
+      "symbol": "CHSY",
+      "name": "Calder Health Systems",
+      "quantity": 1000,
+      "value": 132600,
+      "cost_basis": 110000,
+      "transferable": true,
+      "note": ""
+    },
+    {
+      "id": "P-103",
+      "account_id": "A-2217",
+      "symbol": "CASH",
+      "name": "Cash and cash equivalents",
+      "quantity": 1,
+      "value": 225800,
+      "cost_basis": 225800,
+      "transferable": true,
+      "note": ""
+    }
+  ],
+  "documents": [
+    {
+      "id": "D-1",
+      "kind": "statement",
+      "custodian": "Alder Clearing",
+      "filename": "alder-statement-2026-10-rowan.txt",
+      "received_at": "2026-11-05"
+    },
+    {
+      "id": "D-2",
+      "kind": "statement",
+      "custodian": "Alder Clearing",
+      "filename": "alder-statement-2026-09-voss.txt",
+      "received_at": "2026-11-06"
+    },
+    {
+      "id": "D-3",
+      "kind": "statement",
+      "custodian": "Morrow Trust",
+      "filename": "morrow-statement-2026-10-rowan-trust.txt",
+      "received_at": "2026-11-07"
+    },
+    {
+      "id": "D-4",
+      "kind": "crm_export",
+      "custodian": "Meridian Private Wealth",
+      "filename": "meridian-crm-contacts-2026-11-08.csv",
+      "received_at": "2026-11-08"
+    },
+    {
+      "id": "D-5",
+      "kind": "trust_summary",
+      "custodian": "Alder Clearing",
+      "filename": "calloway-trust-summary.txt",
+      "received_at": "2026-11-09"
+    },
+    {
+      "id": "D-6",
+      "kind": "annuity_summary",
+      "custodian": "Morrow Trust",
+      "filename": "voss-annuity-summary.txt",
+      "received_at": "2026-11-10"
+    }
+  ],
+  "extractions": [
+    {
+      "id": "E-1",
+      "document_id": "D-1",
+      "field_name": "Account registration",
+      "value": "JTWROS",
+      "confidence": 0.99,
+      "source_span": "Account registration: JTWROS"
+    },
+    {
+      "id": "E-2",
+      "document_id": "D-1",
+      "field_name": "Account number",
+      "value": "xxxx-4471",
+      "confidence": 0.99,
+      "source_span": "Account number: xxxx-4471"
+    },
+    {
+      "id": "E-3",
+      "document_id": "D-1",
+      "field_name": "Statement period",
+      "value": "2026-10-01 to 2026-10-31",
+      "confidence": 0.98,
+      "source_span": "Statement period: 2026-10-01 to 2026-10-31"
+    },
+    {
+      "id": "E-4",
+      "document_id": "D-1",
+      "field_name": "Address on file",
+      "value": "1184 Larkspur Lane, Unit 3, Branford, CT 06405",
+      "confidence": 0.94,
+      "source_span": "Address on file: 1184 Larkspur Lane, Unit 3, Branford, CT 06405"
+    },
+    {
+      "id": "E-5",
+      "document_id": "D-1",
+      "field_name": "Beneficiary",
+      "value": "not applicable, joint registration",
+      "confidence": 0.93,
+      "source_span": "Beneficiary: not applicable, joint registration"
+    },
+    {
+      "id": "E-6",
+      "document_id": "D-1",
+      "field_name": "Account value",
+      "value": "2,146,318.44",
+      "confidence": 0.99,
+      "source_span": "Total account value: USD 2,146,318.44"
+    },
+    {
+      "id": "E-7",
+      "document_id": "D-1",
+      "field_name": "Cost basis",
+      "value": "1,837,864.44",
+      "confidence": 0.97,
+      "source_span": "Total cost basis: USD 1,837,864.44"
+    },
+    {
+      "id": "E-8",
+      "document_id": "D-1",
+      "field_name": "Positions held",
+      "value": "7",
+      "confidence": 0.99,
+      "source_span": "Positions held: 7"
+    },
+    {
+      "id": "E-9",
+      "document_id": "D-1",
+      "field_name": "FLAG: address stale",
+      "value": "FLAG: address last updated 2019-04-12; CRM shows 2026-06-14",
+      "confidence": 0.96,
+      "source_span": "Address on file: 1184 Larkspur Lane, Unit 3, Branford, CT 06405 (last updated 2019-04-12)"
+    },
+    {
+      "id": "E-10",
+      "document_id": "D-2",
+      "field_name": "Account registration",
+      "value": "TOD",
+      "confidence": 0.99,
+      "source_span": "Account registration: TOD"
+    },
+    {
+      "id": "E-11",
+      "document_id": "D-2",
+      "field_name": "Account number",
+      "value": "xxxx-6128",
+      "confidence": 0.99,
+      "source_span": "Account number: xxxx-6128"
+    },
+    {
+      "id": "E-12",
+      "document_id": "D-2",
+      "field_name": "Statement period",
+      "value": "2026-09-01 to 2026-09-30",
+      "confidence": 0.98,
+      "source_span": "Statement period: 2026-09-01 to 2026-09-30"
+    },
+    {
+      "id": "E-13",
+      "document_id": "D-2",
+      "field_name": "Address on file",
+      "value": "48 Ashcroft Lane, Madison, CT 06443",
+      "confidence": 0.94,
+      "source_span": "Address on file: 48 Ashcroft Lane, Madison, CT 06443"
+    },
+    {
+      "id": "E-14",
+      "document_id": "D-2",
+      "field_name": "Beneficiary",
+      "value": "none designated",
+      "confidence": 0.93,
+      "source_span": "Beneficiary: none designated"
+    },
+    {
+      "id": "E-15",
+      "document_id": "D-2",
+      "field_name": "Account value",
+      "value": "2,640,000.00",
+      "confidence": 0.99,
+      "source_span": "Total account value: USD 2,640,000.00"
+    },
+    {
+      "id": "E-16",
+      "document_id": "D-2",
+      "field_name": "Cost basis",
+      "value": "2,317,075.00",
+      "confidence": 0.97,
+      "source_span": "Total cost basis: USD 2,317,075.00"
+    },
+    {
+      "id": "E-17",
+      "document_id": "D-2",
+      "field_name": "Positions held",
+      "value": "6",
+      "confidence": 0.99,
+      "source_span": "Positions held: 6"
+    },
+    {
+      "id": "E-18",
+      "document_id": "D-2",
+      "field_name": "Fund holding",
+      "value": "Meridian Select Growth Fund, Class C",
+      "confidence": 0.94,
+      "source_span": "Meridian Select Growth Fund, Class C"
+    },
+    {
+      "id": "E-19",
+      "document_id": "D-2",
+      "field_name": "Share class",
+      "value": "Class C",
+      "confidence": 0.95,
+      "source_span": "Class C shares are proprietary to Meridian Private Wealth and are not eligible for transfer in kind."
+    },
+    {
+      "id": "E-20",
+      "document_id": "D-2",
+      "field_name": "FLAG: beneficiary missing",
+      "value": "FLAG: TOD registration has no designated beneficiary",
+      "confidence": 0.97,
+      "source_span": "Beneficiary: none designated"
+    },
+    {
+      "id": "E-21",
+      "document_id": "D-2",
+      "field_name": "FLAG: non-transferable share class",
+      "value": "FLAG: Class C shares are proprietary and cannot transfer in kind",
+      "confidence": 0.96,
+      "source_span": "Class C shares are proprietary to Meridian Private Wealth and are not eligible for transfer in kind."
+    },
+    {
+      "id": "E-22",
+      "document_id": "D-3",
+      "field_name": "Account registration",
+      "value": "Individual",
+      "confidence": 0.99,
+      "source_span": "Account registration: Individual"
+    },
+    {
+      "id": "E-23",
+      "document_id": "D-3",
+      "field_name": "Account number",
+      "value": "xxxx-3390",
+      "confidence": 0.99,
+      "source_span": "Account number: xxxx-3390"
+    },
+    {
+      "id": "E-24",
+      "document_id": "D-3",
+      "field_name": "Statement period",
+      "value": "2026-10-01 to 2026-10-31",
+      "confidence": 0.98,
+      "source_span": "Statement period: 2026-10-01 to 2026-10-31"
+    },
+    {
+      "id": "E-25",
+      "document_id": "D-3",
+      "field_name": "Address on file",
+      "value": "27 Fenwick Street, Guilford, CT 06437",
+      "confidence": 0.94,
+      "source_span": "Address on file: 27 Fenwick Street, Guilford, CT 06437"
+    },
+    {
+      "id": "E-26",
+      "document_id": "D-3",
+      "field_name": "Beneficiary",
+      "value": "Rowan Family Trust dated 2021-05-14",
+      "confidence": 0.93,
+      "source_span": "Beneficiary: Rowan Family Trust dated 2021-05-14"
+    },
+    {
+      "id": "E-27",
+      "document_id": "D-3",
+      "field_name": "Account value",
+      "value": "4,033,681.56",
+      "confidence": 0.99,
+      "source_span": "Total account value: USD 4,033,681.56"
+    },
+    {
+      "id": "E-28",
+      "document_id": "D-3",
+      "field_name": "Cost basis",
+      "value": "3,545,511.56",
+      "confidence": 0.97,
+      "source_span": "Total cost basis: USD 3,545,511.56"
+    },
+    {
+      "id": "E-29",
+      "document_id": "D-3",
+      "field_name": "Positions held",
+      "value": "6",
+      "confidence": 0.99,
+      "source_span": "Positions held: 6"
+    },
+    {
+      "id": "E-30",
+      "document_id": "D-3",
+      "field_name": "Custodian",
+      "value": "Morrow Trust",
+      "confidence": 0.99,
+      "source_span": "Custodian: Morrow Trust"
+    },
+    {
+      "id": "E-31",
+      "document_id": "D-3",
+      "field_name": "FLAG: registration mismatch",
+      "value": "FLAG: statement shows Individual; account record requires Revocable trust",
+      "confidence": 0.95,
+      "source_span": "Account registration: Individual"
+    },
+    {
+      "id": "E-32",
+      "document_id": "D-4",
+      "field_name": "Household ID",
+      "value": "H-1042",
+      "confidence": 0.99,
+      "source_span": "H-1042,Rowan Household"
+    },
+    {
+      "id": "E-33",
+      "document_id": "D-4",
+      "field_name": "Household name",
+      "value": "Rowan Household",
+      "confidence": 0.99,
+      "source_span": "H-1042,Rowan Household"
+    },
+    {
+      "id": "E-34",
+      "document_id": "D-4",
+      "field_name": "Primary contact",
+      "value": "Jordan Rowan",
+      "confidence": 0.98,
+      "source_span": "Jordan Rowan,Primary"
+    },
+    {
+      "id": "E-35",
+      "document_id": "D-4",
+      "field_name": "Current address",
+      "value": "27 Fenwick Street, Guilford, CT 06437",
+      "confidence": 0.97,
+      "source_span": "\"27 Fenwick Street, Guilford, CT 06437\""
+    },
+    {
+      "id": "E-36",
+      "document_id": "D-4",
+      "field_name": "Client since",
+      "value": "2016",
+      "confidence": 0.96,
+      "source_span": ",2016,"
+    },
+    {
+      "id": "E-37",
+      "document_id": "D-4",
+      "field_name": "Accounts linked",
+      "value": "A-2201; A-2202",
+      "confidence": 0.98,
+      "source_span": "\"A-2201; A-2202\""
+    },
+    {
+      "id": "E-38",
+      "document_id": "D-4",
+      "field_name": "Data quality note",
+      "value": "Address updated 2026-06-14",
+      "confidence": 0.92,
+      "source_span": "Address updated 2026-06-14"
+    },
+    {
+      "id": "E-39",
+      "document_id": "D-5",
+      "field_name": "Trust name",
+      "value": "Calloway Family Irrevocable Trust",
+      "confidence": 0.99,
+      "source_span": "Trust name: Calloway Family Irrevocable Trust"
+    },
+    {
+      "id": "E-40",
+      "document_id": "D-5",
+      "field_name": "Trust type",
+      "value": "Irrevocable",
+      "confidence": 0.99,
+      "source_span": "Trust type: Irrevocable"
+    },
+    {
+      "id": "E-41",
+      "document_id": "D-5",
+      "field_name": "Trust date",
+      "value": "2022-03-18",
+      "confidence": 0.98,
+      "source_span": "Trust date: 2022-03-18"
+    },
+    {
+      "id": "E-42",
+      "document_id": "D-5",
+      "field_name": "Trustee",
+      "value": "Devon Calloway",
+      "confidence": 0.97,
+      "source_span": "Trustee: Devon Calloway"
+    },
+    {
+      "id": "E-43",
+      "document_id": "D-5",
+      "field_name": "Successor trustee",
+      "value": "Harbor Fiduciary Services",
+      "confidence": 0.96,
+      "source_span": "Successor trustee: Harbor Fiduciary Services"
+    },
+    {
+      "id": "E-44",
+      "document_id": "D-5",
+      "field_name": "Governing state",
+      "value": "Connecticut",
+      "confidence": 0.99,
+      "source_span": "Governing state: Connecticut"
+    },
+    {
+      "id": "E-45",
+      "document_id": "D-5",
+      "field_name": "Trust EIN",
+      "value": "pending",
+      "confidence": 0.98,
+      "source_span": "Trust EIN: pending"
+    },
+    {
+      "id": "E-46",
+      "document_id": "D-5",
+      "field_name": "Beneficiaries",
+      "value": "Two children of the grantor, equal shares",
+      "confidence": 0.95,
+      "source_span": "Beneficiaries: Two children of the grantor, equal shares"
+    },
+    {
+      "id": "E-47",
+      "document_id": "D-5",
+      "field_name": "Distribution standard",
+      "value": "Income and principal for health, education, maintenance, and support",
+      "confidence": 0.94,
+      "source_span": "Distribution standard: Income and principal for health, education, maintenance, and support"
+    },
+    {
+      "id": "E-48",
+      "document_id": "D-5",
+      "field_name": "Account to open",
+      "value": "Irrevocable trust account at Alder Clearing",
+      "confidence": 0.97,
+      "source_span": "Account to be opened: Irrevocable trust account at Alder Clearing"
+    },
+    {
+      "id": "E-49",
+      "document_id": "D-5",
+      "field_name": "FLAG: trust EIN absent",
+      "value": "FLAG: trust EIN pending; account cannot be titled",
+      "confidence": 0.98,
+      "source_span": "Trust EIN: pending"
+    },
+    {
+      "id": "E-50",
+      "document_id": "D-6",
+      "field_name": "Contract owner",
+      "value": "Elena Voss",
+      "confidence": 0.99,
+      "source_span": "Contract owner: Elena Voss"
+    },
+    {
+      "id": "E-51",
+      "document_id": "D-6",
+      "field_name": "Annuitant",
+      "value": "Elena Voss",
+      "confidence": 0.99,
+      "source_span": "Annuitant: Elena Voss"
+    },
+    {
+      "id": "E-52",
+      "document_id": "D-6",
+      "field_name": "Issuer",
+      "value": "Halden Life Insurance Company",
+      "confidence": 0.99,
+      "source_span": "Issuer: Halden Life Insurance Company"
+    },
+    {
+      "id": "E-53",
+      "document_id": "D-6",
+      "field_name": "Contract number",
+      "value": "xxxx-8820",
+      "confidence": 0.99,
+      "source_span": "Contract number: xxxx-8820"
+    },
+    {
+      "id": "E-54",
+      "document_id": "D-6",
+      "field_name": "Contract type",
+      "value": "Variable annuity, non-qualified",
+      "confidence": 0.98,
+      "source_span": "Contract type: Variable annuity, non-qualified"
+    },
+    {
+      "id": "E-55",
+      "document_id": "D-6",
+      "field_name": "Issue date",
+      "value": "2018-06-30",
+      "confidence": 0.98,
+      "source_span": "Issue date: 2018-06-30"
+    },
+    {
+      "id": "E-56",
+      "document_id": "D-6",
+      "field_name": "Contract value",
+      "value": "1,300,000.00",
+      "confidence": 0.99,
+      "source_span": "Contract value: USD 1,300,000.00"
+    },
+    {
+      "id": "E-57",
+      "document_id": "D-6",
+      "field_name": "Surrender charge",
+      "value": "3.0% through 2028-06-30",
+      "confidence": 0.96,
+      "source_span": "Surrender charge: 3.0% of contract value through 2028-06-30"
+    },
+    {
+      "id": "E-58",
+      "document_id": "D-6",
+      "field_name": "1035 exchange",
+      "value": "Eligible; receiving carrier acceptance required",
+      "confidence": 0.95,
+      "source_span": "1035 exchange: Eligible; receiving carrier acceptance required"
+    },
+    {
+      "id": "E-59",
+      "document_id": "D-6",
+      "field_name": "FLAG: annuity surrender charge",
+      "value": "FLAG: 3.0% surrender charge applies through 2028-06-30",
+      "confidence": 0.96,
+      "source_span": "Surrender charge: 3.0% of contract value through 2028-06-30"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "T-1",
+      "account_id": "A-2201",
+      "phase": "intake",
+      "title": "Confirm household record and account authority",
+      "owner_role": "transition specialist",
+      "due_at": "2026-11-05",
+      "status": "complete",
+      "blocker": ""
+    },
+    {
+      "id": "T-2",
+      "account_id": "A-2201",
+      "phase": "document collection",
+      "title": "Collect October statement and photo ID",
+      "owner_role": "transition specialist",
+      "due_at": "2026-11-09",
+      "status": "complete",
+      "blocker": ""
+    },
+    {
+      "id": "T-3",
+      "account_id": "A-2201",
+      "phase": "transfer initiation",
+      "title": "Submit ACAT request to Alder Clearing",
+      "owner_role": "transition specialist",
+      "due_at": "2026-11-12",
+      "status": "complete",
+      "blocker": ""
+    },
+    {
+      "id": "T-4",
+      "account_id": "A-2201",
+      "phase": "custodian review",
+      "title": "Resolve address discrepancy with client",
+      "owner_role": "transition specialist",
+      "due_at": "2026-11-19",
+      "status": "blocked",
+      "blocker": "Client confirmation of current address pending"
+    },
+    {
+      "id": "T-5",
+      "account_id": "A-2201",
+      "phase": "confirmation",
+      "title": "Confirm cost basis and positions received",
+      "owner_role": "operations analyst",
+      "due_at": "2026-11-27",
+      "status": "not started",
+      "blocker": ""
+    },
+    {
+      "id": "T-6",
+      "account_id": "A-2201",
+      "phase": "handoff",
+      "title": "Notify advisor that account is funded",
+      "owner_role": "transition specialist",
+      "due_at": "2026-12-02",
+      "status": "not started",
+      "blocker": ""
+    },
+    {
+      "id": "T-7",
+      "account_id": "A-2202",
+      "phase": "intake",
+      "title": "Confirm household record and account authority",
+      "owner_role": "transition specialist",
+      "due_at": "2026-11-05",
+      "status": "complete",
+      "blocker": ""
+    },
+    {
+      "id": "T-8",
+      "account_id": "A-2202",
+      "phase": "document collection",
+      "title": "Collect trustee certification",
+      "owner_role": "transition specialist",
+      "due_at": "2026-11-20",
+      "status": "blocked",
+      "blocker": "Trustee signature pending"
+    },
+    {
+      "id": "T-9",
+      "account_id": "A-2202",
+      "phase": "transfer initiation",
+      "title": "Submit ACAT request after trust retitling",
+      "owner_role": "transition specialist",
+      "due_at": "2026-11-25",
+      "status": "not started",
+      "blocker": ""
+    },
+    {
+      "id": "T-10",
+      "account_id": "A-2202",
+      "phase": "confirmation",
+      "title": "Confirm trust titling and positions received",
+      "owner_role": "operations analyst",
+      "due_at": "2026-12-02",
+      "status": "not started",
+      "blocker": ""
+    },
+    {
+      "id": "T-11",
+      "account_id": "A-2202",
+      "phase": "handoff",
+      "title": "Notify advisor that account is funded",
+      "owner_role": "transition specialist",
+      "due_at": "2026-12-07",
+      "status": "not started",
+      "blocker": ""
+    },
+    {
+      "id": "T-12",
+      "account_id": "A-2203",
+      "phase": "intake",
+      "title": "Confirm household record and account authority",
+      "owner_role": "transition specialist",
+      "due_at": "2026-11-06",
+      "status": "complete",
+      "blocker": ""
+    },
+    {
+      "id": "T-13",
+      "account_id": "A-2203",
+      "phase": "document collection",
+      "title": "Obtain trust EIN and signed trustee certification",
+      "owner_role": "transition specialist",
+      "due_at": "2026-11-21",
+      "status": "blocked",
+      "blocker": "EIN pending from trustee counsel"
+    },
+    {
+      "id": "T-14",
+      "account_id": "A-2203",
+      "phase": "account opening",
+      "title": "Open irrevocable trust account at Alder Clearing",
+      "owner_role": "operations analyst",
+      "due_at": "2026-11-21",
+      "status": "blocked",
+      "blocker": "EIN pending from trustee counsel"
+    },
+    {
+      "id": "T-15",
+      "account_id": "A-2203",
+      "phase": "transfer initiation",
+      "title": "Prepare non-ACAT transfer packet",
+      "owner_role": "transition specialist",
+      "due_at": "2026-12-01",
+      "status": "not started",
+      "blocker": ""
+    },
+    {
+      "id": "T-16",
+      "account_id": "A-2203",
+      "phase": "custodian review",
+      "title": "Submit packet to Alder Clearing trust desk",
+      "owner_role": "transition specialist",
+      "due_at": "2026-12-04",
+      "status": "not started",
+      "blocker": ""
+    },
+    {
+      "id": "T-17",
+      "account_id": "A-2203",
+      "phase": "handoff",
+      "title": "Confirm trust account funded",
+      "owner_role": "advisor",
+      "due_at": "2026-12-10",
+      "status": "not started",
+      "blocker": ""
+    },
+    {
+      "id": "T-18",
+      "account_id": "A-2204",
+      "phase": "intake",
+      "title": "Confirm household record and account authority",
+      "owner_role": "transition specialist",
+      "due_at": "2026-11-06",
+      "status": "complete",
+      "blocker": ""
+    },
+    {
+      "id": "T-19",
+      "account_id": "A-2204",
+      "phase": "document collection",
+      "title": "Collect death certificate and beneficiary election",
+      "owner_role": "transition specialist",
+      "due_at": "2026-11-18",
+      "status": "in progress",
+      "blocker": ""
+    },
+    {
+      "id": "T-20",
+      "account_id": "A-2204",
+      "phase": "transfer initiation",
+      "title": "Submit ACAT request with inherited IRA title",
+      "owner_role": "transition specialist",
+      "due_at": "2026-11-13",
+      "status": "complete",
+      "blocker": ""
+    },
+    {
+      "id": "T-21",
+      "account_id": "A-2204",
+      "phase": "custodian review",
+      "title": "Confirm inherited IRA titling with Morrow Trust",
+      "owner_role": "operations analyst",
+      "due_at": "2026-11-24",
+      "status": "in progress",
+      "blocker": ""
+    },
+    {
+      "id": "T-22",
+      "account_id": "A-2204",
+      "phase": "confirmation",
+      "title": "Confirm beneficiary designation and cost basis",
+      "owner_role": "operations analyst",
+      "due_at": "2026-12-01",
+      "status": "not started",
+      "blocker": ""
+    },
+    {
+      "id": "T-23",
+      "account_id": "A-2204",
+      "phase": "handoff",
+      "title": "Notify advisor that account is funded",
+      "owner_role": "transition specialist",
+      "due_at": "2026-12-07",
+      "status": "not started",
+      "blocker": ""
+    },
+    {
+      "id": "T-24",
+      "account_id": "A-2205",
+      "phase": "intake",
+      "title": "Confirm household record and account authority",
+      "owner_role": "transition specialist",
+      "due_at": "2026-11-06",
+      "status": "complete",
+      "blocker": ""
+    },
+    {
+      "id": "T-25",
+      "account_id": "A-2205",
+      "phase": "document collection",
+      "title": "Collect beneficiary designation form",
+      "owner_role": "transition specialist",
+      "due_at": "2026-11-19",
+      "status": "blocked",
+      "blocker": "No beneficiary on the September statement"
+    },
+    {
+      "id": "T-26",
+      "account_id": "A-2205",
+      "phase": "transfer initiation",
+      "title": "Submit ACAT request to Alder Clearing",
+      "owner_role": "transition specialist",
+      "due_at": "2026-11-13",
+      "status": "complete",
+      "blocker": ""
+    },
+    {
+      "id": "T-27",
+      "account_id": "A-2205",
+      "phase": "custodian review",
+      "title": "Confirm Class C redemption instructions",
+      "owner_role": "transition specialist",
+      "due_at": "2026-11-24",
+      "status": "blocked",
+      "blocker": "Client election on redemption pending"
+    },
+    {
+      "id": "T-28",
+      "account_id": "A-2205",
+      "phase": "confirmation",
+      "title": "Confirm cash proceeds and cost basis",
+      "owner_role": "operations analyst",
+      "due_at": "2026-12-01",
+      "status": "not started",
+      "blocker": ""
+    },
+    {
+      "id": "T-29",
+      "account_id": "A-2205",
+      "phase": "handoff",
+      "title": "Notify advisor that account is funded",
+      "owner_role": "transition specialist",
+      "due_at": "2026-12-07",
+      "status": "not started",
+      "blocker": ""
+    },
+    {
+      "id": "T-30",
+      "account_id": "A-2206",
+      "phase": "intake",
+      "title": "Confirm household record and account authority",
+      "owner_role": "transition specialist",
+      "due_at": "2026-11-06",
+      "status": "complete",
+      "blocker": ""
+    },
+    {
+      "id": "T-31",
+      "account_id": "A-2206",
+      "phase": "document collection",
+      "title": "Obtain annuity contract and surrender schedule",
+      "owner_role": "transition specialist",
+      "due_at": "2026-11-10",
+      "status": "complete",
+      "blocker": ""
+    },
+    {
+      "id": "T-32",
+      "account_id": "A-2206",
+      "phase": "transfer initiation",
+      "title": "Prepare 1035 exchange analysis",
+      "owner_role": "compliance",
+      "due_at": "2026-11-24",
+      "status": "in progress",
+      "blocker": ""
+    },
+    {
+      "id": "T-33",
+      "account_id": "A-2206",
+      "phase": "custodian review",
+      "title": "Submit 1035 exchange request to Halden Life",
+      "owner_role": "transition specialist",
+      "due_at": "2026-12-02",
+      "status": "not started",
+      "blocker": ""
+    },
+    {
+      "id": "T-34",
+      "account_id": "A-2206",
+      "phase": "handoff",
+      "title": "Confirm contract values with advisor",
+      "owner_role": "advisor",
+      "due_at": "2026-12-09",
+      "status": "not started",
+      "blocker": ""
+    },
+    {
+      "id": "T-35",
+      "account_id": "A-2207",
+      "phase": "intake",
+      "title": "Confirm household record and account authority",
+      "owner_role": "transition specialist",
+      "due_at": "2026-12-01",
+      "status": "not started",
+      "blocker": ""
+    },
+    {
+      "id": "T-36",
+      "account_id": "A-2207",
+      "phase": "document collection",
+      "title": "Collect Roth IRA statement and photo ID",
+      "owner_role": "transition specialist",
+      "due_at": "2026-12-04",
+      "status": "not started",
+      "blocker": ""
+    },
+    {
+      "id": "T-37",
+      "account_id": "A-2207",
+      "phase": "transfer initiation",
+      "title": "Submit ACAT request to Alder Clearing",
+      "owner_role": "operations analyst",
+      "due_at": "2026-12-10",
+      "status": "not started",
+      "blocker": ""
+    },
+    {
+      "id": "T-38",
+      "account_id": "A-2208",
+      "phase": "intake",
+      "title": "Confirm household record and account authority",
+      "owner_role": "transition specialist",
+      "due_at": "2026-11-06",
+      "status": "complete",
+      "blocker": ""
+    },
+    {
+      "id": "T-39",
+      "account_id": "A-2208",
+      "phase": "document collection",
+      "title": "Collect August and September statements",
+      "owner_role": "transition specialist",
+      "due_at": "2026-11-10",
+      "status": "complete",
+      "blocker": ""
+    },
+    {
+      "id": "T-40",
+      "account_id": "A-2208",
+      "phase": "transfer initiation",
+      "title": "Submit ACAT request to Morrow Trust",
+      "owner_role": "transition specialist",
+      "due_at": "2026-11-13",
+      "status": "complete",
+      "blocker": ""
+    },
+    {
+      "id": "T-41",
+      "account_id": "A-2208",
+      "phase": "custodian review",
+      "title": "Monitor Morrow Trust review",
+      "owner_role": "operations analyst",
+      "due_at": "2026-11-24",
+      "status": "in progress",
+      "blocker": ""
+    },
+    {
+      "id": "T-42",
+      "account_id": "A-2208",
+      "phase": "confirmation",
+      "title": "Confirm cost basis and positions received",
+      "owner_role": "operations analyst",
+      "due_at": "2026-12-02",
+      "status": "not started",
+      "blocker": ""
+    },
+    {
+      "id": "T-43",
+      "account_id": "A-2209",
+      "phase": "intake",
+      "title": "Confirm household record and account authority",
+      "owner_role": "transition specialist",
+      "due_at": "2026-11-06",
+      "status": "complete",
+      "blocker": ""
+    },
+    {
+      "id": "T-44",
+      "account_id": "A-2209",
+      "phase": "document collection",
+      "title": "Collect plan statement and rollover election",
+      "owner_role": "transition specialist",
+      "due_at": "2026-11-20",
+      "status": "in progress",
+      "blocker": ""
+    },
+    {
+      "id": "T-45",
+      "account_id": "A-2209",
+      "phase": "transfer initiation",
+      "title": "Submit rollover request to Northline Retirement Services",
+      "owner_role": "compliance",
+      "due_at": "2026-11-25",
+      "status": "blocked",
+      "blocker": "Plan approval and spousal consent pending"
+    },
+    {
+      "id": "T-46",
+      "account_id": "A-2209",
+      "phase": "confirmation",
+      "title": "Confirm rollover deposit",
+      "owner_role": "operations analyst",
+      "due_at": "2026-12-08",
+      "status": "not started",
+      "blocker": ""
+    },
+    {
+      "id": "T-47",
+      "account_id": "A-2210",
+      "phase": "intake",
+      "title": "Confirm household record and account authority",
+      "owner_role": "transition specialist",
+      "due_at": "2026-11-06",
+      "status": "complete",
+      "blocker": ""
+    },
+    {
+      "id": "T-48",
+      "account_id": "A-2210",
+      "phase": "document collection",
+      "title": "Collect UTMA custodianship certification",
+      "owner_role": "transition specialist",
+      "due_at": "2026-11-10",
+      "status": "complete",
+      "blocker": ""
+    },
+    {
+      "id": "T-49",
+      "account_id": "A-2210",
+      "phase": "transfer initiation",
+      "title": "Submit ACAT request for UTMA",
+      "owner_role": "transition specialist",
+      "due_at": "2026-11-13",
+      "status": "complete",
+      "blocker": ""
+    },
+    {
+      "id": "T-50",
+      "account_id": "A-2210",
+      "phase": "custodian review",
+      "title": "Confirm UTMA titling with Alder Clearing",
+      "owner_role": "operations analyst",
+      "due_at": "2026-11-24",
+      "status": "in progress",
+      "blocker": ""
+    },
+    {
+      "id": "T-51",
+      "account_id": "A-2210",
+      "phase": "confirmation",
+      "title": "Confirm positions and cost basis",
+      "owner_role": "transition specialist",
+      "due_at": "2026-12-02",
+      "status": "not started",
+      "blocker": ""
+    },
+    {
+      "id": "T-52",
+      "account_id": "A-2211",
+      "phase": "intake",
+      "title": "Confirm household record and account authority",
+      "owner_role": "transition specialist",
+      "due_at": "2026-12-02",
+      "status": "not started",
+      "blocker": ""
+    },
+    {
+      "id": "T-53",
+      "account_id": "A-2211",
+      "phase": "document collection",
+      "title": "Collect September statement and photo ID",
+      "owner_role": "transition specialist",
+      "due_at": "2026-12-07",
+      "status": "not started",
+      "blocker": ""
+    },
+    {
+      "id": "T-54",
+      "account_id": "A-2211",
+      "phase": "transfer initiation",
+      "title": "Submit ACAT request",
+      "owner_role": "operations analyst",
+      "due_at": "2026-12-11",
+      "status": "not started",
+      "blocker": ""
+    },
+    {
+      "id": "T-55",
+      "account_id": "A-2212",
+      "phase": "intake",
+      "title": "Confirm household record and account authority",
+      "owner_role": "transition specialist",
+      "due_at": "2026-11-06",
+      "status": "complete",
+      "blocker": ""
+    },
+    {
+      "id": "T-56",
+      "account_id": "A-2212",
+      "phase": "document collection",
+      "title": "Collect margin agreement and options approval record",
+      "owner_role": "transition specialist",
+      "due_at": "2026-11-10",
+      "status": "complete",
+      "blocker": ""
+    },
+    {
+      "id": "T-57",
+      "account_id": "A-2212",
+      "phase": "transfer initiation",
+      "title": "Review option positions for transfer eligibility",
+      "owner_role": "compliance",
+      "due_at": "2026-11-20",
+      "status": "blocked",
+      "blocker": "Two option positions expire after target live date"
+    },
+    {
+      "id": "T-58",
+      "account_id": "A-2212",
+      "phase": "custodian review",
+      "title": "Submit in-kind review packet",
+      "owner_role": "transition specialist",
+      "due_at": "2026-11-30",
+      "status": "not started",
+      "blocker": ""
+    },
+    {
+      "id": "T-59",
+      "account_id": "A-2212",
+      "phase": "confirmation",
+      "title": "Confirm option settlement and cash transfer",
+      "owner_role": "operations analyst",
+      "due_at": "2026-12-08",
+      "status": "not started",
+      "blocker": ""
+    },
+    {
+      "id": "T-60",
+      "account_id": "A-2213",
+      "phase": "intake",
+      "title": "Confirm household record and account authority",
+      "owner_role": "transition specialist",
+      "due_at": "2026-11-06",
+      "status": "complete",
+      "blocker": ""
+    },
+    {
+      "id": "T-61",
+      "account_id": "A-2213",
+      "phase": "document collection",
+      "title": "Obtain general partner consent for LP assignment",
+      "owner_role": "compliance",
+      "due_at": "2026-11-25",
+      "status": "blocked",
+      "blocker": "General partner consent pending"
+    },
+    {
+      "id": "T-62",
+      "account_id": "A-2213",
+      "phase": "transfer initiation",
+      "title": "Submit assignment packet to Morrow Trust",
+      "owner_role": "compliance",
+      "due_at": "2026-11-30",
+      "status": "blocked",
+      "blocker": "General partner consent pending"
+    },
+    {
+      "id": "T-63",
+      "account_id": "A-2213",
+      "phase": "custodian review",
+      "title": "Confirm assignment acceptance",
+      "owner_role": "transition specialist",
+      "due_at": "2026-12-08",
+      "status": "not started",
+      "blocker": ""
+    },
+    {
+      "id": "T-64",
+      "account_id": "A-2213",
+      "phase": "handoff",
+      "title": "Notify advisor of alternative asset status",
+      "owner_role": "advisor",
+      "due_at": "2026-12-15",
+      "status": "not started",
+      "blocker": ""
+    },
+    {
+      "id": "T-65",
+      "account_id": "A-2214",
+      "phase": "intake",
+      "title": "Confirm household record and account authority",
+      "owner_role": "transition specialist",
+      "due_at": "2026-12-01",
+      "status": "not started",
+      "blocker": ""
+    },
+    {
+      "id": "T-66",
+      "account_id": "A-2214",
+      "phase": "document collection",
+      "title": "Collect September statement and photo ID",
+      "owner_role": "transition specialist",
+      "due_at": "2026-12-04",
+      "status": "not started",
+      "blocker": ""
+    },
+    {
+      "id": "T-67",
+      "account_id": "A-2214",
+      "phase": "transfer initiation",
+      "title": "Submit ACAT request",
+      "owner_role": "operations analyst",
+      "due_at": "2026-12-10",
+      "status": "not started",
+      "blocker": ""
+    },
+    {
+      "id": "T-68",
+      "account_id": "A-2215",
+      "phase": "intake",
+      "title": "Confirm household record and account authority",
+      "owner_role": "transition specialist",
+      "due_at": "2026-12-01",
+      "status": "in progress",
+      "blocker": ""
+    },
+    {
+      "id": "T-69",
+      "account_id": "A-2215",
+      "phase": "document collection",
+      "title": "Collect TOD beneficiary form",
+      "owner_role": "transition specialist",
+      "due_at": "2026-12-08",
+      "status": "not started",
+      "blocker": ""
+    },
+    {
+      "id": "T-70",
+      "account_id": "A-2215",
+      "phase": "transfer initiation",
+      "title": "Submit ACAT request",
+      "owner_role": "operations analyst",
+      "due_at": "2026-12-11",
+      "status": "not started",
+      "blocker": ""
+    },
+    {
+      "id": "T-71",
+      "account_id": "A-2216",
+      "phase": "intake",
+      "title": "Confirm household record and account authority",
+      "owner_role": "transition specialist",
+      "due_at": "2026-11-06",
+      "status": "complete",
+      "blocker": ""
+    },
+    {
+      "id": "T-72",
+      "account_id": "A-2216",
+      "phase": "document collection",
+      "title": "Collect July and August statements",
+      "owner_role": "transition specialist",
+      "due_at": "2026-11-10",
+      "status": "complete",
+      "blocker": ""
+    },
+    {
+      "id": "T-73",
+      "account_id": "A-2216",
+      "phase": "transfer initiation",
+      "title": "Submit ACAT request to Alder Clearing",
+      "owner_role": "transition specialist",
+      "due_at": "2026-11-13",
+      "status": "complete",
+      "blocker": ""
+    },
+    {
+      "id": "T-74",
+      "account_id": "A-2216",
+      "phase": "custodian review",
+      "title": "Respond to Alder Clearing cost basis request",
+      "owner_role": "operations analyst",
+      "due_at": "2026-11-24",
+      "status": "in progress",
+      "blocker": ""
+    },
+    {
+      "id": "T-75",
+      "account_id": "A-2216",
+      "phase": "confirmation",
+      "title": "Confirm positions received",
+      "owner_role": "operations analyst",
+      "due_at": "2026-12-02",
+      "status": "not started",
+      "blocker": ""
+    },
+    {
+      "id": "T-76",
+      "account_id": "A-2217",
+      "phase": "intake",
+      "title": "Confirm household record and account authority",
+      "owner_role": "transition specialist",
+      "due_at": "2026-12-01",
+      "status": "not started",
+      "blocker": ""
+    },
+    {
+      "id": "T-77",
+      "account_id": "A-2217",
+      "phase": "document collection",
+      "title": "Collect September statement and photo ID",
+      "owner_role": "transition specialist",
+      "due_at": "2026-12-04",
+      "status": "not started",
+      "blocker": ""
+    },
+    {
+      "id": "T-78",
+      "account_id": "A-2217",
+      "phase": "transfer initiation",
+      "title": "Submit ACAT request",
+      "owner_role": "operations analyst",
+      "due_at": "2026-12-10",
+      "status": "not started",
+      "blocker": ""
+    },
+    {
+      "id": "T-79",
+      "account_id": "A-2218",
+      "phase": "account opening",
+      "title": "Open individual brokerage account at Morrow Trust",
+      "owner_role": "operations analyst",
+      "due_at": "2026-12-04",
+      "status": "in progress",
+      "blocker": ""
+    },
+    {
+      "id": "T-80",
+      "account_id": "A-2218",
+      "phase": "document collection",
+      "title": "Collect signed new account application and tax form",
+      "owner_role": "transition specialist",
+      "due_at": "2026-12-08",
+      "status": "not started",
+      "blocker": ""
+    },
+    {
+      "id": "T-81",
+      "account_id": "A-2218",
+      "phase": "handoff",
+      "title": "Confirm account number and notify advisor",
+      "owner_role": "transition specialist",
+      "due_at": "2026-12-15",
+      "status": "not started",
+      "blocker": ""
+    }
+  ],
+  "risks": [
+    {
+      "id": "R-1",
+      "account_id": "A-2201",
+      "kind": "NIGO",
+      "severity": "medium",
+      "reason": "Alder statement address was last updated 2019-04-12; CRM address was updated 2026-06-14.",
+      "rule_ref": "Alder Clearing transfer requirements 4.2",
+      "clears_with": "Signed address change form and client confirmation",
+      "status": "open"
+    },
+    {
+      "id": "R-2",
+      "account_id": "A-2205",
+      "kind": "NIGO",
+      "severity": "high",
+      "reason": "TOD registration has no beneficiary designation on the September statement.",
+      "rule_ref": "Alder Clearing transfer requirements 5.1",
+      "clears_with": "Signed beneficiary designation form",
+      "status": "open"
+    },
+    {
+      "id": "R-3",
+      "account_id": "A-2205",
+      "kind": "NIGO",
+      "severity": "high",
+      "reason": "Meridian Select Growth Fund Class C shares are proprietary and cannot transfer in kind.",
+      "rule_ref": "Alder Clearing proprietary fund policy 3.4",
+      "clears_with": "Client election to redeem and repurchase at the receiving custodian",
+      "status": "open"
+    },
+    {
+      "id": "R-4",
+      "account_id": "A-2202",
+      "kind": "NIGO",
+      "severity": "high",
+      "reason": "Morrow Trust statement titles the account as Individual; the account record requires Revocable trust.",
+      "rule_ref": "Morrow Trust account titling requirements 2.1",
+      "clears_with": "Signed account title change form and trustee certification",
+      "status": "open"
+    },
+    {
+      "id": "R-5",
+      "account_id": "A-2203",
+      "kind": "NIGO",
+      "severity": "high",
+      "reason": "Trust EIN is pending, so the irrevocable trust account cannot be titled.",
+      "rule_ref": "Alder Clearing trust account requirements 3.2",
+      "clears_with": "EIN confirmation from trustee counsel",
+      "status": "open"
+    },
+    {
+      "id": "R-6",
+      "account_id": "A-2206",
+      "kind": "NIGO",
+      "severity": "medium",
+      "reason": "A 3.0% surrender charge applies to withdrawals above the free allowance through 2028-06-30.",
+      "rule_ref": "Morrow Trust annuity servicing guide 4.3",
+      "clears_with": "1035 exchange analysis and client acknowledgment",
+      "status": "open"
+    },
+    {
+      "id": "R-7",
+      "account_id": "A-2212",
+      "kind": "NIGO",
+      "severity": "high",
+      "reason": "Two listed option positions expire after the target live date and cannot move in kind.",
+      "rule_ref": "Alder Clearing options transfer policy 2.4",
+      "clears_with": "Option liquidation or expiration before transfer",
+      "status": "open"
+    },
+    {
+      "id": "R-8",
+      "account_id": "A-2213",
+      "kind": "NIGO",
+      "severity": "high",
+      "reason": "Kestrel Ridge Fund II units require general partner consent before assignment.",
+      "rule_ref": "Morrow Trust alternative assets policy 5.2",
+      "clears_with": "Signed general partner consent",
+      "status": "open"
+    },
+    {
+      "id": "R-9",
+      "account_id": "A-2209",
+      "kind": "NIGO",
+      "severity": "medium",
+      "reason": "Northline plan requires a signed rollover election and spousal consent before release.",
+      "rule_ref": "Morrow Trust rollover requirements 6.1",
+      "clears_with": "Signed rollover election and spousal consent",
+      "status": "mitigating"
+    }
+  ]
+}

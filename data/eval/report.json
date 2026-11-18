@@ -1,0 +1,379 @@
+{
+  "run_at": "2026-11-18T15:38:56+00:00",
+  "field_count": 52,
+  "correct_count": 52,
+  "accuracy": 1.0,
+  "per_field": [
+    {
+      "document_id": "D-1",
+      "field": "registration",
+      "expected": "JTWROS",
+      "actual": "JTWROS",
+      "match": true
+    },
+    {
+      "document_id": "D-1",
+      "field": "account_number",
+      "expected": "xxxx-4471",
+      "actual": "xxxx-4471",
+      "match": true
+    },
+    {
+      "document_id": "D-1",
+      "field": "statement_period",
+      "expected": "2026-10-01 to 2026-10-31",
+      "actual": "2026-10-01 to 2026-10-31",
+      "match": true
+    },
+    {
+      "document_id": "D-1",
+      "field": "address",
+      "expected": "1184 Larkspur Lane, Unit 3, Branford, CT 06405",
+      "actual": "1184 Larkspur Lane, Unit 3, Branford, CT 06405",
+      "match": true
+    },
+    {
+      "document_id": "D-1",
+      "field": "beneficiary",
+      "expected": "not applicable, joint registration",
+      "actual": "not applicable, joint registration",
+      "match": true
+    },
+    {
+      "document_id": "D-1",
+      "field": "account_value",
+      "expected": "2,146,318.44",
+      "actual": "2146318.44",
+      "match": true
+    },
+    {
+      "document_id": "D-1",
+      "field": "cost_basis",
+      "expected": "1,837,864.44",
+      "actual": "1837864.44",
+      "match": true
+    },
+    {
+      "document_id": "D-1",
+      "field": "positions_count",
+      "expected": "7",
+      "actual": "7",
+      "match": true
+    },
+    {
+      "document_id": "D-1",
+      "field": "FLAG: stale_address",
+      "expected": "present",
+      "actual": "present",
+      "match": true
+    },
+    {
+      "document_id": "D-2",
+      "field": "registration",
+      "expected": "TOD",
+      "actual": "TOD",
+      "match": true
+    },
+    {
+      "document_id": "D-2",
+      "field": "account_number",
+      "expected": "xxxx-6128",
+      "actual": "xxxx-6128",
+      "match": true
+    },
+    {
+      "document_id": "D-2",
+      "field": "statement_period",
+      "expected": "2026-09-01 to 2026-09-30",
+      "actual": "2026-09-01 to 2026-09-30",
+      "match": true
+    },
+    {
+      "document_id": "D-2",
+      "field": "address",
+      "expected": "48 Ashcroft Lane, Madison, CT 06443",
+      "actual": "48 Ashcroft Lane, Madison, CT 06443",
+      "match": true
+    },
+    {
+      "document_id": "D-2",
+      "field": "beneficiary",
+      "expected": "none designated",
+      "actual": "none designated",
+      "match": true
+    },
+    {
+      "document_id": "D-2",
+      "field": "account_value",
+      "expected": "2,640,000.00",
+      "actual": "2640000",
+      "match": true
+    },
+    {
+      "document_id": "D-2",
+      "field": "cost_basis",
+      "expected": "2,317,075.00",
+      "actual": "2317075",
+      "match": true
+    },
+    {
+      "document_id": "D-2",
+      "field": "positions_count",
+      "expected": "6",
+      "actual": "6",
+      "match": true
+    },
+    {
+      "document_id": "D-2",
+      "field": "fund_holding",
+      "expected": "Meridian Select Growth Fund, Class C",
+      "actual": "Meridian Select Growth Fund, Class C",
+      "match": true
+    },
+    {
+      "document_id": "D-2",
+      "field": "share_class",
+      "expected": "Class C",
+      "actual": "Class C",
+      "match": true
+    },
+    {
+      "document_id": "D-2",
+      "field": "FLAG: beneficiary_missing",
+      "expected": "present",
+      "actual": "present",
+      "match": true
+    },
+    {
+      "document_id": "D-2",
+      "field": "FLAG: non_transferable_share_class",
+      "expected": "present",
+      "actual": "present",
+      "match": true
+    },
+    {
+      "document_id": "D-3",
+      "field": "registration",
+      "expected": "Individual",
+      "actual": "Individual",
+      "match": true
+    },
+    {
+      "document_id": "D-3",
+      "field": "account_number",
+      "expected": "xxxx-3390",
+      "actual": "xxxx-3390",
+      "match": true
+    },
+    {
+      "document_id": "D-3",
+      "field": "statement_period",
+      "expected": "2026-10-01 to 2026-10-31",
+      "actual": "2026-10-01 to 2026-10-31",
+      "match": true
+    },
+    {
+      "document_id": "D-3",
+      "field": "address",
+      "expected": "27 Fenwick Street, Guilford, CT 06437",
+      "actual": "27 Fenwick Street, Guilford, CT 06437",
+      "match": true
+    },
+    {
+      "document_id": "D-3",
+      "field": "beneficiary",
+      "expected": "Rowan Family Trust dated 2021-05-14",
+      "actual": "Rowan Family Trust dated 2021-05-14",
+      "match": true
+    },
+    {
+      "document_id": "D-3",
+      "field": "account_value",
+      "expected": "4,033,681.56",
+      "actual": "4033681.56",
+      "match": true
+    },
+    {
+      "document_id": "D-3",
+      "field": "cost_basis",
+      "expected": "3,545,511.56",
+      "actual": "3545511.56",
+      "match": true
+    },
+    {
+      "document_id": "D-3",
+      "field": "positions_count",
+      "expected": "6",
+      "actual": "6",
+      "match": true
+    },
+    {
+      "document_id": "D-3",
+      "field": "custodian",
+      "expected": "Morrow Trust",
+      "actual": "Morrow Trust",
+      "match": true
+    },
+    {
+      "document_id": "D-3",
+      "field": "FLAG: registration_mismatch",
+      "expected": "present",
+      "actual": "present",
+      "match": true
+    },
+    {
+      "document_id": "D-5",
+      "field": "trust_name",
+      "expected": "Calloway Family Irrevocable Trust",
+      "actual": "Calloway Family Irrevocable Trust",
+      "match": true
+    },
+    {
+      "document_id": "D-5",
+      "field": "trust_type",
+      "expected": "Irrevocable",
+      "actual": "Irrevocable",
+      "match": true
+    },
+    {
+      "document_id": "D-5",
+      "field": "trust_date",
+      "expected": "2022-03-18",
+      "actual": "2022-03-18",
+      "match": true
+    },
+    {
+      "document_id": "D-5",
+      "field": "trustee",
+      "expected": "Devon Calloway",
+      "actual": "Devon Calloway",
+      "match": true
+    },
+    {
+      "document_id": "D-5",
+      "field": "successor_trustee",
+      "expected": "Harbor Fiduciary Services",
+      "actual": "Harbor Fiduciary Services",
+      "match": true
+    },
+    {
+      "document_id": "D-5",
+      "field": "governing_state",
+      "expected": "Connecticut",
+      "actual": "Connecticut",
+      "match": true
+    },
+    {
+      "document_id": "D-5",
+      "field": "trust_ein",
+      "expected": "pending",
+      "actual": "pending",
+      "match": true
+    },
+    {
+      "document_id": "D-5",
+      "field": "beneficiaries",
+      "expected": "Two children of the grantor, equal shares",
+      "actual": "Two children of the grantor, equal shares",
+      "match": true
+    },
+    {
+      "document_id": "D-5",
+      "field": "distribution_standard",
+      "expected": "Income and principal for health, education, maintenance, and support",
+      "actual": "Income and principal for health, education, maintenance, and support",
+      "match": true
+    },
+    {
+      "document_id": "D-5",
+      "field": "account_to_open",
+      "expected": "Irrevocable trust account at Alder Clearing",
+      "actual": "Irrevocable trust account at Alder Clearing",
+      "match": true
+    },
+    {
+      "document_id": "D-5",
+      "field": "FLAG: trust_ein_absent",
+      "expected": "present",
+      "actual": "present",
+      "match": true
+    },
+    {
+      "document_id": "D-6",
+      "field": "contract_owner",
+      "expected": "Elena Voss",
+      "actual": "Elena Voss",
+      "match": true
+    },
+    {
+      "document_id": "D-6",
+      "field": "annuitant",
+      "expected": "Elena Voss",
+      "actual": "Elena Voss",
+      "match": true
+    },
+    {
+      "document_id": "D-6",
+      "field": "issuer",
+      "expected": "Halden Life Insurance Company",
+      "actual": "Halden Life Insurance Company",
+      "match": true
+    },
+    {
+      "document_id": "D-6",
+      "field": "contract_number",
+      "expected": "xxxx-8820",
+      "actual": "xxxx-8820",
+      "match": true
+    },
+    {
+      "document_id": "D-6",
+      "field": "contract_type",
+      "expected": "Variable annuity, non-qualified",
+      "actual": "Variable annuity, non-qualified",
+      "match": true
+    },
+    {
+      "document_id": "D-6",
+      "field": "issue_date",
+      "expected": "2018-06-30",
+      "actual": "2018-06-30",
+      "match": true
+    },
+    {
+      "document_id": "D-6",
+      "field": "contract_value",
+      "expected": "1,300,000.00",
+      "actual": "USD 1,300,000.00",
+      "match": true
+    },
+    {
+      "document_id": "D-6",
+      "field": "surrender_charge",
+      "expected": "3.0% through 2028-06-30",
+      "actual": "3.0% through 2028-06-30",
+      "match": true
+    },
+    {
+      "document_id": "D-6",
+      "field": "1035_exchange",
+      "expected": "Eligible; receiving carrier acceptance required",
+      "actual": "Eligible; receiving carrier acceptance required",
+      "match": true
+    },
+    {
+      "document_id": "D-6",
+      "field": "FLAG: annuity_surrender_charge",
+      "expected": "present",
+      "actual": "present",
+      "match": true
+    }
+  ],
+  "failures": [],
+  "method": "deterministic extractor",
+  "documents_evaluated": 5,
+  "labels_path": "/home/anthony/projects/savvy-transition-copilot/data/eval/labeled.json",
+  "notes": [
+    "Labels are synthetic and describe the same documents this extractor reads. The accuracy is an in-sample check, not a generalization estimate."
+  ]
+}

@@ -1,0 +1,314 @@
+[
+  {
+    "document_id": "D-1",
+    "field_name": "Account registration",
+    "expected": "JTWROS",
+    "source_span": "Account registration: JTWROS"
+  },
+  {
+    "document_id": "D-1",
+    "field_name": "Account number",
+    "expected": "xxxx-4471",
+    "source_span": "Account number: xxxx-4471"
+  },
+  {
+    "document_id": "D-1",
+    "field_name": "Statement period",
+    "expected": "2026-10-01 to 2026-10-31",
+    "source_span": "Statement period: 2026-10-01 to 2026-10-31"
+  },
+  {
+    "document_id": "D-1",
+    "field_name": "Address on file",
+    "expected": "1184 Larkspur Lane, Unit 3, Branford, CT 06405",
+    "source_span": "Address on file: 1184 Larkspur Lane, Unit 3, Branford, CT 06405"
+  },
+  {
+    "document_id": "D-1",
+    "field_name": "Beneficiary",
+    "expected": "not applicable, joint registration",
+    "source_span": "Beneficiary: not applicable, joint registration"
+  },
+  {
+    "document_id": "D-1",
+    "field_name": "Account value",
+    "expected": "2,146,318.44",
+    "source_span": "Total account value: USD 2,146,318.44"
+  },
+  {
+    "document_id": "D-1",
+    "field_name": "Cost basis",
+    "expected": "1,837,864.44",
+    "source_span": "Total cost basis: USD 1,837,864.44"
+  },
+  {
+    "document_id": "D-1",
+    "field_name": "Positions held",
+    "expected": "7",
+    "source_span": "Positions held: 7"
+  },
+  {
+    "document_id": "D-1",
+    "field_name": "FLAG: address stale",
+    "expected": "FLAG: address last updated 2019-04-12; CRM shows 2026-06-14",
+    "source_span": "Address on file: 1184 Larkspur Lane, Unit 3, Branford, CT 06405 (last updated 2019-04-12)"
+  },
+  {
+    "document_id": "D-2",
+    "field_name": "Account registration",
+    "expected": "TOD",
+    "source_span": "Account registration: TOD"
+  },
+  {
+    "document_id": "D-2",
+    "field_name": "Account number",
+    "expected": "xxxx-6128",
+    "source_span": "Account number: xxxx-6128"
+  },
+  {
+    "document_id": "D-2",
+    "field_name": "Statement period",
+    "expected": "2026-09-01 to 2026-09-30",
+    "source_span": "Statement period: 2026-09-01 to 2026-09-30"
+  },
+  {
+    "document_id": "D-2",
+    "field_name": "Address on file",
+    "expected": "48 Ashcroft Lane, Madison, CT 06443",
+    "source_span": "Address on file: 48 Ashcroft Lane, Madison, CT 06443"
+  },
+  {
+    "document_id": "D-2",
+    "field_name": "Beneficiary",
+    "expected": "none designated",
+    "source_span": "Beneficiary: none designated"
+  },
+  {
+    "document_id": "D-2",
+    "field_name": "Account value",
+    "expected": "2,640,000.00",
+    "source_span": "Total account value: USD 2,640,000.00"
+  },
+  {
+    "document_id": "D-2",
+    "field_name": "Cost basis",
+    "expected": "2,317,075.00",
+    "source_span": "Total cost basis: USD 2,317,075.00"
+  },
+  {
+    "document_id": "D-2",
+    "field_name": "Positions held",
+    "expected": "6",
+    "source_span": "Positions held: 6"
+  },
+  {
+    "document_id": "D-2",
+    "field_name": "Fund holding",
+    "expected": "Meridian Select Growth Fund, Class C",
+    "source_span": "Meridian Select Growth Fund, Class C"
+  },
+  {
+    "document_id": "D-2",
+    "field_name": "Share class",
+    "expected": "Class C",
+    "source_span": "Class C shares are proprietary to Meridian Private Wealth and are not eligible for transfer in kind."
+  },
+  {
+    "document_id": "D-2",
+    "field_name": "FLAG: beneficiary missing",
+    "expected": "FLAG: TOD registration has no designated beneficiary",
+    "source_span": "Beneficiary: none designated"
+  },
+  {
+    "document_id": "D-2",
+    "field_name": "FLAG: non-transferable share class",
+    "expected": "FLAG: Class C shares are proprietary and cannot transfer in kind",
+    "source_span": "Class C shares are proprietary to Meridian Private Wealth and are not eligible for transfer in kind."
+  },
+  {
+    "document_id": "D-3",
+    "field_name": "Account registration",
+    "expected": "Individual",
+    "source_span": "Account registration: Individual"
+  },
+  {
+    "document_id": "D-3",
+    "field_name": "Account number",
+    "expected": "xxxx-3390",
+    "source_span": "Account number: xxxx-3390"
+  },
+  {
+    "document_id": "D-3",
+    "field_name": "Statement period",
+    "expected": "2026-10-01 to 2026-10-31",
+    "source_span": "Statement period: 2026-10-01 to 2026-10-31"
+  },
+  {
+    "document_id": "D-3",
+    "field_name": "Address on file",
+    "expected": "27 Fenwick Street, Guilford, CT 06437",
+    "source_span": "Address on file: 27 Fenwick Street, Guilford, CT 06437"
+  },
+  {
+    "document_id": "D-3",
+    "field_name": "Beneficiary",
+    "expected": "Rowan Family Trust dated 2021-05-14",
+    "source_span": "Beneficiary: Rowan Family Trust dated 2021-05-14"
+  },
+  {
+    "document_id": "D-3",
+    "field_name": "Account value",
+    "expected": "4,033,681.56",
+    "source_span": "Total account value: USD 4,033,681.56"
+  },
+  {
+    "document_id": "D-3",
+    "field_name": "Cost basis",
+    "expected": "3,545,511.56",
+    "source_span": "Total cost basis: USD 3,545,511.56"
+  },
+  {
+    "document_id": "D-3",
+    "field_name": "Positions held",
+    "expected": "6",
+    "source_span": "Positions held: 6"
+  },
+  {
+    "document_id": "D-3",
+    "field_name": "Custodian",
+    "expected": "Morrow Trust",
+    "source_span": "Custodian: Morrow Trust"
+  },
+  {
+    "document_id": "D-3",
+    "field_name": "FLAG: registration mismatch",
+    "expected": "FLAG: statement shows Individual; account record requires Revocable trust",
+    "source_span": "Account registration: Individual"
+  },
+  {
+    "document_id": "D-5",
+    "field_name": "Trust name",
+    "expected": "Calloway Family Irrevocable Trust",
+    "source_span": "Trust name: Calloway Family Irrevocable Trust"
+  },
+  {
+    "document_id": "D-5",
+    "field_name": "Trust type",
+    "expected": "Irrevocable",
+    "source_span": "Trust type: Irrevocable"
+  },
+  {
+    "document_id": "D-5",
+    "field_name": "Trust date",
+    "expected": "2022-03-18",
+    "source_span": "Trust date: 2022-03-18"
+  },
+  {
+    "document_id": "D-5",
+    "field_name": "Trustee",
+    "expected": "Devon Calloway",
+    "source_span": "Trustee: Devon Calloway"
+  },
+  {
+    "document_id": "D-5",
+    "field_name": "Successor trustee",
+    "expected": "Harbor Fiduciary Services",
+    "source_span": "Successor trustee: Harbor Fiduciary Services"
+  },
+  {
+    "document_id": "D-5",
+    "field_name": "Governing state",
+    "expected": "Connecticut",
+    "source_span": "Governing state: Connecticut"
+  },
+  {
+    "document_id": "D-5",
+    "field_name": "Trust EIN",
+    "expected": "pending",
+    "source_span": "Trust EIN: pending"
+  },
+  {
+    "document_id": "D-5",
+    "field_name": "Beneficiaries",
+    "expected": "Two children of the grantor, equal shares",
+    "source_span": "Beneficiaries: Two children of the grantor, equal shares"
+  },
+  {
+    "document_id": "D-5",
+    "field_name": "Distribution standard",
+    "expected": "Income and principal for health, education, maintenance, and support",
+    "source_span": "Distribution standard: Income and principal for health, education, maintenance, and support"
+  },
+  {
+    "document_id": "D-5",
+    "field_name": "Account to open",
+    "expected": "Irrevocable trust account at Alder Clearing",
+    "source_span": "Account to be opened: Irrevocable trust account at Alder Clearing"
+  },
+  {
+    "document_id": "D-5",
+    "field_name": "FLAG: trust EIN absent",
+    "expected": "FLAG: trust EIN pending; account cannot be titled",
+    "source_span": "Trust EIN: pending"
+  },
+  {
+    "document_id": "D-6",
+    "field_name": "Contract owner",
+    "expected": "Elena Voss",
+    "source_span": "Contract owner: Elena Voss"
+  },
+  {
+    "document_id": "D-6",
+    "field_name": "Annuitant",
+    "expected": "Elena Voss",
+    "source_span": "Annuitant: Elena Voss"
+  },
+  {
+    "document_id": "D-6",
+    "field_name": "Issuer",
+    "expected": "Halden Life Insurance Company",
+    "source_span": "Issuer: Halden Life Insurance Company"
+  },
+  {
+    "document_id": "D-6",
+    "field_name": "Contract number",
+    "expected": "xxxx-8820",
+    "source_span": "Contract number: xxxx-8820"
+  },
+  {
+    "document_id": "D-6",
+    "field_name": "Contract type",
+    "expected": "Variable annuity, non-qualified",
+    "source_span": "Contract type: Variable annuity, non-qualified"
+  },
+  {
+    "document_id": "D-6",
+    "field_name": "Issue date",
+    "expected": "2018-06-30",
+    "source_span": "Issue date: 2018-06-30"
+  },
+  {
+    "document_id": "D-6",
+    "field_name": "Contract value",
+    "expected": "1,300,000.00",
+    "source_span": "Contract value: USD 1,300,000.00"
+  },
+  {
+    "document_id": "D-6",
+    "field_name": "Surrender charge",
+    "expected": "3.0% through 2028-06-30",
+    "source_span": "Surrender charge: 3.0% of contract value through 2028-06-30"
+  },
+  {
+    "document_id": "D-6",
+    "field_name": "1035 exchange",
+    "expected": "Eligible; receiving carrier acceptance required",
+    "source_span": "1035 exchange: Eligible; receiving carrier acceptance required"
+  },
+  {
+    "document_id": "D-6",
+    "field_name": "FLAG: annuity surrender charge",
+    "expected": "FLAG: 3.0% surrender charge applies through 2028-06-30",
+    "source_span": "Surrender charge: 3.0% of contract value through 2028-06-30"
+  }
+]
