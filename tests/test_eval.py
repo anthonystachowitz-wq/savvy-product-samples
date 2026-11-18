@@ -20,6 +20,7 @@ from app.llm import (  # noqa: E402
     write_cached,
 )
 from app.pipeline.draft import draft  # noqa: E402
+from app.pipeline.extract import extract_document  # noqa: E402
 from app.pipeline.eval import (  # noqa: E402
     _canonical_flag,
     _normalise,
@@ -206,43 +207,18 @@ def test_run_eval_without_labels_returns_zero_and_a_note(tmp_path):
 
 
 # ---------------------------------------------------------------------------
-# Value arithmetic
+# Value model integration (the arithmetic is covered in tests/test_value.py)
 # ---------------------------------------------------------------------------
 
 
-def test_value_model_defaults_are_transparent():
+def test_value_model_defaults_stay_wired_for_existing_callers():
     model = value_model({}, None)
-    assert model["baseline_hours"] == 34
-    assert model["assisted_hours"] == 16
-    assert model["hours_returned"] == 18
-    assert model["annual_transitions"] == 40
-    assert model["annual_hours_returned"] == 720
-    assert model["days_to_funded_target"] == 45
-    assert len(model["formulas"]) == 7
-    assert any("34 - 16 = 18" in formula for formula in model["formulas"])
-    assert any("40 x 18 = 720" in formula for formula in model["formulas"])
-    assert model["assumptions"]["provenance"]
-
-
-def test_value_model_honours_assumption_overrides():
-    model = value_model(
-        {},
-        {
-            "baseline_hours": 40,
-            "assisted_hours": 10,
-            "annual_transitions": 10,
-            "target_days_to_funded": 60,
-        },
-    )
-    assert model["hours_returned"] == 30
-    assert model["annual_hours_returned"] == 300
-    assert model["days_to_funded_target"] == 60
-    assert any("40 - 10 = 30" in formula for formula in model["formulas"])
-
-
-def test_value_model_rejects_assisted_time_above_baseline():
-    with pytest.raises(ValueError):
-        value_model({}, {"baseline_hours": 10, "assisted_hours": 20})
+    assert model["model"] == "account-based"
+    assert model["baseline_hours"] == 435.0
+    assert model["hours_returned_low"] == 109.0
+    assert model["hours_returned_high"] == 152.0
+    # Legacy key: the single assisted figure is the midpoint of the assisted range.
+    assert model["assisted_hours"] == 304.5
 
 
 # ---------------------------------------------------------------------------
@@ -376,3 +352,84 @@ def test_bedrock_provider_uses_converse(monkeypatch):
     assert client.kwargs["modelId"] == "test-model"
     assert client.kwargs["system"] == [{"text": "system prompt"}]
     assert client.kwargs["messages"][0]["content"][0]["text"] == "user prompt"
+
+
+# ---------------------------------------------------------------------------
+# Extractor provenance: only a recorded model run may override the parser
+# ---------------------------------------------------------------------------
+
+
+def _sentinel_payload() -> str:
+    return json.dumps(
+        {
+            "fields": [
+                {
+                    "name": "from_model_cache",
+                    "value": "model",
+                    "confidence": 0.91,
+                    "source_span": "",
+                }
+            ],
+            "flags": [],
+        }
+    )
+
+
+def test_extractor_prefers_a_recorded_model_run(tmp_path, monkeypatch):
+    monkeypatch.setenv("SAVVY_CACHE_DIR", str(tmp_path))
+    write_cached(
+        "extract-D-99",
+        _sentinel_payload(),
+        "live model, recorded",
+        directory=tmp_path,
+    )
+    result = extract_document({"id": "D-99", "text": STATEMENT_TEXT})
+    assert result["method"] == "live model, recorded (cached)"
+    assert any(field["name"] == "from_model_cache" for field in result["fields"])
+
+
+def test_extractor_ignores_a_deterministic_cache(tmp_path, monkeypatch):
+    monkeypatch.setenv("SAVVY_CACHE_DIR", str(tmp_path))
+    write_cached(
+        "extract-D-99",
+        _sentinel_payload(),
+        "deterministic extractor",
+        directory=tmp_path,
+    )
+    result = extract_document({"id": "D-99", "text": STATEMENT_TEXT})
+    assert result["method"] == "deterministic extractor"
+    assert not any(field["name"] == "from_model_cache" for field in result["fields"])
+
+
+def test_run_eval_accepts_flat_label_rows(tmp_path):
+    _write_statement(tmp_path, "alder-01", STATEMENT_TEXT)
+    _write(
+        tmp_path / "eval" / "labeled.json",
+        [
+            {
+                "document_id": "alder-01",
+                "field_name": "Registration",
+                "expected": "Joint Tenants with Rights of Survivorship (JTWROS)",
+                "source_span": "Registration: Joint Tenants with Rights of Survivorship (JTWROS)",
+            },
+            {
+                "document_id": "alder-01",
+                "field_name": "Account number",
+                "expected": "****4821",
+                "source_span": "Account Number: ****4821",
+            },
+            {
+                "document_id": "alder-01",
+                "field_name": "FLAG: beneficiary missing",
+                "expected": "FLAG: no beneficiary",
+                "source_span": "Beneficiary: Morgan Whitfield",
+            },
+        ],
+    )
+
+    report = run_eval(data_dir_path=tmp_path)
+
+    assert report["field_count"] == 3
+    assert report["accuracy"] == 0.6667
+    assert len(report["failures"]) == 1
+    assert report["failures"][0]["field"] == "FLAG: beneficiary_missing"

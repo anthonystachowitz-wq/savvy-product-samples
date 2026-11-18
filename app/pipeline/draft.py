@@ -117,20 +117,26 @@ def draft(
         detail = (
             f"Household {household_id!r} was not found in the book, so no facts could be cited."
         )
-        return _finalise(
-            kind=kind,
-            household_id=resolved_id,
-            subject="Draft unavailable",
-            blocks=[
-                _block(
-                    "This draft could not be generated because the household is not in the book.",
-                    required=True,
-                )
-            ],
-            fillers=(),
-            extra_blocked=[{"check": "household_lookup", "detail": detail}],
-            book=book,
+        # This is an error state, not a draft under review. It carries no claims and
+        # no policy checks, and it is blocked on the lookup alone.
+        body = (
+            "This draft could not be generated because the household is not in the book. "
+            "No content was produced and no facts were cited."
         )
+        return {
+            "subject": "Draft unavailable",
+            "body": body,
+            "claims": [],
+            "blocked": [{"check": "household_lookup", "detail": detail}],
+            "kind": kind,
+            "household_id": resolved_id,
+            "audience": AUDIENCE[kind],
+            "channel": CHANNEL[kind],
+            "word_count": word_count(body),
+            "mode": MODE_DETERMINISTIC_TEMPLATE,
+            "generated_at": utc_now_iso(),
+            "policy_checks": [],
+        }
 
     if kind == "client_update":
         blocks = _client_blocks(book, household, meta)
@@ -555,7 +561,9 @@ def _finalise(
         "mode": MODE_DETERMINISTIC_TEMPLATE,
         "generated_at": utc_now_iso(),
     }
-    checks = check_draft(payload)
+    # The book carries the household consent records, so the protocol check reads them
+    # instead of reloading data/book.json for every draft.
+    checks = check_draft(payload, book=book)
     payload["policy_checks"] = checks
     for failed in blocking_checks(checks):
         question = {

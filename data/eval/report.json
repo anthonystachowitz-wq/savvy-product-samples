@@ -1,5 +1,5 @@
 {
-  "run_at": "2026-11-18T15:40:18+00:00",
+  "run_at": "2026-11-18T15:46:08+00:00",
   "field_count": 51,
   "correct_count": 51,
   "accuracy": 1.0,
@@ -365,7 +365,7 @@
   "failures": [],
   "method": "deterministic extractor",
   "documents_evaluated": 5,
-  "labels_path": "/home/anthony/projects/savvy-transition-copilot/data/eval/labeled.json",
+  "labels_path": "data/eval/labeled.json",
   "notes": [
     "Labels are synthetic and describe the same documents this extractor reads. The accuracy is an in-sample check, not a generalization estimate."
   ]

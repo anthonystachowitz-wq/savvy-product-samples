@@ -25,7 +25,7 @@ def _results(draft: dict) -> dict:
     return {check["check"]: check for check in check_draft(draft)}
 
 
-def test_returns_all_six_named_checks_in_order():
+def test_returns_all_named_checks_in_order():
     checks = check_draft(_draft("A plain note with no numbers."))
     assert [check["check"] for check in checks] == list(CHECKS)
     assert all(check["result"] in {"pass", "warn", "fail"} for check in checks)
@@ -235,4 +235,4 @@ def test_clean_client_draft_passes_every_check():
         "Your advisor can answer questions about the documents."
     )
     checks = check_draft(_draft(body))
-    assert [check["result"] for check in checks] == ["pass"] * 6
+    assert [check["result"] for check in checks] == ["pass"] * len(CHECKS)

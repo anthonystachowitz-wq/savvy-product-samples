@@ -10,8 +10,12 @@ Rules, in order:
 3. A hard case raises a NIGO risk with a reason, a synthetic firm policy reference,
    and the artifact that clears it. Notes and position data can raise additional
    risks (missing beneficiary, stale address, registration mismatch, cost basis).
-4. Wave 1 is the set of accounts with no hard case and no high-severity risk. Blocked
-   accounts are the ones carrying at least one high-severity risk.
+4. Every account with a seeded ``signature_count`` gets a form-packet task in document
+   collection, and the plan reports the signature load by account and by household. A
+   packet for a household whose Broker Protocol consent is pending is marked blocked.
+5. Wave 1 uses the explicit ``accounts[].wave`` field when the book carries one, and
+   falls back to the clean accounts that can start immediately. Blocked accounts are
+   the ones carrying at least one high-severity risk.
 
 No custodian integration is implied. Task dates are planning dates, not promises.
 """
@@ -335,10 +339,20 @@ def build_plan(book: Optional[dict[str, Any]] = None) -> dict[str, Any]:
     tasks: list[dict[str, Any]] = []
     risks: list[dict[str, Any]] = []
     critical_path: list[dict[str, Any]] = []
-    wave1 = 0
-    seeded_wave1 = 0
     clean_accounts = 0
     blocked_accounts = 0
+    signature_total = 0
+    signature_by_account: dict[str, int] = {}
+    signature_by_household: dict[str, int] = {}
+    consent_by_household = {
+        str(item.get("id")): str(item.get("consent_status") or "").strip().lower()
+        for item in households(book)
+    }
+    consent_pending_households = [
+        household_id
+        for household_id, status in consent_by_household.items()
+        if status == "pending"
+    ]
 
     for index, account in enumerate(account_rows):
         account_id = str(account.get("id") or f"account-{index + 1}")
@@ -356,6 +370,26 @@ def build_plan(book: Optional[dict[str, Any]] = None) -> dict[str, Any]:
         )
         tasks.extend(account_tasks)
 
+        signatures = _signature_count(account)
+        if signatures:
+            tasks.append(
+                _signature_packet_task(
+                    account=account,
+                    account_id=account_id,
+                    household_id=household_id,
+                    signatures=signatures,
+                    signed=signed,
+                    window_days=window_days,
+                    stagger=stagger,
+                    consent_status=consent_by_household.get(household_id, ""),
+                )
+            )
+            signature_total += signatures
+            signature_by_account[account_id] = signatures
+            signature_by_household[household_id] = (
+                signature_by_household.get(household_id, 0) + signatures
+            )
+
         account_risks = _account_risks(
             account=account,
             account_id=account_id,
@@ -368,9 +402,7 @@ def build_plan(book: Optional[dict[str, Any]] = None) -> dict[str, Any]:
         high_risks = [risk for risk in account_risks if risk["severity"] == "high"]
         if high_risks:
             blocked_accounts += 1
-        if str(account.get("wave") or "") == "1":
-            seeded_wave1 += 1
-        elif not hard_case and not account_risks and _is_wave1(account):
+        if not hard_case and not account_risks and _is_wave1(account):
             clean_accounts += 1
 
         if hard_case:
@@ -400,9 +432,13 @@ def build_plan(book: Optional[dict[str, Any]] = None) -> dict[str, Any]:
     critical_path.sort(key=lambda item: (item["due_at"], item["account_id"]))
     tasks.sort(key=lambda item: (item["due_at"], item["account_id"], PHASES.index(item["phase"])))
 
-    # Wave 1 is the seeded first wave when the book has one; otherwise it is the
-    # set of clean accounts that can start immediately.
-    wave1 = seeded_wave1 if seeded_wave1 else clean_accounts
+    # Wave 1 is the explicit accounts[].wave field when the book carries one. A book
+    # without wave data falls back to the clean accounts that can start immediately.
+    explicit_waves = [str(account.get("wave") or "").strip() for account in account_rows]
+    if any(explicit_waves):
+        wave1 = sum(1 for wave in explicit_waves if wave == "1")
+    else:
+        wave1 = clean_accounts
 
     return {
         "tasks": tasks,
@@ -414,6 +450,12 @@ def build_plan(book: Optional[dict[str, Any]] = None) -> dict[str, Any]:
             "blocked": blocked_accounts,
             "high_risks": sum(1 for risk in risks if risk["severity"] == "high"),
         },
+        "signature_load": {
+            "total": signature_total,
+            "by_account": signature_by_account,
+            "by_household": signature_by_household,
+        },
+        "consent_pending_households": consent_pending_households,
         "phases": list(PHASES),
         "signed_at": signed.isoformat(),
         "target_live_at": target.isoformat(),
@@ -503,6 +545,62 @@ def _account_tasks(
                 task["status"] = "blocked"
                 task["blocker"] = HARD_CASES[hard_case]["clears_with"]
     return tasks
+
+
+def _signature_count(account: dict[str, Any]) -> int:
+    """The seeded signature estimate for one account, or 0 when it is absent.
+
+    The count is a per-account estimate of the forms that need a client signature, 2
+    to 6 in the seeded book. A missing value is unknown, not zero, so no packet task
+    is invented for it.
+    """
+
+    raw = account.get("signature_count")
+    if isinstance(raw, bool):
+        return 0
+    try:
+        value = int(float(raw))
+    except (TypeError, ValueError):
+        return 0
+    return value if value > 0 else 0
+
+
+def _signature_packet_task(
+    account: dict[str, Any],
+    account_id: str,
+    household_id: str,
+    signatures: int,
+    signed: date,
+    window_days: int,
+    stagger: int,
+    consent_status: str,
+) -> dict[str, Any]:
+    """One form-packet task per account, blocked while protocol consent is pending.
+
+    Signature collection is client-facing work, so a household with pending Broker
+    Protocol consent does not get a live packet until consent is received.
+    """
+
+    custodian = str(account.get("custodian") or "the receiving custodian")
+    noun = "signature" if signatures == 1 else "signatures"
+    phase = "document_collection"
+    due = _due_date(signed, window_days, phase, stagger)
+    pending = consent_status == "pending"
+    return {
+        "id": f"task-{account_id}-signature-packet",
+        "account_id": account_id,
+        "household_id": household_id,
+        "phase": phase,
+        "title": f"Collect {signatures} {noun} on {custodian} account opening packet",
+        "owner_role": "Transition specialist",
+        "due_at": due.isoformat(),
+        "status": "blocked" if pending else "open",
+        "blocker": (
+            f"Broker Protocol consent is pending for household {household_id}."
+            if pending
+            else ""
+        ),
+    }
 
 
 def _due_date(

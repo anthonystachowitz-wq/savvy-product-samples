@@ -1,11 +1,12 @@
 """Policy checks for a draft before it can be approved.
 
-Six named checks, each returning ``pass``, ``warn``, or ``fail``. The pattern
+Seven named checks, each returning ``pass``, ``warn``, or ``fail``. The pattern
 lists are deliberately readable and commented so a reviewer can see exactly what the
 filters do and what they miss. These are drafting controls, not legal advice. The
 policy references are synthetic.
 
-Check order is stable and is what the review screen renders:
+Check order is stable and is what the review screen renders. The first six predate the
+Broker Protocol work and keep their order; ``protocol_consent`` is appended after them.
 
 1. ``advice_language`` - recommendations, transaction instructions, guarantees
 2. ``promised_timing`` - timelines the custodian or carrier controls
@@ -13,6 +14,7 @@ Check order is stable and is what the review screen renders:
 4. ``testimonial`` - testimonials, endorsements, ratings
 5. ``uncited_number`` - a number in the body with no cited claim behind it
 6. ``missing_disclosure`` - audience-appropriate explanation disclaimer
+7. ``protocol_consent`` - client-facing work for a household with pending consent
 """
 
 from __future__ import annotations
@@ -20,7 +22,7 @@ from __future__ import annotations
 import re
 from typing import Any, Iterable, Optional
 
-from . import iter_numbers
+from . import find_household, iter_numbers, load_book
 
 CHECKS = (
     "advice_language",
@@ -29,7 +31,22 @@ CHECKS = (
     "testimonial",
     "uncited_number",
     "missing_disclosure",
+    "protocol_consent",
 )
+
+#: The five data elements the Broker Protocol permits, in the order the packet lists
+#: them. The book's ``book.protocol.permitted_fields`` wins when it carries its own
+#: wording; these are the fallback and the labels the UI can render.
+PROTOCOL_PERMITTED_FIELDS = (
+    "client name",
+    "address",
+    "phone",
+    "email",
+    "account title",
+)
+
+#: The restriction that matters most for a draft queue: no client contact yet.
+PROTOCOL_NO_CONTACT = "no client contact before resignation"
 
 # ---------------------------------------------------------------------------
 # Pattern lists
@@ -125,12 +142,18 @@ CUSTODIAN_DISCLOSURE_MARKERS = (
 INTERNAL_MARKERS = ("internal use", "internal only", "internal digest")
 
 
-def check_draft(draft: dict[str, Any]) -> list[dict[str, Any]]:
-    """Run all six checks and return them in a stable order.
+def check_draft(
+    draft: dict[str, Any], book: Optional[dict[str, Any]] = None
+) -> list[dict[str, Any]]:
+    """Run all seven checks and return them in a stable order.
 
     ``draft`` needs at least ``body`` and ``claims``. ``kind`` or ``audience``
     selects the disclosure standard. Missing keys are treated as empty, not as a
     crash, because the UI renders a check panel for partially built drafts.
+
+    ``book`` supplies the household consent records for ``protocol_consent``. When it
+    is omitted the check falls back to ``data/book.json``, but only for a client-facing
+    draft that names a household.
     """
 
     if not isinstance(draft, dict):
@@ -146,6 +169,7 @@ def check_draft(draft: dict[str, Any]) -> list[dict[str, Any]]:
         _check_patterns("testimonial", body, TESTIMONIAL_PATTERNS, "testimonial, endorsement, or rating"),
         _check_uncited_numbers(body, claims),
         _check_disclosure(draft, body),
+        _check_protocol_consent(draft, book),
     ]
 
 
@@ -311,6 +335,104 @@ def _check_disclosure(draft: dict[str, Any], body: str) -> dict[str, Any]:
         "check": "missing_disclosure",
         "result": "pass",
         "detail": "Internal-use marker is present; no client disclosure is required.",
+    }
+
+
+# ---------------------------------------------------------------------------
+# Broker Protocol consent
+# ---------------------------------------------------------------------------
+
+
+def consent_blocked(
+    book: Optional[dict[str, Any]], household_id: str
+) -> tuple[bool, str]:
+    """Whether a client-facing draft for this household is blocked, and why.
+
+    Returns ``(True, detail)`` when the household's ``consent_status`` is ``pending``,
+    and ``(False, detail)`` when consent is received, not required, or not on file.
+    The detail is written to be shown as-is in the UI, so it names the household and
+    the rule rather than only returning a boolean.
+
+    A household with no consent record cannot be shown to be blocked, so it does not
+    gate the draft; the detail says so instead of implying consent was received.
+    """
+
+    if not isinstance(book, dict) or not book:
+        return False, "No book is loaded, so no protocol consent record is available."
+    household = find_household(book, str(household_id))
+    if household is None:
+        return False, f"Household {household_id!r} is not in the book, so consent cannot be checked."
+    status = str(household.get("consent_status") or "").strip().lower()
+    if status == "pending":
+        return True, _pending_consent_detail(book, str(household.get("id") or household_id))
+    if status == "received":
+        return False, f"Consent is received for household {household_id}; a client-facing draft is permitted."
+    if status == "not required":
+        return False, (
+            f"Household {household_id} does not require protocol consent (new account, "
+            "new money), so a client-facing draft is permitted."
+        )
+    return False, (
+        f"Household {household_id} has no consent status on file, so the protocol check "
+        "does not gate this draft."
+    )
+
+
+def _permitted_fields(book: Optional[dict[str, Any]]) -> list[str]:
+    """The protocol's permitted data elements, from the book when it carries them."""
+
+    meta = book.get("book") if isinstance(book, dict) else None
+    protocol = meta.get("protocol") if isinstance(meta, dict) else None
+    fields = protocol.get("permitted_fields") if isinstance(protocol, dict) else None
+    if isinstance(fields, list):
+        cleaned = [str(field).strip() for field in fields if str(field).strip()]
+        if cleaned:
+            return cleaned
+    return list(PROTOCOL_PERMITTED_FIELDS)
+
+
+def _pending_consent_detail(book: Optional[dict[str, Any]], household_id: str) -> str:
+    fields = ", ".join(field.lower() for field in _permitted_fields(book))
+    return (
+        f"Broker Protocol consent is pending for household {household_id}. Only the five "
+        f"permitted data elements may be used until consent is received: {fields}. "
+        f"{PROTOCOL_NO_CONTACT.capitalize()}. This draft is client-facing, so it stays "
+        "blocked until consent is received."
+    )
+
+
+def _check_protocol_consent(
+    draft: dict[str, Any], book: Optional[dict[str, Any]] = None
+) -> dict[str, Any]:
+    """Fail a client-facing draft when the household's consent is still pending.
+
+    Custodian covers and internal digests are not client-facing, so the protocol does
+    not gate them and the check still reports a pass.
+    """
+
+    if _audience(draft) != "client":
+        return {
+            "check": "protocol_consent",
+            "result": "pass",
+            "detail": "The draft is not client-facing, so Broker Protocol consent does not gate it.",
+        }
+
+    household_id = str(draft.get("household_id") or draft.get("household") or "").strip()
+    if not household_id:
+        return {
+            "check": "protocol_consent",
+            "result": "pass",
+            "detail": "No household is attached to the draft, so no consent record applies.",
+        }
+
+    if book is None:
+        embedded = draft.get("book")
+        book = embedded if isinstance(embedded, dict) else load_book()
+    blocked, detail = consent_blocked(book, household_id)
+    return {
+        "check": "protocol_consent",
+        "result": "fail" if blocked else "pass",
+        "detail": detail,
     }
 
 

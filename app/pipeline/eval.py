@@ -31,6 +31,7 @@ from app.llm import (
 )
 
 from . import (
+    REPO_ROOT,
     data_dir,
     doc_id,
     document_text,
@@ -241,6 +242,11 @@ def run_eval(
     if provider is not None and provider_used and not provider_fallbacks:
         method = f"provider: {getattr(provider, 'name', 'unknown')}"
 
+    try:
+        labels_display = str(labeled_path.relative_to(REPO_ROOT))
+    except ValueError:
+        labels_display = labeled_path.name
+
     report = {
         "run_at": utc_now_iso(),
         "field_count": field_count,
@@ -250,7 +256,7 @@ def run_eval(
         "failures": failures,
         "method": method,
         "documents_evaluated": evaluated_documents,
-        "labels_path": str(labeled_path),
+        "labels_path": labels_display,
         "notes": notes,
     }
     if provider is not None:

@@ -108,8 +108,12 @@ def book_meta(book: Optional[dict[str, Any]]) -> dict[str, Any]:
 def households(book: Optional[dict[str, Any]]) -> list[dict[str, Any]]:
     """Households, derived from accounts when the export omits the households list."""
 
-    if isinstance(book, dict) and isinstance(book.get("households"), list):
-        return [item for item in book["households"] if isinstance(item, dict)]
+    if isinstance(book, dict):
+        if isinstance(book.get("households"), list):
+            return [item for item in book["households"] if isinstance(item, dict)]
+        meta_households = book_meta(book).get("households")
+        if isinstance(meta_households, list):
+            return [item for item in meta_households if isinstance(item, dict)]
     derived: dict[str, dict[str, Any]] = {}
     for account in accounts(book):
         household_id = account.get("household_id") or account.get("household")
@@ -163,8 +167,13 @@ def positions(
                     copy.setdefault("account_id", account.get("id"))
                     copy.setdefault("symbol", item.get("ticker") or item.get("symbol"))
                     collected.append(copy)
-    if isinstance(book, dict) and isinstance(book.get("positions"), list):
-        for item in book["positions"]:
+    raw_positions = None
+    if isinstance(book, dict):
+        raw_positions = book.get("positions")
+        if not isinstance(raw_positions, list):
+            raw_positions = book_meta(book).get("positions")
+    if isinstance(raw_positions, list):
+        for item in raw_positions:
             if not isinstance(item, dict):
                 continue
             exists = any(
@@ -186,8 +195,12 @@ def positions(
 
 
 def documents(book: Optional[dict[str, Any]]) -> list[dict[str, Any]]:
-    if isinstance(book, dict) and isinstance(book.get("documents"), list):
-        return [item for item in book["documents"] if isinstance(item, dict)]
+    if isinstance(book, dict):
+        if isinstance(book.get("documents"), list):
+            return [item for item in book["documents"] if isinstance(item, dict)]
+        meta_documents = book_meta(book).get("documents")
+        if isinstance(meta_documents, list):
+            return [item for item in meta_documents if isinstance(item, dict)]
     return []
 
 
