@@ -1,7 +1,7 @@
 {
-  "run_at": "2026-11-18T15:38:56+00:00",
-  "field_count": 52,
-  "correct_count": 52,
+  "run_at": "2026-11-18T15:40:18+00:00",
+  "field_count": 51,
+  "correct_count": 51,
   "accuracy": 1.0,
   "per_field": [
     {
@@ -51,13 +51,6 @@
       "field": "cost_basis",
       "expected": "1,837,864.44",
       "actual": "1837864.44",
-      "match": true
-    },
-    {
-      "document_id": "D-1",
-      "field": "positions_count",
-      "expected": "7",
-      "actual": "7",
       "match": true
     },
     {
@@ -114,13 +107,6 @@
       "field": "cost_basis",
       "expected": "2,317,075.00",
       "actual": "2317075",
-      "match": true
-    },
-    {
-      "document_id": "D-2",
-      "field": "positions_count",
-      "expected": "6",
-      "actual": "6",
       "match": true
     },
     {
@@ -202,16 +188,16 @@
     },
     {
       "document_id": "D-3",
-      "field": "positions_count",
-      "expected": "6",
-      "actual": "6",
+      "field": "account_title",
+      "expected": "Rowan Family Trust",
+      "actual": "Rowan Family Trust",
       "match": true
     },
     {
       "document_id": "D-3",
-      "field": "custodian",
-      "expected": "Morrow Trust",
-      "actual": "Morrow Trust",
+      "field": "trust_ein",
+      "expected": "not required, grantor trust",
+      "actual": "not required, grantor trust",
       "match": true
     },
     {
@@ -308,6 +294,13 @@
     {
       "document_id": "D-6",
       "field": "annuitant",
+      "expected": "Elena Voss",
+      "actual": "Elena Voss",
+      "match": true
+    },
+    {
+      "document_id": "D-6",
+      "field": "beneficiary",
       "expected": "Elena Voss",
       "actual": "Elena Voss",
       "match": true

@@ -1,7 +1,7 @@
 [
   {
     "document_id": "D-1",
-    "field_name": "Account registration",
+    "field_name": "Registration",
     "expected": "JTWROS",
     "source_span": "Account registration: JTWROS"
   },
@@ -43,19 +43,13 @@
   },
   {
     "document_id": "D-1",
-    "field_name": "Positions held",
-    "expected": "7",
-    "source_span": "Positions held: 7"
-  },
-  {
-    "document_id": "D-1",
     "field_name": "FLAG: address stale",
     "expected": "FLAG: address last updated 2019-04-12; CRM shows 2026-06-14",
-    "source_span": "Address on file: 1184 Larkspur Lane, Unit 3, Branford, CT 06405 (last updated 2019-04-12)"
+    "source_span": "Address last updated: 2019-04-12"
   },
   {
     "document_id": "D-2",
-    "field_name": "Account registration",
+    "field_name": "Registration",
     "expected": "TOD",
     "source_span": "Account registration: TOD"
   },
@@ -97,12 +91,6 @@
   },
   {
     "document_id": "D-2",
-    "field_name": "Positions held",
-    "expected": "6",
-    "source_span": "Positions held: 6"
-  },
-  {
-    "document_id": "D-2",
     "field_name": "Fund holding",
     "expected": "Meridian Select Growth Fund, Class C",
     "source_span": "Meridian Select Growth Fund, Class C"
@@ -127,7 +115,7 @@
   },
   {
     "document_id": "D-3",
-    "field_name": "Account registration",
+    "field_name": "Registration",
     "expected": "Individual",
     "source_span": "Account registration: Individual"
   },
@@ -169,15 +157,15 @@
   },
   {
     "document_id": "D-3",
-    "field_name": "Positions held",
-    "expected": "6",
-    "source_span": "Positions held: 6"
+    "field_name": "Account title",
+    "expected": "Rowan Family Trust",
+    "source_span": "Account title: Rowan Family Trust"
   },
   {
     "document_id": "D-3",
-    "field_name": "Custodian",
-    "expected": "Morrow Trust",
-    "source_span": "Custodian: Morrow Trust"
+    "field_name": "Trust EIN",
+    "expected": "not required, grantor trust",
+    "source_span": "Trust EIN: not required, grantor trust"
   },
   {
     "document_id": "D-3",
@@ -262,6 +250,12 @@
     "field_name": "Annuitant",
     "expected": "Elena Voss",
     "source_span": "Annuitant: Elena Voss"
+  },
+  {
+    "document_id": "D-6",
+    "field_name": "Beneficiary",
+    "expected": "Elena Voss",
+    "source_span": "Beneficiary: Elena Voss"
   },
   {
     "document_id": "D-6",

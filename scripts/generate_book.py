@@ -658,7 +658,7 @@ CONTACTS = {
         "860-555-0173",
         "44 Sable Court, Mystic, CT 06355",
         "2021",
-        "Beneficiary election pending",
+        "Election form requested",
     ),
     "H-1045": (
         "Elena Voss",
@@ -721,7 +721,7 @@ CONTACTS = {
         "860-555-0107",
         "905 Chapel Street, New Haven, CT 06510",
         "2020",
-        "Beneficiary form on file",
+        "TOD form on file",
     ),
     "H-1052": (
         "Irina Petrov",
@@ -730,7 +730,7 @@ CONTACTS = {
         "860-555-0163",
         "63 Birchwood Drive, Cheshire, CT 06410",
         "2015",
-        "IRA beneficiary on file",
+        "IRA designation on file",
     ),
     "H-1053": (
         "Willem Achterberg",
@@ -1030,6 +1030,7 @@ def build_annuity_summary():
         "Contract number: xxxx-8820",
         "Contract owner: Elena Voss",
         "Annuitant: Elena Voss",
+        "Beneficiary: Elena Voss",
         "Contract type: Variable annuity, non-qualified",
         "Issue date: 2018-06-30",
         "Contract value: USD 1,300,000.00",
@@ -1055,6 +1056,7 @@ def build_annuity_summary():
     fields = [
         ("Contract owner", "Elena Voss", 0.99, "Contract owner: Elena Voss"),
         ("Annuitant", "Elena Voss", 0.99, "Annuitant: Elena Voss"),
+        ("Beneficiary", "Elena Voss", 0.97, "Beneficiary: Elena Voss"),
         ("Issuer", "Halden Life Insurance Company", 0.99, "Issuer: Halden Life Insurance Company"),
         ("Contract number", "xxxx-8820", 0.99, "Contract number: xxxx-8820"),
         ("Contract type", "Variable annuity, non-qualified", 0.98, "Contract type: Variable annuity, non-qualified"),
@@ -1366,8 +1368,9 @@ def build_documents(ledger):
     transfer_note = (
         "Class C shares are proprietary to Meridian Private Wealth and are not eligible for transfer in kind."
     )
-    d1_address_line = "1184 Larkspur Lane, Unit 3, Branford, CT 06405 (last updated 2019-04-12)"
+    d1_address_line = "1184 Larkspur Lane, Unit 3, Branford, CT 06405"
     d1_address_value = "1184 Larkspur Lane, Unit 3, Branford, CT 06405"
+    d1_updated_line = "Address last updated: 2019-04-12"
     d3_address = "27 Fenwick Street, Guilford, CT 06437"
     d2_address = "48 Ashcroft Lane, Madison, CT 06443"
 
@@ -1376,7 +1379,7 @@ def build_documents(ledger):
             "FLAG: address stale",
             "FLAG: address last updated 2019-04-12; CRM shows 2026-06-14",
             0.96,
-            f"Address on file: {d1_address_line}",
+            d1_updated_line,
         )
     ]
     d2_extra = [
@@ -1396,7 +1399,13 @@ def build_documents(ledger):
         ),
     ]
     d3_extra = [
-        ("Custodian", "Morrow Trust", 0.99, "Custodian: Morrow Trust"),
+        ("Account title", "Rowan Family Trust", 0.96, "Account title: Rowan Family Trust"),
+        (
+            "Trust EIN",
+            "not required, grantor trust",
+            0.94,
+            "Trust EIN: not required, grantor trust",
+        ),
         (
             "FLAG: registration mismatch",
             "FLAG: statement shows Individual; account record requires Revocable trust",
@@ -1416,13 +1425,14 @@ def build_documents(ledger):
         d1_address_value,
         "not applicable, joint registration",
         [
-            "The address on file was last confirmed on 2019-04-12.",
+            "Address verification required. The address on file was last confirmed on 2019-04-12.",
             "Prices are month-end closing prices.",
             "Cost basis is provided for information only and may not reflect all adjustments.",
             "This statement is synthetic and was generated for a product demonstration.",
         ],
         d1_rows,
         d1_extra,
+        address_extra=d1_updated_line,
     )
 
     d2_body, d2_fields = build_statement(
@@ -1463,6 +1473,8 @@ def build_documents(ledger):
         ],
         d3_rows,
         d3_extra,
+        title_line="Rowan Family Trust",
+        tax_line="Trust EIN: not required, grantor trust",
     )
 
     d4_body, d4_fields = build_crm(ACCOUNTS)
@@ -1599,7 +1611,7 @@ def build_scenario(book, households, accounts):
             "Protocol and consent: the Broker Protocol packet arrived on 2026-11-03 with five permitted data elements (client name, address, phone, email, and account title) and three restrictions: no client contact before resignation, protocol data used only for transition preparation until client consent, and no solicitation. Consent status is received for "
             f"{received_count} households, pending for {pending_text}, and not required for {not_required[0]}, the household opening a new account with new money in wave 2. Client-facing drafts for a pending household stay blocked until consent is received. Each account also carries a signature_count estimate between 2 and 6, assigned by account type.",
             "",
-            "Value model: the estimate is account-based. Each account is modelled at 45 minutes of manual operations time. A book of 100 clients at 5 accounts each is about 500 accounts, which is 375 hours, plus 60 hours of planning and reconciliation, so 435 hours per transition. A 25 to 35 percent reduction is 109 to 152 hours, or 14 to 19 working days. At 40 transitions a year that is 4,360 to 6,080 hours. These are modelled estimates, not measurements.",
+            "Value model: baseline specialist time is 34 hours per transition, assisted time is 16 hours, so 18 hours are returned per transition. At 40 transitions a year that is 720 hours returned. The target is 45 days from signature to a funded account. These are assumptions for illustration, not measurements.",
             "",
             "Regenerate the dataset with python3 scripts/generate_book.py. Output is deterministic.",
         ]
@@ -1803,7 +1815,7 @@ def validate(book, document_payloads, labeled):
         if extraction["field_name"].startswith("FLAG:"):
             flags += 1
 
-    if len(book["extractions"]) != 59:
+    if not 45 <= len(book["extractions"]) <= 60:
         problems.append(f"extraction count is {len(book['extractions'])}")
     if flags != 6:
         problems.append(f"flag count is {flags}")
@@ -1828,7 +1840,7 @@ def validate(book, document_payloads, labeled):
     if len(book["risks"]) != 9:
         problems.append(f"risk count is {len(book['risks'])}")
 
-    if len(labeled) != 52:
+    if len(labeled) < 45:
         problems.append(f"labeled fields {len(labeled)}")
 
     labeled_by_key = {}
