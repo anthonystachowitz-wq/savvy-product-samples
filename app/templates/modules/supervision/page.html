@@ -1,0 +1,616 @@
+{% extends "suite_base.html" %}
+{% block title %}Supervision in the loop, Savvy product samples{% endblock %}
+{% block head %}<link rel="stylesheet" href="/static/modules/supervision.css">{% endblock %}
+{% block content %}
+<div class="mod-head">
+  <div>
+    <div class="mod-kicker">Comply · adviser marketing pre-approval</div>
+    <h1 class="mod-title">Supervision in the loop</h1>
+    <p class="mod-sub">Pre-approval review for adviser marketing at a 12-household practice. The model drafts from an approved fact sheet and classifies every claim. Marta Ellsworth, chief compliance officer, approves or rejects with an evidence file. Nothing is sent, scheduled, or filed.</p>
+  </div>
+  <div class="mod-actions">
+    <span class="chip chip--accent">Comply</span>
+    <a class="btn btn-sm" href="/method">How it is built</a>
+  </div>
+</div>
+
+<div class="sup-provenance">
+  {% if provenance %}
+  <span class="chip chip--live">{{ provenance.model }}</span>
+  <span class="chip">{{ provenance.mode }}</span>
+  <span class="muted">{{ provenance.created_display }}</span>
+  <span class="muted">{{ provenance.latency_ms }} ms</span>
+  <span class="muted">{{ provenance.prompt_tokens }} + {{ provenance.completion_tokens }} tokens</span>
+  {% else %}
+  <span class="chip chip--build">Not recorded</span>
+  {% endif %}
+  <a class="text-link" href="/method">Model provenance and method</a>
+</div>
+
+<p class="sup-purpose">What this shows: generation plus a second classification pass, with the approval gate in code. The model can draft and label. It cannot approve. The evidence file carries the approver, role, version, audience, disclosures, retention date, and artifact hash.</p>
+
+{% if flash.message %}<div class="banner banner--ok">{{ flash.message }}</div>{% endif %}
+{% if flash.error %}<div class="banner banner--fail">{{ flash.error }}</div>{% endif %}
+
+<div class="stat-strip">
+  {% for stat in stats %}
+  <div class="stat">
+    <span class="stat-label">{{ stat.label }}</span>
+    <span class="stat-value">{{ stat.value }}</span>
+    <span class="stat-sub">{{ stat.sub }}</span>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="sup-briefs" aria-label="Brief picker">
+  {% for item in briefs %}
+  <a class="sup-brief{% if item.id == selected.id %} is-active{% endif %}" href="/supervision?brief={{ item.id }}"{% if item.id == selected.id %} aria-current="page"{% endif %}>
+    <div class="sup-brief-top">
+      <span class="sup-brief-id">{{ item.id }}</span>
+      <span class="badge badge-{{ item.status.tone }}">{{ item.status.label }}</span>
+    </div>
+    <span class="sup-brief-title">{{ item.title }}</span>
+    <span class="sup-brief-meta">{{ item.channel }} · {{ item.cadence }}</span>
+    <span class="sup-brief-foot">
+      {% if item.draft.ok %}{{ item.draft.word_count }} words{% else %}No draft recorded{% endif %}
+      · {{ item.claims|length }} claims · v{{ item.version }}
+    </span>
+    {% if item.status.key == 'blocked' %}<span class="sup-brief-block">Approval blocked by a failing check</span>{% endif %}
+    {% if item.revision %}<span class="sup-brief-block sup-brief-revision">Revision v2 applied from the recording</span>{% endif %}
+  </a>
+  {% endfor %}
+</div>
+
+<div class="sup-grid">
+  <div class="sup-main">
+    <section class="mod-panel sup-panel">
+      <div class="sup-panel-head">
+        <div>
+          <p class="mod-kicker-sm">Brief {{ selected.id }}</p>
+          <h3>{{ selected.title }}</h3>
+        </div>
+        <span class="chip">{{ selected.channel }}</span>
+      </div>
+      <div class="sup-panel-body">
+        <p class="sup-objective">{{ selected.objective }}</p>
+        <div class="sup-split">
+          <div>
+            <p class="mini-label">Key points</p>
+            <ol class="sup-points">
+              {% for point in selected.key_points %}<li>{{ point }}</li>{% endfor %}
+            </ol>
+          </div>
+          <div>
+            <p class="mini-label">Constraints</p>
+            <dl class="kv sup-kv">
+              <dt>Audience</dt><dd>{{ selected.audience_label }}</dd>
+              <dt>Length</dt><dd>{{ selected.word_limit }}</dd>
+              <dt>Tone</dt><dd>{{ selected.tone }}</dd>
+              <dt>Disclosures</dt><dd>{% for item in selected.required_disclosures %}{{ item.id }}{% if not loop.last %}, {% endif %}{% endfor %}</dd>
+              <dt>Fact sheet</dt><dd>{{ fact_sheet.id }} · v{{ fact_sheet.version }}</dd>
+            </dl>
+          </div>
+        </div>
+        {% if selected.must_use %}
+        <div class="sup-supplied">
+          <p class="mini-label">Adviser-supplied line, to be used word for word</p>
+          {% for line in selected.must_use %}<p class="sup-quote">{{ line }}</p>{% endfor %}
+          <p class="mod-note">Not on the fact sheet. The classifier should type it, and the gate should refuse it.</p>
+        </div>
+        {% endif %}
+        {% if selected.seeded_risk %}<p class="mod-note sup-seeded">{{ selected.seeded_risk }}</p>{% endif %}
+      </div>
+    </section>
+
+    <section class="mod-panel sup-panel" id="draft">
+      <div class="sup-panel-head">
+        <div>
+          <p class="mod-kicker-sm">Draft</p>
+          <h3>{{ 'Recorded model output' if selected.draft.ok else 'Not recorded yet' }}</h3>
+        </div>
+        <div class="head-badges">
+          <span class="badge badge-neutral">v{{ selected.version }}</span>
+          {% if selected.draft.ok and selected.draft.limit %}
+          <span class="badge badge-{{ selected.draft.limit.tone }}">{{ selected.draft.limit.text }}</span>
+          {% endif %}
+        </div>
+      </div>
+      {% if selected.draft.ok %}
+      <div class="sup-panel-body">
+        {% if selected.draft.headline %}<p class="sup-headline">{{ selected.draft.headline }}</p>{% endif %}
+        <div class="sup-body">
+          {% for paragraph in selected.draft.paragraphs %}<p>{{ paragraph|safe }}</p>{% endfor %}
+        </div>
+        {% if selected.draft.revision_note %}
+        <p class="mod-note sup-revision-note">Revision note: {{ selected.draft.revision_note }}</p>
+        {% endif %}
+      </div>
+      <div class="sup-disc-attached">
+        <p class="mini-label">Disclosures attached, text is added from the fact sheet</p>
+        {% if selected.draft.disclosures %}
+        {% for item in selected.draft.disclosures %}
+        <p><span class="sup-source">{{ item.id }}</span> {{ item.text }}{% if not item.known %} <span class="badge badge-danger">Unknown id</span>{% endif %}</p>
+        {% endfor %}
+        {% else %}
+        <p class="mod-note">No disclosures returned with this draft.</p>
+        {% endif %}
+      </div>
+      <div class="sup-draft-meta">
+        <span>Generated text, not advice. Nothing is sent.</span>
+        {% if selected.draft.provenance %}
+        <span>{{ selected.draft.provenance.model }} · {{ selected.draft.provenance.mode }} · {{ selected.draft.provenance.created_display }}</span>
+        {% endif %}
+        <span class="mono">{{ selected.draft.key }}</span>
+      </div>
+      {% else %}
+      <div class="sup-panel-body">
+        <div class="banner banner--warn">
+          <strong>No recording for this draft.</strong>
+          <p>{{ selected.draft.error }}</p>
+        </div>
+        <p class="mod-note">Run <code>SAVVY_LLM_MODE=live python3 scripts/record_supervision.py</code> from the repository root. The page never invents copy when a recording is missing.</p>
+      </div>
+      {% endif %}
+    </section>
+
+    <section class="mod-panel sup-panel" id="claims">
+      <div class="sup-panel-head">
+        <div>
+          <p class="mod-kicker-sm">Claims</p>
+          <h3>Claim, type, support, source</h3>
+        </div>
+        <div class="head-badges">
+          <span class="badge badge-neutral">{{ selected.claims|length }} claims</span>
+          {% if selected.claims_risk != 'unknown' %}<span class="badge badge-outline">model risk {{ selected.claims_risk }}</span>{% endif %}
+        </div>
+      </div>
+      {% if selected.claims %}
+      <div class="sup-claims-wrap">
+        <table class="sup-claims">
+          <thead>
+            <tr>
+              <th scope="col" class="c-num">#</th>
+              <th scope="col">Claim</th>
+              <th scope="col" class="c-type">Type</th>
+              <th scope="col" class="c-support">Support</th>
+              <th scope="col" class="c-source">Source</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for claim in selected.claims %}
+            <tr>
+              <td class="c-num"><span class="sup-claim-id">{{ claim.label }}</span></td>
+              <td>
+                <span class="sup-claim-text">{{ claim.text }}</span>
+                {% if claim.note %}<span class="sup-claim-note">{{ claim.note }}</span>{% endif %}
+              </td>
+              <td><span class="badge badge-{{ claim.type_tone }}">{{ claim.type_label }}</span></td>
+              <td><span class="badge badge-{{ claim.support_tone }}">{{ claim.support_label }}</span></td>
+              <td>
+                <span class="sup-source"{% if claim.source_statement %} title="{{ claim.source_statement }}"{% endif %}>{{ claim.source_label }}</span>
+                {% if claim.source_kind == 'disclosure' %}<span class="sup-source-kind">disclosure</span>{% elif claim.source_kind == 'none' and claim.support == 'unsupported' %}<span class="sup-source-kind sup-source-kind--none">no source</span>{% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="sup-panel-foot">
+        Every percentage and currency figure is checked against the cited fact in code. A supported label that the source does not carry is downgraded before the policy checks run.
+      </div>
+      {% else %}
+      <div class="sup-panel-body">
+        <p class="empty">{{ selected.claims_error or 'No claim classification is recorded for this version.' }}</p>
+      </div>
+      {% endif %}
+    </section>
+
+    <section class="mod-panel sup-panel" id="checks">
+      <div class="sup-panel-head">
+        <div>
+          <p class="mod-kicker-sm">Policy checks</p>
+          <h3>{{ selected.policy.counts.pass }} pass, {{ selected.policy.counts.warn }} warn, {{ selected.policy.counts.fail }} fail</h3>
+        </div>
+        <span class="badge badge-{{ 'danger' if selected.policy.blocked else ('warn' if selected.policy.counts.warn else 'success') }}">{{ 'Blocked' if selected.policy.blocked else 'Not blocked' }}</span>
+      </div>
+      <div class="sup-panel-body">
+        <div class="sup-checks">
+          {% for check in selected.policy.checks %}
+          <div class="sup-check">
+            <span class="badge badge-{{ 'danger' if check.result == 'fail' else ('warn' if check.result == 'warn' else 'success') }}">{{ check.result|capitalize }}</span>
+            <div>
+              <span class="sup-check-name">{{ check.name }}</span>
+              <span class="sup-check-detail">{{ check.detail }}</span>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="sup-panel-foot">
+        A fail blocks the approval POST on the server, not only the button. Warnings do not block. Calculated risk: {{ selected.policy.risk_computed }}. Model risk: {{ selected.policy.risk_model }}.
+      </div>
+    </section>
+  </div>
+
+  <aside class="sup-side">
+    <section class="mod-panel sup-panel sup-evidence" id="evidence">
+      <div class="sup-panel-head">
+        <div>
+          <p class="mod-kicker-sm">Evidence file</p>
+          <h3>{{ 'Sealed record' if selected.status.key == 'approved' else ('Rejected record' if selected.status.key == 'rejected' else 'Not yet sealed') }}</h3>
+        </div>
+        <span class="badge badge-{{ selected.status.tone }}">{{ selected.status.label }}</span>
+      </div>
+
+      {% if selected.status.key == 'approved' %}
+      {% set e = selected.evidence %}
+      <dl class="kv sup-evidence-grid">
+        <dt>Approver</dt><dd>{{ e.approver }}</dd>
+        <dt>Role</dt><dd>{{ e.role }}</dd>
+        <dt>Timestamp</dt><dd>{{ e.approved_display }}</dd>
+        <dt>Version</dt><dd>v{{ e.version }}</dd>
+        <dt>Audience</dt><dd>{{ e.audience }}</dd>
+        <dt>Channel</dt><dd>{{ e.channel }}</dd>
+        <dt>Disclosures</dt><dd>{% for item in e.disclosures %}{{ item.id }}{% if not loop.last %}, {% endif %}{% endfor %}</dd>
+        <dt>Retention</dt><dd>{{ e.retention_display }} (5 years)</dd>
+        <dt>Artifact hash</dt><dd class="mono sup-hash" title="{{ e.artifact_hash }}">{{ e.hash_short }}...</dd>
+        <dt>Model</dt><dd>{{ e.model }} · {{ e.model_mode }}</dd>
+        {% if e.note %}<dt>Note</dt><dd>{{ e.note }}</dd>{% endif %}
+      </dl>
+      <div class="sup-evidence-foot">
+        <span class="badge badge-success">Sealed</span>
+        <a class="text-link" href="/supervision/evidence/{{ selected.id }}.json" target="_blank" rel="noopener">Open the evidence JSON</a>
+      </div>
+      {% elif selected.status.key == 'rejected' %}
+      {% set e = selected.evidence %}
+      <dl class="kv sup-evidence-grid">
+        <dt>Approver</dt><dd>{{ e.approver }}</dd>
+        <dt>Role</dt><dd>{{ e.role }}</dd>
+        <dt>Timestamp</dt><dd>{{ e.rejected_display }}</dd>
+        <dt>Version</dt><dd>v{{ e.version }}</dd>
+        <dt>Reason</dt><dd>{{ e.reason }}</dd>
+      </dl>
+      <div class="sup-panel-foot">A rejected brief is closed. Reset the demo state to review it again.</div>
+      {% elif selected.draft.ok %}
+      <dl class="kv sup-evidence-grid">
+        <dt>Approver</dt><dd class="muted">Pending</dd>
+        <dt>Role</dt><dd class="muted">Pending</dd>
+        <dt>Timestamp</dt><dd class="muted">Written on approval</dd>
+        <dt>Version</dt><dd>v{{ selected.version }}</dd>
+        <dt>Audience</dt><dd>{{ selected.audience_label }}</dd>
+        <dt>Channel</dt><dd>{{ selected.channel }}</dd>
+        <dt>Disclosures</dt><dd>{% for item in selected.draft.disclosures %}{{ item.id }}{% if not loop.last %}, {% endif %}{% endfor %}</dd>
+        {% if selected.preview %}
+        <dt>Retention</dt><dd>{{ selected.preview.retention_display }} <span class="muted">(target)</span></dd>
+        <dt>Artifact hash</dt><dd class="mono sup-hash" title="{{ selected.preview.hash }}">{{ selected.preview.hash_short }}... <span class="muted">(preview)</span></dd>
+        {% endif %}
+      </dl>
+
+      {% if selected.policy.blocked %}
+      <div class="sup-panel-body sup-blocked">
+        <div class="banner banner--fail">
+          <strong>Approval blocked on the server</strong>
+          <p>{% for check in selected.policy.blocking %}{{ check.name }}{% if not loop.last %}, {% endif %}{% endfor %}. The approve route runs the same checks and refuses the request.</p>
+        </div>
+        <form method="post" action="/supervision/revise" class="sup-form">
+          <input type="hidden" name="brief" value="{{ selected.id }}">
+          <div class="sup-field">
+            <label for="revise-approver">Approver <span class="sup-req">required</span></label>
+            <select id="revise-approver" name="approver" required>
+              <option value="" selected disabled>Select an approver</option>
+              {% for person in approvers %}
+              <option value="{{ person.id }}"{% if not person.selectable %} disabled{% endif %}>{{ person.label }}{% if not person.selectable %} (self-review refused){% endif %}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="btn-row">
+            {% if selected.has_revision and not selected.revision %}
+            <button type="submit" class="btn btn-primary">Apply recorded revision (v2)</button>
+            <button type="submit" class="btn" formaction="/supervision/return">Return to adviser</button>
+            {% else %}
+            <button type="submit" class="btn" formaction="/supervision/return">Return to adviser</button>
+            {% endif %}
+          </div>
+          <p class="form-hint">The revision was recorded in a live call. Applying it replaces v1 with v2 and re-runs the claim classifier on the new text. Returning writes an audit event and leaves the draft blocked.</p>
+        </form>
+      </div>
+      {% else %}
+      <form method="post" action="/supervision/approve" class="sup-form">
+        <input type="hidden" name="brief" value="{{ selected.id }}">
+        <div class="sup-field">
+          <label for="approve-approver">Approver <span class="sup-req">required</span></label>
+          <select id="approve-approver" name="approver" required>
+            <option value="" selected disabled>Select an approver</option>
+            {% for person in approvers %}
+            <option value="{{ person.id }}"{% if not person.selectable %} disabled{% endif %}>{{ person.label }}{% if not person.selectable %} (self-review refused){% endif %}</option>
+            {% endfor %}
+          </select>
+          <p class="form-hint">The drafting adviser cannot approve. The server refuses that approval even if the form is edited.</p>
+        </div>
+        <div class="sup-field">
+          <label for="approve-audience">Audience</label>
+          <select id="approve-audience" name="audience">
+            {% for option in selected.audience_options %}
+            <option value="{{ option.id }}"{% if option.id == selected.default_audience.id %} selected{% endif %}{% if not option.selectable %} disabled{% endif %}>{{ option.label }}{% if not option.selectable %} (refused){% endif %}</option>
+            {% endfor %}
+          </select>
+          <p class="form-hint">{{ selected.audience_note }}</p>
+        </div>
+        <div class="sup-field">
+          <label for="approve-note">Approval note <span class="muted">(optional)</span></label>
+          <input id="approve-note" name="note" type="text" maxlength="200" placeholder="What you checked">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Approve and seal evidence</button>
+      </form>
+
+      <form method="post" action="/supervision/reject" class="sup-form sup-form--reject">
+        <input type="hidden" name="brief" value="{{ selected.id }}">
+        <div class="sup-field">
+          <label for="reject-approver">Reject as <span class="sup-req">required</span></label>
+          <select id="reject-approver" name="approver" required>
+            <option value="" selected disabled>Select an approver</option>
+            {% for person in approvers %}
+            <option value="{{ person.id }}"{% if not person.selectable %} disabled{% endif %}>{{ person.label }}{% if not person.selectable %} (self-review refused){% endif %}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="sup-field">
+          <label for="reject-reason">Reason <span class="sup-req">required</span></label>
+          <input id="reject-reason" name="reason" type="text" maxlength="200" required placeholder="Why this is not ready">
+        </div>
+        <button type="submit" class="btn btn-danger btn-block">Reject and record</button>
+      </form>
+      {% endif %}
+
+      {% else %}
+      <div class="sup-panel-body">
+        <div class="banner banner--warn">
+          <strong>Nothing to approve yet.</strong>
+          <p>The draft and its claim classification have to be recorded before an evidence file can be sealed.</p>
+        </div>
+      </div>
+      {% endif %}
+    </section>
+
+    <section class="mod-panel sup-panel" id="facts">
+      <div class="sup-panel-head">
+        <div>
+          <p class="mod-kicker-sm">Source</p>
+          <h3>Approved fact sheet</h3>
+        </div>
+        <span class="chip">{{ fact_sheet.as_of }}</span>
+      </div>
+      <div class="sup-panel-body sup-fact-intro">
+        <p class="mod-note">{{ fact_sheet.title }} · v{{ fact_sheet.version }} · approved by {{ fact_sheet.approved_by }}. Review due {{ fact_sheet.review_due }}.</p>
+      </div>
+      <div class="sup-facts">
+        {% for fact in fact_sheet.facts %}
+        <div class="sup-fact">
+          <span class="sup-fact-id">{{ fact.id }}</span>
+          <div>
+            <span class="sup-fact-label">{{ fact.label }}</span>
+            <span class="sup-fact-text">{{ fact.statement }}</span>
+            <span class="sup-fact-values">source: {{ fact.source }} · {{ fact.as_of }}</span>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <details class="sup-details">
+        <summary>Disclosure requirements ({{ disclosures|length }})</summary>
+        <div class="sup-disc-list">
+          {% for item in disclosures %}
+          <div class="sup-disc">
+            <div class="sup-disc-head">
+              <span class="sup-source">{{ item.id }}</span>
+              <span class="sup-disc-label">{{ item.label }}</span>
+              {% if item.id in selected.required_disclosures|map(attribute='id')|list %}<span class="badge badge-accent">Required</span>{% endif %}
+              {% if item.id in selected.draft.disclosures|map(attribute='id')|list %}<span class="badge badge-success">Attached</span>{% endif %}
+            </div>
+            <p>{{ item.text }}</p>
+          </div>
+          {% endfor %}
+        </div>
+      </details>
+      <div class="sup-panel-foot">{{ fact_sheet.note }}</div>
+    </section>
+
+    <section class="mod-panel sup-panel" id="audience">
+      <div class="sup-panel-head">
+        <div>
+          <p class="mod-kicker-sm">Consent</p>
+          <h3>Audience and consent</h3>
+        </div>
+        <span class="chip">{{ selected.default_audience.count }} of {{ household_total }}</span>
+      </div>
+      <div class="sup-panel-body">
+        <p class="mod-note">{{ selected.audience_note }}</p>
+        {% if selected.audience_type == 'households' %}
+        <p class="mini-label sup-people-label">Cleared for marketing</p>
+        <div class="sup-people">
+          {% for person in selected.included %}
+          <span class="sup-person" title="{{ person.id }}"><span>{{ person.name }}</span><span class="sup-person-id">{{ person.id }}</span></span>
+          {% endfor %}
+        </div>
+        <p class="mini-label sup-people-label">Excluded from this audience</p>
+        <ul class="sup-excluded">
+          {% for person in selected.excluded %}
+          <li><span>{{ person.name }} <span class="muted mono">{{ person.id }}</span></span><span class="badge badge-{{ person.tone }}">{{ person.status }}</span></li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <p class="mod-note">A public post has no household list, so household consent status does not apply. The content checks and the named approval still do.</p>
+        {% endif %}
+      </div>
+    </section>
+  </aside>
+</div>
+
+<div class="sup-bottom">
+  <section class="mod-panel sup-panel" id="audit">
+    <div class="sup-panel-head">
+      <div>
+        <p class="mod-kicker-sm">Audit</p>
+        <h3>Every decision, refusal, and return</h3>
+      </div>
+      <span class="chip">{{ audit_count }} {{ 'event' if audit_count == 1 else 'events' }}</span>
+    </div>
+    {% if audit_rows %}
+    <div class="sup-audit-wrap">
+      <table class="sup-audit">
+        <thead><tr><th scope="col">Time</th><th scope="col">Who</th><th scope="col">Action</th><th scope="col">Detail</th></tr></thead>
+        <tbody>
+          {% for row in audit_rows %}
+          <tr>
+            <td class="sup-audit-time">{{ row.time }}</td>
+            <td>{{ row.actor }}</td>
+            <td><span class="sup-audit-action">{{ row.action }}</span><span class="sup-audit-entity">{{ row.entity }}</span></td>
+            <td class="sup-audit-detail">{{ row.detail }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="sup-panel-body"><p class="empty">No audit events yet. Approve, reject, or return a brief to write one.</p></div>
+    {% endif %}
+    <div class="sup-panel-foot sup-reset">
+      <span>The log is append only. It is written by app.platform.audit and read back here.</span>
+      <form method="post" action="/supervision/reset"><button type="submit" class="btn btn-sm">Reset demo state</button></form>
+    </div>
+  </section>
+
+  <div class="sup-bottom-side">
+    <section class="mod-panel sup-panel" id="eval">
+      <div class="sup-panel-head">
+        <div>
+          <p class="mod-kicker-sm">Evaluation</p>
+          <h3>{{ eval.name if eval else 'Claim flag accuracy' }}</h3>
+        </div>
+        {% if eval %}<span class="chip">{{ eval.cases }} labelled claims</span>{% endif %}
+      </div>
+      {% if eval %}
+      <div class="sup-panel-body">
+        <div class="sup-eval-top">
+          <div>
+            <span class="sup-eval-score">{{ eval.accuracy }}</span>
+            <span class="sup-eval-label">exact match, {{ eval.exact }} of {{ eval.cases }}</span>
+          </div>
+          <div class="sup-eval-stats">
+            <div><span class="sup-eval-num">{{ eval.precision }}</span><span class="sup-eval-cap">precision</span></div>
+            <div><span class="sup-eval-num">{{ eval.recall }}</span><span class="sup-eval-cap">recall</span></div>
+            <div><span class="sup-eval-num">{{ eval.f1 }}</span><span class="sup-eval-cap">F1</span></div>
+          </div>
+        </div>
+        <p class="mod-note">Flags expected {{ eval.flags.expected }}, returned {{ eval.flags.actual }}. True positives {{ eval.flags.true_positive }}, false positives {{ eval.flags.false_positive }}, false negatives {{ eval.flags.false_negative }}.</p>
+        <p class="mini-label sup-people-label">By label</p>
+        <div class="sup-labels">
+          {% for label, row in eval.by_label.items() %}
+          <span class="sup-label">{{ label.replace('_', ' ') }} <span class="mono">{{ row.exact }}/{{ row.cases }}</span></span>
+          {% endfor %}
+        </div>
+        {% if eval.failures %}
+        <p class="mini-label sup-people-label">Failures shown</p>
+        <ul class="sup-failures">
+          {% for failure in eval.failures %}
+          <li>
+            <span class="sup-fail-case">{{ failure.case }}</span>
+            <span class="sup-fail-line">expected {{ failure.expected }}, got {{ failure.actual }}</span>
+            {% if failure.note %}<span class="sup-fail-note">{{ failure.note }}</span>{% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+      <div class="sup-panel-foot">{{ eval.source }} · {{ eval.model }} · {{ eval.recorded }}. The score covers the classifier after the deterministic source check. <a href="/method">Method page</a>.</div>
+      {% else %}
+      <div class="sup-panel-body"><p class="empty">No eval yet. Run <code>python3 scripts/eval_supervision.py</code>.</p></div>
+      {% endif %}
+    </section>
+
+    <section class="mod-panel sup-panel" id="impact">
+      <div class="sup-panel-head">
+        <div>
+          <p class="mod-kicker-sm">Modelled impact</p>
+          <h3>Review cycle time</h3>
+        </div>
+        <span class="badge badge-outline">Modelled estimate</span>
+      </div>
+      <div class="sup-panel-body">
+        <div class="sup-impact-top">
+          <span class="sup-impact-big">{{ metric.loop_days }} days</span>
+          <span class="sup-impact-label">from {{ metric.baseline_days }} days per piece</span>
+        </div>
+        <p class="mod-note">{{ metric.saved_days }} days saved, {{ metric.saved_pct }}% of the baseline, on an assumption set. Not a time study.</p>
+        <table class="sup-impact-table">
+          <thead><tr><th scope="col">Step</th><th scope="col" class="num">Baseline</th><th scope="col" class="num">Loop</th></tr></thead>
+          <tbody>
+            {% for step in metric.steps %}
+            <tr><td>{{ step.name }}<span class="sup-step-note">{{ step.note }}</span></td><td class="num">{{ step.baseline }}</td><td class="num">{{ step.loop }}</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <p class="mod-note">At {{ metric.pieces_per_year }} pieces a year: {{ metric.cumulative_days_saved }} cumulative cycle days removed. First-pass returns {{ metric.returns_baseline }} to {{ metric.returns_loop }}, so {{ metric.returns_avoided }} avoided.</p>
+      </div>
+      <div class="sup-panel-foot">Arithmetic in <span class="mono">logic.py, review_cycle_model()</span>. Change any assumption and the number moves.</div>
+    </section>
+  </div>
+</div>
+
+<section class="mod-panel sup-panel sup-method" id="method">
+  <div class="sup-panel-head">
+    <div>
+      <p class="mod-kicker-sm">How this is built</p>
+      <h3>Prompt pattern, eval, and what failed</h3>
+    </div>
+    <a class="text-link" href="/method">Method page</a>
+  </div>
+  <div class="sup-method-grid">
+    <div>
+      <p class="mini-label">Prompt pattern</p>
+      <ol class="sup-points">
+        <li>One generation call per brief. Inputs are the brief and the approved fact sheet. Output is strict JSON: headline, body, disclosure ids.</li>
+        <li>One classification call per draft. The model splits the body into claims, types each one, and cites a fact or disclosure id.</li>
+        <li>A deterministic source check verifies every percentage and currency figure against the cited fact. A supported label the source does not carry is downgraded before the gate.</li>
+        <li>The policy gate is code. Any fail blocks the approval POST, the same checks that disabled the form.</li>
+        <li>One revision call for the blocked draft, then a fresh classification call on the revision before it can be approved.</li>
+      </ol>
+      <details class="sup-details">
+        <summary>System prompt: draft generation</summary>
+        <pre class="sup-pre">{{ system_generation }}</pre>
+      </details>
+      <details class="sup-details">
+        <summary>System prompt: claim classification</summary>
+        <pre class="sup-pre">{{ system_classify }}</pre>
+      </details>
+    </div>
+    <div>
+      <p class="mini-label">The eval</p>
+      <p class="mod-note">Twelve hand-labelled claims, one recorded classification call, scored on the classifier the page uses. {% if eval %}{{ eval.exact }} of {{ eval.cases }} exact, precision {{ eval.precision }}, recall {{ eval.recall }}.{% endif %} The cases and labels are in <span class="mono">data/modules/supervision/eval_cases.json</span>; the script that writes the score is <span class="mono">scripts/eval_supervision.py</span>.</p>
+      <p class="mini-label sup-people-label">What failed</p>
+      <ul class="mod-list sup-failed">
+        <li>Performance claims read as fact. In the eval list, "The S&P 500 total return was 12.4% in 2025" came back factual and supported, so the performance flag missed. The identical sentence came back performance inside the drafts, so the label is context sensitive.</li>
+        <li>Right flag, wrong type. "The practice has grown 38% since 2023" was typed performance rather than a factual claim with no source. The flag fired, the type did not match the label.</li>
+        <li>The first classification pass over-flagged process language as unsupported: "please reply to this email", "we do not give tax advice". All four drafts blocked. The prompt now extracts only checkable claims and the support rule accepts disclosure ids.</li>
+        <li>Generation undershot every brief. Drafts ran 44 to 111 words against briefs asking 60 to 190. The word count sits next to the limit on every draft.</li>
+        <li>The adviser's supplied line was reproduced word for word, as instructed. That is the blocked example, and the gate refused it three ways: performance type, unsupported claim, and a number outside the fact sheet.</li>
+      </ul>
+    </div>
+    <div>
+      <p class="mini-label">Guardrails</p>
+      <ul class="mod-list">
+        <li>No approval without a named, independent approver. Self-review is refused on the server.</li>
+        <li>No approval while a policy check fails, and no approval from a form post that skips the checks.</li>
+        <li>Every attached disclosure comes from the fact sheet by id. The model does not type disclosure text.</li>
+        <li>An approval writes an evidence file with the artifact hash and a five-year retention date, and one audit event.</li>
+        <li>Client-facing work for a household without recorded consent cannot be approved for that audience.</li>
+      </ul>
+      <p class="mini-label sup-people-label">Not in this build</p>
+      <ul class="mod-list">
+        <li>No send, no scheduling, no CRM, no custodian connection. A sealed evidence file is the end of the workflow.</li>
+        <li>No legal opinion. The policy rules and the fact sheet are synthetic.</li>
+        <li>No reviewer telemetry, so the cycle-time model stays an assumption set.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+{% endblock %}

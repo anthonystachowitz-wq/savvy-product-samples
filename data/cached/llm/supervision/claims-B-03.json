@@ -1,0 +1,21 @@
+{
+  "module": "supervision",
+  "key": "claims-B-03",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 1048,
+    "completion_tokens": 228,
+    "total_tokens": 1276,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 920
+  },
+  "latency_ms": 1308,
+  "created_at": "2026-11-19T05:54:41+00:00",
+  "system_sha": "57acea63faaa574e",
+  "prompt_sha": "ac03526d9fbe776c",
+  "text": "{\"claims\": [{\"text\": \"Whitfield Wealth Partners serves 12 client households.\", \"type\": \"factual\", \"support\": \"supported\", \"source\": \"F-02\"}, {\"text\": \"Our quarterly review windows fall in the first two weeks of January, April, July, and October, and we look forward to speaking with you during those periods.\", \"type\": \"factual\", \"support\": \"supported\", \"source\": \"F-11\"}, {\"text\": \"For transparency on costs, the total market ETF used in client accounts carries a 0.03% annual expense ratio.\", \"type\": \"factual\", \"support\": \"supported\", \"source\": \"F-08\"}, {\"text\": \"Whitfield Wealth Partners is a registered investment adviser in the United States.\", \"type\": \"factual\", \"support\": \"supported\", \"source\": \"D-03\"}, {\"text\": \"Registration does not imply a certain level of skill or training.\", \"type\": \"factual\", \"support\": \"supported\", \"source\": \"D-03\"}], \"risk\": \"low\"}"
+}

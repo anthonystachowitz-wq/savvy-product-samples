@@ -1,0 +1,21 @@
+{
+  "module": "supervision",
+  "key": "draft-B-02",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 629,
+    "completion_tokens": 175,
+    "total_tokens": 804,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 629
+  },
+  "latency_ms": 2001,
+  "created_at": "2026-11-19T05:53:03+00:00",
+  "system_sha": "b28d632b0c7e920f",
+  "prompt_sha": "0ab03bccdae748da",
+  "text": "{\"headline\": \"IRA limits and RMD age for the 2026 tax season\", \"body\": \"As tax season approaches, two figures may be useful to keep in mind. For 2026, the IRA contribution limit is USD 7,000 for owners under 50 and USD 8,000 for owners 50 and older. Required minimum distributions begin at age 73 for owners born in 1951 or later.\\n\\nOur practice does not give tax advice. Please confirm the details that apply to you with your tax preparer. If you would like to discuss these figures or your accounts, our quarterly review windows are the first two weeks of January, April, July, and October. You are welcome to reach out during any of them.\", \"disclosures\": [\"D-03\", \"D-04\", \"D-06\"]}"
+}

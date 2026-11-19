@@ -1,0 +1,21 @@
+{
+  "module": "supervision",
+  "key": "claims-B-01",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 1089,
+    "completion_tokens": 314,
+    "total_tokens": 1403,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 1089
+  },
+  "latency_ms": 1565,
+  "created_at": "2026-11-19T05:54:14+00:00",
+  "system_sha": "57acea63faaa574e",
+  "prompt_sha": "df839238ebc1b4fe",
+  "text": "{\"claims\": [{\"text\": \"The S&P 500 total return was 12.4% in 2025.\", \"type\": \"performance\", \"support\": \"supported\", \"source\": \"F-04\"}, {\"text\": \"The Bloomberg US Aggregate Bond Index returned 3.1% in 2025.\", \"type\": \"performance\", \"support\": \"supported\", \"source\": \"F-05\"}, {\"text\": \"The MSCI EAFE Index returned 9.6% in 2025.\", \"type\": \"performance\", \"support\": \"supported\", \"source\": \"F-06\"}, {\"text\": \"These figures describe a single calendar year and are not a forecast of any future period.\", \"type\": \"factual\", \"support\": \"supported\", \"source\": \"D-01\"}, {\"text\": \"Index returns are unmanaged and do not reflect fees or expenses.\", \"type\": \"factual\", \"support\": \"supported\", \"source\": \"D-02\"}, {\"text\": \"The practice does not change a plan because of one year of returns.\", \"type\": \"factual\", \"support\": \"supported\", \"source\": \"none\"}, {\"text\": \"We review each plan within the quarterly review windows, which are the first two weeks of January, April, July, and October, rather than reacting to a single year's results.\", \"type\": \"factual\", \"support\": \"supported\", \"source\": \"F-11\"}], \"risk\": \"low\"}"
+}

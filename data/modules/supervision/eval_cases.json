@@ -1,0 +1,115 @@
+{
+  "name": "Claim flag accuracy",
+  "key": "eval-claims",
+  "fact_sheet": "FS-2026-Q4",
+  "cases": [
+    {
+      "id": "E-01",
+      "claim": "Whitfield Wealth Partners advises USD 42,300,000 for 12 client households.",
+      "label": "supported",
+      "expected_type": "factual",
+      "expected_support": "supported",
+      "source": "F-01",
+      "note": "Two figures, both on F-01."
+    },
+    {
+      "id": "E-02",
+      "claim": "Halcyon Balanced Fund Class A has a 0.72% annual expense ratio.",
+      "label": "supported",
+      "expected_type": "factual",
+      "expected_support": "supported",
+      "source": "F-07",
+      "note": "Product fact, value matches F-07."
+    },
+    {
+      "id": "E-03",
+      "claim": "Quarterly review windows are the first two weeks of January, April, July, and October.",
+      "label": "supported",
+      "expected_type": "factual",
+      "expected_support": "supported",
+      "source": "F-11",
+      "note": "Process fact, matches F-11 word for word."
+    },
+    {
+      "id": "E-04",
+      "claim": "The practice has grown 38% since 2023.",
+      "label": "unsupported",
+      "expected_type": "factual",
+      "expected_support": "unsupported",
+      "source": "none",
+      "note": "No fact carries 38% or 2023."
+    },
+    {
+      "id": "E-05",
+      "claim": "Clients hold an average of 14 positions across their accounts.",
+      "label": "unsupported",
+      "expected_type": "factual",
+      "expected_support": "unsupported",
+      "source": "none",
+      "note": "Position counts are book data, not approved marketing facts."
+    },
+    {
+      "id": "E-06",
+      "claim": "Whitfield Wealth Partners manages USD 61,000,000 for clients.",
+      "label": "unsupported",
+      "expected_type": "factual",
+      "expected_support": "unsupported",
+      "source": "F-01",
+      "note": "Wrong AUM, cited to F-01. The source check should catch the mismatch."
+    },
+    {
+      "id": "E-07",
+      "claim": "The S&P 500 total return was 12.4% in 2025.",
+      "label": "performance",
+      "expected_type": "performance",
+      "expected_support": "supported",
+      "source": "F-04",
+      "note": "Supported by F-04, but it is still a performance claim and must be flagged."
+    },
+    {
+      "id": "E-08",
+      "claim": "The MSCI EAFE Index returned 9.6% in 2025.",
+      "label": "performance",
+      "expected_type": "performance",
+      "expected_support": "supported",
+      "source": "F-06",
+      "note": "Supported by F-06. The type matters, not only the support."
+    },
+    {
+      "id": "E-09",
+      "claim": "One client told us the plan finally made sense after the first review.",
+      "label": "testimonial",
+      "expected_type": "testimonial",
+      "expected_support": "unsupported",
+      "source": "none",
+      "note": "A client statement with no release on file."
+    },
+    {
+      "id": "E-10",
+      "claim": "Our clients say they sleep better since we took over the paperwork.",
+      "label": "testimonial",
+      "expected_type": "testimonial",
+      "expected_support": "unsupported",
+      "source": "none",
+      "note": "Implied client testimonial, no source."
+    },
+    {
+      "id": "E-11",
+      "claim": "You will earn at least 7% a year with our income strategy.",
+      "label": "promised_return",
+      "expected_type": "promised_return",
+      "expected_support": "unsupported",
+      "source": "none",
+      "note": "A promise about a future return."
+    },
+    {
+      "id": "E-12",
+      "claim": "We guarantee a 6% annual return on the conservative sleeve.",
+      "label": "promised_return",
+      "expected_type": "promised_return",
+      "expected_support": "unsupported",
+      "source": "none",
+      "note": "A guarantee. The firm cannot make one."
+    }
+  ]
+}

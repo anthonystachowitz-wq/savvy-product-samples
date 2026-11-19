@@ -1,0 +1,21 @@
+{
+  "module": "supervision",
+  "key": "draft-B-01",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 745,
+    "completion_tokens": 195,
+    "total_tokens": 940,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 745
+  },
+  "latency_ms": 1802,
+  "created_at": "2026-11-19T05:53:01+00:00",
+  "system_sha": "b28d632b0c7e920f",
+  "prompt_sha": "ddfc7390b95524ef",
+  "text": "{\"headline\": \"2025 Index Returns and the Quarterly Review\", \"body\": \"The 2025 total returns for the three index series we track were as follows. The S&P 500 total return was 12.4% in 2025. The Bloomberg US Aggregate Bond Index returned 3.1% in 2025. The MSCI EAFE Index returned 9.6% in 2025. These figures describe a single calendar year and are not a forecast of any future period.\\n\\nIndex returns are unmanaged and do not reflect fees or expenses. The practice does not change a plan because of one year of returns. We review each plan within the quarterly review windows, which are the first two weeks of January, April, July, and October, rather than reacting to a single year's results.\", \"disclosures\": [\"D-01\", \"D-02\", \"D-03\", \"D-04\"]}"
+}

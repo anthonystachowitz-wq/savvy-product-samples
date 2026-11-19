@@ -1,0 +1,202 @@
+{
+  "as_of": "2026-11-03",
+  "brand": "Whitfield Wealth Partners",
+  "adviser": "Dana Whitfield",
+  "generated_from": "data/book.json",
+  "reviewer": "Marta Ellsworth",
+  "reviewer_role": "Chief Compliance Officer",
+  "audiences": [
+    {
+      "id": "consent_received",
+      "label": "Clients with consent on file",
+      "household_ids": [
+        "H-1042",
+        "H-1046",
+        "H-1047",
+        "H-1048",
+        "H-1049",
+        "H-1050",
+        "H-1051",
+        "H-1052"
+      ],
+      "count": 8,
+      "blocked": false,
+      "note": "Marketing is permitted for these households."
+    },
+    {
+      "id": "all_book",
+      "label": "All households in the book",
+      "household_ids": [
+        "H-1042",
+        "H-1043",
+        "H-1044",
+        "H-1045",
+        "H-1046",
+        "H-1047",
+        "H-1048",
+        "H-1049",
+        "H-1050",
+        "H-1051",
+        "H-1052",
+        "H-1053"
+      ],
+      "count": 12,
+      "blocked": true,
+      "pending_ids": [
+        "H-1043",
+        "H-1044",
+        "H-1045"
+      ],
+      "no_marketing_ids": [
+        "H-1053"
+      ],
+      "note": "3 households have consent pending and 1 are not cleared for marketing. The server refuses this audience."
+    }
+  ],
+  "briefs": [
+    {
+      "id": "B-01",
+      "key": "market-update",
+      "title": "Q4 2026 market update",
+      "channel": "Email",
+      "audience_type": "households",
+      "default_audience": "consent_received",
+      "cadence": "Quarterly",
+      "objective": "Explain what the 2025 index returns were without forecasting, and remind clients that the practice does not change a plan because of one year of returns.",
+      "key_points": [
+        "State the 2025 total return for each of the three index series on the fact sheet, with its value.",
+        "Say that index returns are unmanaged and do not reflect fees or expenses.",
+        "Say that the practice reviews the plan in the quarterly windows rather than reacting to one year.",
+        "Close with the required disclosures by id."
+      ],
+      "must_use": [],
+      "tone": "Calm and factual. No forecast, no recommendation, no advice.",
+      "word_limit": "150 to 190 words",
+      "required_disclosures": [
+        "D-01",
+        "D-02",
+        "D-03",
+        "D-04"
+      ],
+      "fact_ids": [
+        "F-01",
+        "F-04",
+        "F-05",
+        "F-06",
+        "F-11"
+      ],
+      "status": "ready",
+      "draft_key": "draft-B-01",
+      "claims_key": "claims-B-01",
+      "revision_key": null,
+      "revision_claims_key": null,
+      "seeded_risk": "One supported performance claim is expected. The policy warns on performance claims but does not fail them when the number is on the fact sheet."
+    },
+    {
+      "id": "B-02",
+      "key": "tax-reminder",
+      "title": "Tax-season reminder for 2026",
+      "channel": "Email",
+      "audience_type": "households",
+      "default_audience": "consent_received",
+      "cadence": "Annual",
+      "objective": "Tell clients which contribution limit and distribution age matter this season, without giving tax advice.",
+      "key_points": [
+        "State the 2026 IRA contribution limits for owners under 50 and for owners 50 and older.",
+        "State the age at which required minimum distributions begin.",
+        "Say the practice does not give tax advice and that clients should confirm details with their tax preparer.",
+        "Point to the quarterly review windows for questions."
+      ],
+      "must_use": [],
+      "tone": "Plain and useful. No tax advice and no deadline pressure.",
+      "word_limit": "140 to 170 words",
+      "required_disclosures": [
+        "D-03",
+        "D-04",
+        "D-06"
+      ],
+      "fact_ids": [
+        "F-09",
+        "F-10",
+        "F-11"
+      ],
+      "status": "ready",
+      "draft_key": "draft-B-02",
+      "claims_key": "claims-B-02",
+      "revision_key": null,
+      "revision_claims_key": null,
+      "seeded_risk": "None. The tax figures are synthetic and labelled as such on the fact sheet."
+    },
+    {
+      "id": "B-03",
+      "key": "client-newsletter",
+      "title": "Client newsletter, winter 2026",
+      "channel": "Email",
+      "audience_type": "households",
+      "default_audience": "consent_received",
+      "cadence": "Quarterly",
+      "objective": "Give clients a short practice update: the size of the practice, the review calendar, one plain cost fact, and a statement of how the firm is registered.",
+      "key_points": [
+        "State how many client households the practice serves.",
+        "State the quarterly review windows.",
+        "Mention the annual expense ratio of the total market ETF used in client accounts.",
+        "State that the practice is a registered investment adviser and that registration does not imply a certain level of skill or training."
+      ],
+      "must_use": [],
+      "tone": "Warm but restrained. No testimonial, no client story, no numbers beyond the fact sheet.",
+      "word_limit": "130 to 160 words",
+      "required_disclosures": [
+        "D-03",
+        "D-04"
+      ],
+      "fact_ids": [
+        "F-02",
+        "F-03",
+        "F-08",
+        "F-11"
+      ],
+      "status": "ready",
+      "draft_key": "draft-B-03",
+      "claims_key": "claims-B-03",
+      "revision_key": null,
+      "revision_claims_key": null,
+      "seeded_risk": "None. No performance claim belongs in this piece."
+    },
+    {
+      "id": "B-04",
+      "key": "social-post",
+      "title": "Social post, adviser-supplied performance line",
+      "channel": "Social post",
+      "audience_type": "public",
+      "default_audience": "public",
+      "cadence": "One-off",
+      "objective": "A short public post about planning for the year ahead, using one line the adviser wants to keep.",
+      "key_points": [
+        "Keep it under 90 words.",
+        "Use the adviser-supplied line exactly once.",
+        "State that the practice is a registered investment adviser.",
+        "Close with the required disclosures by id."
+      ],
+      "must_use": [
+        "Our clients have earned 14.2% a year since 2019."
+      ],
+      "tone": "Short and plain. No performance promise.",
+      "word_limit": "60 to 90 words",
+      "required_disclosures": [
+        "D-01",
+        "D-02",
+        "D-03"
+      ],
+      "fact_ids": [
+        "F-03",
+        "F-11"
+      ],
+      "status": "ready",
+      "draft_key": "draft-B-04",
+      "claims_key": "claims-B-04",
+      "revision_key": "revise-B-04",
+      "revision_claims_key": "claims-B-04-v2",
+      "seeded_risk": "The adviser pasted a performance line into the brief. 14.2% is not on the fact sheet, so the second pass and the server gate both flag it. The draft cannot be approved until it is revised."
+    }
+  ]
+}

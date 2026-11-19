@@ -1,0 +1,21 @@
+{
+  "module": "supervision",
+  "key": "draft-B-04",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 551,
+    "completion_tokens": 96,
+    "total_tokens": 647,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 551
+  },
+  "latency_ms": 1386,
+  "created_at": "2026-11-19T05:53:06+00:00",
+  "system_sha": "b28d632b0c7e920f",
+  "prompt_sha": "3a67f28330ee62fb",
+  "text": "{\"headline\": \"Planning for the year ahead\", \"body\": \"As you plan for the year ahead, our quarterly review windows fall in the first two weeks of January, April, July, and October. Whitfield Wealth Partners is a registered investment adviser in the United States. \\\"Our clients have earned 14.2% a year since 2019.\\\"\", \"disclosures\": [\"D-01\", \"D-02\", \"D-03\"]}"
+}

@@ -1,0 +1,21 @@
+{
+  "module": "supervision",
+  "key": "eval-claims",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 862,
+    "completion_tokens": 589,
+    "total_tokens": 1451,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 862
+  },
+  "latency_ms": 2820,
+  "created_at": "2026-11-19T05:53:18+00:00",
+  "system_sha": "5460bc54f7fa2f9d",
+  "prompt_sha": "2abbddde24e4c5ce",
+  "text": "{\"claims\": [{\"id\": \"E-01\", \"text\": \"Whitfield Wealth Partners advises USD 42,300,000 for 12 client households.\", \"type\": \"factual\", \"support\": \"supported\", \"source\": \"F-01\"}, {\"id\": \"E-02\", \"text\": \"Halcyon Balanced Fund Class A has a 0.72% annual expense ratio.\", \"type\": \"factual\", \"support\": \"supported\", \"source\": \"F-07\"}, {\"id\": \"E-03\", \"text\": \"Quarterly review windows are the first two weeks of January, April, July, and October.\", \"type\": \"factual\", \"support\": \"supported\", \"source\": \"F-11\"}, {\"id\": \"E-04\", \"text\": \"The practice has grown 38% since 2023.\", \"type\": \"performance\", \"support\": \"unsupported\", \"source\": \"none\"}, {\"id\": \"E-05\", \"text\": \"Clients hold an average of 14 positions across their accounts.\", \"type\": \"factual\", \"support\": \"unsupported\", \"source\": \"none\"}, {\"id\": \"E-06\", \"text\": \"Whitfield Wealth Partners manages USD 61,000,000 for clients.\", \"type\": \"factual\", \"support\": \"unsupported\", \"source\": \"none\"}, {\"id\": \"E-07\", \"text\": \"The S&P 500 total return was 12.4% in 2025.\", \"type\": \"factual\", \"support\": \"supported\", \"source\": \"F-04\"}, {\"id\": \"E-08\", \"text\": \"The MSCI EAFE Index returned 9.6% in 2025.\", \"type\": \"factual\", \"support\": \"supported\", \"source\": \"F-06\"}, {\"id\": \"E-09\", \"text\": \"One client told us the plan finally made sense after the first review.\", \"type\": \"testimonial\", \"support\": \"unsupported\", \"source\": \"none\"}, {\"id\": \"E-10\", \"text\": \"Our clients say they sleep better since we took over the paperwork.\", \"type\": \"testimonial\", \"support\": \"unsupported\", \"source\": \"none\"}, {\"id\": \"E-11\", \"text\": \"You will earn at least 7% a year with our income strategy.\", \"type\": \"promised_return\", \"support\": \"unsupported\", \"source\": \"none\"}, {\"id\": \"E-12\", \"text\": \"We guarantee a 6% annual return on the conservative sleeve.\", \"type\": \"promised_return\", \"support\": \"unsupported\", \"source\": \"none\"}], \"risk\": \"high\"}"
+}

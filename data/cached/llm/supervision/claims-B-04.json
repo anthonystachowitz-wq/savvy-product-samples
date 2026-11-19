@@ -1,0 +1,21 @@
+{
+  "module": "supervision",
+  "key": "claims-B-04",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 991,
+    "completion_tokens": 134,
+    "total_tokens": 1125,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 863
+  },
+  "latency_ms": 1488,
+  "created_at": "2026-11-19T05:54:19+00:00",
+  "system_sha": "57acea63faaa574e",
+  "prompt_sha": "ffbfcf8502359ebd",
+  "text": "{\"claims\": [{\"text\": \"our quarterly review windows fall in the first two weeks of January, April, July, and October\", \"type\": \"factual\", \"support\": \"supported\", \"source\": \"F-11\"}, {\"text\": \"Whitfield Wealth Partners is a registered investment adviser in the United States.\", \"type\": \"factual\", \"support\": \"supported\", \"source\": \"F-03\"}, {\"text\": \"Our clients have earned 14.2% a year since 2019.\", \"type\": \"performance\", \"support\": \"unsupported\", \"source\": \"none\"}], \"risk\": \"high\"}"
+}

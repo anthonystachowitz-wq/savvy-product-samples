@@ -1,0 +1,21 @@
+{
+  "module": "supervision",
+  "key": "claims-B-02",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 1069,
+    "completion_tokens": 228,
+    "total_tokens": 1297,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 941
+  },
+  "latency_ms": 1822,
+  "created_at": "2026-11-19T05:54:16+00:00",
+  "system_sha": "57acea63faaa574e",
+  "prompt_sha": "0f816dee2d5ebb07",
+  "text": "{\"claims\": [{\"text\": \"For 2026, the IRA contribution limit is USD 7,000 for owners under 50 and USD 8,000 for owners 50 and older.\", \"type\": \"factual\", \"support\": \"supported\", \"source\": \"F-09\"}, {\"text\": \"Required minimum distributions begin at age 73 for owners born in 1951 or later.\", \"type\": \"factual\", \"support\": \"supported\", \"source\": \"F-10\"}, {\"text\": \"Our practice does not give tax advice.\", \"type\": \"factual\", \"support\": \"supported\", \"source\": \"D-04\"}, {\"text\": \"Please confirm the details that apply to you with your tax preparer.\", \"type\": \"factual\", \"support\": \"supported\", \"source\": \"D-06\"}, {\"text\": \"Our quarterly review windows are the first two weeks of January, April, July, and October.\", \"type\": \"factual\", \"support\": \"supported\", \"source\": \"F-11\"}], \"risk\": \"low\"}"
+}

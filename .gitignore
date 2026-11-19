@@ -5,3 +5,4 @@ app.db
 data/state.db
 .env
 *.log
+data/state/

@@ -37,7 +37,7 @@ SUITE_MODULES = [
         "label": "Supervision in the loop",
         "lever": "Comply",
         "url": "/supervision",
-        "status": "in build",
+        "status": "live",
         "ai": "Generation plus claim classification and policy checks",
         "one_liner": "Drafts adviser marketing inside a pre-approval workflow with an evidence file per piece.",
         "metric": "Review cycle time, modelled",

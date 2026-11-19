@@ -1,0 +1,21 @@
+{
+  "module": "supervision",
+  "key": "claims-B-04-v2",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 1025,
+    "completion_tokens": 194,
+    "total_tokens": 1219,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 897
+  },
+  "latency_ms": 1447,
+  "created_at": "2026-11-19T05:54:20+00:00",
+  "system_sha": "57acea63faaa574e",
+  "prompt_sha": "302326973b6c495b",
+  "text": "{\"claims\": [{\"text\": \"our quarterly review windows fall in the first two weeks of January, April, July, and October\", \"type\": \"factual\", \"support\": \"supported\", \"source\": \"F-11\"}, {\"text\": \"Whitfield Wealth Partners is a registered investment adviser in the United States.\", \"type\": \"factual\", \"support\": \"supported\", \"source\": \"F-03\"}, {\"text\": \"The 2026 IRA contribution limit is USD 7,000 for owners under 50 and USD 8,000 for owners 50 and older.\", \"type\": \"factual\", \"support\": \"supported\", \"source\": \"F-09\"}, {\"text\": \"Required minimum distributions begin at age 73 for owners born in 1951 or later.\", \"type\": \"factual\", \"support\": \"supported\", \"source\": \"F-10\"}], \"risk\": \"low\"}"
+}

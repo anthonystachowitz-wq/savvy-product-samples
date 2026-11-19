@@ -1,0 +1,21 @@
+{
+  "module": "supervision",
+  "key": "revise-B-04",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 850,
+    "completion_tokens": 166,
+    "total_tokens": 1016,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 850
+  },
+  "latency_ms": 1495,
+  "created_at": "2026-11-19T05:53:14+00:00",
+  "system_sha": "611f53801346cb77",
+  "prompt_sha": "e71278a284a5886c",
+  "text": "{\"headline\": \"Planning your finances for the year ahead\", \"body\": \"As you plan for the year ahead, our quarterly review windows fall in the first two weeks of January, April, July, and October. Whitfield Wealth Partners is a registered investment adviser in the United States. The 2026 IRA contribution limit is USD 7,000 for owners under 50 and USD 8,000 for owners 50 and older. Required minimum distributions begin at age 73 for owners born in 1951 or later.\", \"disclosures\": [\"D-01\", \"D-02\", \"D-03\"], \"revision_note\": \"Removed the unsupported adviser performance claim and replaced it with approved contribution-limit and RMD facts while keeping the review-calendar language and required disclosures.\"}"
+}

@@ -1,0 +1,175 @@
+{
+  "id": "FS-2026-Q4",
+  "title": "Approved marketing fact sheet, Q4 2026",
+  "brand": "Whitfield Wealth Partners",
+  "as_of": "2026-11-03",
+  "approved_by": "Marta Ellsworth, Chief Compliance Officer",
+  "review_due": "2027-02-03",
+  "version": 3,
+  "note": "Synthetic reference facts for this product sample. The index, fund, and tax figures are invented and must not be used as real market or tax data.",
+  "facts": [
+    {
+      "id": "F-01",
+      "section": "Firm",
+      "label": "Assets under management",
+      "statement": "Whitfield Wealth Partners advises USD 42,300,000 for 12 client households as of 2026-11-03.",
+      "values": [
+        "USD 42,300,000",
+        "12"
+      ],
+      "source": "book record, data/book.json aum_total",
+      "as_of": "2026-11-03"
+    },
+    {
+      "id": "F-02",
+      "section": "Firm",
+      "label": "Households served",
+      "statement": "Whitfield Wealth Partners serves 12 client households.",
+      "values": [
+        "12"
+      ],
+      "source": "book record, data/book.json households",
+      "as_of": "2026-11-03"
+    },
+    {
+      "id": "F-03",
+      "section": "Firm",
+      "label": "Regulatory status",
+      "statement": "Whitfield Wealth Partners is a registered investment adviser in the United States. Registration does not imply a certain level of skill or training.",
+      "values": [],
+      "source": "firm record, synthetic",
+      "as_of": "2026-11-03"
+    },
+    {
+      "id": "F-04",
+      "section": "Market",
+      "label": "Large cap index, 2025",
+      "statement": "The S&P 500 total return was 12.4% in 2025.",
+      "values": [
+        "12.4%",
+        "2025"
+      ],
+      "source": "synthetic index series, invented for this demo",
+      "as_of": "2026-01-15"
+    },
+    {
+      "id": "F-05",
+      "section": "Market",
+      "label": "US bond index, 2025",
+      "statement": "The Bloomberg US Aggregate Bond Index returned 3.1% in 2025.",
+      "values": [
+        "3.1%",
+        "2025"
+      ],
+      "source": "synthetic index series, invented for this demo",
+      "as_of": "2026-01-15"
+    },
+    {
+      "id": "F-06",
+      "section": "Market",
+      "label": "Developed markets index, 2025",
+      "statement": "The MSCI EAFE Index returned 9.6% in 2025.",
+      "values": [
+        "9.6%",
+        "2025"
+      ],
+      "source": "synthetic index series, invented for this demo",
+      "as_of": "2026-01-15"
+    },
+    {
+      "id": "F-07",
+      "section": "Product",
+      "label": "Halcyon Balanced Fund, Class A",
+      "statement": "Halcyon Balanced Fund Class A has a 0.72% annual expense ratio.",
+      "values": [
+        "0.72%"
+      ],
+      "source": "fund fact card, synthetic",
+      "as_of": "2026-09-30"
+    },
+    {
+      "id": "F-08",
+      "section": "Product",
+      "label": "Total market ETF",
+      "statement": "The total market ETF used in client accounts has a 0.03% annual expense ratio.",
+      "values": [
+        "0.03%"
+      ],
+      "source": "fund fact card, synthetic",
+      "as_of": "2026-09-30"
+    },
+    {
+      "id": "F-09",
+      "section": "Planning",
+      "label": "IRA contribution limits, 2026",
+      "statement": "The 2026 IRA contribution limit is USD 7,000 for owners under 50 and USD 8,000 for owners 50 and older.",
+      "values": [
+        "2026",
+        "USD 7,000",
+        "USD 8,000",
+        "50"
+      ],
+      "source": "synthetic tax reference, invented for this demo",
+      "as_of": "2026-10-01"
+    },
+    {
+      "id": "F-10",
+      "section": "Planning",
+      "label": "Required minimum distributions",
+      "statement": "Required minimum distributions begin at age 73 for owners born in 1951 or later.",
+      "values": [
+        "73",
+        "1951"
+      ],
+      "source": "synthetic tax reference, invented for this demo",
+      "as_of": "2026-10-01"
+    },
+    {
+      "id": "F-11",
+      "section": "Planning",
+      "label": "Review calendar",
+      "statement": "Quarterly review windows are the first two weeks of January, April, July, and October.",
+      "values": [
+        "January",
+        "April",
+        "July",
+        "October",
+        "two"
+      ],
+      "source": "firm calendar, synthetic",
+      "as_of": "2026-11-03"
+    }
+  ],
+  "disclosures": [
+    {
+      "id": "D-01",
+      "label": "Performance",
+      "text": "Past performance does not guarantee future results."
+    },
+    {
+      "id": "D-02",
+      "label": "Index data",
+      "text": "Index returns are unmanaged, do not reflect fees or expenses, and cannot be invested in directly."
+    },
+    {
+      "id": "D-03",
+      "label": "Registration",
+      "text": "Whitfield Wealth Partners is a registered investment adviser. Registration does not imply a certain level of skill or training."
+    },
+    {
+      "id": "D-04",
+      "label": "Audience",
+      "text": "This material is for the named recipient only and is not investment, tax, or legal advice."
+    },
+    {
+      "id": "D-05",
+      "label": "Testimonials",
+      "text": "Client testimonials are not used in firm marketing."
+    },
+    {
+      "id": "D-06",
+      "label": "Tax",
+      "text": "Consult your tax adviser about your own situation before acting."
+    }
+  ]
+}
