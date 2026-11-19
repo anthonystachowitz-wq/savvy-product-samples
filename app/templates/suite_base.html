@@ -12,8 +12,10 @@
   {% block head %}{% endblock %}
 </head>
 <body class="suite-body">
-  {% include "_suite_nav.html" %}
-  <div class="suite-disclaimer" role="note">Unofficial concept, not affiliated with Savvy. All data synthetic. Built only from public information. Happy to take it down on request.</div>
+  <header class="suite-header">
+    {% include "_suite_nav.html" %}
+    <div class="suite-disclaimer" role="note">Unofficial concept, not affiliated with Savvy. All data synthetic. Built only from public information. Happy to take it down on request.</div>
+  </header>
   <main class="suite-main">
     {% block content %}{% endblock %}
   </main>
