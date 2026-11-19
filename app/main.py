@@ -11,6 +11,9 @@ build-time adapter used when the pipeline is unavailable.
 
 from __future__ import annotations
 
+import importlib
+import json
+import logging
 import platform
 import re
 import sqlite3
@@ -26,9 +29,14 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from . import store
+from .platform import config as suite_config
+from .platform import llm as suite_llm
+from .platform import nav as suite_nav
 
 BASE_DIR = Path(__file__).resolve().parent
 templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
+templates.env.globals["suite_modules"] = suite_nav.SUITE_MODULES
+templates.env.globals["suite_levers"] = suite_nav.LEVERS
 
 
 @asynccontextmanager
@@ -509,8 +517,8 @@ def _tour_context(request: Request) -> dict[str, Any]:
         "current": current,
         "total": len(TOUR_STEPS),
         "step": TOUR_STEPS[current - 1],
-        "prev_url": prev_step["href"] if prev_step else "/",
-        "next_url": next_step["href"] if next_step else "/?tour=1",
+        "prev_url": prev_step["href"] if prev_step else "/transition",
+        "next_url": next_step["href"] if next_step else "/transition?tour=1",
         "prev_label": f"Back to step {current - 1}" if prev_step else "Overview",
         "next_label": f"Next: step {current + 1}" if next_step else "Restart tour",
         "is_last": next_step is None,
@@ -564,11 +572,109 @@ def _redirect(url: str) -> RedirectResponse:
 
 
 # ---------------------------------------------------------------------------
-# Overview
+# Suite hub and method
 # ---------------------------------------------------------------------------
 
 
+def _module_evals() -> tuple[list[dict[str, Any]], list[str]]:
+    """Read every module's eval file so the method page reflects real scores."""
+
+    evals: list[dict[str, Any]] = []
+    failures: list[str] = []
+    modules_dir = suite_config.REPO_ROOT / "data" / "modules"
+    if not modules_dir.is_dir():
+        return evals, failures
+    for path in sorted(modules_dir.glob("*/eval.json")):
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        slug = path.parent.name
+        try:
+            label = suite_nav.module(slug)["label"]
+        except KeyError:
+            label = slug.replace("-", " ").title()
+        score = payload.get("accuracy", payload.get("score"))
+        if isinstance(score, float):
+            score = f"{score * 100:.1f}%"
+        evals.append(
+            {
+                "slug": slug,
+                "label": label,
+                "name": str(payload.get("name") or "Evaluation"),
+                "cases": payload.get("cases", payload.get("case_count", "n/a")),
+                "score": score if score is not None else "n/a",
+                "shows_failures": bool(payload.get("failures")),
+            }
+        )
+        failures.extend(str(item) for item in (payload.get("failure_notes") or []))
+    return evals, failures
+
+
+def _llm_stats() -> dict[str, Any]:
+    runs = 0
+    prompt_tokens = 0
+    completion_tokens = 0
+    latencies: list[int] = []
+    models: set[str] = set()
+    root = suite_config.CACHE_DIR
+    if root.is_dir():
+        for path in root.glob("**/*.json"):
+            try:
+                payload = json.loads(path.read_text(encoding="utf-8"))
+            except (OSError, ValueError):
+                continue
+            runs += 1
+            usage = payload.get("usage") or {}
+            prompt_tokens += int(usage.get("prompt_tokens") or 0)
+            completion_tokens += int(usage.get("completion_tokens") or 0)
+            if payload.get("latency_ms"):
+                latencies.append(int(payload["latency_ms"]))
+            if payload.get("model"):
+                models.add(str(payload["model"]))
+    availability = suite_llm.availability()
+    return {
+        "runs": runs,
+        "prompt_tokens": f"{prompt_tokens:,}",
+        "completion_tokens": f"{completion_tokens:,}",
+        "latency": int(sum(latencies) / len(latencies)) if latencies else 0,
+        "models": ", ".join(sorted(models)) or "none yet",
+        "used_today": availability["used_today"],
+        "daily_limit": availability["daily_limit"],
+    }
+
+
 @app.get("/")
+def hub(request: Request):
+    return templates.TemplateResponse(
+        request=request,
+        name="hub.html",
+        context={"request": request, "active": "hub"},
+    )
+
+
+@app.get("/method")
+def method(request: Request):
+    evals, failures = _module_evals()
+    return templates.TemplateResponse(
+        request=request,
+        name="method.html",
+        context={
+            "request": request,
+            "active": "method",
+            "evals": evals,
+            "failures": failures[:8],
+            "llm_stats": _llm_stats(),
+        },
+    )
+
+
+# ---------------------------------------------------------------------------
+# Transition Copilot
+# ---------------------------------------------------------------------------
+
+
+@app.get("/transition")
 def overview(request: Request):
     stats = store.stats()
     eval_data = store.get_eval_report()
@@ -1158,3 +1264,18 @@ def healthz():
 @app.get("/favicon.ico", include_in_schema=False)
 def favicon():
     return RedirectResponse("/static/favicon.svg", status_code=307)
+
+# ---------------------------------------------------------------------------
+# Product sample routers
+# ---------------------------------------------------------------------------
+
+_suite_log = logging.getLogger("savvy.suite")
+
+for _router_file in sorted((BASE_DIR / "modules").glob("*/routes.py")):
+    _slug = _router_file.parent.name
+    try:
+        _module = importlib.import_module(f"app.modules.{_slug}.routes")
+        app.include_router(_module.router)
+        _suite_log.info("Mounted product sample: %s", _slug)
+    except Exception as _exc:  # noqa: BLE001 - a broken sample must not take down the suite
+        _suite_log.warning("Product sample %s did not mount: %s", _slug, _exc)

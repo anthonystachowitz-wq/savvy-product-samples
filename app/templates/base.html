@@ -9,6 +9,7 @@
   <title>{% block title %}Transition Copilot{% endblock %}</title>
   <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
   <link rel="stylesheet" href="/static/app.css">
+  <link rel="stylesheet" href="/static/suite.css">
   <script defer src="/static/app.js"></script>
 </head>
 <body>
@@ -37,7 +38,7 @@
 
     <nav class="nav" aria-label="Primary">
       <span class="nav-label">Workspace</span>
-      <a href="/" class="{{ 'is-active' if active == 'overview' }}" {% if active == 'overview' %}aria-current="page"{% endif %}>
+      <a href="/transition" class="{{ 'is-active' if active == 'overview' }}" {% if active == 'overview' %}aria-current="page"{% endif %}>
         {{ icon("overview") }}<span>Overview</span>
       </a>
       <a href="/intake" class="{{ 'is-active' if active == 'intake' }}" {% if active == 'intake' %}aria-current="page"{% endif %}>
@@ -58,6 +59,14 @@
         {{ icon("about") }}<span>About</span>
       </a>
     </nav>
+
+    <div class="sidebar-suite">
+      <span class="nav-label">Product samples</span>
+      <a href="/">All five samples</a>
+      {% for item in suite_modules %}{% if item.slug != 'transition' %}
+      <a href="{{ item.url }}">{{ item.label }}</a>
+      {% endif %}{% endfor %}
+    </div>
 
     <div class="sidebar-context">
       <div class="context-label">Seeded book</div>

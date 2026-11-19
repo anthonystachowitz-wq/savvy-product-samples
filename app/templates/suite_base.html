@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Unofficial product samples for Savvy Wealth. Synthetic data only. Not affiliated.">
+  <title>{% block title %}Savvy product samples{% endblock %}</title>
+  <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+  <link rel="stylesheet" href="/static/app.css">
+  <link rel="stylesheet" href="/static/suite.css">
+  {% block head %}{% endblock %}
+</head>
+<body class="suite-body">
+  {% include "_suite_nav.html" %}
+  <div class="suite-disclaimer" role="note">Unofficial concept, not affiliated with Savvy. All data synthetic. Built only from public information. Happy to take it down on request.</div>
+  <main class="suite-main">
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="suite-footer">
+    <span>Built by Anthony Stachowitz. Not a Savvy product. No real client data.</span>
+    <span><a href="/method">How it is built</a> &middot; <a href="/transition">Transition Copilot</a> &middot; <a href="/">All samples</a></span>
+  </footer>
+  <script defer src="/static/app.js"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

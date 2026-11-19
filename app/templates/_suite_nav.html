@@ -1,0 +1,14 @@
+{% set current = active|default('') %}
+<div class="suite-nav">
+  <a class="suite-brand" href="/">
+    <span class="suite-brand-mark">5</span>
+    <span>Savvy product samples</span>
+  </a>
+  <nav class="suite-links" aria-label="Product samples">
+    {% for item in suite_modules %}
+      <a class="suite-link{% if current == item.slug %} is-active{% endif %}" href="{{ item.url }}"{% if current == item.slug %} aria-current="page"{% endif %}>{{ item.label }}</a>
+    {% endfor %}
+    <a class="suite-link{% if current == 'method' %} is-active{% endif %}" href="/method">How it's built</a>
+  </nav>
+  <span class="suite-nav-note">Unofficial concept, synthetic data</span>
+</div>

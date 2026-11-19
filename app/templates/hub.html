@@ -1,0 +1,92 @@
+{% extends "suite_base.html" %}
+{% block title %}Five product samples for Savvy, Anthony Stachowitz{% endblock %}
+{% block content %}
+<section class="hub-hero">
+  <div class="hub-kicker">Product samples for the Senior Product Manager role, November 2026</div>
+  <h1 class="hub-title">Five product samples for one operating RIA</h1>
+  <p class="hub-sub">Savvy is three businesses now: an adviser platform, a custodial platform on Fidelity's rails, and a back-office AI line sold to other firms. I built one product in that shape, five surfaces, one client record, and one approval and evidence trail. Each surface maps to one lever the business actually pulls.</p>
+  <div class="hub-meta">
+    <span class="chip chip--accent">Synthetic data only</span>
+    <span class="chip">Live model calls, recorded</span>
+    <span class="chip">No custodian connection</span>
+    <span class="chip">Not affiliated with Savvy</span>
+  </div>
+</section>
+
+<section>
+  <div class="hub-grid">
+    {% for item in suite_modules %}
+    <article class="hub-card{% if item.status == 'live' %} hub-card--live{% endif %}">
+      <div class="hub-card-head">
+        <span class="chip chip--accent">{{ item.lever }}</span>
+        <span class="chip {% if item.status == 'live' %}chip--live{% else %}chip--build{% endif %}">{{ 'Live' if item.status == 'live' else 'In build' }}</span>
+      </div>
+      <h2 class="hub-card-title"><a href="{{ item.url }}">{{ item.label }}</a></h2>
+      <p class="hub-card-text">{{ item.one_liner }}</p>
+      <p class="hub-card-ai">AI pattern: {{ item.ai }}</p>
+      <div class="hub-card-foot">
+        <span class="hub-card-metric">{{ item.metric }}</span>
+        <a class="hub-card-link" href="{{ item.url }}">Open &rarr;</a>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="hub-columns">
+  <div class="hub-panel">
+    <h2>How to look at this in five minutes</h2>
+    <ol class="hub-steps">
+      <li>Start with <a href="/transition">Transition Copilot</a>. It is the finished one: a signed book becomes a record, a signature plan, and an approval file.</li>
+      <li>Then <a href="/concierge">Client Concierge</a>. Same client record, now answering a client question with citations and an advice boundary.</li>
+      <li><a href="/bookiq">Book IQ</a> ranks the next dollar in every book. <a href="/supervision">Supervision</a> puts generated marketing through a pre-approval file. <a href="/lpo">LP Ops</a> takes private markets paperwork from intake to capital call.</li>
+      <li>Read <a href="/method">How it is built</a> to see the model, the prompts, the evals, and what the models got wrong.</li>
+    </ol>
+  </div>
+  <div class="hub-panel">
+    <h2>Why these five</h2>
+    <p>They are the five levers in Savvy's own operating model: recruit advisers, grow their books, serve their clients, keep marketing compliant, and scale operations without adding headcount per dollar.</p>
+    <p>Every surface reads the same synthetic book and writes to the same audit trail. That is the product argument: one client record, many surfaces, one set of controls.</p>
+    <p class="mod-note">All metrics on this site are modelled estimates from stated assumptions. Nothing here is a measurement.</p>
+  </div>
+</section>
+
+<section class="hub-panel" style="margin-bottom:26px">
+  <h2>What is real and what is simulated</h2>
+  <div class="hub-columns" style="margin:10px 0 0">
+    <div>
+      <p class="mod-kicker-sm">Real</p>
+      <ul class="mod-list">
+        <li>The application code, the model calls, the prompts, the evals, and the approval and audit logic.</li>
+        <li>Every model output was produced by a live call to DeepSeek and is replayed from the recording by default.</li>
+        <li>The synthetic book is generated deterministically and is internally consistent.</li>
+      </ul>
+    </div>
+    <div>
+      <p class="mod-kicker-sm">Simulated</p>
+      <ul class="mod-list">
+        <li>All clients, households, accounts, custodians, LPs, and adviser data are invented.</li>
+        <li>There is no custodian connection, no filing, no trading, and no delivery of any message.</li>
+        <li>The business metrics are modelled estimates, not measurements from a live firm.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="hub-panel">
+  <h2>The business case, in one line per lever</h2>
+  <table class="mod-table">
+    <thead><tr><th>Lever</th><th>Sample</th><th>What it moves</th><th>Estimate, modelled</th></tr></thead>
+    <tbody>
+      {% for item in suite_modules %}
+      <tr>
+        <td><span class="chip chip--accent">{{ item.lever }}</span></td>
+        <td><a href="{{ item.url }}">{{ item.label }}</a></td>
+        <td class="mod-note">{{ item.one_liner }}</td>
+        <td class="mod-note">{{ item.metric }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

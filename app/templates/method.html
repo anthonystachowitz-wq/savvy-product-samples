@@ -1,0 +1,106 @@
+{% extends "suite_base.html" %}
+{% block title %}How it is built, Savvy product samples{% endblock %}
+{% block content %}
+<div class="mod-head">
+  <div>
+    <div class="mod-kicker">Method</div>
+    <h1 class="mod-title">How these samples are built</h1>
+    <p class="mod-sub">The point of the samples is not the pages. It is the way they were built: real model calls, recorded so they replay, small evaluations, and an honest list of what failed.</p>
+  </div>
+</div>
+
+<div class="mod-grid">
+  <div>
+    <section class="mod-panel">
+      <h3>The model and the provider</h3>
+      <p>All model work runs on DeepSeek through its API. The default model is DeepSeek Flash, with DeepSeek V4 Pro available for the harder generation steps. Every output shown in the samples was produced by a real call, saved to a recording with its model, latency, and token usage, and replayed by default so a reviewer never sees a spinner fail.</p>
+      <p>Where the deployment allows it, a module can make a fresh live call inside a small daily budget. The budget exists so a public demo link cannot run up an API bill.</p>
+      <p class="mod-note">Model outputs are generated text, not advice, and every client-facing output sits behind a human approval step and an evidence record.</p>
+    </section>
+
+    <section class="mod-panel">
+      <h3>Five AI patterns, one per sample</h3>
+      <table class="mod-table">
+        <thead><tr><th>Sample</th><th>Pattern</th><th>What the model does</th></tr></thead>
+        <tbody>
+          {% for item in suite_modules %}
+          <tr><td>{{ item.label }}</td><td class="mod-note">{{ item.ai }}</td><td class="mod-note">{{ item.one_liner }}</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="mod-panel">
+      <h3>Evaluations</h3>
+      {% if evals %}
+      <table class="mod-table">
+        <thead><tr><th>Sample</th><th>Evaluation</th><th class="num">Cases</th><th class="num">Score</th><th>Failures shown in the page</th></tr></thead>
+        <tbody>
+          {% for row in evals %}
+          <tr>
+            <td>{{ row.label }}</td>
+            <td class="mod-note">{{ row.name }}</td>
+            <td class="num">{{ row.cases }}</td>
+            <td class="num">{{ row.score }}</td>
+            <td class="mod-note">{{ 'yes' if row.shows_failures else 'no' }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <p class="empty">Evaluation results appear here as each sample records them.</p>
+      {% endif %}
+    </section>
+
+    <section class="mod-panel">
+      <h3>What the models got wrong</h3>
+      {% if failures %}
+      <ul class="mod-list">
+        {% for item in failures %}<li>{{ item }}</li>{% endfor %}
+      </ul>
+      {% else %}
+      <p class="empty">Failure notes appear here as each sample records its evaluation.</p>
+      {% endif %}
+    </section>
+  </div>
+
+  <div>
+    <section class="mod-panel">
+      <h3>Recorded runs</h3>
+      {% if llm_stats %}
+      <dl class="kv">
+        <dt>Recorded calls</dt><dd>{{ llm_stats.runs }}</dd>
+        <dt>Models</dt><dd>{{ llm_stats.models }}</dd>
+        <dt>Mean latency</dt><dd>{{ llm_stats.latency }} ms</dd>
+        <dt>Prompt tokens</dt><dd>{{ llm_stats.prompt_tokens }}</dd>
+        <dt>Completion tokens</dt><dd>{{ llm_stats.completion_tokens }}</dd>
+        <dt>Live budget today</dt><dd>{{ llm_stats.used_today }} of {{ llm_stats.daily_limit }}</dd>
+      </dl>
+      {% else %}
+      <p class="empty">No recordings yet.</p>
+      {% endif %}
+    </section>
+
+    <section class="mod-panel">
+      <h3>The guardrails that repeat everywhere</h3>
+      <ul class="mod-list">
+        <li>Every output that reaches a client or a custodian is held for a named human approval.</li>
+        <li>Every number in a draft points at a seeded source field, or the draft is flagged.</li>
+        <li>Client-facing work for a household without protocol consent is blocked on the server.</li>
+        <li>Advice language is blocked. Anything that looks like a recommendation routes to the adviser.</li>
+        <li>Each approval writes an evidence record and an audit event.</li>
+      </ul>
+    </section>
+
+    <section class="mod-panel">
+      <h3>What this is not</h3>
+      <ul class="mod-list">
+        <li>Not a Savvy product, and not affiliated with Savvy.</li>
+        <li>Not connected to a custodian, a CRM, or a private markets administrator.</li>
+        <li>Not a measurement. The hours and margin figures are modelled estimates.</li>
+        <li>Not legal or compliance advice. The policy references are synthetic.</li>
+      </ul>
+    </section>
+  </div>
+</div>
+{% endblock %}
