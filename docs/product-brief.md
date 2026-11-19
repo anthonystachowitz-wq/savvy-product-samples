@@ -1,85 +1,107 @@
-# Transition Copilot
-### A product sample for Savvy, November 2026
+# Five product samples for one operating RIA
+### A work sample for the Senior Product Manager role at Savvy, November 2026
 *Anthony Stachowitz · anthony.stachowitz@gmail.com · linkedin.com/in/anthonystachowitz*
 *I don't work at Savvy. Everything here is built from public information and synthetic data. Happy to take it down on request.*
 
 ## The short version
 
-Savvy has six open roles across advisor onboarding, transition, and advisor experience. That hiring plan is the clearest public statement of where the constraint is. When a signed advisor's book takes months to get live, every week is revenue not yet on platform and a specialist's hours not yet spent on the next transition.
+Savvy is three businesses now: an adviser platform, a custodial platform built on Fidelity's rails, and a back-office AI line sold to other wealth firms. I built a working product suite in that shape. Five surfaces, one synthetic client record, one approval and audit layer, and one set of evaluations with the failures shown.
 
-I built a working slice of the workflow that fixes that, with the policy checks and audit trail a registered investment adviser would need. This page explains why I picked this bet, what the demo actually does, how I would measure it, and what I would need to learn in the first 30 days to prove myself wrong.
+Each surface maps to one lever Savvy's own operating model pulls: recruit advisers, grow their books, serve their clients, keep marketing compliant, and scale operations without adding headcount per dollar. The point is not the five pages. It is that I can find a wedge from public signals, build a working slice with a real model in the loop, measure it honestly, and put the controls in before the demo.
 
-## What I read before building
+## What the public record suggested
 
-Your job board, read as a roadmap: six roles in onboarding, transition, and advisor experience. The postings publish the KPIs for time to assets transitioned, signed-not-started rate, onboarding CSAT, and enablement completion, and the transition specialist owns root-cause reviews on NIGOs ([job board](https://jobs.ashbyhq.com/savvy)).
+Savvy's job board reads like a roadmap. Six open roles across adviser onboarding, transition, and adviser experience, with published KPIs for time to assets transitioned, signed-not-started rate, onboarding CSAT, and enablement completion. A transition specialist owns root-cause reviews on NIGOs. That is a team pointing at manual work.
 
-A new enterprise line, from the product marketing posting: "We've spent the last few years building AI to run these workflows inside our own firm. Now we're bringing that product to market for enterprise RIAs and wealth firms." It is sold as an outcome, in operating hours returned and EBITDA margin.
+The new enterprise line, from the product marketing posting: "We've spent the last few years building AI to run these workflows inside our own firm. Now we're bringing that product to market for enterprise RIAs and wealth firms." It deploys into each customer's existing systems and is measured by "the operating hours we return and the improvement in EBITDA margin," with forward-deployed engineers and design partners.
 
-The operational reality from public sources: a clean ACATS transfer runs three to four business days, and the carrying firm has three days to validate or take exception ([DTCC](https://www.dtcc.com/insights/2025/acats-transformation-is-underway), [FINRA](https://www.finra.org/rules-guidance/key-topics/customer-account-transfers)). The bottleneck is everything before the transfer: a seven-account household can need 20 signatures, and a 100-client book can approach 1,500 ([WealthManagement](https://www.wealthmanagement.com/business-planning/for-transitioning-advisors-repapering-is-a-daunting-task)). Under the Broker Protocol an advisor may take exactly five data elements, and no client contact is allowed before resignation, Protocol or not ([Comply](https://www.comply.com/resource/understanding-the-broker-protocol-in-2025-what-individual-advisers-and-rias-need-to-know/)).
+And the custodial platform, launched 23 September 2026, opened Savvy's rails to RIAs that are not joining as advisers. Savvy is not the custodian. Savvy Wealth Management is the introducing broker-dealer and Fidelity's National Financial Services holds the accounts.
 
-The gap everybody shares, per trade press: there is no cross-custodian data model, so every transition reconciles the same household again ([RIABiz, November 2026](https://riabiz.com/a/2026/11/2/schwab-rias-have-until-monday-to-convert-exclusively-to-docusign-ending-paper-era-as-it-deputizes-nevis-to-help-rias-conquer-their-onboarding-quagmire-and-prove-ai-can-fix-the-most-painful-workflow-at-any-ria)).
-
-## Why this bet
-
-Transition sits at the intersection of Savvy's growth engine and its new product line. Internally, faster transitions mean revenue starts sooner, specialists carry more books, and the signed-not-started rate goes down. Externally, every growing RIA has this workflow, and the buyers already spend on it. The same product can be used inside the firm first and then sold, which is the cheapest way to find out if it works.
-
-It also produces the asset Savvy already treats as the moat. The complete household record has to start somewhere. Today it starts in a spreadsheet during transition. Making transition the first place the record gets built means every new book lands structured, reconciled, and auditable instead of being cleaned up months later.
-
-The competitive picture is real. Docupace runs transitions with in-house specialists, Skience and Advisor360 sell onboarding and account opening, Dispatch and Jump are shipping AI-assisted transitions now, Nevis is part-owned by Schwab and goes live for Schwab RIAs in Q1 2027, and Avantos raised a Series A with Vanguard, Guardian, and SEI behind it. Savvy's edge is not features. It is that Savvy is the customer, can price against its own cost baseline, and can prove hours returned inside its own RIA before asking another firm to believe it.
+Read together: Savvy is moving from one revenue line to three, and it is already paying for the operational work the samples address.
 
 ## What I built
 
-A working prototype, not a deck. One seeded book: 12 households, 18 accounts, eight hard cases including an irrevocable trust, an inherited IRA, a variable annuity, a held-away 401(k), an LP interest, and a margin account with options. Fictional custodians. The workflow runs in four steps.
+A working suite, not a deck. One synthetic book of 12 households and 18 accounts, generated deterministically. Every surface reads the same record and writes to the same audit trail. All model work runs on DeepSeek, mostly DeepSeek Flash, through a recorded-run cache: every output shown was produced by a real call, saved with its model, latency, and token usage, and replayed by default so a reviewer never sees a spinner fail.
 
-**Intake.** Synthetic statements and a CRM export become a structured household and account record, with confidence per field, missing-data flags, and a hard-case list. It also shows what the workflow is allowed to know: the five Broker Protocol fields, and which households have not consented yet.
+| Sample | Lever | What it does | AI pattern |
+|---|---|---|---|
+| Transition Copilot | Recruit | A signed book becomes a structured record, a signature and NIGO plan, and an approval file | Document extraction and workflow orchestration |
+| Client Concierge | Serve | Answers a client's own questions from their record, cites every number, routes advice to the adviser | Retrieval and grounded generation |
+| Book IQ | Grow | Ranks the next dollar in every book with evidence and drafts the adviser outreach | Reasoning and ranking over the book |
+| Supervision in the loop | Comply | Drafts adviser marketing inside a pre-approval workflow with an evidence file per piece | Generation plus claim classification |
+| LP Ops | Scale | Takes private markets paperwork from intake to capital call, with exceptions flagged | Document extraction and exception detection |
 
-**Plan.** Per-account form packets, signature counts, owners, and due dates, sequenced against the real clocks. ACATS is a short step at the end. Most of the plan is chasing signatures. NIGO risks carry the reason and what clears them.
+The suite is 54 recorded model calls, about 99,000 tokens, with a mean latency around two seconds. The model is not the product. The workflow, the data underneath it, and the controls are.
 
-**Review.** Client updates, custodian cover letters, and internal digests sit in a queue. Each draft carries its claims with sources, a policy check against advice language, promised timing, and protocol consent, and an evidence file with approver, timestamp, audience, and retention. Nothing sends without a human. Every action writes to an audit trail.
+## The evaluations, including what failed
 
-**Value.** The hours model, with the arithmetic visible. A 100-client book at five accounts per household is about 500 accounts. At 45 minutes of ops time each, that is 375 hours, plus 60 hours of planning and reconciliation, so 435 hours per transition. A 25 to 35 percent reduction is 109 to 152 hours, or 14 to 19 working days. Forty transitions a year is 4,360 to 6,080 hours. These are modelled estimates with the assumptions shown, not measurements.
+Small evaluations, in-sample, and shown with their failures rather than a perfect score.
 
-What is real: the pipeline code, the policy checks, the evidence and audit model, the eval harness, and the screens. What is simulated: the statements, the extracted values (the demo runs a deterministic parser and template writer so a click never fails; the code carries a model-provider interface for live runs), and any custodian integration. The demo states this on every page. The eval report scores extraction against a labelled set: 100 percent on 51 fields, measured in-sample on synthetic statements, which is a build check rather than a claim about real documents.
+| Area | What it measures | Result |
+|---|---|---|
+| Transition | Field extraction against 51 labelled fields | 51 of 51 in-sample, a build check, not a claim about real statements |
+| Concierge | Advice boundary, citations, and routing across 10 labelled questions | 90 percent |
+| Book IQ | Top play and required signal across 12 labelled households | 12 of 12 in-sample |
+| Supervision | Claim-type classification across 12 labelled claims | 75 percent exact, 100 percent precision, 77.8 percent recall |
+| LP Ops | Field extraction and exception detection across 5 packets | 96.9 percent |
 
-Demo: [DEMO_URL]. Code: [REPO_URL].
+Three failures are worth reading because they are the real story. On an advice question, the client assistant refused correctly but mentioned an Nvidia holding the household did not own; the number check cannot see names, so a named-entity check is the next control. The supervision classifier typed two index-return sentences as factual rather than performance, so the performance flag missed them; the identical sentence was caught inside a draft, which says the label is context sensitive. The LP extractor called two medium exceptions high severity. Each is on its page, next to the fix I would make.
 
-## How I would measure it
+## The controls that matter in an RIA
 
-Instrument each account as a state machine with timestamps: signed, application submitted, custodian accepted, transfer initiated, validated, settled, funded, model invested, billing live. Everything else follows from those timestamps.
+Every client-facing output waits for a named human approval and produces an evidence record: approver, role, timestamp, version, audience, channel, disclosures, retention date, and a hash. Every number in a draft points at a seeded source field or the draft is flagged. Advice language is blocked, and anything that looks like a recommendation routes to the adviser. A client-facing draft for a household without Broker Protocol consent is blocked on the server, not only in the button. Nothing is sent, filed, traded, or delivered.
 
-Leading: time from signature to first submitted application, first-pass yield, NIGO rate by custodian and reason, signatures outstanding per household, stalled accounts over 14 days, touches per account. Lagging: days to first funded account, days to 50, 80, and 90 percent of transferable assets, signed-not-started rate, onboarding CSAT at 30 and 60 days, specialist books in flight.
+That is the part I would want a hiring manager to judge. The model is the easy part to demo.
 
-The business case is hours returned per transition. The published benchmarks are thin and I would not claim otherwise. Docupace's 68 percent of accounts in 30 days and 93 percent in 60 is vendor data ([source](https://markets.businessinsider.com/news/stocks/docupace-advisor-transitions-program-celebrates-500-000th-client-account-served-1031554591)). No public NIGO rate or days-to-first-funded series exists. Your transition specialist posting has that role running root-cause reviews on NIGOs, which means the data has to exist before it can be improved. I would rather build the instrumentation than borrow a number.
+## The business case, modelled
 
-## Risks and what guards them
+| Sample | Modelled impact | How it is calculated |
+|---|---|---|
+| Transition Copilot | 109 to 152 hours returned per 100-client transition | 500 accounts at 45 minutes plus 60 planning hours equals 435 hours, times 25 to 35 percent |
+| Client Concierge | 3.3 adviser hours a month | 30 routine questions, 60 percent answerable, 11 adviser minutes each |
+| Book IQ | USD 4.48 million of net new assets across the book | Sum of 12 recommended plays at stated consolidation and cash assumptions |
+| Supervision | Review cycle 3.31 to 1.87 days per piece | Pickup, first pass, rework rate, sign-off, before and after |
+| LP Ops | 5.25 hours per LP per year | 15 hours of baseline work times a 35 percent reduction |
 
-Custodian dependency. The receiving custodian is the system of record and the plan can only orchestrate it. Phase one tracks and prepares, it does not pretend to integrate.
-
-Extraction accuracy. Confidence per field, a labelled eval set, and human review before anything leaves the queue. A wrong registration or beneficiary is worse than a slow one.
-
-The advice line. Client drafts explain status, next steps, and documents required. They do not recommend transactions. Advice-seeking language routes to the adviser, and the check is visible in the UI rather than a footer.
-
-Protocol consent. No client-facing draft for a household without consent. That is a hard block in the workflow, not a warning.
-
-Records. Communications about a client's accounts are firm records. The vendor keeps nothing for itself. The firm keeps and exports everything it needs for five years, and the demo shows the retention field.
-
-Trust with the transition team. Specialists are the users, and a tool that feels like surveillance fails. The product should remove the signature chase, not add a manager's dashboard.
+Every number is modelled arithmetic with the assumptions visible on the page. None is a measurement, and none is presented as one.
 
 ## What I would do in the first 30 days
 
-1. Shadow three live transitions, stopwatch in hand, and time every step from signature to funded. Replace my model with the real distribution.
-2. Sit with the transition leads and pull NIGO reasons, first-pass yield, and stalled-account data for the last two quarters.
-3. Interview five recently transitioned advisors and five in flight. Find the moment they nearly lost confidence.
-4. Ask Growth for signed-not-started data and the reasons behind it. That number is the cost of a slow transition.
-5. Run one design partner through the prototype if the enterprise motion is live. If not, run it internally against a completed transition as a backtest.
-6. Kill or reorder anything the data contradicts. One module that lands beats five that look good on a page.
+1. Shadow three live transitions and time every step from signature to funded. Replace the model with the real distribution.
+2. Pull the operational data: NIGO reasons, first-pass yield, stalled accounts, signed-not-started, and the hours behind each.
+3. Sit with the transition and service teams, then with five recently moved advisers, and find the moment they nearly lost confidence.
+4. Pick the one workflow with a measurable number and ship an internal improvement before proposing anything big.
+5. For the enterprise line, test whether the same workflow sells to a design partner, and whether that conflicts with the affiliation pitch. That is the strategic question I would want to work through with the team.
+6. Kill or reorder anything the data contradicts.
+
+## How I would measure it
+
+Instrument each account as a state machine with timestamps: signed, application submitted, custodian accepted, transfer initiated, validated, settled, funded, model invested, billing live. From those, compute time to first funded account, days to 50, 80, and 90 percent of transferable assets, first-pass yield, NIGO rate by custodian and reason, signatures outstanding, stalled accounts, and specialist capacity. For the enterprise line, hours returned per firm and the buyer's EBITDA margin. For the client surface, answers released without approval, which should stay at zero.
+
+## Risks and what guards them
+
+Custodian dependency. The custodian is the system of record and the plan can only orchestrate it. Phase one tracks and prepares, it does not pretend to integrate.
+
+Model error. Confidence per field, source citations, labelled evaluations, and human review before anything leaves the queue. The failures above show why this matters.
+
+The advice line. Client drafts explain; they do not recommend. Advice-seeking language routes to the adviser, and the check is visible rather than a footer disclaimer.
+
+Protocol consent. No client-facing draft for a household without consent. A hard block in the workflow.
+
+Records. Communications about a client's accounts are firm records. The vendor keeps nothing for itself, and the firm keeps and exports what it needs for five years.
+
+Trust with the operators. Specialists are the users. A tool that feels like surveillance fails. The product should remove the chase, not add a manager's dashboard.
+
+## The competitive reality
+
+The space is crowded and worth being honest about. Farther is the closest model match and better capitalised, with USD 23 billion in recruited assets. Altruist, now being acquired by Vanguard, owns the account data and gives software away with custody. LPL has 32,000 advisers. On the enterprise side, Nevis has Schwab's backing, Avantos has Vanguard, Guardian, and SEI, and the systems of record are shipping AI at no extra cost.
+
+Savvy's advantage is not features. It is that Savvy is the customer, can prove hours and margin from its own profit and loss, and offers advisers equity plus their own brand. The samples are built around that advantage: every one is an operating workflow with a measure attached, not a feature demo.
 
 ## What I deliberately did not build
 
-No custodian integrations, no direct client access, no advice, no pricing page, no fabricated benchmarks, and no claims about Savvy's internals. This is an outside-in argument, built to start a conversation, not a plan.
+No custodian or CRM integration, no delivery or filing, no advice, no real client data, and no pricing page. This is an outside-in argument built to start a conversation, not a plan. The two-page version of that argument is in the brief, and the code is in the repository.
 
-## Where this goes if it works
-
-Internal first: fewer hours per transition, more books per specialist, faster time to revenue. Then the enterprise module: sell the same workflow into firms that do not have Savvy's operations team, price against operating hours returned, and use Savvy's own RIA as the reference deployment. The proof is the same either way, and Savvy is one of the few companies that can generate it from its own P&L.
+Demo: [DEMO_URL]. Code: [REPO_URL].
 
 If any of this is wrong, I would like to hear which part.

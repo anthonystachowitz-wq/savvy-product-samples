@@ -1,4 +1,4 @@
-# Deploying the sample
+# Deploying the suite
 
 Two containers: the app and a Caddy reverse proxy that terminates TLS and sets
 `noindex` so the demo does not show up in search.
@@ -9,8 +9,8 @@ Two containers: the app and a Caddy reverse proxy that terminates TLS and sets
 - A DNS A record for the demo subdomain pointing at the host.
 - Ports 80 and 443 open.
 
-Nothing in the demo needs outbound network access in cached mode. The app reads
-only the seeded synthetic files in `data/`.
+The recordings and the synthetic data are baked into the image, so the demo
+works without any network call. Live model mode is optional.
 
 ## Run it
 
@@ -18,7 +18,7 @@ From the repo root:
 
 ```bash
 cp deploy/.env.example deploy/.env
-# edit DEMO_DOMAIN
+# edit DEMO_DOMAIN, and set DEEPSEEK_API_KEY if you want live model calls
 docker compose -f deploy/docker-compose.yml --env-file deploy/.env up -d --build
 ```
 
@@ -27,6 +27,16 @@ Caddy gets a certificate on first request. Check it:
 ```bash
 curl -sI https://$DEMO_DOMAIN | head -20
 ```
+
+## Model mode
+
+The suite ships with recorded live calls in `data/cached/llm/`. Those replay
+with no key and no network. Setting `SAVVY_LLM_MODE=live` and a
+`DEEPSEEK_API_KEY` lets the pages make fresh calls, capped by
+`SAVVY_LLM_DAILY_LIMIT` per day across all samples.
+
+The key is passed through the environment at runtime. It is never written into
+the image or the repository.
 
 ## Update
 
@@ -41,13 +51,6 @@ docker compose -f deploy/docker-compose.yml --env-file deploy/.env up -d --build
 docker compose -f deploy/docker-compose.yml logs -f web
 docker compose -f deploy/docker-compose.yml down
 ```
-
-## Live model mode (optional)
-
-The demo defaults to cached deterministic outputs so a click never fails. To let
-the app call Bedrock instead, set `SAVVY_LLM_MODE=bedrock`, `BEDROCK_MODEL_ID`,
-and `AWS_REGION` in `deploy/.env`, and run the container with an instance role
-that can call that one model. Do not put access keys in the file.
 
 ## Rules
 

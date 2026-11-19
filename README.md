@@ -1,71 +1,40 @@
-# Transition Copilot
+# Five product samples for an AI-native RIA
 
-A working product sample for a wealth-management platform: an AI-assisted adviser
-transition workflow that takes a signed adviser's book from contract to fully
-transferred assets.
+A working product suite built as a work sample for the Senior Product Manager role at Savvy Wealth. Five surfaces, one synthetic client record, one approval and audit layer, and one honest evaluation story.
 
-**This is an unofficial concept.** I do not work at Savvy and this is not
-affiliated with Savvy. All client, adviser, custodian, and account data in the
-demo is synthetic. Nothing here is investment advice. Built from public
-information only. Happy to take it down on request.
+**Unofficial concept.** I do not work at Savvy and this is not affiliated with Savvy. All client, adviser, custodian, LP, and account data is synthetic. Nothing here is investment advice. Built from public information only. Happy to take it down on request.
 
 - Anthony Stachowitz
 - anthony.stachowitz@gmail.com
 - linkedin.com/in/anthonystachowitz
 
-## Why this exists
+## Why these five
 
-Savvy's public job board shows six open roles across adviser onboarding,
-transition, and adviser experience, plus a new enterprise line that sells
-back-office AI by the operating hours it returns. Transition is the workflow
-between those two. This sample is the first slice I would productize: a messy
-book becomes a structured record, the record becomes a signature and
-form-packet plan with NIGO risks, and every client communication sits behind a
-human approval and an evidence file.
+Savvy's own public hiring and product signals point at five levers: recruit advisers, grow their books, serve their clients, keep marketing compliant, and scale operations without adding headcount per dollar. Each sample maps to one lever, and each one uses a different AI pattern on the same client record.
 
-The argument is in the [product brief](docs/product-brief.md). This repository is
-the proof of work.
+| Sample | Lever | AI pattern | Route |
+|---|---|---|---|
+| Transition Copilot | Recruit | Document extraction and workflow orchestration | /transition |
+| Client Concierge | Serve | Retrieval over the household record and grounded generation | /concierge |
+| Book IQ | Grow | Reasoning and ranking over the book, plus outreach drafting | /bookiq |
+| Supervision in the loop | Comply | Generation plus claim classification and policy checks | /supervision |
+| LP Ops | Scale | Document extraction and exception detection | /lpo |
 
-## The demo
+The hub at / is the starting point. /method is generated from the modules: every recorded run, every evaluation, and every failure is read from the data files.
 
-Six screens, one seeded book of 12 households and 18 accounts across two
-fictional custodians:
+## Real model work
 
-| Screen | What it shows |
-|---|---|
-| Overview | The thesis, the three claims, and a guided tour |
-| Intake | Synthetic statements and a CRM export become structured fields with confidence, flags, and the Broker Protocol permission card |
-| Plan | Per-account form packets and signature counts, the critical path, and NIGO risks with reasons and remedies |
-| Review | Draft client and custodian communications with source-cited claims, policy checks, an approval gate, an evidence file, and an audit trail |
-| Value | The hours-returned model with every formula visible, plus the extraction eval |
-| About | What is real, what is simulated, the compliance map, and limitations |
+All model calls run on DeepSeek through its API, mostly DeepSeek Flash. Every output shown in the suite came from a real call. The recordings live in `data/cached/llm/` with the model, latency, token usage, and prompt hash. The app replays them by default so a reviewer never sees a spinner fail, and a deployment can make fresh calls inside a small daily budget.
+
+The evaluations are small and in-sample. They are shown with their failures on the module pages and on /method. Examples: the client assistant invented a holding in one refusal, the supervision classifier missed two performance claims that were framed as factual returns, and the LP extractor was too severe on two exceptions. Those are the interesting parts.
 
 ## What is real and what is simulated
 
 | Real | Simulated |
 |---|---|
-| The pipeline code: extraction, planning, drafting, policy checks, value model, eval harness | The book, statements, CRM export, trust and annuity summaries, custodians, and people |
-| The seeded questions and the rules asserted in tests | Any custodian connection or filing. None exists |
-| The in-sample extraction eval and its failures/scores | The extracted values at demo time. The demo runs a deterministic parser and template writer so a click never fails |
-
-The extraction eval scores 100 percent on 51 labelled fields **in-sample**, on
-synthetic statements the parser was built against. It is a build check, not a
-generalization claim, and the report says so.
-
-The pipeline carries a provider interface for a real model. Cached outputs are
-labelled `deterministic extractor` or `deterministic template` and never
-`live model, recorded` unless a real model call produced them.
-
-## Compliance notes
-
-- Client-facing drafts explain status, next steps, and required documents. They
-  do not recommend transactions, and a policy check blocks advice language.
-- A household without Broker Protocol consent cannot receive a client-facing
-  draft. That is a hard block in the workflow.
-- Communications about a client's accounts are firm records. The demo keeps the
-  evidence and the audit trail on the firm side and states the retention period.
-- All data is synthetic. No real client data, no vendor credentials, no
-  production screenshots.
+| The application code, the prompts, the recorded model calls, the evaluations, the approval and audit logic | The synthetic book, the client records, the LP packets, the marketing briefs, the fact sheet, and the people |
+| The deterministic data generators and the guardrail rules | Any custodian, CRM, private markets administrator, e-signature, wire, or delivery integration. None exists |
+| The modelled business arithmetic, with its assumptions on the page | The market context and the company's internal data. Nothing internal is used |
 
 ## Quick start
 
@@ -76,51 +45,58 @@ python3 -m pip install -r requirements.txt
 make run            # or: python3 -m uvicorn app.main:app --reload --port 8000
 ```
 
-Open http://127.0.0.1:8000. The app seeds a local `app.db` on first request
-from the files in `data/`. `make reset` clears it; `make test` runs the suite;
-`make eval` regenerates the extraction report. `/healthz` reports the engine
-path and the seeded book.
+Open http://127.0.0.1:8000. The app seeds a local `app.db` on first request and reads the recorded model outputs from `data/cached`. No API key is needed to run the demo.
 
-### Rebuild the synthetic dataset
+### Optional live model mode
 
 ```bash
-python3 scripts/generate_book.py
-python3 scripts/warm_cache.py
+export DEEPSEEK_API_KEY=...
+export SAVVY_LLM_MODE=live
+export SAVVY_LLM_DAILY_LIMIT=200
 ```
 
-The generator is deterministic. Two runs from any working directory produce
-byte-identical files.
+Live mode makes a real call only when a recording is missing or a page asks for a refresh, and every call counts against the daily budget.
 
-### Run the eval and the tests
+### Rebuild the data and recordings
 
 ```bash
-python3 scripts/run_eval.py
+python3 scripts/generate_book.py            # the shared synthetic book
+python3 scripts/generate_concierge.py       # each module's deterministic data
+python3 scripts/record_concierge.py         # live calls into data/cached, once
+python3 scripts/eval_concierge.py           # writes data/modules/concierge/eval.json
 python3 -m pytest -q
 ```
 
-The eval writes `data/eval/report.json`, which the Value screen reads.
+Each module has its own generate, record, and eval scripts. See `docs/architecture.md`.
 
 ## Deploy
 
-See [deploy/README.md](deploy/README.md). Two containers: the app and a Caddy
-proxy that terminates TLS and sets `noindex`.
+See [deploy/README.md](deploy/README.md). Two containers: the app and a Caddy proxy that terminates TLS and sets `noindex`. The DeepSeek key is passed at runtime through the environment and never baked into the image.
 
 ## Repository layout
 
 ```
-app/            FastAPI app, templates, static assets, and the pipeline
-data/           Deterministic synthetic book, documents, labels, and cache
-scripts/        Dataset generator, cache warmer, eval runner
-tests/          Guardrail, eval, value, and consent tests
-deploy/         Dockerfile, compose file, Caddy config
-docs/           Product brief and architecture notes
+app/
+  main.py                 hub, method page, and the Transition sample
+  platform/               DeepSeek client with recorded runs, audit, state, nav
+  modules/                one package per sample, each with routes and logic
+  templates/              suite layout, hub, method, Transition, and module templates
+  static/                 CSS and a small progressive-enhancement script
+data/
+  book.json               the shared synthetic book
+  documents/              synthetic statements and summaries for Transition
+  modules/                per-module synthetic data, labels, and eval results
+  cached/llm/             recorded live model calls, with model and usage metadata
+scripts/                  deterministic generators, recorders, eval runners
+tests/                    unit tests for the pipeline, recordings, and guards
+deploy/                   Dockerfile, compose file, Caddy config
+docs/                     the product brief and architecture notes
 ```
 
 ## Limitations
 
-- No custodian integration. The product orchestrates a process; the custodian
-  remains the system of record.
-- The seeded book is small and synthetic. Real books are messier.
-- The value model is arithmetic with labelled assumptions, not a measurement.
-- The Broker Protocol mechanics are simplified to the five permitted data fields
-  and the no-contact rule.
+- No custodian, CRM, or private markets connection. Every step that would touch the outside world is a draft.
+- The evaluations are small, in-sample, and written by the same person who wrote the prompts.
+- The business metrics are modelled arithmetic with labelled assumptions, not measurements.
+- The synthetic book is small and tidy. Real books are messier.
+- There is no authentication. The demo is unlisted and sets `noindex`, and it must not hold real data.
