@@ -581,6 +581,23 @@ def _module_evals() -> tuple[list[dict[str, Any]], list[str]]:
 
     evals: list[dict[str, Any]] = []
     failures: list[str] = []
+    transition_report = suite_config.REPO_ROOT / "data" / "eval" / "report.json"
+    if transition_report.is_file():
+        try:
+            payload = json.loads(transition_report.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            payload = {}
+        score = payload.get("accuracy")
+        evals.append(
+            {
+                "slug": "transition",
+                "label": "Transition Copilot",
+                "name": "Extraction field accuracy (in-sample)",
+                "cases": payload.get("field_count", "n/a"),
+                "score": f"{score * 100:.1f}%" if isinstance(score, float) else "n/a",
+                "shows_failures": bool(payload.get("failures")),
+            }
+        )
     modules_dir = suite_config.REPO_ROOT / "data" / "modules"
     if not modules_dir.is_dir():
         return evals, failures
