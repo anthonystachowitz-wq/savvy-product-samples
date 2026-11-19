@@ -12,7 +12,9 @@
   <link rel="stylesheet" href="/static/suite.css">
   <script defer src="/static/app.js"></script>
 </head>
-<body>
+<body class="has-suite-nav">
+  {% set suite_nav_fixed = true %}
+  {% include "_suite_nav.html" %}
   <div class="disclaimer" role="note">
     <div class="disclaimer-main">
       {{ icon("info", 13) }}

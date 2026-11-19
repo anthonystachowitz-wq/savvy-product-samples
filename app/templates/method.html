@@ -19,6 +19,13 @@
     </section>
 
     <section class="mod-panel">
+      <h3>How this was built in two days</h3>
+      <p>Two days, five modules, 179 tests. Transition Copilot was built the day before the other four. Every module shares the same platform: the DeepSeek client and recorded-run cache, the audit log, the module state, and the suite layout.</p>
+      <p>I made the product decisions, wrote or directed every prompt, defined the guardrails and the evaluations, reviewed the output, and ran the QA. AI coding agents wrote most of the code. That division of labour is the workflow I would bring to the role: the leverage is real, and so is the need to review, test, and keep a human accountable for what ships.</p>
+      <p class="mod-note">This is a work sample, not a proposal for Savvy's roadmap. You may already have some of this internally. If so, the useful part is the method: what I noticed, what I chose, how fast it came together, and how the controls are built.</p>
+    </section>
+
+    <section class="mod-panel">
       <h3>Five AI patterns, one per sample</h3>
       <table class="mod-table">
         <thead><tr><th>Sample</th><th>Pattern</th><th>What the model does</th></tr></thead>
@@ -89,6 +96,15 @@
         <li>Client-facing work for a household without protocol consent is blocked on the server.</li>
         <li>Advice language is blocked. Anything that looks like a recommendation routes to the adviser.</li>
         <li>Each approval writes an evidence record and an audit event.</li>
+      </ul>
+    </section>
+
+    <section class="mod-panel">
+      <h3>What this shows, and what it does not</h3>
+      <ul class="mod-list">
+        <li><strong>Shows:</strong> speed with AI, product judgment across five surfaces, control design, and honesty about model failures.</li>
+        <li><strong>Does not show:</strong> production engineering depth, a held-out benchmark, or any custodian, CRM, or private markets integration.</li>
+        <li><strong>The interview question I expect:</strong> what did you do versus the agents. Answer: every product decision, prompt, guardrail, evaluation, and review. The agents typed most of it, and I am accountable for all of it.</li>
       </ul>
     </section>
 

@@ -1,5 +1,5 @@
 {% set current = active|default('') %}
-<div class="suite-nav">
+<div class="suite-nav{% if suite_nav_fixed|default(false) %} suite-nav--fixed{% endif %}">
   <a class="suite-brand" href="/">
     <span class="suite-brand-mark">5</span>
     <span>Savvy product samples</span>

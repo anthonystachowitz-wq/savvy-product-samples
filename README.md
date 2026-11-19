@@ -22,6 +22,10 @@ Savvy's own public hiring and product signals point at five levers: recruit advi
 
 The hub at / is the starting point. /method is generated from the modules: every recorded run, every evaluation, and every failure is read from the data files.
 
+## Built in two days
+
+AI coding agents wrote most of the code in this repository. The product decisions, prompts, guardrails, evaluations, review, and QA were mine. Five modules, 179 tests, 54 recorded model calls, and a deployed demo in two days. That division of labour is the part I would bring to the role.
+
 ## Real model work
 
 All model calls run on DeepSeek through its API, mostly DeepSeek Flash. Every output shown in the suite came from a real call. The recordings live in `data/cached/llm/` with the model, latency, token usage, and prompt hash. The app replays them by default so a reviewer never sees a spinner fail, and a deployment can make fresh calls inside a small daily budget.

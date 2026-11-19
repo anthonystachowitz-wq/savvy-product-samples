@@ -33,6 +33,8 @@ A working suite, not a deck. One synthetic book of 12 households and 18 accounts
 
 The suite is 54 recorded model calls, about 99,000 tokens, with a mean latency around two seconds. The model is not the product. The workflow, the data underneath it, and the controls are.
 
+The build method is part of the sample. It was built over two days. AI coding agents wrote most of the code. I made the product decisions, wrote or directed every prompt, defined the guardrails and the evaluations, reviewed every module, and ran the QA. That division of labour is what I would bring to the role: high leverage, with a person accountable for what ships.
+
 ## The evaluations, including what failed
 
 Small evaluations, in-sample, and shown with their failures rather than a perfect score.
@@ -104,4 +106,4 @@ No custodian or CRM integration, no delivery or filing, no advice, no real clien
 
 Demo: https://savvy-suite.3-236-129-20.sslip.io. Code: https://github.com/anthonystachowitz-wq/savvy-product-samples.
 
-If any of this is wrong, I would like to hear which part.
+This is a work sample, not a proposal for Savvy's roadmap. Savvy may already have some of this internally. If so, the useful part is the method: what I noticed, what I chose, how fast it came together, and how the controls are built.
