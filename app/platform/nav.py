@@ -17,7 +17,7 @@ SUITE_MODULES = [
         "label": "Client Concierge",
         "lever": "Serve",
         "url": "/concierge",
-        "status": "in build",
+        "status": "live",
         "ai": "Retrieval over the household record and grounded generation",
         "one_liner": "Answers a client's own questions from their record, with citations, and routes anything that is advice to the adviser.",
         "metric": "Fewer routine questions per adviser, modelled",

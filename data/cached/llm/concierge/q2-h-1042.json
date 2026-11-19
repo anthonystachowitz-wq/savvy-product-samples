@@ -1,0 +1,21 @@
+{
+  "module": "concierge",
+  "key": "q2-h-1042",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 3157,
+    "completion_tokens": 305,
+    "total_tokens": 3462,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "prompt_cache_hit_tokens": 256,
+    "prompt_cache_miss_tokens": 2901
+  },
+  "latency_ms": 1977,
+  "created_at": "2026-11-19T05:55:41+00:00",
+  "system_sha": "b8a94d3f7772eeaa",
+  "prompt_sha": "557c35b388349fea",
+  "text": "{\"intent\": \"explain\", \"answer\": \"The record shows fees billed in 2026 of USD 38,382.39, across 3 fee charges billed this year. The most recent charge was USD 13,132.50 on 2026-09-30, and the next charge date is 2026-12-31. The advisory fee is 0.85% annual, billed quarterly in arrears on quarter-end account value. Your last meeting note shows you asked for a written fee summary, so your adviser can provide that detail.\", \"citations\": [{\"field\": \"fees.ytd_total\", \"value\": \"USD 38,382.39\"}, {\"field\": \"fees.charges_billed_ytd\", \"value\": \"3\"}, {\"field\": \"fees.last_charge_amount\", \"value\": \"USD 13,132.50\"}, {\"field\": \"fees.last_charge_date\", \"value\": \"2026-09-30\"}, {\"field\": \"fees.next_charge_date\", \"value\": \"2026-12-31\"}, {\"field\": \"fees.annual_rate_pct\", \"value\": \"0.85%\"}, {\"field\": \"fees.billing_frequency\", \"value\": \"Quarterly, in arrears\"}, {\"field\": \"fees.billing_basis\", \"value\": \"Quarter-end account value\"}], \"route_to_advisor\": false}"
+}

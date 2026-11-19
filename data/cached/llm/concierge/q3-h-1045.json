@@ -1,0 +1,21 @@
+{
+  "module": "concierge",
+  "key": "q3-h-1045",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 3018,
+    "completion_tokens": 136,
+    "total_tokens": 3154,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "prompt_cache_hit_tokens": 256,
+    "prompt_cache_miss_tokens": 2762
+  },
+  "latency_ms": 1448,
+  "created_at": "2026-11-19T05:55:49+00:00",
+  "system_sha": "b8a94d3f7772eeaa",
+  "prompt_sha": "669a67fb47940c59",
+  "text": "{\"intent\": \"advice\", \"answer\": \"This is a recommendation question about selling shares and buying bonds, so I am routing it to your adviser rather than answering it here. Your adviser can review your holdings, including the individual brokerage (TOD) account xxxx-6128 and the variable annuity xxxx-8820, against your goals and get back to you.\", \"citations\": [{\"field\": \"accounts.A-2205.masked_number\", \"value\": \"xxxx-6128\"}, {\"field\": \"accounts.A-2206.masked_number\", \"value\": \"xxxx-8820\"}], \"route_to_advisor\": true}"
+}

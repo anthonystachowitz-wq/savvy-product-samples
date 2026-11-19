@@ -1,0 +1,257 @@
+{
+  "questions": [
+    {
+      "id": "q1",
+      "order": 1,
+      "preset": true,
+      "topic": "performance",
+      "label": "Performance, last quarter",
+      "text": "How did my portfolio perform last quarter?",
+      "expected_intent": "explain"
+    },
+    {
+      "id": "q2",
+      "order": 2,
+      "preset": true,
+      "topic": "fees",
+      "label": "Fees this year",
+      "text": "What fees did I pay this year?",
+      "expected_intent": "explain"
+    },
+    {
+      "id": "q3",
+      "order": 3,
+      "preset": true,
+      "topic": "advice",
+      "label": "Advice, sell and buy",
+      "text": "Should I sell my Nvidia shares and buy bonds?",
+      "expected_intent": "advice"
+    },
+    {
+      "id": "q4",
+      "order": 4,
+      "preset": true,
+      "topic": "transaction",
+      "label": "Move money",
+      "text": "Please move USD 75,000 from my brokerage account to my bank account.",
+      "expected_intent": "transaction"
+    },
+    {
+      "id": "q5",
+      "order": 5,
+      "preset": true,
+      "topic": "documents",
+      "label": "Trust account documents",
+      "text": "What documents do you have for my trust account?",
+      "expected_intent": "explain"
+    },
+    {
+      "id": "q6",
+      "order": 6,
+      "preset": false,
+      "topic": "trust_terms",
+      "label": "Trust terms",
+      "text": "Who is the trustee of my trust, and what is the distribution standard?",
+      "expected_intent": "explain"
+    }
+  ],
+  "router": [
+    {
+      "topic": "advice",
+      "question_id": "q3",
+      "keywords": [
+        "should",
+        "recommend",
+        "advice",
+        "sell",
+        "buy",
+        "rebalance",
+        "allocate",
+        "switch"
+      ]
+    },
+    {
+      "topic": "transaction",
+      "question_id": "q4",
+      "keywords": [
+        "move",
+        "transfer",
+        "wire",
+        "withdraw",
+        "deposit",
+        "send"
+      ]
+    },
+    {
+      "topic": "trust_terms",
+      "question_id": "q6",
+      "keywords": [
+        "trustee",
+        "distribution standard",
+        "beneficiaries",
+        "trust terms"
+      ]
+    },
+    {
+      "topic": "documents",
+      "question_id": "q5",
+      "keywords": [
+        "document",
+        "trust",
+        "statement",
+        "paperwork",
+        "on file"
+      ]
+    },
+    {
+      "topic": "fees",
+      "question_id": "q2",
+      "keywords": [
+        "fee",
+        "fees",
+        "charged",
+        "cost"
+      ]
+    },
+    {
+      "topic": "performance",
+      "question_id": "q1",
+      "keywords": [
+        "perform",
+        "performance",
+        "return",
+        "quarter",
+        "gain",
+        "balance"
+      ]
+    }
+  ],
+  "keys": [
+    {
+      "question_id": "q1",
+      "household_id": "H-1042",
+      "household_name": "Rowan Household",
+      "key": "q1-h-1042"
+    },
+    {
+      "question_id": "q1",
+      "household_id": "H-1043",
+      "household_name": "Calloway Household",
+      "key": "q1-h-1043"
+    },
+    {
+      "question_id": "q1",
+      "household_id": "H-1045",
+      "household_name": "Voss Household",
+      "key": "q1-h-1045"
+    },
+    {
+      "question_id": "q2",
+      "household_id": "H-1042",
+      "household_name": "Rowan Household",
+      "key": "q2-h-1042"
+    },
+    {
+      "question_id": "q2",
+      "household_id": "H-1043",
+      "household_name": "Calloway Household",
+      "key": "q2-h-1043"
+    },
+    {
+      "question_id": "q2",
+      "household_id": "H-1045",
+      "household_name": "Voss Household",
+      "key": "q2-h-1045"
+    },
+    {
+      "question_id": "q3",
+      "household_id": "H-1042",
+      "household_name": "Rowan Household",
+      "key": "q3-h-1042"
+    },
+    {
+      "question_id": "q3",
+      "household_id": "H-1043",
+      "household_name": "Calloway Household",
+      "key": "q3-h-1043"
+    },
+    {
+      "question_id": "q3",
+      "household_id": "H-1045",
+      "household_name": "Voss Household",
+      "key": "q3-h-1045"
+    },
+    {
+      "question_id": "q4",
+      "household_id": "H-1042",
+      "household_name": "Rowan Household",
+      "key": "q4-h-1042"
+    },
+    {
+      "question_id": "q4",
+      "household_id": "H-1043",
+      "household_name": "Calloway Household",
+      "key": "q4-h-1043"
+    },
+    {
+      "question_id": "q4",
+      "household_id": "H-1045",
+      "household_name": "Voss Household",
+      "key": "q4-h-1045"
+    },
+    {
+      "question_id": "q5",
+      "household_id": "H-1042",
+      "household_name": "Rowan Household",
+      "key": "q5-h-1042"
+    },
+    {
+      "question_id": "q5",
+      "household_id": "H-1043",
+      "household_name": "Calloway Household",
+      "key": "q5-h-1043"
+    },
+    {
+      "question_id": "q5",
+      "household_id": "H-1045",
+      "household_name": "Voss Household",
+      "key": "q5-h-1045"
+    },
+    {
+      "question_id": "q6",
+      "household_id": "H-1042",
+      "household_name": "Rowan Household",
+      "key": "q6-h-1042"
+    },
+    {
+      "question_id": "q6",
+      "household_id": "H-1043",
+      "household_name": "Calloway Household",
+      "key": "q6-h-1043"
+    },
+    {
+      "question_id": "q6",
+      "household_id": "H-1045",
+      "household_name": "Voss Household",
+      "key": "q6-h-1045"
+    }
+  ],
+  "households": [
+    {
+      "id": "H-1042",
+      "display_name": "Rowan Household",
+      "consent_status": "received"
+    },
+    {
+      "id": "H-1043",
+      "display_name": "Calloway Household",
+      "consent_status": "pending"
+    },
+    {
+      "id": "H-1045",
+      "display_name": "Voss Household",
+      "consent_status": "pending"
+    }
+  ],
+  "free_text_note": "Fifteen question and household pairs are recorded. Free text is matched to the closest recorded question by keyword. Anything else is shown as a recording gap rather than a fresh answer."
+}

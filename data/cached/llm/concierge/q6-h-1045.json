@@ -1,0 +1,21 @@
+{
+  "module": "concierge",
+  "key": "q6-h-1045",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 3022,
+    "completion_tokens": 160,
+    "total_tokens": 3182,
+    "prompt_tokens_details": {
+      "cached_tokens": 2816
+    },
+    "prompt_cache_hit_tokens": 2816,
+    "prompt_cache_miss_tokens": 206
+  },
+  "latency_ms": 1935,
+  "created_at": "2026-11-19T05:56:06+00:00",
+  "system_sha": "b8a94d3f7772eeaa",
+  "prompt_sha": "34643e66f042b323",
+  "text": "{\"intent\": \"unsupported\", \"answer\": \"The record does not name a trustee or state a distribution standard for any trust. The only trust-related entry is the custodian on the variable annuity account xxxx-8820, listed as Morrow Trust, which is a custodian name, not a trustee designation. No trust document is among the documents on file. Those details would need to come from the trust document itself.\", \"citations\": [{\"field\": \"accounts.A-2206.custodian\", \"value\": \"Morrow Trust\"}, {\"field\": \"accounts.A-2206.masked_number\", \"value\": \"xxxx-8820\"}, {\"field\": \"household.document_count\", \"value\": \"3\"}], \"route_to_advisor\": false}"
+}

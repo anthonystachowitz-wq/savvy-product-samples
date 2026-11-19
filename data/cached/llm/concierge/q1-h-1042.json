@@ -1,0 +1,21 @@
+{
+  "module": "concierge",
+  "key": "q1-h-1042",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 3157,
+    "completion_tokens": 314,
+    "total_tokens": 3471,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "prompt_cache_hit_tokens": 256,
+    "prompt_cache_miss_tokens": 2901
+  },
+  "latency_ms": 1985,
+  "created_at": "2026-11-19T05:55:35+00:00",
+  "system_sha": "b8a94d3f7772eeaa",
+  "prompt_sha": "dbb4b05fa91f3966",
+  "text": "{\"intent\": \"explain\", \"answer\": \"For Q3 2026 (2026-07-01 to 2026-09-30), the household began at USD 5,952,300.00 and ended at USD 6,180,000.00. Net contributions were USD 38,700.00 and market change was USD 189,000.00. The return for the period was 3.18%, compared with 2.90% for the 60/40 composite benchmark. This is a draft for your adviser to review.\", \"citations\": [{\"field\": \"performance.period\", \"value\": \"Q3 2026 (2026-07-01 to 2026-09-30)\"}, {\"field\": \"performance.beginning_value\", \"value\": \"USD 5,952,300.00\"}, {\"field\": \"performance.ending_value\", \"value\": \"USD 6,180,000.00\"}, {\"field\": \"performance.net_contributions\", \"value\": \"USD 38,700.00\"}, {\"field\": \"performance.market_change\", \"value\": \"USD 189,000.00\"}, {\"field\": \"performance.return_pct\", \"value\": \"3.18%\"}, {\"field\": \"performance.benchmark_pct\", \"value\": \"2.90%\"}, {\"field\": \"performance.benchmark_name\", \"value\": \"60/40 composite\"}], \"route_to_advisor\": false}"
+}

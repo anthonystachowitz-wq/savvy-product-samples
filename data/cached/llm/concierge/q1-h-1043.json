@@ -1,0 +1,21 @@
+{
+  "module": "concierge",
+  "key": "q1-h-1043",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 2451,
+    "completion_tokens": 358,
+    "total_tokens": 2809,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "prompt_cache_hit_tokens": 256,
+    "prompt_cache_miss_tokens": 2195
+  },
+  "latency_ms": 1915,
+  "created_at": "2026-11-19T05:55:37+00:00",
+  "system_sha": "b8a94d3f7772eeaa",
+  "prompt_sha": "3ea86509950f0ce0",
+  "text": "{\"intent\": \"explain\", \"answer\": \"For Q3 2026 (2026-07-01 to 2026-09-30), the household began at USD 4,141,800.00 and ended at USD 4,250,000.00, a market change of USD 108,200.00 with net contributions of USD 0.00. The return for the period was 2.61%, compared with 2.90% for the 60/40 composite benchmark. These figures cover the irrevocable trust account xxxx-7715.\", \"citations\": [{\"field\": \"performance.period\", \"value\": \"Q3 2026 (2026-07-01 to 2026-09-30)\"}, {\"field\": \"performance.beginning_value\", \"value\": \"USD 4,141,800.00\"}, {\"field\": \"performance.ending_value\", \"value\": \"USD 4,250,000.00\"}, {\"field\": \"performance.market_change\", \"value\": \"USD 108,200.00\"}, {\"field\": \"performance.net_contributions\", \"value\": \"USD 0.00\"}, {\"field\": \"performance.return_pct\", \"value\": \"2.61%\"}, {\"field\": \"performance.benchmark_pct\", \"value\": \"2.90%\"}, {\"field\": \"performance.benchmark_name\", \"value\": \"60/40 composite\"}, {\"field\": \"accounts.A-2203.masked_number\", \"value\": \"xxxx-7715\"}, {\"field\": \"accounts.A-2203.type\", \"value\": \"Irrevocable trust\"}], \"route_to_advisor\": false}"
+}

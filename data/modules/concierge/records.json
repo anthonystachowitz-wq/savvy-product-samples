@@ -1,0 +1,2970 @@
+{
+  "module": "concierge",
+  "as_of": "2026-11-18",
+  "adviser": "Dana Whitfield",
+  "firm_book": "book-whitfield",
+  "source": "data/book.json households, accounts, positions, documents and extractions, plus synthetic record extensions",
+  "consent_rule": "A household without Broker Protocol consent cannot have a client-facing answer released.",
+  "disclosure": "This answer explains the record on file as of 2026-11-18. It is not investment, tax, or legal advice. Figures come from the custodian records listed in the citations. Your adviser reviews every answer before it is released.",
+  "documents_excluded": [
+    {
+      "id": "D-4",
+      "reason": "Book-wide CRM export. No household link, so it is not shown as a household document."
+    }
+  ],
+  "households": [
+    {
+      "id": "H-1042",
+      "display_name": "Rowan Household",
+      "consent_status": "received",
+      "consent_note": "Broker Protocol consent is on file for this household.",
+      "relationship": "Client since 2016",
+      "notes": "Two generations of accounts",
+      "total_cents": 618000000,
+      "total_value": "USD 6,180,000.00",
+      "accounts": [
+        {
+          "id": "A-2201",
+          "custodian": "Alder Clearing",
+          "account_type": "Joint brokerage",
+          "registration": "JTWROS",
+          "masked_number": "xxxx-4471",
+          "value_cents": 214631844,
+          "value": "USD 2,146,318.44",
+          "holdings": [
+            {
+              "symbol": "VTI",
+              "name": "Total market ETF",
+              "value_cents": 85316400,
+              "value": "USD 853,164.00",
+              "transferable": true,
+              "weight_pct": "13.81%"
+            },
+            {
+              "symbol": "VXUS",
+              "name": "Total international ETF",
+              "value_cents": 17444000,
+              "value": "USD 174,440.00",
+              "transferable": true,
+              "weight_pct": "2.82%"
+            },
+            {
+              "symbol": "BND",
+              "name": "Total bond market ETF",
+              "value_cents": 35448000,
+              "value": "USD 354,480.00",
+              "transferable": true,
+              "weight_pct": "5.74%"
+            },
+            {
+              "symbol": "VEA",
+              "name": "Developed markets ETF",
+              "value_cents": 36500000,
+              "value": "USD 365,000.00",
+              "transferable": true,
+              "weight_pct": "5.91%"
+            },
+            {
+              "symbol": "NBMI",
+              "name": "Northbridge Materials",
+              "value_cents": 10098000,
+              "value": "USD 100,980.00",
+              "transferable": true,
+              "weight_pct": "1.63%"
+            },
+            {
+              "symbol": "CHSY",
+              "name": "Calder Health Systems",
+              "value_cents": 11934000,
+              "value": "USD 119,340.00",
+              "transferable": true,
+              "weight_pct": "1.93%"
+            },
+            {
+              "symbol": "CASH",
+              "name": "Cash and cash equivalents",
+              "value_cents": 17891444,
+              "value": "USD 178,914.44",
+              "transferable": true,
+              "weight_pct": "2.90%"
+            }
+          ]
+        },
+        {
+          "id": "A-2202",
+          "custodian": "Morrow Trust",
+          "account_type": "Revocable living trust",
+          "registration": "Revocable trust",
+          "masked_number": "xxxx-3390",
+          "value_cents": 403368156,
+          "value": "USD 4,033,681.56",
+          "holdings": [
+            {
+              "symbol": "VTI",
+              "name": "Total market ETF",
+              "value_cents": 175008000,
+              "value": "USD 1,750,080.00",
+              "transferable": true,
+              "weight_pct": "28.32%"
+            },
+            {
+              "symbol": "VXUS",
+              "name": "Total international ETF",
+              "value_cents": 29904000,
+              "value": "USD 299,040.00",
+              "transferable": true,
+              "weight_pct": "4.84%"
+            },
+            {
+              "symbol": "BND",
+              "name": "Total bond market ETF",
+              "value_cents": 53172000,
+              "value": "USD 531,720.00",
+              "transferable": true,
+              "weight_pct": "8.60%"
+            },
+            {
+              "symbol": "VWO",
+              "name": "Emerging markets ETF",
+              "value_cents": 26541000,
+              "value": "USD 265,410.00",
+              "transferable": true,
+              "weight_pct": "4.29%"
+            },
+            {
+              "symbol": "HBFX",
+              "name": "Halcyon Balanced Fund, Class A",
+              "value_cents": 99892000,
+              "value": "USD 998,920.00",
+              "transferable": true,
+              "weight_pct": "16.16%"
+            },
+            {
+              "symbol": "CASH",
+              "name": "Cash and cash equivalents",
+              "value_cents": 18851156,
+              "value": "USD 188,511.56",
+              "transferable": true,
+              "weight_pct": "3.05%"
+            }
+          ]
+        }
+      ],
+      "performance": {
+        "quarter": "Q3 2026",
+        "period": "Q3 2026 (2026-07-01 to 2026-09-30)",
+        "beginning_cents": 595230000,
+        "beginning_value": "USD 5,952,300.00",
+        "net_contributions_cents": 3870000,
+        "net_contributions": "USD 38,700.00",
+        "market_change_cents": 18900000,
+        "market_change": "USD 189,000.00",
+        "ending_cents": 618000000,
+        "ending_value": "USD 6,180,000.00",
+        "return_pct": "3.18%",
+        "benchmark_pct": "2.90%",
+        "benchmark_name": "60/40 composite"
+      },
+      "fees": {
+        "annual_rate_pct": "0.85%",
+        "billing_frequency": "Quarterly, in arrears",
+        "billing_basis": "Quarter-end account value",
+        "charges": [
+          {
+            "date": "2026-03-31",
+            "basis_cents": 593000000,
+            "basis": "USD 5,930,000.00",
+            "amount_cents": 1260125,
+            "amount": "USD 12,601.25"
+          },
+          {
+            "date": "2026-06-30",
+            "basis_cents": 595230000,
+            "basis": "USD 5,952,300.00",
+            "amount_cents": 1264864,
+            "amount": "USD 12,648.64"
+          },
+          {
+            "date": "2026-09-30",
+            "basis_cents": 618000000,
+            "basis": "USD 6,180,000.00",
+            "amount_cents": 1313250,
+            "amount": "USD 13,132.50"
+          }
+        ],
+        "charges_billed_ytd": 3,
+        "ytd_total_cents": 3838239,
+        "ytd_total": "USD 38,382.39",
+        "last_charge_date": "2026-09-30",
+        "last_charge_amount": "USD 13,132.50",
+        "next_charge_date": "2026-12-31"
+      },
+      "goals": [
+        {
+          "id": "G-1",
+          "label": "Retirement income at 65",
+          "target_cents": 750000000,
+          "target": "USD 7,500,000.00",
+          "target_date": "2033-06-01",
+          "funded_cents": 618000000,
+          "funded": "USD 6,180,000.00",
+          "funded_pct": "82.4%",
+          "status": "on track"
+        },
+        {
+          "id": "G-2",
+          "label": "Grandchild education fund",
+          "target_cents": 18000000,
+          "target": "USD 180,000.00",
+          "target_date": "2031-09-01",
+          "funded_cents": 9640000,
+          "funded": "USD 96,400.00",
+          "funded_pct": "53.6%",
+          "status": "needs review"
+        },
+        {
+          "id": "G-3",
+          "label": "Emergency reserve",
+          "target_cents": 15000000,
+          "target": "USD 150,000.00",
+          "target_date": "2026-12-31",
+          "funded_cents": 17891444,
+          "funded": "USD 178,914.44",
+          "funded_pct": "119.3%",
+          "status": "funded"
+        }
+      ],
+      "meeting": {
+        "date": "2026-10-22",
+        "kind": "Annual review",
+        "attendees": "Dana Whitfield, Jordan Rowan",
+        "note": "Reviewed the trust registration and the 2027 distribution plan. Client asked for a written fee summary.",
+        "next_review": "2027-04-20"
+      },
+      "held_away": [
+        {
+          "id": "HA-1",
+          "custodian": "Northline Retirement Services",
+          "account_type": "Employer 401(k)",
+          "value_cents": 41260000,
+          "value": "USD 412,600.00",
+          "note": "Plan is outside the book. No rollover requested."
+        },
+        {
+          "id": "HA-2",
+          "custodian": "Branford Savings",
+          "account_type": "Cash reserve",
+          "value_cents": 8500000,
+          "value": "USD 85,000.00",
+          "note": "Emergency reserve outside the book."
+        }
+      ],
+      "held_away_total_cents": 49760000,
+      "held_away_total": "USD 497,600.00",
+      "documents": [
+        {
+          "id": "DOC-R1",
+          "kind": "advisory_agreement",
+          "custodian": "Savvy",
+          "filename": "rowan-advisory-agreement-2016-04-11.pdf",
+          "received_at": "2016-04-11",
+          "account_id": "A-2201",
+          "status": "current",
+          "source": "record extension, synthetic",
+          "summary": [
+            [
+              "Effective date",
+              "2016-04-11"
+            ],
+            [
+              "Service standard",
+              "Annual review, quarterly statements"
+            ],
+            [
+              "Fee schedule",
+              "0.85% annual, billed quarterly in arrears"
+            ]
+          ]
+        },
+        {
+          "id": "D-1",
+          "kind": "statement",
+          "custodian": "Alder Clearing",
+          "filename": "alder-statement-2026-10-rowan.txt",
+          "received_at": "2026-11-05",
+          "account_id": "A-2201",
+          "status": "on file",
+          "source": "data/book.json documents",
+          "summary": [
+            [
+              "Registration",
+              "JTWROS"
+            ],
+            [
+              "Account number",
+              "xxxx-4471"
+            ],
+            [
+              "Statement period",
+              "2026-10-01 to 2026-10-31"
+            ],
+            [
+              "Account value",
+              "USD 2,146,318.44"
+            ]
+          ]
+        },
+        {
+          "id": "D-3",
+          "kind": "statement",
+          "custodian": "Morrow Trust",
+          "filename": "morrow-statement-2026-10-rowan-trust.txt",
+          "received_at": "2026-11-07",
+          "account_id": "A-2202",
+          "status": "on file",
+          "source": "data/book.json documents",
+          "summary": [
+            [
+              "Registration",
+              "Individual"
+            ],
+            [
+              "Account number",
+              "xxxx-3390"
+            ],
+            [
+              "Statement period",
+              "2026-10-01 to 2026-10-31"
+            ],
+            [
+              "Account value",
+              "USD 4,033,681.56"
+            ]
+          ]
+        }
+      ],
+      "fields": [
+        {
+          "path": "household.display_name",
+          "label": "Household",
+          "value": "Rowan Household",
+          "kind": "text"
+        },
+        {
+          "path": "household.consent_status",
+          "label": "Consent status",
+          "value": "received",
+          "kind": "text"
+        },
+        {
+          "path": "household.relationship",
+          "label": "Client relationship",
+          "value": "Client since 2016",
+          "kind": "text"
+        },
+        {
+          "path": "household.as_of",
+          "label": "Record as of",
+          "value": "2026-11-18",
+          "kind": "date"
+        },
+        {
+          "path": "household.total_value",
+          "label": "Total value across accounts",
+          "value": "USD 6,180,000.00",
+          "kind": "money"
+        },
+        {
+          "path": "household.account_count",
+          "label": "Accounts on the record",
+          "value": "2",
+          "kind": "count"
+        },
+        {
+          "path": "household.held_away_total",
+          "label": "Held-away assets",
+          "value": "USD 497,600.00",
+          "kind": "money"
+        },
+        {
+          "path": "household.document_count",
+          "label": "Documents on file",
+          "value": "3",
+          "kind": "count"
+        },
+        {
+          "path": "accounts.A-2201.type",
+          "label": "A-2201 account type",
+          "value": "Joint brokerage",
+          "kind": "text"
+        },
+        {
+          "path": "accounts.A-2201.custodian",
+          "label": "A-2201 custodian",
+          "value": "Alder Clearing",
+          "kind": "text"
+        },
+        {
+          "path": "accounts.A-2201.masked_number",
+          "label": "A-2201 account number",
+          "value": "xxxx-4471",
+          "kind": "text"
+        },
+        {
+          "path": "accounts.A-2201.value",
+          "label": "A-2201 value",
+          "value": "USD 2,146,318.44",
+          "kind": "money"
+        },
+        {
+          "path": "holdings.A-2201.VTI.name",
+          "label": "VTI name",
+          "value": "Total market ETF",
+          "kind": "text"
+        },
+        {
+          "path": "holdings.A-2201.VTI.value",
+          "label": "VTI value",
+          "value": "USD 853,164.00",
+          "kind": "money"
+        },
+        {
+          "path": "holdings.A-2201.VTI.weight_pct",
+          "label": "VTI share of household",
+          "value": "13.81%",
+          "kind": "percent"
+        },
+        {
+          "path": "holdings.A-2201.VXUS.name",
+          "label": "VXUS name",
+          "value": "Total international ETF",
+          "kind": "text"
+        },
+        {
+          "path": "holdings.A-2201.VXUS.value",
+          "label": "VXUS value",
+          "value": "USD 174,440.00",
+          "kind": "money"
+        },
+        {
+          "path": "holdings.A-2201.VXUS.weight_pct",
+          "label": "VXUS share of household",
+          "value": "2.82%",
+          "kind": "percent"
+        },
+        {
+          "path": "holdings.A-2201.BND.name",
+          "label": "BND name",
+          "value": "Total bond market ETF",
+          "kind": "text"
+        },
+        {
+          "path": "holdings.A-2201.BND.value",
+          "label": "BND value",
+          "value": "USD 354,480.00",
+          "kind": "money"
+        },
+        {
+          "path": "holdings.A-2201.BND.weight_pct",
+          "label": "BND share of household",
+          "value": "5.74%",
+          "kind": "percent"
+        },
+        {
+          "path": "holdings.A-2201.VEA.name",
+          "label": "VEA name",
+          "value": "Developed markets ETF",
+          "kind": "text"
+        },
+        {
+          "path": "holdings.A-2201.VEA.value",
+          "label": "VEA value",
+          "value": "USD 365,000.00",
+          "kind": "money"
+        },
+        {
+          "path": "holdings.A-2201.VEA.weight_pct",
+          "label": "VEA share of household",
+          "value": "5.91%",
+          "kind": "percent"
+        },
+        {
+          "path": "holdings.A-2201.NBMI.name",
+          "label": "NBMI name",
+          "value": "Northbridge Materials",
+          "kind": "text"
+        },
+        {
+          "path": "holdings.A-2201.NBMI.value",
+          "label": "NBMI value",
+          "value": "USD 100,980.00",
+          "kind": "money"
+        },
+        {
+          "path": "holdings.A-2201.NBMI.weight_pct",
+          "label": "NBMI share of household",
+          "value": "1.63%",
+          "kind": "percent"
+        },
+        {
+          "path": "holdings.A-2201.CHSY.name",
+          "label": "CHSY name",
+          "value": "Calder Health Systems",
+          "kind": "text"
+        },
+        {
+          "path": "holdings.A-2201.CHSY.value",
+          "label": "CHSY value",
+          "value": "USD 119,340.00",
+          "kind": "money"
+        },
+        {
+          "path": "holdings.A-2201.CHSY.weight_pct",
+          "label": "CHSY share of household",
+          "value": "1.93%",
+          "kind": "percent"
+        },
+        {
+          "path": "holdings.A-2201.CASH.name",
+          "label": "CASH name",
+          "value": "Cash and cash equivalents",
+          "kind": "text"
+        },
+        {
+          "path": "holdings.A-2201.CASH.value",
+          "label": "CASH value",
+          "value": "USD 178,914.44",
+          "kind": "money"
+        },
+        {
+          "path": "holdings.A-2201.CASH.weight_pct",
+          "label": "CASH share of household",
+          "value": "2.90%",
+          "kind": "percent"
+        },
+        {
+          "path": "accounts.A-2202.type",
+          "label": "A-2202 account type",
+          "value": "Revocable living trust",
+          "kind": "text"
+        },
+        {
+          "path": "accounts.A-2202.custodian",
+          "label": "A-2202 custodian",
+          "value": "Morrow Trust",
+          "kind": "text"
+        },
+        {
+          "path": "accounts.A-2202.masked_number",
+          "label": "A-2202 account number",
+          "value": "xxxx-3390",
+          "kind": "text"
+        },
+        {
+          "path": "accounts.A-2202.value",
+          "label": "A-2202 value",
+          "value": "USD 4,033,681.56",
+          "kind": "money"
+        },
+        {
+          "path": "holdings.A-2202.VTI.name",
+          "label": "VTI name",
+          "value": "Total market ETF",
+          "kind": "text"
+        },
+        {
+          "path": "holdings.A-2202.VTI.value",
+          "label": "VTI value",
+          "value": "USD 1,750,080.00",
+          "kind": "money"
+        },
+        {
+          "path": "holdings.A-2202.VTI.weight_pct",
+          "label": "VTI share of household",
+          "value": "28.32%",
+          "kind": "percent"
+        },
+        {
+          "path": "holdings.A-2202.VXUS.name",
+          "label": "VXUS name",
+          "value": "Total international ETF",
+          "kind": "text"
+        },
+        {
+          "path": "holdings.A-2202.VXUS.value",
+          "label": "VXUS value",
+          "value": "USD 299,040.00",
+          "kind": "money"
+        },
+        {
+          "path": "holdings.A-2202.VXUS.weight_pct",
+          "label": "VXUS share of household",
+          "value": "4.84%",
+          "kind": "percent"
+        },
+        {
+          "path": "holdings.A-2202.BND.name",
+          "label": "BND name",
+          "value": "Total bond market ETF",
+          "kind": "text"
+        },
+        {
+          "path": "holdings.A-2202.BND.value",
+          "label": "BND value",
+          "value": "USD 531,720.00",
+          "kind": "money"
+        },
+        {
+          "path": "holdings.A-2202.BND.weight_pct",
+          "label": "BND share of household",
+          "value": "8.60%",
+          "kind": "percent"
+        },
+        {
+          "path": "holdings.A-2202.VWO.name",
+          "label": "VWO name",
+          "value": "Emerging markets ETF",
+          "kind": "text"
+        },
+        {
+          "path": "holdings.A-2202.VWO.value",
+          "label": "VWO value",
+          "value": "USD 265,410.00",
+          "kind": "money"
+        },
+        {
+          "path": "holdings.A-2202.VWO.weight_pct",
+          "label": "VWO share of household",
+          "value": "4.29%",
+          "kind": "percent"
+        },
+        {
+          "path": "holdings.A-2202.HBFX.name",
+          "label": "HBFX name",
+          "value": "Halcyon Balanced Fund, Class A",
+          "kind": "text"
+        },
+        {
+          "path": "holdings.A-2202.HBFX.value",
+          "label": "HBFX value",
+          "value": "USD 998,920.00",
+          "kind": "money"
+        },
+        {
+          "path": "holdings.A-2202.HBFX.weight_pct",
+          "label": "HBFX share of household",
+          "value": "16.16%",
+          "kind": "percent"
+        },
+        {
+          "path": "holdings.A-2202.CASH.name",
+          "label": "CASH name",
+          "value": "Cash and cash equivalents",
+          "kind": "text"
+        },
+        {
+          "path": "holdings.A-2202.CASH.value",
+          "label": "CASH value",
+          "value": "USD 188,511.56",
+          "kind": "money"
+        },
+        {
+          "path": "holdings.A-2202.CASH.weight_pct",
+          "label": "CASH share of household",
+          "value": "3.05%",
+          "kind": "percent"
+        },
+        {
+          "path": "performance.period",
+          "label": "Performance period",
+          "value": "Q3 2026 (2026-07-01 to 2026-09-30)",
+          "kind": "date"
+        },
+        {
+          "path": "performance.beginning_value",
+          "label": "Value at period start",
+          "value": "USD 5,952,300.00",
+          "kind": "money"
+        },
+        {
+          "path": "performance.net_contributions",
+          "label": "Net contributions in period",
+          "value": "USD 38,700.00",
+          "kind": "money"
+        },
+        {
+          "path": "performance.market_change",
+          "label": "Market change in period",
+          "value": "USD 189,000.00",
+          "kind": "money"
+        },
+        {
+          "path": "performance.ending_value",
+          "label": "Value at period end",
+          "value": "USD 6,180,000.00",
+          "kind": "money"
+        },
+        {
+          "path": "performance.return_pct",
+          "label": "Return for the period",
+          "value": "3.18%",
+          "kind": "percent"
+        },
+        {
+          "path": "performance.benchmark_pct",
+          "label": "Benchmark return for the period",
+          "value": "2.90%",
+          "kind": "percent"
+        },
+        {
+          "path": "performance.benchmark_name",
+          "label": "Benchmark",
+          "value": "60/40 composite",
+          "kind": "text"
+        },
+        {
+          "path": "fees.annual_rate_pct",
+          "label": "Advisory fee, annual",
+          "value": "0.85%",
+          "kind": "percent"
+        },
+        {
+          "path": "fees.billing_frequency",
+          "label": "Fee billing frequency",
+          "value": "Quarterly, in arrears",
+          "kind": "text"
+        },
+        {
+          "path": "fees.billing_basis",
+          "label": "Fee billing basis",
+          "value": "Quarter-end account value",
+          "kind": "text"
+        },
+        {
+          "path": "fees.charges_billed_ytd",
+          "label": "Fee charges billed this year",
+          "value": "3",
+          "kind": "count"
+        },
+        {
+          "path": "fees.ytd_total",
+          "label": "Fees billed in 2026",
+          "value": "USD 38,382.39",
+          "kind": "money"
+        },
+        {
+          "path": "fees.last_charge_date",
+          "label": "Last fee charge date",
+          "value": "2026-09-30",
+          "kind": "date"
+        },
+        {
+          "path": "fees.last_charge_amount",
+          "label": "Last fee charge",
+          "value": "USD 13,132.50",
+          "kind": "money"
+        },
+        {
+          "path": "fees.next_charge_date",
+          "label": "Next fee charge date",
+          "value": "2026-12-31",
+          "kind": "date"
+        },
+        {
+          "path": "goals.G-1.label",
+          "label": "G-1 goal",
+          "value": "Retirement income at 65",
+          "kind": "text"
+        },
+        {
+          "path": "goals.G-1.target_value",
+          "label": "G-1 target",
+          "value": "USD 7,500,000.00",
+          "kind": "money"
+        },
+        {
+          "path": "goals.G-1.target_date",
+          "label": "G-1 target date",
+          "value": "2033-06-01",
+          "kind": "date"
+        },
+        {
+          "path": "goals.G-1.funded_value",
+          "label": "G-1 funded to date",
+          "value": "USD 6,180,000.00",
+          "kind": "money"
+        },
+        {
+          "path": "goals.G-1.funded_pct",
+          "label": "G-1 funded share",
+          "value": "82.4%",
+          "kind": "percent"
+        },
+        {
+          "path": "goals.G-1.status",
+          "label": "G-1 status",
+          "value": "on track",
+          "kind": "text"
+        },
+        {
+          "path": "goals.G-2.label",
+          "label": "G-2 goal",
+          "value": "Grandchild education fund",
+          "kind": "text"
+        },
+        {
+          "path": "goals.G-2.target_value",
+          "label": "G-2 target",
+          "value": "USD 180,000.00",
+          "kind": "money"
+        },
+        {
+          "path": "goals.G-2.target_date",
+          "label": "G-2 target date",
+          "value": "2031-09-01",
+          "kind": "date"
+        },
+        {
+          "path": "goals.G-2.funded_value",
+          "label": "G-2 funded to date",
+          "value": "USD 96,400.00",
+          "kind": "money"
+        },
+        {
+          "path": "goals.G-2.funded_pct",
+          "label": "G-2 funded share",
+          "value": "53.6%",
+          "kind": "percent"
+        },
+        {
+          "path": "goals.G-2.status",
+          "label": "G-2 status",
+          "value": "needs review",
+          "kind": "text"
+        },
+        {
+          "path": "goals.G-3.label",
+          "label": "G-3 goal",
+          "value": "Emergency reserve",
+          "kind": "text"
+        },
+        {
+          "path": "goals.G-3.target_value",
+          "label": "G-3 target",
+          "value": "USD 150,000.00",
+          "kind": "money"
+        },
+        {
+          "path": "goals.G-3.target_date",
+          "label": "G-3 target date",
+          "value": "2026-12-31",
+          "kind": "date"
+        },
+        {
+          "path": "goals.G-3.funded_value",
+          "label": "G-3 funded to date",
+          "value": "USD 178,914.44",
+          "kind": "money"
+        },
+        {
+          "path": "goals.G-3.funded_pct",
+          "label": "G-3 funded share",
+          "value": "119.3%",
+          "kind": "percent"
+        },
+        {
+          "path": "goals.G-3.status",
+          "label": "G-3 status",
+          "value": "funded",
+          "kind": "text"
+        },
+        {
+          "path": "meeting.last_date",
+          "label": "Last meeting date",
+          "value": "2026-10-22",
+          "kind": "date"
+        },
+        {
+          "path": "meeting.kind",
+          "label": "Last meeting type",
+          "value": "Annual review",
+          "kind": "text"
+        },
+        {
+          "path": "meeting.attendees",
+          "label": "Last meeting attendees",
+          "value": "Dana Whitfield, Jordan Rowan",
+          "kind": "text"
+        },
+        {
+          "path": "meeting.note",
+          "label": "Last meeting note",
+          "value": "Reviewed the trust registration and the 2027 distribution plan. Client asked for a written fee summary.",
+          "kind": "text"
+        },
+        {
+          "path": "meeting.next_review",
+          "label": "Next review date",
+          "value": "2027-04-20",
+          "kind": "date"
+        },
+        {
+          "path": "held_away.HA-1.custodian",
+          "label": "HA-1 custodian",
+          "value": "Northline Retirement Services",
+          "kind": "text"
+        },
+        {
+          "path": "held_away.HA-1.account_type",
+          "label": "HA-1 account type",
+          "value": "Employer 401(k)",
+          "kind": "text"
+        },
+        {
+          "path": "held_away.HA-1.value",
+          "label": "HA-1 value",
+          "value": "USD 412,600.00",
+          "kind": "money"
+        },
+        {
+          "path": "held_away.HA-1.note",
+          "label": "HA-1 note",
+          "value": "Plan is outside the book. No rollover requested.",
+          "kind": "text"
+        },
+        {
+          "path": "held_away.HA-2.custodian",
+          "label": "HA-2 custodian",
+          "value": "Branford Savings",
+          "kind": "text"
+        },
+        {
+          "path": "held_away.HA-2.account_type",
+          "label": "HA-2 account type",
+          "value": "Cash reserve",
+          "kind": "text"
+        },
+        {
+          "path": "held_away.HA-2.value",
+          "label": "HA-2 value",
+          "value": "USD 85,000.00",
+          "kind": "money"
+        },
+        {
+          "path": "held_away.HA-2.note",
+          "label": "HA-2 note",
+          "value": "Emergency reserve outside the book.",
+          "kind": "text"
+        },
+        {
+          "path": "documents.DOC-R1.kind",
+          "label": "DOC-R1 document type",
+          "value": "advisory agreement",
+          "kind": "text"
+        },
+        {
+          "path": "documents.DOC-R1.filename",
+          "label": "DOC-R1 file name",
+          "value": "rowan-advisory-agreement-2016-04-11.pdf",
+          "kind": "text"
+        },
+        {
+          "path": "documents.DOC-R1.received_at",
+          "label": "DOC-R1 received",
+          "value": "2016-04-11",
+          "kind": "date"
+        },
+        {
+          "path": "documents.DOC-R1.account",
+          "label": "DOC-R1 account",
+          "value": "A-2201",
+          "kind": "text"
+        },
+        {
+          "path": "documents.DOC-R1.status",
+          "label": "DOC-R1 status",
+          "value": "current",
+          "kind": "text"
+        },
+        {
+          "path": "documents.DOC-R1.effective_date",
+          "label": "DOC-R1 effective date",
+          "value": "2016-04-11",
+          "kind": "text"
+        },
+        {
+          "path": "documents.DOC-R1.service_standard",
+          "label": "DOC-R1 service standard",
+          "value": "Annual review, quarterly statements",
+          "kind": "text"
+        },
+        {
+          "path": "documents.DOC-R1.fee_schedule",
+          "label": "DOC-R1 fee schedule",
+          "value": "0.85% annual, billed quarterly in arrears",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-1.kind",
+          "label": "D-1 document type",
+          "value": "statement",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-1.filename",
+          "label": "D-1 file name",
+          "value": "alder-statement-2026-10-rowan.txt",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-1.received_at",
+          "label": "D-1 received",
+          "value": "2026-11-05",
+          "kind": "date"
+        },
+        {
+          "path": "documents.D-1.account",
+          "label": "D-1 account",
+          "value": "A-2201",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-1.status",
+          "label": "D-1 status",
+          "value": "on file",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-1.registration",
+          "label": "D-1 registration",
+          "value": "JTWROS",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-1.account_number",
+          "label": "D-1 account number",
+          "value": "xxxx-4471",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-1.statement_period",
+          "label": "D-1 statement period",
+          "value": "2026-10-01 to 2026-10-31",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-1.account_value",
+          "label": "D-1 account value",
+          "value": "USD 2,146,318.44",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-3.kind",
+          "label": "D-3 document type",
+          "value": "statement",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-3.filename",
+          "label": "D-3 file name",
+          "value": "morrow-statement-2026-10-rowan-trust.txt",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-3.received_at",
+          "label": "D-3 received",
+          "value": "2026-11-07",
+          "kind": "date"
+        },
+        {
+          "path": "documents.D-3.account",
+          "label": "D-3 account",
+          "value": "A-2202",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-3.status",
+          "label": "D-3 status",
+          "value": "on file",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-3.registration",
+          "label": "D-3 registration",
+          "value": "Individual",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-3.account_number",
+          "label": "D-3 account number",
+          "value": "xxxx-3390",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-3.statement_period",
+          "label": "D-3 statement period",
+          "value": "2026-10-01 to 2026-10-31",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-3.account_value",
+          "label": "D-3 account value",
+          "value": "USD 4,033,681.56",
+          "kind": "text"
+        }
+      ]
+    },
+    {
+      "id": "H-1043",
+      "display_name": "Calloway Household",
+      "consent_status": "pending",
+      "consent_note": "Broker Protocol consent is pending. Protocol data may be used only for transition preparation until client consent.",
+      "relationship": "Client since 2009",
+      "notes": "Brother is trustee; EIN pending",
+      "total_cents": 425000000,
+      "total_value": "USD 4,250,000.00",
+      "accounts": [
+        {
+          "id": "A-2203",
+          "custodian": "Alder Clearing",
+          "account_type": "Irrevocable trust",
+          "registration": "Irrevocable trust",
+          "masked_number": "xxxx-7715",
+          "value_cents": 425000000,
+          "value": "USD 4,250,000.00",
+          "holdings": [
+            {
+              "symbol": "VTI",
+              "name": "Total market ETF",
+              "value_cents": 194149500,
+              "value": "USD 1,941,495.00",
+              "transferable": true,
+              "weight_pct": "45.68%"
+            },
+            {
+              "symbol": "BND",
+              "name": "Total bond market ETF",
+              "value_cents": 62772500,
+              "value": "USD 627,725.00",
+              "transferable": true,
+              "weight_pct": "14.77%"
+            },
+            {
+              "symbol": "VXUS",
+              "name": "Total international ETF",
+              "value_cents": 37024000,
+              "value": "USD 370,240.00",
+              "transferable": true,
+              "weight_pct": "8.71%"
+            },
+            {
+              "symbol": "CHSY",
+              "name": "Calder Health Systems",
+              "value_cents": 45084000,
+              "value": "USD 450,840.00",
+              "transferable": true,
+              "weight_pct": "10.61%"
+            },
+            {
+              "symbol": "HBFX",
+              "name": "Halcyon Balanced Fund, Class A",
+              "value_cents": 72998000,
+              "value": "USD 729,980.00",
+              "transferable": true,
+              "weight_pct": "17.18%"
+            },
+            {
+              "symbol": "CASH",
+              "name": "Cash and cash equivalents",
+              "value_cents": 12972000,
+              "value": "USD 129,720.00",
+              "transferable": true,
+              "weight_pct": "3.05%"
+            }
+          ]
+        }
+      ],
+      "performance": {
+        "quarter": "Q3 2026",
+        "period": "Q3 2026 (2026-07-01 to 2026-09-30)",
+        "beginning_cents": 414180000,
+        "beginning_value": "USD 4,141,800.00",
+        "net_contributions_cents": 0,
+        "net_contributions": "USD 0.00",
+        "market_change_cents": 10820000,
+        "market_change": "USD 108,200.00",
+        "ending_cents": 425000000,
+        "ending_value": "USD 4,250,000.00",
+        "return_pct": "2.61%",
+        "benchmark_pct": "2.90%",
+        "benchmark_name": "60/40 composite"
+      },
+      "fees": {
+        "annual_rate_pct": "0.85%",
+        "billing_frequency": "Quarterly, in arrears",
+        "billing_basis": "Quarter-end account value",
+        "charges": [
+          {
+            "date": "2026-03-31",
+            "basis_cents": 418000000,
+            "basis": "USD 4,180,000.00",
+            "amount_cents": 888250,
+            "amount": "USD 8,882.50"
+          },
+          {
+            "date": "2026-06-30",
+            "basis_cents": 414180000,
+            "basis": "USD 4,141,800.00",
+            "amount_cents": 880133,
+            "amount": "USD 8,801.33"
+          },
+          {
+            "date": "2026-09-30",
+            "basis_cents": 425000000,
+            "basis": "USD 4,250,000.00",
+            "amount_cents": 903125,
+            "amount": "USD 9,031.25"
+          }
+        ],
+        "charges_billed_ytd": 3,
+        "ytd_total_cents": 2671508,
+        "ytd_total": "USD 26,715.08",
+        "last_charge_date": "2026-09-30",
+        "last_charge_amount": "USD 9,031.25",
+        "next_charge_date": "2026-12-31"
+      },
+      "goals": [
+        {
+          "id": "G-1",
+          "label": "Trust distribution reserve",
+          "target_cents": 25000000,
+          "target": "USD 250,000.00",
+          "target_date": "2027-01-15",
+          "funded_cents": 12972000,
+          "funded": "USD 129,720.00",
+          "funded_pct": "51.9%",
+          "status": "on track"
+        },
+        {
+          "id": "G-2",
+          "label": "Two-generation education fund",
+          "target_cents": 40000000,
+          "target": "USD 400,000.00",
+          "target_date": "2032-09-01",
+          "funded_cents": 15000000,
+          "funded": "USD 150,000.00",
+          "funded_pct": "37.5%",
+          "status": "needs review"
+        }
+      ],
+      "meeting": {
+        "date": "2026-09-18",
+        "kind": "Trust onboarding",
+        "attendees": "Dana Whitfield, Devon Calloway (trustee)",
+        "note": "Trustee certification and trust EIN are still open. No client contact until consent is received.",
+        "next_review": "2026-12-01"
+      },
+      "held_away": [
+        {
+          "id": "HA-1",
+          "custodian": "Harbor Fiduciary Services",
+          "account_type": "Trust cash reserve",
+          "value_cents": 24000000,
+          "value": "USD 240,000.00",
+          "note": "Successor trustee holds a reserve outside the book."
+        }
+      ],
+      "held_away_total_cents": 24000000,
+      "held_away_total": "USD 240,000.00",
+      "documents": [
+        {
+          "id": "DOC-C2",
+          "kind": "advisory_agreement",
+          "custodian": "Savvy",
+          "filename": "calloway-advisory-agreement-2009-03-02.pdf",
+          "received_at": "2009-03-02",
+          "account_id": "A-2203",
+          "status": "current",
+          "source": "record extension, synthetic",
+          "summary": [
+            [
+              "Effective date",
+              "2009-03-02"
+            ],
+            [
+              "Service standard",
+              "Annual review, quarterly statements"
+            ],
+            [
+              "Fee schedule",
+              "0.85% annual, billed quarterly in arrears"
+            ]
+          ]
+        },
+        {
+          "id": "D-5",
+          "kind": "trust_summary",
+          "custodian": "Alder Clearing",
+          "filename": "calloway-trust-summary.txt",
+          "received_at": "2026-11-09",
+          "account_id": "A-2203",
+          "status": "on file",
+          "source": "data/book.json documents",
+          "summary": [
+            [
+              "Trust name",
+              "Calloway Family Irrevocable Trust"
+            ],
+            [
+              "Trust type",
+              "Irrevocable"
+            ],
+            [
+              "Trust date",
+              "2022-03-18"
+            ],
+            [
+              "Trustee",
+              "Devon Calloway"
+            ],
+            [
+              "Governing state",
+              "Connecticut"
+            ],
+            [
+              "Trust EIN",
+              "pending"
+            ],
+            [
+              "Beneficiaries",
+              "Two children of the grantor, equal shares"
+            ],
+            [
+              "Distribution standard",
+              "Income and principal for health, education, maintenance, and support"
+            ]
+          ]
+        },
+        {
+          "id": "DOC-C1",
+          "kind": "trustee_certification",
+          "custodian": "Harbor Fiduciary Services",
+          "filename": "calloway-trustee-certification-request.txt",
+          "received_at": "2026-11-09",
+          "account_id": "A-2203",
+          "status": "requested",
+          "source": "record extension, synthetic",
+          "summary": [
+            [
+              "Request status",
+              "Requested from the trustee"
+            ],
+            [
+              "Open item",
+              "Certification and trust EIN"
+            ]
+          ]
+        }
+      ],
+      "fields": [
+        {
+          "path": "household.display_name",
+          "label": "Household",
+          "value": "Calloway Household",
+          "kind": "text"
+        },
+        {
+          "path": "household.consent_status",
+          "label": "Consent status",
+          "value": "pending",
+          "kind": "text"
+        },
+        {
+          "path": "household.relationship",
+          "label": "Client relationship",
+          "value": "Client since 2009",
+          "kind": "text"
+        },
+        {
+          "path": "household.as_of",
+          "label": "Record as of",
+          "value": "2026-11-18",
+          "kind": "date"
+        },
+        {
+          "path": "household.total_value",
+          "label": "Total value across accounts",
+          "value": "USD 4,250,000.00",
+          "kind": "money"
+        },
+        {
+          "path": "household.account_count",
+          "label": "Accounts on the record",
+          "value": "1",
+          "kind": "count"
+        },
+        {
+          "path": "household.held_away_total",
+          "label": "Held-away assets",
+          "value": "USD 240,000.00",
+          "kind": "money"
+        },
+        {
+          "path": "household.document_count",
+          "label": "Documents on file",
+          "value": "3",
+          "kind": "count"
+        },
+        {
+          "path": "accounts.A-2203.type",
+          "label": "A-2203 account type",
+          "value": "Irrevocable trust",
+          "kind": "text"
+        },
+        {
+          "path": "accounts.A-2203.custodian",
+          "label": "A-2203 custodian",
+          "value": "Alder Clearing",
+          "kind": "text"
+        },
+        {
+          "path": "accounts.A-2203.masked_number",
+          "label": "A-2203 account number",
+          "value": "xxxx-7715",
+          "kind": "text"
+        },
+        {
+          "path": "accounts.A-2203.value",
+          "label": "A-2203 value",
+          "value": "USD 4,250,000.00",
+          "kind": "money"
+        },
+        {
+          "path": "holdings.A-2203.VTI.name",
+          "label": "VTI name",
+          "value": "Total market ETF",
+          "kind": "text"
+        },
+        {
+          "path": "holdings.A-2203.VTI.value",
+          "label": "VTI value",
+          "value": "USD 1,941,495.00",
+          "kind": "money"
+        },
+        {
+          "path": "holdings.A-2203.VTI.weight_pct",
+          "label": "VTI share of household",
+          "value": "45.68%",
+          "kind": "percent"
+        },
+        {
+          "path": "holdings.A-2203.BND.name",
+          "label": "BND name",
+          "value": "Total bond market ETF",
+          "kind": "text"
+        },
+        {
+          "path": "holdings.A-2203.BND.value",
+          "label": "BND value",
+          "value": "USD 627,725.00",
+          "kind": "money"
+        },
+        {
+          "path": "holdings.A-2203.BND.weight_pct",
+          "label": "BND share of household",
+          "value": "14.77%",
+          "kind": "percent"
+        },
+        {
+          "path": "holdings.A-2203.VXUS.name",
+          "label": "VXUS name",
+          "value": "Total international ETF",
+          "kind": "text"
+        },
+        {
+          "path": "holdings.A-2203.VXUS.value",
+          "label": "VXUS value",
+          "value": "USD 370,240.00",
+          "kind": "money"
+        },
+        {
+          "path": "holdings.A-2203.VXUS.weight_pct",
+          "label": "VXUS share of household",
+          "value": "8.71%",
+          "kind": "percent"
+        },
+        {
+          "path": "holdings.A-2203.CHSY.name",
+          "label": "CHSY name",
+          "value": "Calder Health Systems",
+          "kind": "text"
+        },
+        {
+          "path": "holdings.A-2203.CHSY.value",
+          "label": "CHSY value",
+          "value": "USD 450,840.00",
+          "kind": "money"
+        },
+        {
+          "path": "holdings.A-2203.CHSY.weight_pct",
+          "label": "CHSY share of household",
+          "value": "10.61%",
+          "kind": "percent"
+        },
+        {
+          "path": "holdings.A-2203.HBFX.name",
+          "label": "HBFX name",
+          "value": "Halcyon Balanced Fund, Class A",
+          "kind": "text"
+        },
+        {
+          "path": "holdings.A-2203.HBFX.value",
+          "label": "HBFX value",
+          "value": "USD 729,980.00",
+          "kind": "money"
+        },
+        {
+          "path": "holdings.A-2203.HBFX.weight_pct",
+          "label": "HBFX share of household",
+          "value": "17.18%",
+          "kind": "percent"
+        },
+        {
+          "path": "holdings.A-2203.CASH.name",
+          "label": "CASH name",
+          "value": "Cash and cash equivalents",
+          "kind": "text"
+        },
+        {
+          "path": "holdings.A-2203.CASH.value",
+          "label": "CASH value",
+          "value": "USD 129,720.00",
+          "kind": "money"
+        },
+        {
+          "path": "holdings.A-2203.CASH.weight_pct",
+          "label": "CASH share of household",
+          "value": "3.05%",
+          "kind": "percent"
+        },
+        {
+          "path": "performance.period",
+          "label": "Performance period",
+          "value": "Q3 2026 (2026-07-01 to 2026-09-30)",
+          "kind": "date"
+        },
+        {
+          "path": "performance.beginning_value",
+          "label": "Value at period start",
+          "value": "USD 4,141,800.00",
+          "kind": "money"
+        },
+        {
+          "path": "performance.net_contributions",
+          "label": "Net contributions in period",
+          "value": "USD 0.00",
+          "kind": "money"
+        },
+        {
+          "path": "performance.market_change",
+          "label": "Market change in period",
+          "value": "USD 108,200.00",
+          "kind": "money"
+        },
+        {
+          "path": "performance.ending_value",
+          "label": "Value at period end",
+          "value": "USD 4,250,000.00",
+          "kind": "money"
+        },
+        {
+          "path": "performance.return_pct",
+          "label": "Return for the period",
+          "value": "2.61%",
+          "kind": "percent"
+        },
+        {
+          "path": "performance.benchmark_pct",
+          "label": "Benchmark return for the period",
+          "value": "2.90%",
+          "kind": "percent"
+        },
+        {
+          "path": "performance.benchmark_name",
+          "label": "Benchmark",
+          "value": "60/40 composite",
+          "kind": "text"
+        },
+        {
+          "path": "fees.annual_rate_pct",
+          "label": "Advisory fee, annual",
+          "value": "0.85%",
+          "kind": "percent"
+        },
+        {
+          "path": "fees.billing_frequency",
+          "label": "Fee billing frequency",
+          "value": "Quarterly, in arrears",
+          "kind": "text"
+        },
+        {
+          "path": "fees.billing_basis",
+          "label": "Fee billing basis",
+          "value": "Quarter-end account value",
+          "kind": "text"
+        },
+        {
+          "path": "fees.charges_billed_ytd",
+          "label": "Fee charges billed this year",
+          "value": "3",
+          "kind": "count"
+        },
+        {
+          "path": "fees.ytd_total",
+          "label": "Fees billed in 2026",
+          "value": "USD 26,715.08",
+          "kind": "money"
+        },
+        {
+          "path": "fees.last_charge_date",
+          "label": "Last fee charge date",
+          "value": "2026-09-30",
+          "kind": "date"
+        },
+        {
+          "path": "fees.last_charge_amount",
+          "label": "Last fee charge",
+          "value": "USD 9,031.25",
+          "kind": "money"
+        },
+        {
+          "path": "fees.next_charge_date",
+          "label": "Next fee charge date",
+          "value": "2026-12-31",
+          "kind": "date"
+        },
+        {
+          "path": "goals.G-1.label",
+          "label": "G-1 goal",
+          "value": "Trust distribution reserve",
+          "kind": "text"
+        },
+        {
+          "path": "goals.G-1.target_value",
+          "label": "G-1 target",
+          "value": "USD 250,000.00",
+          "kind": "money"
+        },
+        {
+          "path": "goals.G-1.target_date",
+          "label": "G-1 target date",
+          "value": "2027-01-15",
+          "kind": "date"
+        },
+        {
+          "path": "goals.G-1.funded_value",
+          "label": "G-1 funded to date",
+          "value": "USD 129,720.00",
+          "kind": "money"
+        },
+        {
+          "path": "goals.G-1.funded_pct",
+          "label": "G-1 funded share",
+          "value": "51.9%",
+          "kind": "percent"
+        },
+        {
+          "path": "goals.G-1.status",
+          "label": "G-1 status",
+          "value": "on track",
+          "kind": "text"
+        },
+        {
+          "path": "goals.G-2.label",
+          "label": "G-2 goal",
+          "value": "Two-generation education fund",
+          "kind": "text"
+        },
+        {
+          "path": "goals.G-2.target_value",
+          "label": "G-2 target",
+          "value": "USD 400,000.00",
+          "kind": "money"
+        },
+        {
+          "path": "goals.G-2.target_date",
+          "label": "G-2 target date",
+          "value": "2032-09-01",
+          "kind": "date"
+        },
+        {
+          "path": "goals.G-2.funded_value",
+          "label": "G-2 funded to date",
+          "value": "USD 150,000.00",
+          "kind": "money"
+        },
+        {
+          "path": "goals.G-2.funded_pct",
+          "label": "G-2 funded share",
+          "value": "37.5%",
+          "kind": "percent"
+        },
+        {
+          "path": "goals.G-2.status",
+          "label": "G-2 status",
+          "value": "needs review",
+          "kind": "text"
+        },
+        {
+          "path": "meeting.last_date",
+          "label": "Last meeting date",
+          "value": "2026-09-18",
+          "kind": "date"
+        },
+        {
+          "path": "meeting.kind",
+          "label": "Last meeting type",
+          "value": "Trust onboarding",
+          "kind": "text"
+        },
+        {
+          "path": "meeting.attendees",
+          "label": "Last meeting attendees",
+          "value": "Dana Whitfield, Devon Calloway (trustee)",
+          "kind": "text"
+        },
+        {
+          "path": "meeting.note",
+          "label": "Last meeting note",
+          "value": "Trustee certification and trust EIN are still open. No client contact until consent is received.",
+          "kind": "text"
+        },
+        {
+          "path": "meeting.next_review",
+          "label": "Next review date",
+          "value": "2026-12-01",
+          "kind": "date"
+        },
+        {
+          "path": "held_away.HA-1.custodian",
+          "label": "HA-1 custodian",
+          "value": "Harbor Fiduciary Services",
+          "kind": "text"
+        },
+        {
+          "path": "held_away.HA-1.account_type",
+          "label": "HA-1 account type",
+          "value": "Trust cash reserve",
+          "kind": "text"
+        },
+        {
+          "path": "held_away.HA-1.value",
+          "label": "HA-1 value",
+          "value": "USD 240,000.00",
+          "kind": "money"
+        },
+        {
+          "path": "held_away.HA-1.note",
+          "label": "HA-1 note",
+          "value": "Successor trustee holds a reserve outside the book.",
+          "kind": "text"
+        },
+        {
+          "path": "documents.DOC-C2.kind",
+          "label": "DOC-C2 document type",
+          "value": "advisory agreement",
+          "kind": "text"
+        },
+        {
+          "path": "documents.DOC-C2.filename",
+          "label": "DOC-C2 file name",
+          "value": "calloway-advisory-agreement-2009-03-02.pdf",
+          "kind": "text"
+        },
+        {
+          "path": "documents.DOC-C2.received_at",
+          "label": "DOC-C2 received",
+          "value": "2009-03-02",
+          "kind": "date"
+        },
+        {
+          "path": "documents.DOC-C2.account",
+          "label": "DOC-C2 account",
+          "value": "A-2203",
+          "kind": "text"
+        },
+        {
+          "path": "documents.DOC-C2.status",
+          "label": "DOC-C2 status",
+          "value": "current",
+          "kind": "text"
+        },
+        {
+          "path": "documents.DOC-C2.effective_date",
+          "label": "DOC-C2 effective date",
+          "value": "2009-03-02",
+          "kind": "text"
+        },
+        {
+          "path": "documents.DOC-C2.service_standard",
+          "label": "DOC-C2 service standard",
+          "value": "Annual review, quarterly statements",
+          "kind": "text"
+        },
+        {
+          "path": "documents.DOC-C2.fee_schedule",
+          "label": "DOC-C2 fee schedule",
+          "value": "0.85% annual, billed quarterly in arrears",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-5.kind",
+          "label": "D-5 document type",
+          "value": "trust summary",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-5.filename",
+          "label": "D-5 file name",
+          "value": "calloway-trust-summary.txt",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-5.received_at",
+          "label": "D-5 received",
+          "value": "2026-11-09",
+          "kind": "date"
+        },
+        {
+          "path": "documents.D-5.account",
+          "label": "D-5 account",
+          "value": "A-2203",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-5.status",
+          "label": "D-5 status",
+          "value": "on file",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-5.trust_name",
+          "label": "D-5 trust name",
+          "value": "Calloway Family Irrevocable Trust",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-5.trust_type",
+          "label": "D-5 trust type",
+          "value": "Irrevocable",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-5.trust_date",
+          "label": "D-5 trust date",
+          "value": "2022-03-18",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-5.trustee",
+          "label": "D-5 trustee",
+          "value": "Devon Calloway",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-5.governing_state",
+          "label": "D-5 governing state",
+          "value": "Connecticut",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-5.trust_ein",
+          "label": "D-5 trust ein",
+          "value": "pending",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-5.beneficiaries",
+          "label": "D-5 beneficiaries",
+          "value": "Two children of the grantor, equal shares",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-5.distribution_standard",
+          "label": "D-5 distribution standard",
+          "value": "Income and principal for health, education, maintenance, and support",
+          "kind": "text"
+        },
+        {
+          "path": "documents.DOC-C1.kind",
+          "label": "DOC-C1 document type",
+          "value": "trustee certification",
+          "kind": "text"
+        },
+        {
+          "path": "documents.DOC-C1.filename",
+          "label": "DOC-C1 file name",
+          "value": "calloway-trustee-certification-request.txt",
+          "kind": "text"
+        },
+        {
+          "path": "documents.DOC-C1.received_at",
+          "label": "DOC-C1 received",
+          "value": "2026-11-09",
+          "kind": "date"
+        },
+        {
+          "path": "documents.DOC-C1.account",
+          "label": "DOC-C1 account",
+          "value": "A-2203",
+          "kind": "text"
+        },
+        {
+          "path": "documents.DOC-C1.status",
+          "label": "DOC-C1 status",
+          "value": "requested",
+          "kind": "text"
+        },
+        {
+          "path": "documents.DOC-C1.request_status",
+          "label": "DOC-C1 request status",
+          "value": "Requested from the trustee",
+          "kind": "text"
+        },
+        {
+          "path": "documents.DOC-C1.open_item",
+          "label": "DOC-C1 open item",
+          "value": "Certification and trust EIN",
+          "kind": "text"
+        }
+      ]
+    },
+    {
+      "id": "H-1045",
+      "display_name": "Voss Household",
+      "consent_status": "pending",
+      "consent_note": "Broker Protocol consent is pending. Protocol data may be used only for transition preparation until client consent.",
+      "relationship": "Client since 2014",
+      "notes": "TOD brokerage plus a non-qualified annuity",
+      "total_cents": 394000000,
+      "total_value": "USD 3,940,000.00",
+      "accounts": [
+        {
+          "id": "A-2205",
+          "custodian": "Alder Clearing",
+          "account_type": "Individual brokerage (TOD)",
+          "registration": "TOD",
+          "masked_number": "xxxx-6128",
+          "value_cents": 264000000,
+          "value": "USD 2,640,000.00",
+          "holdings": [
+            {
+              "symbol": "VTI",
+              "name": "Total market ETF",
+              "value_cents": 112114500,
+              "value": "USD 1,121,145.00",
+              "transferable": true,
+              "weight_pct": "28.46%"
+            },
+            {
+              "symbol": "VXUS",
+              "name": "Total international ETF",
+              "value_cents": 20648000,
+              "value": "USD 206,480.00",
+              "transferable": true,
+              "weight_pct": "5.24%"
+            },
+            {
+              "symbol": "BND",
+              "name": "Total bond market ETF",
+              "value_cents": 38402000,
+              "value": "USD 384,020.00",
+              "transferable": true,
+              "weight_pct": "9.75%"
+            },
+            {
+              "symbol": "MSGF",
+              "name": "Meridian Select Growth Fund, Class C",
+              "value_cents": 64416000,
+              "value": "USD 644,160.00",
+              "transferable": false,
+              "weight_pct": "16.35%"
+            },
+            {
+              "symbol": "CHSY",
+              "name": "Calder Health Systems",
+              "value_cents": 15912000,
+              "value": "USD 159,120.00",
+              "transferable": true,
+              "weight_pct": "4.04%"
+            },
+            {
+              "symbol": "CASH",
+              "name": "Cash and cash equivalents",
+              "value_cents": 12507500,
+              "value": "USD 125,075.00",
+              "transferable": true,
+              "weight_pct": "3.17%"
+            }
+          ]
+        },
+        {
+          "id": "A-2206",
+          "custodian": "Morrow Trust",
+          "account_type": "Variable annuity",
+          "registration": "Individual",
+          "masked_number": "xxxx-8820",
+          "value_cents": 130000000,
+          "value": "USD 1,300,000.00",
+          "holdings": [
+            {
+              "symbol": "HAL-EQ",
+              "name": "Halden Equity Index Subaccount",
+              "value_cents": 53500000,
+              "value": "USD 535,000.00",
+              "transferable": false,
+              "weight_pct": "13.58%"
+            },
+            {
+              "symbol": "HAL-BAL",
+              "name": "Halden Balanced Subaccount",
+              "value_cents": 30192000,
+              "value": "USD 301,920.00",
+              "transferable": false,
+              "weight_pct": "7.66%"
+            },
+            {
+              "symbol": "HAL-BOND",
+              "name": "Halden Core Bond Subaccount",
+              "value_cents": 13032000,
+              "value": "USD 130,320.00",
+              "transferable": false,
+              "weight_pct": "3.31%"
+            },
+            {
+              "symbol": "HAL-INTL",
+              "name": "Halden International Subaccount",
+              "value_cents": 18574000,
+              "value": "USD 185,740.00",
+              "transferable": false,
+              "weight_pct": "4.71%"
+            },
+            {
+              "symbol": "HAL-FIX",
+              "name": "Halden Fixed Account",
+              "value_cents": 14702000,
+              "value": "USD 147,020.00",
+              "transferable": false,
+              "weight_pct": "3.73%"
+            }
+          ]
+        }
+      ],
+      "performance": {
+        "quarter": "Q3 2026",
+        "period": "Q3 2026 (2026-07-01 to 2026-09-30)",
+        "beginning_cents": 387654000,
+        "beginning_value": "USD 3,876,540.00",
+        "net_contributions_cents": 2400000,
+        "net_contributions": "USD 24,000.00",
+        "market_change_cents": 3946000,
+        "market_change": "USD 39,460.00",
+        "ending_cents": 394000000,
+        "ending_value": "USD 3,940,000.00",
+        "return_pct": "1.02%",
+        "benchmark_pct": "2.90%",
+        "benchmark_name": "60/40 composite"
+      },
+      "fees": {
+        "annual_rate_pct": "0.85%",
+        "billing_frequency": "Quarterly, in arrears",
+        "billing_basis": "Quarter-end account value",
+        "charges": [
+          {
+            "date": "2026-03-31",
+            "basis_cents": 390250000,
+            "basis": "USD 3,902,500.00",
+            "amount_cents": 829281,
+            "amount": "USD 8,292.81"
+          },
+          {
+            "date": "2026-06-30",
+            "basis_cents": 387654000,
+            "basis": "USD 3,876,540.00",
+            "amount_cents": 823765,
+            "amount": "USD 8,237.65"
+          },
+          {
+            "date": "2026-09-30",
+            "basis_cents": 394000000,
+            "basis": "USD 3,940,000.00",
+            "amount_cents": 837250,
+            "amount": "USD 8,372.50"
+          }
+        ],
+        "charges_billed_ytd": 3,
+        "ytd_total_cents": 2490296,
+        "ytd_total": "USD 24,902.96",
+        "last_charge_date": "2026-09-30",
+        "last_charge_amount": "USD 8,372.50",
+        "next_charge_date": "2026-12-31"
+      },
+      "goals": [
+        {
+          "id": "G-1",
+          "label": "Retirement at 62",
+          "target_cents": 480000000,
+          "target": "USD 4,800,000.00",
+          "target_date": "2030-04-01",
+          "funded_cents": 394000000,
+          "funded": "USD 3,940,000.00",
+          "funded_pct": "82.1%",
+          "status": "on track"
+        },
+        {
+          "id": "G-2",
+          "label": "Annuity income start",
+          "target_cents": 130000000,
+          "target": "USD 1,300,000.00",
+          "target_date": "2030-06-30",
+          "funded_cents": 130000000,
+          "funded": "USD 1,300,000.00",
+          "funded_pct": "100.0%",
+          "status": "funded"
+        },
+        {
+          "id": "G-3",
+          "label": "Property reserve",
+          "target_cents": 30000000,
+          "target": "USD 300,000.00",
+          "target_date": "2028-05-01",
+          "funded_cents": 12507500,
+          "funded": "USD 125,075.00",
+          "funded_pct": "41.7%",
+          "status": "needs review"
+        }
+      ],
+      "meeting": {
+        "date": "2026-08-07",
+        "kind": "Mid-year check-in",
+        "attendees": "Dana Whitfield, Elena Voss",
+        "note": "Reviewed the annuity contract and the Class C share class. The 1035 exchange question is open.",
+        "next_review": "2027-02-05"
+      },
+      "held_away": [
+        {
+          "id": "HA-1",
+          "custodian": "Northline Retirement Services",
+          "account_type": "Former employer 401(k)",
+          "value_cents": 9640000,
+          "value": "USD 96,400.00",
+          "note": "Plan is outside the book."
+        }
+      ],
+      "held_away_total_cents": 9640000,
+      "held_away_total": "USD 96,400.00",
+      "documents": [
+        {
+          "id": "DOC-V1",
+          "kind": "advisory_agreement",
+          "custodian": "Savvy",
+          "filename": "voss-advisory-agreement-2014-05-20.pdf",
+          "received_at": "2014-05-20",
+          "account_id": "A-2205",
+          "status": "current",
+          "source": "record extension, synthetic",
+          "summary": [
+            [
+              "Effective date",
+              "2014-05-20"
+            ],
+            [
+              "Service standard",
+              "Annual review, quarterly statements"
+            ],
+            [
+              "Fee schedule",
+              "0.85% annual, billed quarterly in arrears"
+            ]
+          ]
+        },
+        {
+          "id": "D-2",
+          "kind": "statement",
+          "custodian": "Alder Clearing",
+          "filename": "alder-statement-2026-09-voss.txt",
+          "received_at": "2026-11-06",
+          "account_id": "A-2205",
+          "status": "on file",
+          "source": "data/book.json documents",
+          "summary": [
+            [
+              "Registration",
+              "TOD"
+            ],
+            [
+              "Account number",
+              "xxxx-6128"
+            ],
+            [
+              "Statement period",
+              "2026-09-01 to 2026-09-30"
+            ],
+            [
+              "Account value",
+              "USD 2,640,000.00"
+            ]
+          ]
+        },
+        {
+          "id": "D-6",
+          "kind": "annuity_summary",
+          "custodian": "Morrow Trust",
+          "filename": "voss-annuity-summary.txt",
+          "received_at": "2026-11-10",
+          "account_id": "A-2206",
+          "status": "on file",
+          "source": "data/book.json documents",
+          "summary": [
+            [
+              "Beneficiary",
+              "Elena Voss"
+            ],
+            [
+              "Issuer",
+              "Halden Life Insurance Company"
+            ],
+            [
+              "Contract type",
+              "Variable annuity, non-qualified"
+            ],
+            [
+              "Issue date",
+              "2018-06-30"
+            ],
+            [
+              "Contract value",
+              "USD 1,300,000.00"
+            ]
+          ]
+        }
+      ],
+      "fields": [
+        {
+          "path": "household.display_name",
+          "label": "Household",
+          "value": "Voss Household",
+          "kind": "text"
+        },
+        {
+          "path": "household.consent_status",
+          "label": "Consent status",
+          "value": "pending",
+          "kind": "text"
+        },
+        {
+          "path": "household.relationship",
+          "label": "Client relationship",
+          "value": "Client since 2014",
+          "kind": "text"
+        },
+        {
+          "path": "household.as_of",
+          "label": "Record as of",
+          "value": "2026-11-18",
+          "kind": "date"
+        },
+        {
+          "path": "household.total_value",
+          "label": "Total value across accounts",
+          "value": "USD 3,940,000.00",
+          "kind": "money"
+        },
+        {
+          "path": "household.account_count",
+          "label": "Accounts on the record",
+          "value": "2",
+          "kind": "count"
+        },
+        {
+          "path": "household.held_away_total",
+          "label": "Held-away assets",
+          "value": "USD 96,400.00",
+          "kind": "money"
+        },
+        {
+          "path": "household.document_count",
+          "label": "Documents on file",
+          "value": "3",
+          "kind": "count"
+        },
+        {
+          "path": "accounts.A-2205.type",
+          "label": "A-2205 account type",
+          "value": "Individual brokerage (TOD)",
+          "kind": "text"
+        },
+        {
+          "path": "accounts.A-2205.custodian",
+          "label": "A-2205 custodian",
+          "value": "Alder Clearing",
+          "kind": "text"
+        },
+        {
+          "path": "accounts.A-2205.masked_number",
+          "label": "A-2205 account number",
+          "value": "xxxx-6128",
+          "kind": "text"
+        },
+        {
+          "path": "accounts.A-2205.value",
+          "label": "A-2205 value",
+          "value": "USD 2,640,000.00",
+          "kind": "money"
+        },
+        {
+          "path": "holdings.A-2205.VTI.name",
+          "label": "VTI name",
+          "value": "Total market ETF",
+          "kind": "text"
+        },
+        {
+          "path": "holdings.A-2205.VTI.value",
+          "label": "VTI value",
+          "value": "USD 1,121,145.00",
+          "kind": "money"
+        },
+        {
+          "path": "holdings.A-2205.VTI.weight_pct",
+          "label": "VTI share of household",
+          "value": "28.46%",
+          "kind": "percent"
+        },
+        {
+          "path": "holdings.A-2205.VXUS.name",
+          "label": "VXUS name",
+          "value": "Total international ETF",
+          "kind": "text"
+        },
+        {
+          "path": "holdings.A-2205.VXUS.value",
+          "label": "VXUS value",
+          "value": "USD 206,480.00",
+          "kind": "money"
+        },
+        {
+          "path": "holdings.A-2205.VXUS.weight_pct",
+          "label": "VXUS share of household",
+          "value": "5.24%",
+          "kind": "percent"
+        },
+        {
+          "path": "holdings.A-2205.BND.name",
+          "label": "BND name",
+          "value": "Total bond market ETF",
+          "kind": "text"
+        },
+        {
+          "path": "holdings.A-2205.BND.value",
+          "label": "BND value",
+          "value": "USD 384,020.00",
+          "kind": "money"
+        },
+        {
+          "path": "holdings.A-2205.BND.weight_pct",
+          "label": "BND share of household",
+          "value": "9.75%",
+          "kind": "percent"
+        },
+        {
+          "path": "holdings.A-2205.MSGF.name",
+          "label": "MSGF name",
+          "value": "Meridian Select Growth Fund, Class C",
+          "kind": "text"
+        },
+        {
+          "path": "holdings.A-2205.MSGF.value",
+          "label": "MSGF value",
+          "value": "USD 644,160.00",
+          "kind": "money"
+        },
+        {
+          "path": "holdings.A-2205.MSGF.weight_pct",
+          "label": "MSGF share of household",
+          "value": "16.35%",
+          "kind": "percent"
+        },
+        {
+          "path": "holdings.A-2205.CHSY.name",
+          "label": "CHSY name",
+          "value": "Calder Health Systems",
+          "kind": "text"
+        },
+        {
+          "path": "holdings.A-2205.CHSY.value",
+          "label": "CHSY value",
+          "value": "USD 159,120.00",
+          "kind": "money"
+        },
+        {
+          "path": "holdings.A-2205.CHSY.weight_pct",
+          "label": "CHSY share of household",
+          "value": "4.04%",
+          "kind": "percent"
+        },
+        {
+          "path": "holdings.A-2205.CASH.name",
+          "label": "CASH name",
+          "value": "Cash and cash equivalents",
+          "kind": "text"
+        },
+        {
+          "path": "holdings.A-2205.CASH.value",
+          "label": "CASH value",
+          "value": "USD 125,075.00",
+          "kind": "money"
+        },
+        {
+          "path": "holdings.A-2205.CASH.weight_pct",
+          "label": "CASH share of household",
+          "value": "3.17%",
+          "kind": "percent"
+        },
+        {
+          "path": "accounts.A-2206.type",
+          "label": "A-2206 account type",
+          "value": "Variable annuity",
+          "kind": "text"
+        },
+        {
+          "path": "accounts.A-2206.custodian",
+          "label": "A-2206 custodian",
+          "value": "Morrow Trust",
+          "kind": "text"
+        },
+        {
+          "path": "accounts.A-2206.masked_number",
+          "label": "A-2206 account number",
+          "value": "xxxx-8820",
+          "kind": "text"
+        },
+        {
+          "path": "accounts.A-2206.value",
+          "label": "A-2206 value",
+          "value": "USD 1,300,000.00",
+          "kind": "money"
+        },
+        {
+          "path": "holdings.A-2206.HAL-EQ.name",
+          "label": "HAL-EQ name",
+          "value": "Halden Equity Index Subaccount",
+          "kind": "text"
+        },
+        {
+          "path": "holdings.A-2206.HAL-EQ.value",
+          "label": "HAL-EQ value",
+          "value": "USD 535,000.00",
+          "kind": "money"
+        },
+        {
+          "path": "holdings.A-2206.HAL-EQ.weight_pct",
+          "label": "HAL-EQ share of household",
+          "value": "13.58%",
+          "kind": "percent"
+        },
+        {
+          "path": "holdings.A-2206.HAL-BAL.name",
+          "label": "HAL-BAL name",
+          "value": "Halden Balanced Subaccount",
+          "kind": "text"
+        },
+        {
+          "path": "holdings.A-2206.HAL-BAL.value",
+          "label": "HAL-BAL value",
+          "value": "USD 301,920.00",
+          "kind": "money"
+        },
+        {
+          "path": "holdings.A-2206.HAL-BAL.weight_pct",
+          "label": "HAL-BAL share of household",
+          "value": "7.66%",
+          "kind": "percent"
+        },
+        {
+          "path": "holdings.A-2206.HAL-BOND.name",
+          "label": "HAL-BOND name",
+          "value": "Halden Core Bond Subaccount",
+          "kind": "text"
+        },
+        {
+          "path": "holdings.A-2206.HAL-BOND.value",
+          "label": "HAL-BOND value",
+          "value": "USD 130,320.00",
+          "kind": "money"
+        },
+        {
+          "path": "holdings.A-2206.HAL-BOND.weight_pct",
+          "label": "HAL-BOND share of household",
+          "value": "3.31%",
+          "kind": "percent"
+        },
+        {
+          "path": "holdings.A-2206.HAL-INTL.name",
+          "label": "HAL-INTL name",
+          "value": "Halden International Subaccount",
+          "kind": "text"
+        },
+        {
+          "path": "holdings.A-2206.HAL-INTL.value",
+          "label": "HAL-INTL value",
+          "value": "USD 185,740.00",
+          "kind": "money"
+        },
+        {
+          "path": "holdings.A-2206.HAL-INTL.weight_pct",
+          "label": "HAL-INTL share of household",
+          "value": "4.71%",
+          "kind": "percent"
+        },
+        {
+          "path": "holdings.A-2206.HAL-FIX.name",
+          "label": "HAL-FIX name",
+          "value": "Halden Fixed Account",
+          "kind": "text"
+        },
+        {
+          "path": "holdings.A-2206.HAL-FIX.value",
+          "label": "HAL-FIX value",
+          "value": "USD 147,020.00",
+          "kind": "money"
+        },
+        {
+          "path": "holdings.A-2206.HAL-FIX.weight_pct",
+          "label": "HAL-FIX share of household",
+          "value": "3.73%",
+          "kind": "percent"
+        },
+        {
+          "path": "performance.period",
+          "label": "Performance period",
+          "value": "Q3 2026 (2026-07-01 to 2026-09-30)",
+          "kind": "date"
+        },
+        {
+          "path": "performance.beginning_value",
+          "label": "Value at period start",
+          "value": "USD 3,876,540.00",
+          "kind": "money"
+        },
+        {
+          "path": "performance.net_contributions",
+          "label": "Net contributions in period",
+          "value": "USD 24,000.00",
+          "kind": "money"
+        },
+        {
+          "path": "performance.market_change",
+          "label": "Market change in period",
+          "value": "USD 39,460.00",
+          "kind": "money"
+        },
+        {
+          "path": "performance.ending_value",
+          "label": "Value at period end",
+          "value": "USD 3,940,000.00",
+          "kind": "money"
+        },
+        {
+          "path": "performance.return_pct",
+          "label": "Return for the period",
+          "value": "1.02%",
+          "kind": "percent"
+        },
+        {
+          "path": "performance.benchmark_pct",
+          "label": "Benchmark return for the period",
+          "value": "2.90%",
+          "kind": "percent"
+        },
+        {
+          "path": "performance.benchmark_name",
+          "label": "Benchmark",
+          "value": "60/40 composite",
+          "kind": "text"
+        },
+        {
+          "path": "fees.annual_rate_pct",
+          "label": "Advisory fee, annual",
+          "value": "0.85%",
+          "kind": "percent"
+        },
+        {
+          "path": "fees.billing_frequency",
+          "label": "Fee billing frequency",
+          "value": "Quarterly, in arrears",
+          "kind": "text"
+        },
+        {
+          "path": "fees.billing_basis",
+          "label": "Fee billing basis",
+          "value": "Quarter-end account value",
+          "kind": "text"
+        },
+        {
+          "path": "fees.charges_billed_ytd",
+          "label": "Fee charges billed this year",
+          "value": "3",
+          "kind": "count"
+        },
+        {
+          "path": "fees.ytd_total",
+          "label": "Fees billed in 2026",
+          "value": "USD 24,902.96",
+          "kind": "money"
+        },
+        {
+          "path": "fees.last_charge_date",
+          "label": "Last fee charge date",
+          "value": "2026-09-30",
+          "kind": "date"
+        },
+        {
+          "path": "fees.last_charge_amount",
+          "label": "Last fee charge",
+          "value": "USD 8,372.50",
+          "kind": "money"
+        },
+        {
+          "path": "fees.next_charge_date",
+          "label": "Next fee charge date",
+          "value": "2026-12-31",
+          "kind": "date"
+        },
+        {
+          "path": "goals.G-1.label",
+          "label": "G-1 goal",
+          "value": "Retirement at 62",
+          "kind": "text"
+        },
+        {
+          "path": "goals.G-1.target_value",
+          "label": "G-1 target",
+          "value": "USD 4,800,000.00",
+          "kind": "money"
+        },
+        {
+          "path": "goals.G-1.target_date",
+          "label": "G-1 target date",
+          "value": "2030-04-01",
+          "kind": "date"
+        },
+        {
+          "path": "goals.G-1.funded_value",
+          "label": "G-1 funded to date",
+          "value": "USD 3,940,000.00",
+          "kind": "money"
+        },
+        {
+          "path": "goals.G-1.funded_pct",
+          "label": "G-1 funded share",
+          "value": "82.1%",
+          "kind": "percent"
+        },
+        {
+          "path": "goals.G-1.status",
+          "label": "G-1 status",
+          "value": "on track",
+          "kind": "text"
+        },
+        {
+          "path": "goals.G-2.label",
+          "label": "G-2 goal",
+          "value": "Annuity income start",
+          "kind": "text"
+        },
+        {
+          "path": "goals.G-2.target_value",
+          "label": "G-2 target",
+          "value": "USD 1,300,000.00",
+          "kind": "money"
+        },
+        {
+          "path": "goals.G-2.target_date",
+          "label": "G-2 target date",
+          "value": "2030-06-30",
+          "kind": "date"
+        },
+        {
+          "path": "goals.G-2.funded_value",
+          "label": "G-2 funded to date",
+          "value": "USD 1,300,000.00",
+          "kind": "money"
+        },
+        {
+          "path": "goals.G-2.funded_pct",
+          "label": "G-2 funded share",
+          "value": "100.0%",
+          "kind": "percent"
+        },
+        {
+          "path": "goals.G-2.status",
+          "label": "G-2 status",
+          "value": "funded",
+          "kind": "text"
+        },
+        {
+          "path": "goals.G-3.label",
+          "label": "G-3 goal",
+          "value": "Property reserve",
+          "kind": "text"
+        },
+        {
+          "path": "goals.G-3.target_value",
+          "label": "G-3 target",
+          "value": "USD 300,000.00",
+          "kind": "money"
+        },
+        {
+          "path": "goals.G-3.target_date",
+          "label": "G-3 target date",
+          "value": "2028-05-01",
+          "kind": "date"
+        },
+        {
+          "path": "goals.G-3.funded_value",
+          "label": "G-3 funded to date",
+          "value": "USD 125,075.00",
+          "kind": "money"
+        },
+        {
+          "path": "goals.G-3.funded_pct",
+          "label": "G-3 funded share",
+          "value": "41.7%",
+          "kind": "percent"
+        },
+        {
+          "path": "goals.G-3.status",
+          "label": "G-3 status",
+          "value": "needs review",
+          "kind": "text"
+        },
+        {
+          "path": "meeting.last_date",
+          "label": "Last meeting date",
+          "value": "2026-08-07",
+          "kind": "date"
+        },
+        {
+          "path": "meeting.kind",
+          "label": "Last meeting type",
+          "value": "Mid-year check-in",
+          "kind": "text"
+        },
+        {
+          "path": "meeting.attendees",
+          "label": "Last meeting attendees",
+          "value": "Dana Whitfield, Elena Voss",
+          "kind": "text"
+        },
+        {
+          "path": "meeting.note",
+          "label": "Last meeting note",
+          "value": "Reviewed the annuity contract and the Class C share class. The 1035 exchange question is open.",
+          "kind": "text"
+        },
+        {
+          "path": "meeting.next_review",
+          "label": "Next review date",
+          "value": "2027-02-05",
+          "kind": "date"
+        },
+        {
+          "path": "held_away.HA-1.custodian",
+          "label": "HA-1 custodian",
+          "value": "Northline Retirement Services",
+          "kind": "text"
+        },
+        {
+          "path": "held_away.HA-1.account_type",
+          "label": "HA-1 account type",
+          "value": "Former employer 401(k)",
+          "kind": "text"
+        },
+        {
+          "path": "held_away.HA-1.value",
+          "label": "HA-1 value",
+          "value": "USD 96,400.00",
+          "kind": "money"
+        },
+        {
+          "path": "held_away.HA-1.note",
+          "label": "HA-1 note",
+          "value": "Plan is outside the book.",
+          "kind": "text"
+        },
+        {
+          "path": "documents.DOC-V1.kind",
+          "label": "DOC-V1 document type",
+          "value": "advisory agreement",
+          "kind": "text"
+        },
+        {
+          "path": "documents.DOC-V1.filename",
+          "label": "DOC-V1 file name",
+          "value": "voss-advisory-agreement-2014-05-20.pdf",
+          "kind": "text"
+        },
+        {
+          "path": "documents.DOC-V1.received_at",
+          "label": "DOC-V1 received",
+          "value": "2014-05-20",
+          "kind": "date"
+        },
+        {
+          "path": "documents.DOC-V1.account",
+          "label": "DOC-V1 account",
+          "value": "A-2205",
+          "kind": "text"
+        },
+        {
+          "path": "documents.DOC-V1.status",
+          "label": "DOC-V1 status",
+          "value": "current",
+          "kind": "text"
+        },
+        {
+          "path": "documents.DOC-V1.effective_date",
+          "label": "DOC-V1 effective date",
+          "value": "2014-05-20",
+          "kind": "text"
+        },
+        {
+          "path": "documents.DOC-V1.service_standard",
+          "label": "DOC-V1 service standard",
+          "value": "Annual review, quarterly statements",
+          "kind": "text"
+        },
+        {
+          "path": "documents.DOC-V1.fee_schedule",
+          "label": "DOC-V1 fee schedule",
+          "value": "0.85% annual, billed quarterly in arrears",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-2.kind",
+          "label": "D-2 document type",
+          "value": "statement",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-2.filename",
+          "label": "D-2 file name",
+          "value": "alder-statement-2026-09-voss.txt",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-2.received_at",
+          "label": "D-2 received",
+          "value": "2026-11-06",
+          "kind": "date"
+        },
+        {
+          "path": "documents.D-2.account",
+          "label": "D-2 account",
+          "value": "A-2205",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-2.status",
+          "label": "D-2 status",
+          "value": "on file",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-2.registration",
+          "label": "D-2 registration",
+          "value": "TOD",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-2.account_number",
+          "label": "D-2 account number",
+          "value": "xxxx-6128",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-2.statement_period",
+          "label": "D-2 statement period",
+          "value": "2026-09-01 to 2026-09-30",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-2.account_value",
+          "label": "D-2 account value",
+          "value": "USD 2,640,000.00",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-6.kind",
+          "label": "D-6 document type",
+          "value": "annuity summary",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-6.filename",
+          "label": "D-6 file name",
+          "value": "voss-annuity-summary.txt",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-6.received_at",
+          "label": "D-6 received",
+          "value": "2026-11-10",
+          "kind": "date"
+        },
+        {
+          "path": "documents.D-6.account",
+          "label": "D-6 account",
+          "value": "A-2206",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-6.status",
+          "label": "D-6 status",
+          "value": "on file",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-6.beneficiary",
+          "label": "D-6 beneficiary",
+          "value": "Elena Voss",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-6.issuer",
+          "label": "D-6 issuer",
+          "value": "Halden Life Insurance Company",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-6.contract_type",
+          "label": "D-6 contract type",
+          "value": "Variable annuity, non-qualified",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-6.issue_date",
+          "label": "D-6 issue date",
+          "value": "2018-06-30",
+          "kind": "text"
+        },
+        {
+          "path": "documents.D-6.contract_value",
+          "label": "D-6 contract value",
+          "value": "USD 1,300,000.00",
+          "kind": "text"
+        }
+      ]
+    }
+  ]
+}

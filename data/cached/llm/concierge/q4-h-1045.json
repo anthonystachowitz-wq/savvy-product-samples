@@ -1,0 +1,21 @@
+{
+  "module": "concierge",
+  "key": "q4-h-1045",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 3023,
+    "completion_tokens": 122,
+    "total_tokens": 3145,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "prompt_cache_hit_tokens": 256,
+    "prompt_cache_miss_tokens": 2767
+  },
+  "latency_ms": 1978,
+  "created_at": "2026-11-19T05:55:54+00:00",
+  "system_sha": "b8a94d3f7772eeaa",
+  "prompt_sha": "d4137ab78d9de452",
+  "text": "{\"intent\": \"transaction\", \"answer\": \"This request involves moving money, so I am routing it to your adviser and the operations team. They will confirm the details with you before anything is submitted. For reference, the individual brokerage account on the record is xxxx-6128, held at Alder Clearing.\", \"citations\": [{\"field\": \"accounts.A-2205.masked_number\", \"value\": \"xxxx-6128\"}, {\"field\": \"accounts.A-2205.custodian\", \"value\": \"Alder Clearing\"}], \"route_to_advisor\": true}"
+}

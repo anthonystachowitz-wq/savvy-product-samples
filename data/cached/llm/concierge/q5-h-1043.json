@@ -1,0 +1,21 @@
+{
+  "module": "concierge",
+  "key": "q5-h-1043",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 2453,
+    "completion_tokens": 402,
+    "total_tokens": 2855,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "prompt_cache_hit_tokens": 256,
+    "prompt_cache_miss_tokens": 2197
+  },
+  "latency_ms": 2280,
+  "created_at": "2026-11-19T05:55:59+00:00",
+  "system_sha": "b8a94d3f7772eeaa",
+  "prompt_sha": "7d7a2445a3849b76",
+  "text": "{\"intent\": \"explain\", \"answer\": \"The record shows 3 documents on file for the Irrevocable trust account xxxx-7715. These are an advisory agreement, calloway-advisory-agreement-2009-03-02.pdf, status current; a trust summary, calloway-trust-summary.txt, status on file; and a trustee certification, calloway-trustee-certification-request.txt, status requested, with the open item listed as Certification and trust EIN.\", \"citations\": [{\"field\": \"household.document_count\", \"value\": \"3\"}, {\"field\": \"accounts.A-2203.type\", \"value\": \"Irrevocable trust\"}, {\"field\": \"accounts.A-2203.masked_number\", \"value\": \"xxxx-7715\"}, {\"field\": \"documents.DOC-C2.kind\", \"value\": \"advisory agreement\"}, {\"field\": \"documents.DOC-C2.filename\", \"value\": \"calloway-advisory-agreement-2009-03-02.pdf\"}, {\"field\": \"documents.DOC-C2.status\", \"value\": \"current\"}, {\"field\": \"documents.D-5.kind\", \"value\": \"trust summary\"}, {\"field\": \"documents.D-5.filename\", \"value\": \"calloway-trust-summary.txt\"}, {\"field\": \"documents.D-5.status\", \"value\": \"on file\"}, {\"field\": \"documents.DOC-C1.kind\", \"value\": \"trustee certification\"}, {\"field\": \"documents.DOC-C1.filename\", \"value\": \"calloway-trustee-certification-request.txt\"}, {\"field\": \"documents.DOC-C1.status\", \"value\": \"requested\"}, {\"field\": \"documents.DOC-C1.open_item\", \"value\": \"Certification and trust EIN\"}], \"route_to_advisor\": false}"
+}

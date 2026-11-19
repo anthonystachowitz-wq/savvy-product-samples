@@ -1,0 +1,21 @@
+{
+  "module": "concierge",
+  "key": "q5-h-1045",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 3017,
+    "completion_tokens": 254,
+    "total_tokens": 3271,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "prompt_cache_hit_tokens": 256,
+    "prompt_cache_miss_tokens": 2761
+  },
+  "latency_ms": 2092,
+  "created_at": "2026-11-19T05:56:01+00:00",
+  "system_sha": "b8a94d3f7772eeaa",
+  "prompt_sha": "1b9f9b8fca22fd1a",
+  "text": "{\"intent\": \"explain\", \"answer\": \"The record lists 3 documents on file, but none is a trust document. The documents are an advisory agreement for the individual brokerage (TOD) xxxx-6128, a statement for that same account, and an annuity summary for the variable annuity xxxx-8820. No trust account or trust document appears on this record.\", \"citations\": [{\"field\": \"household.document_count\", \"value\": \"3\"}, {\"field\": \"documents.DOC-V1.kind\", \"value\": \"advisory agreement\"}, {\"field\": \"documents.DOC-V1.account\", \"value\": \"A-2205\"}, {\"field\": \"accounts.A-2205.masked_number\", \"value\": \"xxxx-6128\"}, {\"field\": \"documents.D-2.kind\", \"value\": \"statement\"}, {\"field\": \"documents.D-6.kind\", \"value\": \"annuity summary\"}, {\"field\": \"documents.D-6.account\", \"value\": \"A-2206\"}, {\"field\": \"accounts.A-2206.masked_number\", \"value\": \"xxxx-8820\"}], \"route_to_advisor\": false}"
+}

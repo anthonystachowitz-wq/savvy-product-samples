@@ -1,0 +1,21 @@
+{
+  "module": "concierge",
+  "key": "q3-h-1042",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 3160,
+    "completion_tokens": 163,
+    "total_tokens": 3323,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "prompt_cache_hit_tokens": 256,
+    "prompt_cache_miss_tokens": 2904
+  },
+  "latency_ms": 1435,
+  "created_at": "2026-11-19T05:55:46+00:00",
+  "system_sha": "b8a94d3f7772eeaa",
+  "prompt_sha": "8a5c308d463770bb",
+  "text": "{\"intent\": \"advice\", \"answer\": \"This is a recommendation question about selling shares and buying bonds, so I am routing it to your adviser rather than answering it here. Your adviser can review your holdings and goals with you. For reference, the record as of 2026-11-18 shows total value across accounts of USD 6,180,000.00 and a 60/40 composite benchmark.\", \"citations\": [{\"field\": \"household.total_value\", \"value\": \"USD 6,180,000.00\"}, {\"field\": \"performance.benchmark_name\", \"value\": \"60/40 composite\"}, {\"field\": \"household.as_of\", \"value\": \"2026-11-18\"}], \"route_to_advisor\": true}"
+}

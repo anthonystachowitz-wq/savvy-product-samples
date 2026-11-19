@@ -1,0 +1,21 @@
+{
+  "module": "concierge",
+  "key": "q4-h-1043",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 2459,
+    "completion_tokens": 144,
+    "total_tokens": 2603,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "prompt_cache_hit_tokens": 256,
+    "prompt_cache_miss_tokens": 2203
+  },
+  "latency_ms": 1777,
+  "created_at": "2026-11-19T05:55:53+00:00",
+  "system_sha": "b8a94d3f7772eeaa",
+  "prompt_sha": "01f7a2879b2bc0af",
+  "text": "{\"intent\": \"transaction\", \"answer\": \"This request involves moving money, so it goes to your adviser or the operations team for handling. I cannot initiate or confirm any transfer. Note that the account on record is an irrevocable trust, and the record shows consent status as pending, so the team will review the details before anything proceeds.\", \"citations\": [{\"field\": \"household.consent_status\", \"value\": \"pending\"}, {\"field\": \"accounts.A-2203.type\", \"value\": \"Irrevocable trust\"}, {\"field\": \"accounts.A-2203.masked_number\", \"value\": \"xxxx-7715\"}], \"route_to_advisor\": true}"
+}

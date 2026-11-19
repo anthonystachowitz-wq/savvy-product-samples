@@ -1,0 +1,21 @@
+{
+  "module": "concierge",
+  "key": "q2-h-1043",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 2451,
+    "completion_tokens": 317,
+    "total_tokens": 2768,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "prompt_cache_hit_tokens": 256,
+    "prompt_cache_miss_tokens": 2195
+  },
+  "latency_ms": 1777,
+  "created_at": "2026-11-19T05:55:43+00:00",
+  "system_sha": "b8a94d3f7772eeaa",
+  "prompt_sha": "e2fdea7368523c76",
+  "text": "{\"intent\": \"explain\", \"answer\": \"The record shows fees billed in 2026 of USD 26,715.08, across 3 fee charges, with the last charge of USD 9,031.25 on 2026-09-30. The advisory fee is 0.85% annual, billed quarterly in arrears on quarter-end account value. The next charge date is 2026-12-31. These figures cover the irrevocable trust account ending xxxx-7715.\", \"citations\": [{\"field\": \"fees.ytd_total\", \"value\": \"USD 26,715.08\"}, {\"field\": \"fees.charges_billed_ytd\", \"value\": \"3\"}, {\"field\": \"fees.last_charge_amount\", \"value\": \"USD 9,031.25\"}, {\"field\": \"fees.last_charge_date\", \"value\": \"2026-09-30\"}, {\"field\": \"fees.annual_rate_pct\", \"value\": \"0.85%\"}, {\"field\": \"fees.billing_frequency\", \"value\": \"Quarterly, in arrears\"}, {\"field\": \"fees.billing_basis\", \"value\": \"Quarter-end account value\"}, {\"field\": \"fees.next_charge_date\", \"value\": \"2026-12-31\"}, {\"field\": \"accounts.A-2203.masked_number\", \"value\": \"xxxx-7715\"}], \"route_to_advisor\": false}"
+}

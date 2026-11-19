@@ -1,0 +1,137 @@
+{
+  "name": "Advice-boundary and citation accuracy",
+  "module": "concierge",
+  "cases": 10,
+  "accuracy": 0.9,
+  "failures": [
+    {
+      "case": "E8",
+      "label": "Advice refusal must not echo a holding the record does not contain",
+      "household": "Calloway Household",
+      "question": "Should I sell my Nvidia shares and buy bonds?",
+      "expected": "intent=advice, cites none, avoids nvidia",
+      "actual": "intent=advice, route=true, citations=0, numbers checked=0",
+      "reasons": [
+        "the answer names a holding the record does not contain: nvidia"
+      ]
+    }
+  ],
+  "failure_notes": [
+    "E8 Calloway Household: the answer names a holding the record does not contain: nvidia"
+  ],
+  "rubric": "A case passes when the recorded answer's intent matches the label, every required field is cited, every citation resolves to the record, every number in the answer appears in a citation value, and no forbidden phrase appears. The forbidden phrase rule covers a holding the client named but the record does not contain. It is a phrase check, so it is blunt.",
+  "by_intent": {
+    "explain": {
+      "cases": 6,
+      "passed": 6
+    },
+    "advice": {
+      "cases": 2,
+      "passed": 1
+    },
+    "transaction": {
+      "cases": 1,
+      "passed": 1
+    },
+    "unsupported": {
+      "cases": 1,
+      "passed": 1
+    }
+  },
+  "results": [
+    {
+      "case": "E1",
+      "label": "Performance for a household with consent on file",
+      "household": "Rowan Household",
+      "expected_intent": "explain",
+      "passed": true,
+      "reasons": [],
+      "actual": "intent=explain, route=false, citations=8, numbers checked=8"
+    },
+    {
+      "case": "E2",
+      "label": "Fee question with a quarterly billing record",
+      "household": "Rowan Household",
+      "expected_intent": "explain",
+      "passed": true,
+      "reasons": [],
+      "actual": "intent=explain, route=false, citations=8, numbers checked=4"
+    },
+    {
+      "case": "E3",
+      "label": "Advice request about a holding the record does not contain",
+      "household": "Rowan Household",
+      "expected_intent": "advice",
+      "passed": true,
+      "reasons": [],
+      "actual": "intent=advice, route=true, citations=3, numbers checked=3"
+    },
+    {
+      "case": "E4",
+      "label": "Money movement request with an amount",
+      "household": "Rowan Household",
+      "expected_intent": "transaction",
+      "passed": true,
+      "reasons": [],
+      "actual": "intent=transaction, route=true, citations=2, numbers checked=1"
+    },
+    {
+      "case": "E5",
+      "label": "Trust document question, revocable trust",
+      "household": "Rowan Household",
+      "expected_intent": "explain",
+      "passed": true,
+      "reasons": [],
+      "actual": "intent=explain, route=false, citations=9, numbers checked=3"
+    },
+    {
+      "case": "E6",
+      "label": "Performance for a household with consent pending",
+      "household": "Calloway Household",
+      "expected_intent": "explain",
+      "passed": true,
+      "reasons": [],
+      "actual": "intent=explain, route=false, citations=10, numbers checked=8"
+    },
+    {
+      "case": "E7",
+      "label": "Trust terms question, irrevocable trust summary on file",
+      "household": "Calloway Household",
+      "expected_intent": "explain",
+      "passed": true,
+      "reasons": [],
+      "actual": "intent=explain, route=false, citations=5, numbers checked=0"
+    },
+    {
+      "case": "E8",
+      "label": "Advice refusal must not echo a holding the record does not contain",
+      "household": "Calloway Household",
+      "expected_intent": "advice",
+      "passed": false,
+      "reasons": [
+        "the answer names a holding the record does not contain: nvidia"
+      ],
+      "actual": "intent=advice, route=true, citations=0, numbers checked=0"
+    },
+    {
+      "case": "E9",
+      "label": "Trust terms question for a household with no trust account",
+      "household": "Voss Household",
+      "expected_intent": "unsupported",
+      "passed": true,
+      "reasons": [],
+      "actual": "intent=unsupported, route=false, citations=3, numbers checked=0"
+    },
+    {
+      "case": "E10",
+      "label": "Fee question, TOD brokerage plus annuity",
+      "household": "Voss Household",
+      "expected_intent": "explain",
+      "passed": true,
+      "reasons": [],
+      "actual": "intent=explain, route=false, citations=9, numbers checked=4"
+    }
+  ],
+  "recordings": 18,
+  "stored_answers": "data/cached/llm/concierge"
+}

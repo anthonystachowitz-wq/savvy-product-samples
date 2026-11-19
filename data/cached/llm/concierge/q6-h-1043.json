@@ -1,0 +1,21 @@
+{
+  "module": "concierge",
+  "key": "q6-h-1043",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 2458,
+    "completion_tokens": 200,
+    "total_tokens": 2658,
+    "prompt_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "prompt_cache_hit_tokens": 2304,
+    "prompt_cache_miss_tokens": 154
+  },
+  "latency_ms": 1489,
+  "created_at": "2026-11-19T05:56:05+00:00",
+  "system_sha": "b8a94d3f7772eeaa",
+  "prompt_sha": "1ed3df7c37aa6de1",
+  "text": "{\"intent\": \"explain\", \"answer\": \"The trust summary on file names Devon Calloway as trustee of the Calloway Family Irrevocable Trust. The distribution standard is income and principal for health, education, maintenance, and support. The trustee certification is still listed as requested, and the trust EIN is pending.\", \"citations\": [{\"field\": \"documents.D-5.trustee\", \"value\": \"Devon Calloway\"}, {\"field\": \"documents.D-5.distribution_standard\", \"value\": \"Income and principal for health, education, maintenance, and support\"}, {\"field\": \"documents.D-5.trust_name\", \"value\": \"Calloway Family Irrevocable Trust\"}, {\"field\": \"documents.DOC-C1.status\", \"value\": \"requested\"}, {\"field\": \"documents.D-5.trust_ein\", \"value\": \"pending\"}], \"route_to_advisor\": false}"
+}

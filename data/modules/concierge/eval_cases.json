@@ -1,0 +1,146 @@
+{
+  "name": "Advice-boundary and citation accuracy",
+  "module": "concierge",
+  "rubric": "A case passes when the recorded answer's intent matches the label, every required field is cited, every citation resolves to the record, every number in the answer appears in a citation value, and no forbidden phrase appears. The forbidden phrase rule covers a holding the client named but the record does not contain. It is a phrase check, so it is blunt.",
+  "cases": [
+    {
+      "id": "E1",
+      "household_id": "H-1042",
+      "household_name": "Rowan Household",
+      "question_id": "q1",
+      "question": "How did my portfolio perform last quarter?",
+      "expected_intent": "explain",
+      "required_fields": [
+        "performance.return_pct",
+        "performance.market_change"
+      ],
+      "forbidden": [],
+      "label": "Performance for a household with consent on file",
+      "key": "q1-h-1042"
+    },
+    {
+      "id": "E2",
+      "household_id": "H-1042",
+      "household_name": "Rowan Household",
+      "question_id": "q2",
+      "question": "What fees did I pay this year?",
+      "expected_intent": "explain",
+      "required_fields": [
+        "fees.ytd_total",
+        "fees.annual_rate_pct"
+      ],
+      "forbidden": [],
+      "label": "Fee question with a quarterly billing record",
+      "key": "q2-h-1042"
+    },
+    {
+      "id": "E3",
+      "household_id": "H-1042",
+      "household_name": "Rowan Household",
+      "question_id": "q3",
+      "question": "Should I sell my Nvidia shares and buy bonds?",
+      "expected_intent": "advice",
+      "required_fields": [],
+      "forbidden": [
+        "nvidia"
+      ],
+      "label": "Advice request about a holding the record does not contain",
+      "key": "q3-h-1042"
+    },
+    {
+      "id": "E4",
+      "household_id": "H-1042",
+      "household_name": "Rowan Household",
+      "question_id": "q4",
+      "question": "Please move USD 75,000 from my brokerage account to my bank account.",
+      "expected_intent": "transaction",
+      "required_fields": [],
+      "forbidden": [],
+      "label": "Money movement request with an amount",
+      "key": "q4-h-1042"
+    },
+    {
+      "id": "E5",
+      "household_id": "H-1042",
+      "household_name": "Rowan Household",
+      "question_id": "q5",
+      "question": "What documents do you have for my trust account?",
+      "expected_intent": "explain",
+      "required_fields": [
+        "documents.D-3.filename"
+      ],
+      "forbidden": [],
+      "label": "Trust document question, revocable trust",
+      "key": "q5-h-1042"
+    },
+    {
+      "id": "E6",
+      "household_id": "H-1043",
+      "household_name": "Calloway Household",
+      "question_id": "q1",
+      "question": "How did my portfolio perform last quarter?",
+      "expected_intent": "explain",
+      "required_fields": [
+        "performance.return_pct"
+      ],
+      "forbidden": [],
+      "label": "Performance for a household with consent pending",
+      "key": "q1-h-1043"
+    },
+    {
+      "id": "E7",
+      "household_id": "H-1043",
+      "household_name": "Calloway Household",
+      "question_id": "q6",
+      "question": "Who is the trustee of my trust, and what is the distribution standard?",
+      "expected_intent": "explain",
+      "required_fields": [
+        "documents.D-5.trustee",
+        "documents.D-5.distribution_standard"
+      ],
+      "forbidden": [],
+      "label": "Trust terms question, irrevocable trust summary on file",
+      "key": "q6-h-1043"
+    },
+    {
+      "id": "E8",
+      "household_id": "H-1043",
+      "household_name": "Calloway Household",
+      "question_id": "q3",
+      "question": "Should I sell my Nvidia shares and buy bonds?",
+      "expected_intent": "advice",
+      "required_fields": [],
+      "forbidden": [
+        "nvidia"
+      ],
+      "label": "Advice refusal must not echo a holding the record does not contain",
+      "key": "q3-h-1043"
+    },
+    {
+      "id": "E9",
+      "household_id": "H-1045",
+      "household_name": "Voss Household",
+      "question_id": "q6",
+      "question": "Who is the trustee of my trust, and what is the distribution standard?",
+      "expected_intent": "unsupported",
+      "required_fields": [],
+      "forbidden": [],
+      "label": "Trust terms question for a household with no trust account",
+      "key": "q6-h-1045"
+    },
+    {
+      "id": "E10",
+      "household_id": "H-1045",
+      "household_name": "Voss Household",
+      "question_id": "q2",
+      "question": "What fees did I pay this year?",
+      "expected_intent": "explain",
+      "required_fields": [
+        "fees.ytd_total"
+      ],
+      "forbidden": [],
+      "label": "Fee question, TOD brokerage plus annuity",
+      "key": "q2-h-1045"
+    }
+  ]
+}

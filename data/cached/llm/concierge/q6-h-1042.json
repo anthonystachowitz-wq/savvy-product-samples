@@ -1,0 +1,21 @@
+{
+  "module": "concierge",
+  "key": "q6-h-1042",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 3164,
+    "completion_tokens": 174,
+    "total_tokens": 3338,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "prompt_cache_hit_tokens": 256,
+    "prompt_cache_miss_tokens": 2908
+  },
+  "latency_ms": 1743,
+  "created_at": "2026-11-19T05:56:03+00:00",
+  "system_sha": "b8a94d3f7772eeaa",
+  "prompt_sha": "315e13424fb2f3ae",
+  "text": "{\"intent\": \"unsupported\", \"answer\": \"The record does not name a trustee or state a distribution standard. The trust account is listed as a revocable living trust with Morrow Trust as custodian, and the last meeting note mentions reviewing the trust registration and a 2027 distribution plan, but no trustee name or distribution terms are recorded. Those details would need to come from the trust document itself.\", \"citations\": [{\"field\": \"accounts.A-2202.type\", \"value\": \"Revocable living trust\"}, {\"field\": \"accounts.A-2202.custodian\", \"value\": \"Morrow Trust\"}, {\"field\": \"meeting.note\", \"value\": \"Reviewed the trust registration and the 2027 distribution plan. Client asked for a written fee summary.\"}], \"route_to_advisor\": false}"
+}

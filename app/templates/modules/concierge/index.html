@@ -1,0 +1,592 @@
+{% extends "suite_base.html" %}
+{% block title %}Client Concierge, Savvy product samples{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="/static/modules/concierge.css">
+{% endblock %}
+{% block content %}
+
+<div class="mod-head">
+  <div>
+    <div class="mod-kicker">Serve &middot; client questions</div>
+    <h1 class="mod-title">Client Concierge</h1>
+    <p class="mod-sub">A supervised assistant inside the adviser portal. A client asks about their own record. The model explains it, cites the field behind every number, and routes anything that is advice or a transaction to the adviser. Nothing reaches a client until a named person approves it.</p>
+  </div>
+  <div class="mod-actions">
+    <span class="chip chip--accent">Serve</span>
+    <span class="chip">{{ adviser }}, adviser</span>
+    <span class="chip chip--live">{{ recording.count }} recorded calls</span>
+    <a class="chip" href="/method">How it is built</a>
+  </div>
+</div>
+
+{% if flash %}
+<div class="banner banner--{{ flash.level }}" role="status">{{ flash.text }}</div>
+{% endif %}
+
+<div class="cq-demo">
+  <span class="cq-demo-label">What this demonstrates</span>
+  <p class="cq-demo-text">Retrieval over one household record, grounded generation with field-level citations, and a deterministic check that can fail the model. The adviser stays in the loop because the assistant explains but never advises, and because a release needs a name, a role, and a passing check. <a class="text-link" href="#ask">Jump to the question box</a></p>
+</div>
+
+{% if metric and metric.steps %}
+<div class="cq-strip" aria-label="Modelled effect">
+  <div class="cq-stat">
+    <span class="cq-stat-label">Adviser hours returned, per month</span>
+    <span class="cq-stat-value">{{ metric.steps[3].value }}</span>
+    <span class="cq-stat-note">modelled, {{ metric.steps[3].formula }}</span>
+  </div>
+  <div class="cq-stat">
+    <span class="cq-stat-label">Routine questions answered without the adviser</span>
+    <span class="cq-stat-value">{{ metric.steps[1].value }} of {{ metric.steps[0].value }}</span>
+    <span class="cq-stat-note">per month, modelled</span>
+  </div>
+  <div class="cq-stat">
+    <span class="cq-stat-label">Loaded cost returned, per year</span>
+    <span class="cq-stat-value">{{ metric.steps[5].value }}</span>
+    <span class="cq-stat-note">modelled at USD 120 an hour</span>
+  </div>
+  <div class="cq-stat">
+    <span class="cq-stat-label">Answers released without a named approval</span>
+    <span class="cq-stat-value">{{ metric.risk_metric.value }}</span>
+    <span class="cq-stat-note">server-side check, not a model claim</span>
+  </div>
+</div>
+{% endif %}
+
+{% if household %}
+<section class="cq-section" id="record">
+  <div class="cq-section-head">
+    <div>
+      <p class="mod-kicker-sm">Record</p>
+      <h2 class="cq-h2">Household record</h2>
+    </div>
+    <span class="mod-note">Source: data/book.json plus a synthetic record extension. As of {{ as_of }}.</span>
+  </div>
+
+  <div class="cq-tabs" role="navigation" aria-label="Households">
+    {% for item in households %}
+    <a class="cq-tab{{ ' is-active' if item.id == household.id }}" href="/concierge?h={{ item.id }}#ask">
+      <span class="cq-tab-name">{{ item.display_name }}</span>
+      <span class="cq-tab-meta">{{ item.id }} &middot; {{ item.total_value }}</span>
+      <span class="chip {{ 'chip--live' if item.consent_status == 'received' else 'chip--build' }}">consent {{ item.consent_status }}</span>
+    </a>
+    {% endfor %}
+  </div>
+
+  <div class="mod-grid mod-grid--wide">
+    <div>
+      <div class="mod-panel">
+        <div class="cq-panel-head">
+          <h3>Accounts</h3>
+          <span class="mod-note">{{ household.accounts|length }} accounts, {{ household.fields|length }} field paths in the prompt</span>
+        </div>
+        <div class="table-wrap">
+          <table class="mod-table">
+            <thead><tr><th scope="col">Account</th><th scope="col">Type</th><th scope="col">Custodian</th><th scope="col" class="num">Value</th></tr></thead>
+            <tbody>
+              {% for account in household.accounts %}
+              <tr>
+                <td class="mono">{{ account.masked_number }}</td>
+                <td>{{ account.account_type }}</td>
+                <td>{{ account.custodian }}</td>
+                <td class="num">{{ account.value }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <div class="cq-total">
+          <span>Total value</span>
+          <span class="mono">{{ household.total_value }}</span>
+          <span class="mod-note">sum of the positions in data/book.json</span>
+        </div>
+      </div>
+
+      <div class="mod-panel">
+        <div class="cq-panel-head">
+          <h3>Documents on file</h3>
+          <span class="mod-note">{{ household.documents|length }} documents</span>
+        </div>
+        <div class="table-wrap">
+          <table class="mod-table">
+            <thead><tr><th scope="col">File</th><th scope="col">Type</th><th scope="col">Received</th><th scope="col">Status</th></tr></thead>
+            <tbody>
+              {% for document in household.documents %}
+              <tr>
+                <td class="mono cq-file">{{ document.filename }}</td>
+                <td>{{ document.kind|replace("_", " ") }}</td>
+                <td>{{ document.received_at|day }}</td>
+                <td>{{ document.status }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="mod-panel">
+        <div class="cq-panel-head">
+          <h3>Held-away assets</h3>
+          <span class="mod-note">{{ household.held_away_total }} outside the book</span>
+        </div>
+        <table class="mod-table">
+          <thead><tr><th scope="col">Custodian</th><th scope="col">Type</th><th scope="col" class="num">Value</th></tr></thead>
+          <tbody>
+            {% for item in household.held_away %}
+            <tr>
+              <td>{{ item.custodian }}</td>
+              <td>{{ item.account_type }}</td>
+              <td class="num">{{ item.value }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <p class="mod-note">Held-away balances are client-reported. They are not custodied or verified by the firm.</p>
+      </div>
+    </div>
+
+    <div>
+      <div class="mod-panel">
+        <div class="cq-panel-head">
+          <h3>Goals</h3>
+          <span class="mod-note">{{ household.goals|length }} goals on the record</span>
+        </div>
+        {% for goal in household.goals %}
+        <div class="cq-goal">
+          <div class="cq-goal-top">
+            <span class="cq-goal-label">{{ goal.label }}</span>
+            <span class="badge {{ 'badge-success' if goal.status == 'funded' else ('badge-warn' if goal.status == 'needs review' else 'badge-accent') }}">{{ goal.status }}</span>
+          </div>
+          <div class="cq-goal-meta">{{ goal.funded }} of {{ goal.target }} &middot; target {{ goal.target_date|day }}</div>
+          <div class="cq-bar"><span style="width: {{ goal.funded_pct }}"></span></div>
+          <div class="cq-goal-pct">{{ goal.funded_pct }} funded</div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <div class="mod-panel">
+        <h3>Last meeting</h3>
+        <dl class="kv">
+          <dt>Date</dt><dd>{{ household.meeting.date|day }}</dd>
+          <dt>Type</dt><dd>{{ household.meeting.kind }}</dd>
+          <dt>Attendees</dt><dd>{{ household.meeting.attendees }}</dd>
+          <dt>Note</dt><dd>{{ household.meeting.note }}</dd>
+          <dt>Next review</dt><dd>{{ household.meeting.next_review|day }}</dd>
+        </dl>
+      </div>
+
+      <div class="mod-panel">
+        <h3>Consent on the record</h3>
+        <p class="mod-note">{{ household.consent_note }}</p>
+        <p class="mod-note">{{ household.notes }}.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cq-section" id="ask">
+  <div class="cq-section-head">
+    <div>
+      <p class="mod-kicker-sm">Question</p>
+      <h2 class="cq-h2">Ask about this record</h2>
+    </div>
+    <span class="mod-note">{{ key_count }} recorded question and household pairs. Five presets, plus free text matched to a recording.</span>
+  </div>
+
+  <div class="mod-panel cq-ask">
+    <form method="post" action="/concierge/ask" class="cq-ask-form">
+      <input type="hidden" name="household" value="{{ household.id }}">
+      <div class="cq-presets">
+        {% for preset in presets %}
+        <button class="cq-preset" type="submit" name="question_id" value="{{ preset.id }}">
+          <span class="cq-preset-label">{{ preset.label }}</span>
+          <span class="cq-preset-text">{{ preset.text }}</span>
+          <span class="cq-preset-intent">expected intent: {{ preset.expected_intent }}</span>
+        </button>
+        {% endfor %}
+      </div>
+      <div class="cq-free">
+        <label class="cq-free-label" for="free_text">Or type a client question</label>
+        <div class="btn-row">
+          <input class="input cq-free-input" id="free_text" name="free_text" maxlength="220" placeholder="e.g. How much am I paying in fees?">
+          <button class="btn btn-primary" type="submit" name="action" value="ask">Ask</button>
+          <button class="btn" type="submit" name="action" value="live">Ask live</button>
+        </div>
+        <p class="mod-note">Free text is matched to the closest recorded question by keyword. If nothing matches, the page shows the recording gap instead of an invented answer.</p>
+      </div>
+    </form>
+  </div>
+</section>
+
+{% if bundle %}
+<section class="cq-section" id="answer">
+  <div class="cq-section-head">
+    <div>
+      <p class="mod-kicker-sm">Answer</p>
+      <h2 class="cq-h2">{{ household.display_name }}</h2>
+    </div>
+    <div class="cq-head-chips">
+      {% set intent_class = 'badge-accent' if bundle.intent == 'explain' else ('badge-neutral' if bundle.intent == 'unsupported' else 'badge-warn') %}
+      <span class="badge {{ intent_class }}">intent: {{ bundle.intent }}</span>
+      {% if bundle.route_to_advisor %}<span class="badge badge-warn">routed to the adviser</span>{% endif %}
+      <span class="badge {{ 'badge-success' if bundle.ok else 'badge-danger' }}">{{ 'checks pass' if bundle.ok else 'checks fail' }}</span>
+      {% if live_variant %}<span class="badge badge-neutral">fresh live call</span>{% endif %}
+    </div>
+  </div>
+
+  {% if answer_error %}<div class="banner banner--warn">{{ answer_error }}</div>{% endif %}
+
+  <div class="mod-grid mod-grid--wide">
+    <div>
+      <article class="mod-panel cq-answer">
+        <div class="cq-answer-meta">
+          <p class="cq-question">{{ question_text }}</p>
+          <p class="mod-note">Recording {{ bundle.key }}{% if from_free_text %} &middot; matched from free text{% endif %}</p>
+        </div>
+
+        {% if consent_blocked %}
+        <div class="banner banner--fail">
+          <strong>Release blocked by protocol consent.</strong> {{ consent_blocked }}
+        </div>
+        {% endif %}
+
+        {% if bundle.parse_error %}
+        <div class="banner banner--fail">
+          <strong>Parse failure.</strong> {{ bundle.parse_error }} The raw text is kept in the recording and the answer cannot be released.
+        </div>
+        {% endif %}
+
+        <p class="cq-answer-text">{{ bundle.answer }}</p>
+
+        {% if bundle.citations %}
+        <div class="cq-cites">
+          {% for citation in bundle.citations %}
+          <div class="cq-cite cq-cite--{{ citation.status }}">
+            <code class="cq-cite-path">{{ citation.field }}</code>
+            <span class="cq-cite-value">{{ citation.value }}</span>
+            <span class="cq-cite-flag">{{ 'match' if citation.status == 'match' else ('mismatch' if citation.status == 'mismatch' else 'not in record') }}</span>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <p class="cq-quiet">No citations. This answer contains no numbers.</p>
+        {% endif %}
+
+        <div class="cq-check {{ 'is-pass' if bundle.guardrail.ok else 'is-fail' }}">
+          <span class="cq-check-title">{{ 'Number check passed' if bundle.guardrail.ok else 'Number check failed' }}</span>
+          <span class="cq-check-text">
+            {% if bundle.guardrail.checked %}
+            {{ bundle.guardrail.covered }} of {{ bundle.guardrail.checked }} quantities in the answer appear in a cited value. Dates, years, and account ids are ignored.
+            {% else %}
+            The answer contains no numbers, so there is nothing to check.
+            {% endif %}
+            {% if bundle.guardrail.uncovered %}Numbers with no cited field: <span class="mono">{{ bundle.guardrail.uncovered|join(", ") }}</span>.{% endif %}
+            {% if bundle.guardrail.unresolved %}Citations that do not resolve: <span class="mono">{{ bundle.guardrail.unresolved|join(", ") }}</span>.{% endif %}
+          </span>
+        </div>
+
+        {% if bundle.policy_notes %}
+        <ul class="cq-notes">
+          {% for note in bundle.policy_notes %}<li>{{ note }}</li>{% endfor %}
+        </ul>
+        {% endif %}
+
+        {% if bundle.route_to_advisor %}
+        <div class="cq-route">
+          <span class="cq-route-label">Route to adviser</span>
+          <p class="cq-route-text">The model did not answer the question. Dana Whitfield answers it in the portal. Nothing is traded, moved, or sent by this demo.</p>
+        </div>
+        {% endif %}
+
+        <div class="cq-actions">
+          <form method="post" action="/concierge/hold">
+            <input type="hidden" name="household" value="{{ household.id }}">
+            <input type="hidden" name="key" value="{{ key }}">
+            <input type="hidden" name="live" value="{{ '1' if live_variant else '' }}">
+            {% set held_state = hold_for_key.status if hold_for_key else '' %}
+            <button class="btn btn-primary" type="submit"{% if held_state in ('held', 'approved') %} disabled{% endif %}>{{ 'Already held' if held_state == 'held' else ('Approved and sealed' if held_state == 'approved' else 'Hold for adviser approval') }}</button>
+          </form>
+          <form method="post" action="/concierge/ask">
+            <input type="hidden" name="household" value="{{ household.id }}">
+            <input type="hidden" name="question_id" value="{{ entry.question_id }}">
+            <button class="btn" type="submit" name="action" value="live">Run live</button>
+          </form>
+          <span class="mod-note">Holding writes a state record and an audit event. Nothing is sent.</span>
+        </div>
+
+        <div class="cq-provenance">
+          <span class="chip chip--live">recorded live call</span>
+          <span class="cq-prov-model">{{ bundle.provenance.model }}</span>
+          <span class="mod-note">{{ bundle.provenance.mode }} &middot; {{ bundle.provenance.created_at|short_ts }} &middot; {{ bundle.provenance.latency_ms }} ms &middot; {{ bundle.provenance.prompt_tokens }} prompt and {{ bundle.provenance.completion_tokens }} completion tokens</span>
+          <a class="text-link" href="/method">Method</a>
+        </div>
+      </article>
+    </div>
+
+    <aside class="cq-aside">
+      <div class="mod-panel cq-evidence">
+        <div class="cq-panel-head">
+          <h3>Evidence record</h3>
+          {% if hold_for_key %}
+          <span class="badge {{ 'badge-success' if hold_for_key.status == 'approved' else ('badge-danger' if hold_for_key.status == 'rejected' else 'badge-warn') }}">{{ hold_for_key.status }}</span>
+          {% else %}
+          <span class="badge badge-neutral">not held</span>
+          {% endif %}
+        </div>
+        {% if hold_for_key %}
+          {% set ev = hold_for_key.evidence %}
+          <dl class="kv">
+            <dt>Approver</dt><dd>{{ ev.approver if ev else hold_for_key.held_by }}</dd>
+            <dt>Role</dt><dd>{{ ev.role if ev else "Pending" }}</dd>
+            <dt>Timestamp</dt><dd>{{ (ev.approved_at|short_ts) if ev else (hold_for_key.held_at|short_ts) }}</dd>
+            <dt>Version</dt><dd>{{ hold_for_key.version }}</dd>
+            <dt>Audience</dt><dd>{{ ev.audience if ev else "Client portal, household only" }}</dd>
+            <dt>Channel</dt><dd>{{ ev.channel if ev else "Portal message (simulated, not sent)" }}</dd>
+            <dt>Disclosure</dt><dd class="cq-evidence-disclosure">{{ ev.disclosure if ev else disclosure }}</dd>
+            <dt>Retention</dt><dd>{{ (ev.retention_until|day) if ev else "Five years from approval" }}</dd>
+            <dt>Hash</dt><dd class="mono cq-hash">{{ (ev.hash or hold_for_key.hash)[:24] }}...</dd>
+          </dl>
+          {% if hold_for_key.blocked_reason %}
+          <p class="cq-evidence-blocked">{{ hold_for_key.blocked_reason }}</p>
+          {% endif %}
+          {% if hold_for_key.status == 'held' %}
+          <a class="text-link" href="#queue">Decide in the review queue</a>
+          {% endif %}
+        {% else %}
+          <dl class="kv">
+            <dt>Approver</dt><dd>{{ adviser }}</dd>
+            <dt>Role</dt><dd>Pending</dd>
+            <dt>Timestamp</dt><dd>Not yet approved</dd>
+            <dt>Version</dt><dd>v1, on hold</dd>
+            <dt>Audience</dt><dd>Client portal, household only</dd>
+            <dt>Channel</dt><dd>Portal message (simulated, not sent)</dd>
+            <dt>Disclosure</dt><dd class="cq-evidence-disclosure">{{ disclosure }}</dd>
+            <dt>Retention</dt><dd>Five years from approval</dd>
+          </dl>
+          <p class="mod-note">The record is written when the answer is held. It is sealed with the approver, role, and hash when it is approved.</p>
+        {% endif %}
+      </div>
+
+      <div class="mod-panel">
+        <h3>The boundary this page enforces</h3>
+        <ul class="cq-boundary">
+          <li>The model explains the record. It never recommends, trades, or moves money.</li>
+          <li>Every number in the answer must appear in a citation that resolves to the record.</li>
+          <li>A household without Broker Protocol consent cannot have an answer released.</li>
+          <li>Release needs a named approver, a role, and a passing check. Nothing is delivered by this demo.</li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+</section>
+{% endif %}
+
+{% if not bundle %}
+<section class="cq-section" id="answer">
+  <div class="mod-panel cq-gap">
+    <h3>No answer loaded</h3>
+    {% if gap_text %}
+    <p class="cq-question">You asked: {{ gap_text }}</p>
+    {% endif %}
+    <p class="mod-note">{{ answer_error if answer_error else "Pick a preset question above, or type one and press Ask. The page does not call the model on a plain page load." }}</p>
+    <p class="mod-note">{{ questions.free_text_note }}</p>
+    <p class="mod-note">Recorded pairs: {% for item in keys.values() %}<span class="mono cq-key">{{ item.key }}</span>{% endfor %}</p>
+  </div>
+</section>
+{% endif %}
+
+<section class="cq-section" id="queue">
+  <div class="cq-section-head">
+    <div>
+      <p class="mod-kicker-sm">Review</p>
+      <h2 class="cq-h2">Answers held for approval</h2>
+    </div>
+    <span class="mod-note">{{ hold_stats.total }} held or decided &middot; {{ hold_stats.approved }} approved &middot; {{ hold_stats.blocked }} blocked on consent or a failed check</span>
+  </div>
+
+  {% if holds %}
+  {% for item in holds %}
+  <div class="cq-hold">
+    <div class="cq-hold-top">
+      <span class="mono cq-hold-id">{{ item.id }}</span>
+      <span class="badge {{ 'badge-success' if item.status == 'approved' else ('badge-danger' if item.status == 'rejected' else 'badge-warn') }}">{{ item.status }}</span>
+      <span class="badge badge-outline">{{ item.intent }}</span>
+      {% if item.blocked_reason %}<span class="badge badge-danger">release blocked</span>{% endif %}
+      <span class="mod-note cq-hold-when">{{ item.household_name }} &middot; held by {{ item.held_by }} {{ item.held_at|short_ts }}</span>
+    </div>
+    <p class="cq-hold-q">{{ item.question }}</p>
+    <p class="cq-hold-meta">
+      {{ item.guardrail.covered }} of {{ item.guardrail.checked }} quantities cited &middot; {{ item.citations|length }} citations &middot; {{ item.provenance.model }} &middot; recording {{ item.source_key }}
+    </p>
+    {% if item.blocked_reason %}<p class="cq-hold-block">{{ item.blocked_reason }}</p>{% endif %}
+    {% if item.status == 'held' %}
+    <div class="cq-hold-forms">
+      <form method="post" action="/concierge/decision" class="cq-hold-form">
+        <input type="hidden" name="hold_id" value="{{ item.id }}">
+        <select class="select cq-role" name="role" aria-label="Approver role" required>
+          <option value="">Approver role</option>
+          {% for role in roles %}<option value="{{ role }}">{{ role }}</option>{% endfor %}
+        </select>
+        <input class="input cq-note" name="note" maxlength="240" aria-label="Approval note" placeholder="Approval note (optional)">
+        <button class="btn btn-primary" type="submit" name="action" value="approve"{% if item.blocked_reason %} disabled{% endif %}>Approve for release</button>
+      </form>
+      <form method="post" action="/concierge/decision" class="cq-hold-form">
+        <input type="hidden" name="hold_id" value="{{ item.id }}">
+        <input class="input cq-note" name="note" maxlength="240" aria-label="Rejection reason" placeholder="Rejection reason">
+        <button class="btn btn-danger" type="submit" name="action" value="reject">Reject</button>
+      </form>
+    </div>
+    {% elif item.status == 'approved' %}
+    <p class="cq-hold-decision">Approved by {{ item.evidence.approver }} ({{ item.evidence.role }}) {{ item.evidence.approved_at|short_ts }}. Evidence v{{ item.evidence.version }}, retention to {{ item.evidence.retention_until|day }}, hash <span class="mono">{{ item.evidence.hash[:16] }}</span>. Nothing was sent.</p>
+    {% else %}
+    <p class="cq-hold-decision">Rejected by {{ item.decision.actor }} {{ item.decision.at|short_ts }}. {{ item.decision.note if item.decision.note else "No reason given." }}</p>
+    {% endif %}
+  </div>
+  {% endfor %}
+  {% else %}
+  <div class="empty">No answers held yet. Ask a question, then hold the answer for approval.</div>
+  {% endif %}
+</section>
+
+<section class="cq-section" id="eval">
+  <div class="mod-grid">
+    <div class="mod-panel cq-eval">
+      <div class="cq-panel-head">
+        <h3>Evaluation: advice boundary and citations</h3>
+        <span class="mod-note">{{ eval.cases }} labelled cases</span>
+      </div>
+      {% if eval.available %}
+      <div class="cq-eval-head">
+        <span class="cq-eval-number">{{ eval.percent }}%</span>
+        <span class="mod-note">{{ eval.passed }} of {{ eval.cases }} cases pass. A case passes when the intent matches the label, every required field is cited, every citation resolves to the record, the number check passes, and the route flag matches the intent.</span>
+      </div>
+      <div class="table-wrap">
+        <table class="mod-table">
+          <thead><tr><th scope="col">Case</th><th scope="col">Expected</th><th scope="col">Result</th><th scope="col">Why</th></tr></thead>
+          <tbody>
+            {% for row in eval.results %}
+            <tr>
+              <td class="mono">{{ row.case }}</td>
+              <td>{{ row.expected_intent }}</td>
+              <td><span class="badge {{ 'badge-success' if row.passed else 'badge-danger' }}">{{ 'pass' if row.passed else 'fail' }}</span></td>
+              <td class="cq-eval-why">{{ row.reasons|join("; ") if row.reasons else row.actual }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <p class="empty">No eval report yet. Run <span class="mono">python3 scripts/eval_concierge.py</span> and reload.</p>
+      {% endif %}
+    </div>
+
+    <div class="mod-panel cq-metric">
+      <div class="cq-panel-head">
+        <h3>{{ metric.name }}</h3>
+        <span class="mod-note">{{ metric.unit }}</span>
+      </div>
+      <p class="cq-metric-head">{{ metric.headline }}</p>
+      <table class="mod-table">
+        <thead><tr><th scope="col">Step</th><th scope="col">Arithmetic</th><th scope="col" class="num">Value</th></tr></thead>
+        <tbody>
+          {% for step in metric.steps %}
+          <tr>
+            <td>{{ step.label }}</td>
+            <td class="mono cq-formula">{{ step.formula }}</td>
+            <td class="num">{{ step.value }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <ul class="cq-assumptions">
+        {% for item in metric.assumptions %}
+        <li><span class="cq-assumption-label">{{ item.label }}</span><span class="mono">{{ item.value }}</span><span class="mod-note">{{ item.source }}</span></li>
+        {% endfor %}
+      </ul>
+      <p class="mod-note">{{ metric.caveat }}</p>
+    </div>
+  </div>
+</section>
+
+<section class="cq-section" id="built">
+  <div class="mod-grid">
+    <div class="mod-panel">
+      <h3>How this is built</h3>
+      <p><strong>Prompt pattern.</strong> One call per question. The household record is flattened to a field table of {{ household.fields|length }} paths, each with a label and an exact value string. The system prompt requires strict JSON with an intent, a short plain answer, a citation list, and a route flag. Advice and transaction questions are refused in the prompt and routed.</p>
+      <p><strong>The deterministic check.</strong> Code, not the model, decides whether an answer is grounded. Every cited path must exist in the record with the same value. Every number in the answer, after ids and dates are stripped, must appear in a cited value. A failure is shown on the page and blocks release, even when the advice boundary held.</p>
+      <details class="cq-details">
+        <summary>Read the system prompt</summary>
+        <pre class="cq-pre">{{ system_prompt }}</pre>
+      </details>
+      <p><strong>What failed.</strong> Recorded answers, not model claims. The eval writes these from the recordings.</p>
+      {% if eval.failure_notes %}
+      <ul class="mod-list">
+        {% for note in eval.failure_notes %}<li>{{ note }}</li>{% endfor %}
+      </ul>
+      {% else %}
+      <p class="mod-note">The eval has not run yet, or every case passed. Run scripts/eval_concierge.py to refresh.</p>
+      {% endif %}
+      <p class="mod-note">Known limits: the free-text router is keyword matching over 18 recorded pairs, not a general retrieval layer. Session state is a JSON file. Nothing here is wired to a custodian, a CRM, or a mailbox.</p>
+    </div>
+
+    <div class="mod-panel">
+      <h3>Model provenance</h3>
+      <dl class="kv">
+        <dt>Recorded calls</dt><dd>{{ recording.count }} of {{ recording.expected }}</dd>
+        <dt>Model</dt><dd>{{ recording.models }}</dd>
+        <dt>Mode</dt><dd>live model, recorded; replayed by default</dd>
+        <dt>Mean latency</dt><dd>{{ recording.mean_latency }} ms</dd>
+        <dt>Total tokens</dt><dd>{{ recording.tokens }}</dd>
+        <dt>Latest recording</dt><dd>{{ recording.latest|short_ts }}</dd>
+        <dt>Suite live calls today</dt><dd>{{ availability.used_today }} of {{ availability.daily_limit }} ({{ availability.mode }} mode)</dd>
+      </dl>
+      {% if recording.missing %}
+      <p class="cq-quiet">{{ recording.missing }} recorded answers are missing. Run <span class="mono">python3 scripts/record_concierge.py</span>.</p>
+      {% endif %}
+      <p class="mod-note">Every answer above comes from one saved call under data/cached/llm/concierge/. A fresh call is optional, capped by a daily budget, and stored under a separate live- key so the eval set stays fixed.</p>
+      <a class="text-link" href="/method">How the model is run</a>
+    </div>
+  </div>
+</section>
+
+<section class="cq-section" id="audit">
+  <div class="cq-section-head">
+    <div>
+      <p class="mod-kicker-sm">Record</p>
+      <h2 class="cq-h2">Audit trail</h2>
+    </div>
+    <span class="mod-note">{{ audit_count }} events for this module, newest first</span>
+  </div>
+  <div class="mod-panel cq-audit">
+    {% if audit %}
+    <div class="table-wrap audit-wrap">
+      <table class="mod-table">
+        <thead><tr><th scope="col">Time</th><th scope="col">Actor</th><th scope="col">Action</th><th scope="col">Entity</th><th scope="col">Detail</th></tr></thead>
+        <tbody>
+          {% for event in audit %}
+          <tr>
+            <td class="mono cq-nowrap">{{ event.created_at|short_ts }}</td>
+            <td>{{ event.actor }}</td>
+            <td class="mono">{{ event.action }}</td>
+            <td class="mono cq-entity">{{ event.entity_type }}/{{ event.entity_id }}</td>
+            <td class="cq-detail">{{ event.detail }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <p class="empty">No audit events yet. Hold an answer to write the first one.</p>
+    {% endif %}
+  </div>
+  <p class="mod-note cq-footnote">The audit table is the shared suite table. Records are write-only in this demo and every event belongs to the concierge module.</p>
+</section>
+
+{% else %}
+<div class="mod-panel">
+  <h3>The record is not generated yet</h3>
+  <p class="mod-note">Run <span class="mono">python3 scripts/generate_concierge.py</span>, then reload this page.</p>
+</div>
+{% endif %}
+
+{% endblock %}
