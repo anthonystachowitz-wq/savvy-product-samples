@@ -1,0 +1,21 @@
+{
+  "module": "lpo",
+  "key": "checklist-p-03",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 996,
+    "completion_tokens": 389,
+    "total_tokens": 1385,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 868
+  },
+  "latency_ms": 2631,
+  "created_at": "2026-11-19T05:55:24+00:00",
+  "system_sha": "402862e24a3a9b3a",
+  "prompt_sha": "9dc9953c982ca1af",
+  "text": "{\"status\":\"blocked\",\"summary\":\"The packet has a high severity bank name mismatch: the wire block names Northline Bank, N.A. while the custodian of record is Morrow Trust. Funding is blocked until the wire details are confirmed or corrected.\",\"checklist\":[{\"item\":\"Resolve bank name mismatch: wire block shows Northline Bank, N.A. but custodian of record is Morrow Trust; obtain corrected wire instructions or written confirmation from the investor\",\"owner\":\"Ops\",\"due\":\"2026-10-30\",\"blocking\":true},{\"item\":\"Confirm with Compliance whether the administrator issue log entry (medium) is cleared once the wire discrepancy is resolved\",\"owner\":\"Compliance\",\"due\":\"2026-10-30\",\"blocking\":true},{\"item\":\"Verify international wire routing details (ABA 026009593, account 3390-1187, reference KRV-IV-ROWAN) against confirmed instructions before release\",\"owner\":\"Ops\",\"due\":\"2026-10-30\",\"blocking\":true},{\"item\":\"Reconcile commitment USD 1,250,000 and LP name Rowan Family Trust against the administrator record\",\"owner\":\"Fund administrator\",\"due\":\"2026-10-30\",\"blocking\":false},{\"item\":\"Confirm signature ID SIG-2026-10-02-4471 and trustee authority for Jordan Rowan are on file\",\"owner\":\"Counsel\",\"due\":\"2026-10-30\",\"blocking\":false},{\"item\":\"File KYC verified status (2026-10-03) and qualified purchaser documentation in the packet record\",\"owner\":\"Compliance\",\"due\":\"2026-10-30\",\"blocking\":false},{\"item\":\"Note closing date 2026-10-30 against fund final close 2027-06-30 and confirm no side letter is required\",\"owner\":\"Ops\",\"due\":\"2026-10-30\",\"blocking\":false}]}"
+}

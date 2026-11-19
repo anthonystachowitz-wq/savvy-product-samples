@@ -1,0 +1,21 @@
+{
+  "module": "lpo",
+  "key": "extract-p-03",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 1048,
+    "completion_tokens": 147,
+    "total_tokens": 1195,
+    "prompt_tokens_details": {
+      "cached_tokens": 512
+    },
+    "prompt_cache_hit_tokens": 512,
+    "prompt_cache_miss_tokens": 536
+  },
+  "latency_ms": 1374,
+  "created_at": "2026-11-19T05:55:21+00:00",
+  "system_sha": "574dd497280825fd",
+  "prompt_sha": "ee1a407a076ae0d6",
+  "text": "{\"fields\":{\"lp_name\":\"Rowan Family Trust\",\"entity_type\":\"Revocable trust\",\"commitment_amount\":1250000,\"qualified_status\":\"Qualified purchaser\",\"custodian\":\"Morrow Trust\",\"bank_details_present\":\"Yes\",\"signature_present\":\"Yes\",\"tax_id_present\":\"Yes\",\"side_letter\":\"No\",\"subscription_date\":\"2026-10-02\",\"closing_date\":\"2026-10-30\",\"wire_instructions\":\"International wire\"},\"exceptions\":[{\"kind\":\"bank_name_mismatch\",\"detail\":\"Wire block bank name is Northline Bank, N.A., but the custodian of record is Morrow Trust.\",\"severity\":\"high\"}],\"confidence\":0.95}"
+}

@@ -1,0 +1,21 @@
+{
+  "module": "lpo",
+  "key": "checklist-p-05",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 991,
+    "completion_tokens": 367,
+    "total_tokens": 1358,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 863
+  },
+  "latency_ms": 2973,
+  "created_at": "2026-11-19T05:55:33+00:00",
+  "system_sha": "402862e24a3a9b3a",
+  "prompt_sha": "f756f8a3a3baacbf",
+  "text": "{\"status\":\"blocked\",\"summary\":\"The subscription packet for Achterberg Holdings LLC is unsigned and has no named signer, a high severity exception, and wire instructions and bank details are not provided. The packet cannot proceed to funding until the signature and wire details are resolved.\",\"checklist\":[{\"item\":\"Obtain a signed subscription form with a named signer and completed date line; re-upload the full packet including the signature page.\",\"owner\":\"Ops\",\"due\":\"2027-06-30\",\"blocking\":true},{\"item\":\"Obtain wire instructions and bank details from the investor; the packet states these will follow once the account is opened.\",\"owner\":\"Ops\",\"due\":\"2027-06-30\",\"blocking\":true},{\"item\":\"Confirm qualified purchaser and accredited investor status, both left blank or incomplete on the uploaded form.\",\"owner\":\"Compliance\",\"due\":\"2027-06-30\",\"blocking\":true},{\"item\":\"Complete KYC review; status is in_review as of 2026-11-12.\",\"owner\":\"Compliance\",\"due\":\"2027-06-30\",\"blocking\":true},{\"item\":\"Confirm the side letter position with the investor's counsel; no side letter is included pending their review.\",\"owner\":\"Counsel\",\"due\":\"2027-06-30\",\"blocking\":false},{\"item\":\"Reconcile the extracted closing date of 2026-12-12 against the administrator record and confirm the applicable closing.\",\"owner\":\"Fund administrator\",\"due\":\"2027-06-30\",\"blocking\":false},{\"item\":\"Verify the commitment amount of USD 500,000 and custodian Alder Clearing against the administrator record.\",\"owner\":\"Ops\",\"due\":\"2027-06-30\",\"blocking\":false}]}"
+}

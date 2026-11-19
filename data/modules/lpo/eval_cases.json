@@ -1,0 +1,244 @@
+{
+  "name": "Subscription packet extraction",
+  "version": 1,
+  "module": "lpo",
+  "as_of": "2026-11-19",
+  "field_keys": [
+    "lp_name",
+    "entity_type",
+    "commitment_amount",
+    "qualified_status",
+    "custodian",
+    "bank_details_present",
+    "signature_present",
+    "tax_id_present",
+    "side_letter",
+    "subscription_date",
+    "closing_date",
+    "wire_instructions"
+  ],
+  "field_definitions": [
+    {
+      "key": "lp_name",
+      "label": "LP name",
+      "type": "text"
+    },
+    {
+      "key": "entity_type",
+      "label": "Entity type",
+      "type": "text"
+    },
+    {
+      "key": "commitment_amount",
+      "label": "Commitment",
+      "type": "money"
+    },
+    {
+      "key": "qualified_status",
+      "label": "QP or accredited status",
+      "type": "enum"
+    },
+    {
+      "key": "custodian",
+      "label": "Custodian",
+      "type": "text"
+    },
+    {
+      "key": "bank_details_present",
+      "label": "Bank details present",
+      "type": "yesno"
+    },
+    {
+      "key": "signature_present",
+      "label": "Signature present",
+      "type": "yesno"
+    },
+    {
+      "key": "tax_id_present",
+      "label": "Tax ID present",
+      "type": "yesno"
+    },
+    {
+      "key": "side_letter",
+      "label": "Side letter",
+      "type": "yesno"
+    },
+    {
+      "key": "subscription_date",
+      "label": "Subscription date",
+      "type": "date"
+    },
+    {
+      "key": "closing_date",
+      "label": "Closing date",
+      "type": "date"
+    },
+    {
+      "key": "wire_instructions",
+      "label": "Wire instructions",
+      "type": "enum"
+    }
+  ],
+  "exception_kinds": [
+    "missing_signature",
+    "missing_kyc",
+    "bank_name_mismatch",
+    "commitment_mismatch",
+    "date_anomaly"
+  ],
+  "cases": [
+    {
+      "case": "P-01",
+      "packet_id": "P-01",
+      "lp_id": "LP-01",
+      "household_id": "H-1050",
+      "expected": {
+        "lp_name": "Ferraro Family Office LLC",
+        "entity_type": "Family office LLC",
+        "commitment_amount": 1500000,
+        "qualified_status": "Qualified purchaser",
+        "custodian": "Morrow Trust",
+        "bank_details_present": "Yes",
+        "signature_present": "Yes",
+        "tax_id_present": "Yes",
+        "side_letter": "Yes",
+        "subscription_date": "2026-09-18",
+        "closing_date": "2026-09-30",
+        "wire_instructions": "Domestic wire"
+      },
+      "expected_exceptions": [],
+      "expected_exception_details": [],
+      "notes": "Executed agreement, W-9, and signed side letter. Control case."
+    },
+    {
+      "case": "P-02",
+      "packet_id": "P-02",
+      "lp_id": "LP-02",
+      "household_id": "H-1043",
+      "expected": {
+        "lp_name": "Calloway Family Irrevocable Trust",
+        "entity_type": "Irrevocable trust",
+        "commitment_amount": 1000000,
+        "qualified_status": "Qualified purchaser",
+        "custodian": "Alder Clearing",
+        "bank_details_present": "Yes",
+        "signature_present": "No",
+        "tax_id_present": "No",
+        "side_letter": "No",
+        "subscription_date": "2026-11-06",
+        "closing_date": "2026-12-12",
+        "wire_instructions": "Domestic wire"
+      },
+      "expected_exceptions": [
+        "missing_kyc",
+        "missing_signature"
+      ],
+      "expected_exception_details": [
+        {
+          "kind": "missing_kyc",
+          "severity": "high"
+        },
+        {
+          "kind": "missing_signature",
+          "severity": "high"
+        }
+      ],
+      "notes": "Scanned form and trust certificate. No signature page in the upload."
+    },
+    {
+      "case": "P-03",
+      "packet_id": "P-03",
+      "lp_id": "LP-03",
+      "household_id": "H-1042",
+      "expected": {
+        "lp_name": "Rowan Family Trust",
+        "entity_type": "Revocable trust",
+        "commitment_amount": 1250000,
+        "qualified_status": "Qualified purchaser",
+        "custodian": "Morrow Trust",
+        "bank_details_present": "Yes",
+        "signature_present": "Yes",
+        "tax_id_present": "Yes",
+        "side_letter": "No",
+        "subscription_date": "2026-10-02",
+        "closing_date": "2026-10-30",
+        "wire_instructions": "International wire"
+      },
+      "expected_exceptions": [
+        "bank_name_mismatch"
+      ],
+      "expected_exception_details": [
+        {
+          "kind": "bank_name_mismatch",
+          "severity": "medium"
+        }
+      ],
+      "notes": "Portal summary with investor-entered wire instructions."
+    },
+    {
+      "case": "P-04",
+      "packet_id": "P-04",
+      "lp_id": "LP-04",
+      "household_id": "H-1049",
+      "expected": {
+        "lp_name": "Lindqvist Capital LLC",
+        "entity_type": "Limited liability company",
+        "commitment_amount": 975000,
+        "qualified_status": "Qualified purchaser",
+        "custodian": "Alder Clearing",
+        "bank_details_present": "Yes",
+        "signature_present": "Yes",
+        "tax_id_present": "Yes",
+        "side_letter": "Yes",
+        "subscription_date": "2026-10-28",
+        "closing_date": "2026-10-14",
+        "wire_instructions": "Domestic wire"
+      },
+      "expected_exceptions": [
+        "commitment_mismatch",
+        "date_anomaly"
+      ],
+      "expected_exception_details": [
+        {
+          "kind": "commitment_mismatch",
+          "severity": "high"
+        },
+        {
+          "kind": "date_anomaly",
+          "severity": "medium"
+        }
+      ],
+      "notes": "Seven-page agreement, text extract only. No page images."
+    },
+    {
+      "case": "P-05",
+      "packet_id": "P-05",
+      "lp_id": "LP-05",
+      "household_id": "H-1053",
+      "expected": {
+        "lp_name": "Achterberg Holdings LLC",
+        "entity_type": "Limited liability company",
+        "commitment_amount": 500000,
+        "qualified_status": "Not stated",
+        "custodian": "Alder Clearing",
+        "bank_details_present": "No",
+        "signature_present": "No",
+        "tax_id_present": "Yes",
+        "side_letter": "No",
+        "subscription_date": "2026-11-10",
+        "closing_date": "2026-12-12",
+        "wire_instructions": "Not stated"
+      },
+      "expected_exceptions": [
+        "missing_signature"
+      ],
+      "expected_exception_details": [
+        {
+          "kind": "missing_signature",
+          "severity": "high"
+        }
+      ],
+      "notes": "Cover email, form, and certificate of formation. Wire details deferred."
+    }
+  ]
+}

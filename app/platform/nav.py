@@ -47,10 +47,10 @@ SUITE_MODULES = [
         "label": "LP Ops",
         "lever": "Scale",
         "url": "/lpo",
-        "status": "in build",
+        "status": "live",
         "ai": "Document extraction and exception detection",
         "one_liner": "Takes private markets paperwork from intake to capital call without adding headcount per dollar.",
-        "metric": "Hours per LP per year, modelled",
+        "metric": "5.25 hours returned per LP per year, modelled",
     },
 ]
 

@@ -1,0 +1,607 @@
+{
+  "program": {
+    "name": "Private Markets Access Program",
+    "desk": "Private Markets Desk",
+    "platform": "Allocate",
+    "eligibility": "Qualified purchasers only",
+    "mandate": "Venture and growth first",
+    "owner": "Priya Raman",
+    "owner_role": "Operations lead",
+    "as_of": "2026-11-19",
+    "currency": "USD",
+    "source": "Synthetic Allocate capital account export and administrator records"
+  },
+  "fund": {
+    "name": "Kestrel Ridge Venture Access Fund IV, LP",
+    "short_name": "Kestrel Ridge Venture IV",
+    "strategy": "Venture",
+    "vintage": 2026,
+    "target_usd": 40000000,
+    "first_close": "2026-09-30",
+    "final_close": "2027-06-30",
+    "administrator": "Ridgeline Fund Services",
+    "general_partner": "Kestrel Ridge Partners GP, LLC",
+    "retention_years": 7,
+    "retention_until": "2034-06-30"
+  },
+  "summary": {
+    "lps": 6,
+    "packets": 5,
+    "commitments": 6500000,
+    "called": 1950000,
+    "funded": 1695000,
+    "outstanding": 255000,
+    "unfunded": 4550000,
+    "called_pct": 30.0,
+    "funded_pct_of_called": 86.9,
+    "funded_pct_of_commitments": 26.1,
+    "open_exceptions": 6,
+    "packets_with_exceptions": 4,
+    "fund_target": 40000000,
+    "fund_target_pct": 16.2,
+    "next_event_id": "C-02",
+    "next_event_label": "Capital call 2",
+    "next_event_date": "2026-11-28",
+    "next_event_amount": 650000,
+    "next_event_outstanding": 255000,
+    "current_hours": 31.5,
+    "target_hours": 315.0
+  },
+  "stage_counts": {
+    "all": 6,
+    "document_intake": 1,
+    "exception_review": 3,
+    "ready_to_fund": 0,
+    "funded": 2
+  },
+  "stage_order": [
+    "document_intake",
+    "exception_review",
+    "ready_to_fund",
+    "funded"
+  ],
+  "stage_labels": {
+    "document_intake": "Document intake",
+    "exception_review": "Exception review",
+    "ready_to_fund": "Ready to fund",
+    "funded": "Funded"
+  },
+  "kyc_labels": {
+    "verified": "Verified",
+    "pending": "Pending",
+    "in_review": "In review"
+  },
+  "document_labels": {
+    "complete": "Complete",
+    "exception": "Exception",
+    "in_review": "In review"
+  },
+  "exception_labels": {
+    "missing_signature": "Missing signature",
+    "missing_kyc": "Missing KYC",
+    "bank_name_mismatch": "Bank name mismatch",
+    "commitment_mismatch": "Commitment mismatch",
+    "date_anomaly": "Date anomaly"
+  },
+  "severity_labels": {
+    "high": "High",
+    "medium": "Medium",
+    "low": "Low"
+  },
+  "calendar_status_labels": {
+    "settled": "Settled",
+    "partially_funded": "Partially funded",
+    "noticed": "Noticed",
+    "declared": "Declared",
+    "scheduled": "Scheduled",
+    "projected": "Projected"
+  },
+  "calendar_kind_labels": {
+    "capital_call": "Capital call",
+    "distribution": "Distribution"
+  },
+  "field_definitions": [
+    {
+      "key": "lp_name",
+      "label": "LP name",
+      "type": "text"
+    },
+    {
+      "key": "entity_type",
+      "label": "Entity type",
+      "type": "text"
+    },
+    {
+      "key": "commitment_amount",
+      "label": "Commitment",
+      "type": "money"
+    },
+    {
+      "key": "qualified_status",
+      "label": "QP or accredited status",
+      "type": "enum"
+    },
+    {
+      "key": "custodian",
+      "label": "Custodian",
+      "type": "text"
+    },
+    {
+      "key": "bank_details_present",
+      "label": "Bank details present",
+      "type": "yesno"
+    },
+    {
+      "key": "signature_present",
+      "label": "Signature present",
+      "type": "yesno"
+    },
+    {
+      "key": "tax_id_present",
+      "label": "Tax ID present",
+      "type": "yesno"
+    },
+    {
+      "key": "side_letter",
+      "label": "Side letter",
+      "type": "yesno"
+    },
+    {
+      "key": "subscription_date",
+      "label": "Subscription date",
+      "type": "date"
+    },
+    {
+      "key": "closing_date",
+      "label": "Closing date",
+      "type": "date"
+    },
+    {
+      "key": "wire_instructions",
+      "label": "Wire instructions",
+      "type": "enum"
+    }
+  ],
+  "field_keys": [
+    "lp_name",
+    "entity_type",
+    "commitment_amount",
+    "qualified_status",
+    "custodian",
+    "bank_details_present",
+    "signature_present",
+    "tax_id_present",
+    "side_letter",
+    "subscription_date",
+    "closing_date",
+    "wire_instructions"
+  ],
+  "team": [
+    {
+      "name": "Priya Raman",
+      "role": "Operations lead"
+    },
+    {
+      "name": "Marcus Hale",
+      "role": "Compliance reviewer"
+    },
+    {
+      "name": "Dana Whitfield",
+      "role": "Adviser of record"
+    }
+  ],
+  "lps": [
+    {
+      "id": "LP-01",
+      "household_id": "H-1050",
+      "household_name": "Ferraro Household",
+      "consent_status": "received",
+      "name": "Ferraro Family Office LLC",
+      "short_name": "Ferraro Family Office",
+      "entity_type": "Family office LLC",
+      "commitment": 1500000,
+      "called": 450000,
+      "funded": 450000,
+      "outstanding": 0,
+      "funded_pct": 30.0,
+      "paid_of_called_pct": 100.0,
+      "kyc_status": "verified",
+      "kyc_label": "Verified",
+      "kyc_detail": "Verified 2026-09-22",
+      "document_status": "complete",
+      "document_label": "Complete",
+      "stage": "funded",
+      "stage_label": "Funded",
+      "packet_id": "P-01",
+      "custodian": "Morrow Trust",
+      "exception_count": 0,
+      "next_event": {
+        "date": "2027-01-15",
+        "label": "Distribution D-01",
+        "kind": "distribution"
+      },
+      "status_note": "Closed at the September first close. No open items. This packet is the clean control."
+    },
+    {
+      "id": "LP-02",
+      "household_id": "H-1043",
+      "household_name": "Calloway Household",
+      "consent_status": "pending",
+      "name": "Calloway Family Irrevocable Trust",
+      "short_name": "Calloway Family Trust",
+      "entity_type": "Irrevocable trust",
+      "commitment": 1000000,
+      "called": 300000,
+      "funded": 195000,
+      "outstanding": 105000,
+      "funded_pct": 19.5,
+      "paid_of_called_pct": 65.0,
+      "kyc_status": "pending",
+      "kyc_label": "Pending",
+      "kyc_detail": "Trust certification and EIN pending",
+      "document_status": "exception",
+      "document_label": "Exception",
+      "stage": "exception_review",
+      "stage_label": "Exception review",
+      "packet_id": "P-02",
+      "custodian": "Alder Clearing",
+      "exception_count": 2,
+      "next_event": {
+        "date": "2026-11-28",
+        "label": "Call 2 balance and KYC",
+        "kind": "capital_call"
+      },
+      "status_note": "Signature page and KYC file are outstanding. The call 2 balance is held until both clear."
+    },
+    {
+      "id": "LP-03",
+      "household_id": "H-1042",
+      "household_name": "Rowan Household",
+      "consent_status": "received",
+      "name": "Rowan Family Trust",
+      "short_name": "Rowan Family Trust",
+      "entity_type": "Revocable trust",
+      "commitment": 1250000,
+      "called": 375000,
+      "funded": 375000,
+      "outstanding": 0,
+      "funded_pct": 30.0,
+      "paid_of_called_pct": 100.0,
+      "kyc_status": "verified",
+      "kyc_label": "Verified",
+      "kyc_detail": "Verified 2026-10-03",
+      "document_status": "exception",
+      "document_label": "Exception",
+      "stage": "exception_review",
+      "stage_label": "Exception review",
+      "packet_id": "P-03",
+      "custodian": "Morrow Trust",
+      "exception_count": 1,
+      "next_event": {
+        "date": "2026-11-28",
+        "label": "Wire confirmation",
+        "kind": "capital_call"
+      },
+      "status_note": "Wire bank does not match the custodian of record. Confirm before the next release."
+    },
+    {
+      "id": "LP-04",
+      "household_id": "H-1049",
+      "household_name": "Lindqvist Household",
+      "consent_status": "received",
+      "name": "Lindqvist Capital LLC",
+      "short_name": "Lindqvist Capital",
+      "entity_type": "Limited liability company",
+      "commitment": 750000,
+      "called": 225000,
+      "funded": 225000,
+      "outstanding": 0,
+      "funded_pct": 30.0,
+      "paid_of_called_pct": 100.0,
+      "kyc_status": "verified",
+      "kyc_label": "Verified",
+      "kyc_detail": "Verified 2026-10-16",
+      "document_status": "exception",
+      "document_label": "Exception",
+      "stage": "exception_review",
+      "stage_label": "Exception review",
+      "packet_id": "P-04",
+      "custodian": "Alder Clearing",
+      "exception_count": 2,
+      "next_event": {
+        "date": "2026-11-28",
+        "label": "Commitment correction",
+        "kind": "capital_call"
+      },
+      "status_note": "Commitment and date discrepancies need correction before funding."
+    },
+    {
+      "id": "LP-05",
+      "household_id": "H-1053",
+      "household_name": "Achterberg Household",
+      "consent_status": "not required",
+      "name": "Achterberg Holdings LLC",
+      "short_name": "Achterberg Holdings",
+      "entity_type": "Limited liability company",
+      "commitment": 500000,
+      "called": 150000,
+      "funded": 0,
+      "outstanding": 150000,
+      "funded_pct": 0.0,
+      "paid_of_called_pct": 0.0,
+      "kyc_status": "in_review",
+      "kyc_label": "In review",
+      "kyc_detail": "In review since 2026-11-12",
+      "document_status": "in_review",
+      "document_label": "In review",
+      "stage": "document_intake",
+      "stage_label": "Document intake",
+      "packet_id": "P-05",
+      "custodian": "Alder Clearing",
+      "exception_count": 1,
+      "next_event": {
+        "date": "2026-12-12",
+        "label": "Countersigned packet",
+        "kind": "closing"
+      },
+      "status_note": "Admitted at the September first close. Funding is held until the signed packet and wire details are complete."
+    },
+    {
+      "id": "LP-06",
+      "household_id": "H-1044",
+      "household_name": "Barrett Household",
+      "consent_status": "pending",
+      "name": "Barrett Legacy Trust",
+      "short_name": "Barrett Legacy Trust",
+      "entity_type": "Irrevocable trust",
+      "commitment": 1500000,
+      "called": 450000,
+      "funded": 450000,
+      "outstanding": 0,
+      "funded_pct": 30.0,
+      "paid_of_called_pct": 100.0,
+      "kyc_status": "verified",
+      "kyc_label": "Verified",
+      "kyc_detail": "Verified 2026-09-29",
+      "document_status": "complete",
+      "document_label": "Complete",
+      "stage": "funded",
+      "stage_label": "Funded",
+      "packet_id": null,
+      "custodian": "Morrow Trust",
+      "exception_count": 0,
+      "next_event": {
+        "date": "2026-12-26",
+        "label": "Capital call 3",
+        "kind": "capital_call"
+      },
+      "status_note": "Closed and funded. No packet in the current queue."
+    }
+  ],
+  "calendar": [
+    {
+      "id": "C-01",
+      "kind": "capital_call",
+      "number": 1,
+      "notice_date": "2026-09-30",
+      "date": "2026-10-14",
+      "date_label": "Due",
+      "amount": 1300000,
+      "pct": 0.2,
+      "status": "settled",
+      "status_label": "Settled",
+      "outstanding": 0,
+      "meta": "Settled 2026-10-14.",
+      "kind_label": "Capital call",
+      "pct_label": "20% of commitments",
+      "is_past": true,
+      "is_next": false
+    },
+    {
+      "id": "C-02",
+      "kind": "capital_call",
+      "number": 2,
+      "notice_date": "2026-11-14",
+      "date": "2026-11-28",
+      "date_label": "Due",
+      "amount": 650000,
+      "pct": 0.1,
+      "status": "partially_funded",
+      "status_label": "Partially funded",
+      "outstanding": 255000,
+      "meta": "USD 255,000 outstanding from LP-02 and LP-05.",
+      "kind_label": "Capital call",
+      "pct_label": "10% of commitments",
+      "is_past": false,
+      "is_next": true
+    },
+    {
+      "id": "C-03",
+      "kind": "capital_call",
+      "number": 3,
+      "notice_date": "2026-12-12",
+      "date": "2026-12-26",
+      "date_label": "Due",
+      "amount": 650000,
+      "pct": 0.1,
+      "status": "noticed",
+      "status_label": "Noticed",
+      "outstanding": 650000,
+      "meta": "Notice issued 2026-12-12.",
+      "kind_label": "Capital call",
+      "pct_label": "10% of commitments",
+      "is_past": false,
+      "is_next": false
+    },
+    {
+      "id": "D-01",
+      "kind": "distribution",
+      "number": 1,
+      "notice_date": null,
+      "date": "2027-01-15",
+      "date_label": "Pay",
+      "amount": 220000,
+      "pct": null,
+      "status": "declared",
+      "status_label": "Declared",
+      "outstanding": 0,
+      "meta": "Declared from the Kestrel Ridge Growth II secondary.",
+      "kind_label": "Distribution",
+      "pct_label": "No capital called",
+      "is_past": false,
+      "is_next": false
+    },
+    {
+      "id": "C-04",
+      "kind": "capital_call",
+      "number": 4,
+      "notice_date": "2027-02-20",
+      "date": "2027-03-06",
+      "date_label": "Due",
+      "amount": 975000,
+      "pct": 0.15,
+      "status": "scheduled",
+      "status_label": "Scheduled",
+      "outstanding": 975000,
+      "meta": "Scheduled for the growth sleeve.",
+      "kind_label": "Capital call",
+      "pct_label": "15% of commitments",
+      "is_past": false,
+      "is_next": false
+    },
+    {
+      "id": "D-02",
+      "kind": "distribution",
+      "number": 2,
+      "notice_date": null,
+      "date": "2027-03-31",
+      "date_label": "Pay",
+      "amount": 180000,
+      "pct": null,
+      "status": "projected",
+      "status_label": "Projected",
+      "outstanding": 0,
+      "meta": "Projected. Not declared.",
+      "kind_label": "Distribution",
+      "pct_label": "No capital called",
+      "is_past": false,
+      "is_next": false
+    }
+  ],
+  "metric": {
+    "label": "Hours returned per LP per year",
+    "per_lp_hours": 5.25,
+    "baseline_hours": 15.0,
+    "reduction_rate": 0.35,
+    "current_lps": 6,
+    "current_hours": 31.5,
+    "target_lps": 60,
+    "target_hours": 315.0,
+    "productive_hours": 1880,
+    "target_fte": 0.17,
+    "task_lines": [
+      {
+        "key": "subscription",
+        "name": "Subscription pack review",
+        "formula": "1 packet x 4.0 hours",
+        "hours": 4.0,
+        "basis": "Review, signature chase, and file assembly"
+      },
+      {
+        "key": "kyc",
+        "name": "KYC and tax refresh",
+        "formula": "1 refresh x 2.0 hours",
+        "hours": 2.0,
+        "basis": "Annual refresh and W-9 or EIN follow-up"
+      },
+      {
+        "key": "calls",
+        "name": "Capital call processing",
+        "formula": "4 calls x 0.75 hours",
+        "hours": 3.0,
+        "basis": "Notice, reconciliation, and receipt"
+      },
+      {
+        "key": "distributions",
+        "name": "Distribution processing",
+        "formula": "2 events x 0.5 hours",
+        "hours": 1.0,
+        "basis": "Allocation, statement, and cash reconciliation"
+      },
+      {
+        "key": "statements",
+        "name": "Quarterly statement reconciliation",
+        "formula": "4 quarters x 1.25 hours",
+        "hours": 5.0,
+        "basis": "NAV tie-out and LP statement"
+      }
+    ],
+    "math": "15.00 baseline hours x 35% = 5.25 hours per LP per year. 6 LPs = 31.5 hours. 60 LPs = 315 hours, or 0.17 FTE at 1,880 productive hours.",
+    "caveat": "Modelled from the desk task list. Not a time study. The 60-LP target is a program assumption."
+  },
+  "assumptions": [
+    {
+      "label": "Program",
+      "value": "Private Markets Access Program",
+      "source": "Synthetic program record"
+    },
+    {
+      "label": "Platform",
+      "value": "Allocate",
+      "source": "Synthetic program record"
+    },
+    {
+      "label": "Eligibility",
+      "value": "Qualified purchasers only",
+      "source": "Synthetic program record"
+    },
+    {
+      "label": "Fund target",
+      "value": "USD 40,000,000",
+      "source": "Synthetic fund term sheet"
+    },
+    {
+      "label": "Calls per year",
+      "value": "4",
+      "source": "Modelled from the 2026 call schedule"
+    },
+    {
+      "label": "Distributions per year",
+      "value": "2",
+      "source": "Modelled from the 2027 distribution calendar"
+    },
+    {
+      "label": "Reduction rate",
+      "value": "35%",
+      "source": "Modelled assumption"
+    },
+    {
+      "label": "Target LPs",
+      "value": "60",
+      "source": "Program assumption"
+    },
+    {
+      "label": "Productive hours",
+      "value": "1,880 per year",
+      "source": "Modelled FTE basis"
+    }
+  ],
+  "sources": {
+    "pipeline": "Synthetic Allocate capital account export, as of 2026-11-19",
+    "calendar": "Synthetic fund administrator call and distribution notices",
+    "packets": "Synthetic subscription packets, received 2026-09-18 to 2026-11-10",
+    "exceptions": "Synthetic administrator issue log",
+    "eval": "data/modules/lpo/eval.json",
+    "metric": "Modelled from the desk task list"
+  },
+  "build_note": {
+    "pattern": "One extraction call per packet with strict JSON and a closed exception vocabulary. The administrator record sits in the prompt so the model can compare commitment, KYC, and custodian. A second call turns the extraction into an internal checklist. A third drafts the LP status note for two packets. All three are parsed defensively.",
+    "eval": "65 checks: 60 field cells across five packets, plus 5 exception sets. An exception set passes only when the kind and every severity match. Exact match after normalising money, dates, and yes/no values. In-sample, so it describes these five documents, not the next one.",
+    "limits": [
+      "Text intake only. No PDF parsing, OCR, or document storage.",
+      "No Allocate API, custodian API, e-signature, wire, or filing integration.",
+      "No model output is sent to an LP. The status note waits for a named approval.",
+      "The exception log is a synthetic administrator record, not a real NIGO feed."
+    ]
+  }
+}

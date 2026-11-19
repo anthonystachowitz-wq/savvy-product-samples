@@ -1,0 +1,21 @@
+{
+  "module": "lpo",
+  "key": "checklist-p-02",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 1154,
+    "completion_tokens": 317,
+    "total_tokens": 1471,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 1026
+  },
+  "latency_ms": 2501,
+  "created_at": "2026-11-19T05:55:20+00:00",
+  "system_sha": "402862e24a3a9b3a",
+  "prompt_sha": "0a0b7307a2cf9195",
+  "text": "{\"status\":\"blocked\",\"summary\":\"Packet P-02 for Calloway Family Irrevocable Trust is blocked by two high-severity exceptions: the trustee signature block is unexecuted and KYC review has not started, with trust certification and EIN outstanding.\",\"checklist\":[{\"item\":\"Obtain executed signature page from trustee Devon Calloway on the subscription form\",\"owner\":\"Ops\",\"due\":\"2026-12-12\",\"blocking\":true},{\"item\":\"Initiate KYC review; collect trust certification and trust EIN\",\"owner\":\"Compliance\",\"due\":\"2026-12-12\",\"blocking\":true},{\"item\":\"Confirm trustee authority under the 2022-03-18 Connecticut trust instrument\",\"owner\":\"Counsel\",\"due\":\"2026-12-12\",\"blocking\":false},{\"item\":\"Reconcile commitment amount of $1,000,000 against administrator record\",\"owner\":\"Fund administrator\",\"due\":\"2026-12-12\",\"blocking\":false},{\"item\":\"Verify custodian Alder Clearing and domestic wire instructions (ABA 011401533, account 7715-0042)\",\"owner\":\"Ops\",\"due\":\"2026-12-12\",\"blocking\":false},{\"item\":\"Confirm qualified purchaser status is documented in the file\",\"owner\":\"Compliance\",\"due\":\"2026-12-12\",\"blocking\":false},{\"item\":\"Re-extract packet after signature and EIN are supplied and clear exceptions\",\"owner\":\"Ops\",\"due\":\"2026-12-12\",\"blocking\":false}]}"
+}

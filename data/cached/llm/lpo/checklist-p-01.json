@@ -1,0 +1,21 @@
+{
+  "module": "lpo",
+  "key": "checklist-p-01",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 989,
+    "completion_tokens": 373,
+    "total_tokens": 1362,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 989
+  },
+  "latency_ms": 2566,
+  "created_at": "2026-11-19T05:55:16+00:00",
+  "system_sha": "402862e24a3a9b3a",
+  "prompt_sha": "787d9c390aac6cdb",
+  "text": "{\"status\":\"ready_for_review\",\"summary\":\"Subscription packet for Ferraro Family Office LLC (USD 1,500,000) is complete with wire, tax, signature, and KYC details present and no high severity exceptions. One manual confirmation remains: the signed side letter fee discount schedule should be verified against the administrator record before funding.\",\"checklist\":[{\"item\":\"Confirm signed side letter fee discount schedule is on file and matches the general partner-signed terms\",\"owner\":\"Ops\",\"due\":\"2026-09-30\",\"blocking\":false},{\"item\":\"Verify bank letter is on file with the administrator and matches wire instructions (Morrow Trust, ABA 021000089, account 4471-8820-31)\",\"owner\":\"Fund administrator\",\"due\":\"2026-09-30\",\"blocking\":false},{\"item\":\"Reconcile commitment amount USD 1,500,000 and LP legal name against administrator record\",\"owner\":\"Ops\",\"due\":\"2026-09-30\",\"blocking\":false},{\"item\":\"Confirm qualified purchaser evidence is retained in the subscription file\",\"owner\":\"Compliance\",\"due\":\"2026-09-30\",\"blocking\":false},{\"item\":\"Confirm KYC verified status (2026-09-22) is recorded in the administrator system\",\"owner\":\"Compliance\",\"due\":\"2026-09-30\",\"blocking\":false},{\"item\":\"Verify W-9 TIN 88-4419072 is captured and consistent with the subscription agreement\",\"owner\":\"Ops\",\"due\":\"2026-09-30\",\"blocking\":false},{\"item\":\"Confirm closing date 2026-09-30 is within the fund final close of 2027-06-30 and schedule wire release\",\"owner\":\"Ops\",\"due\":\"2026-09-30\",\"blocking\":false}]}"
+}

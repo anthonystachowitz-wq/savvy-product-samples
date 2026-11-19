@@ -1,0 +1,21 @@
+{
+  "module": "lpo",
+  "key": "extract-p-04",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 1118,
+    "completion_tokens": 180,
+    "total_tokens": 1298,
+    "prompt_tokens_details": {
+      "cached_tokens": 512
+    },
+    "prompt_cache_hit_tokens": 512,
+    "prompt_cache_miss_tokens": 606
+  },
+  "latency_ms": 1444,
+  "created_at": "2026-11-19T05:55:25+00:00",
+  "system_sha": "574dd497280825fd",
+  "prompt_sha": "12dc34c7782ffebf",
+  "text": "{\"fields\":{\"lp_name\":\"Lindqvist Capital LLC\",\"entity_type\":\"Limited liability company\",\"commitment_amount\":975000,\"qualified_status\":\"Qualified purchaser\",\"custodian\":\"Alder Clearing\",\"bank_details_present\":\"Yes\",\"signature_present\":\"Yes\",\"tax_id_present\":\"Yes\",\"side_letter\":\"Yes\",\"subscription_date\":\"2026-10-28\",\"closing_date\":\"2026-10-14\",\"wire_instructions\":\"Domestic wire\"},\"exceptions\":[{\"kind\":\"commitment_mismatch\",\"detail\":\"Packet commitment USD 975,000 differs from administrator record commitment USD 750,000.\",\"severity\":\"high\"},{\"kind\":\"date_anomaly\",\"detail\":\"Closing date 2026-10-14 is before subscription date 2026-10-28.\",\"severity\":\"high\"}],\"confidence\":0.95}"
+}

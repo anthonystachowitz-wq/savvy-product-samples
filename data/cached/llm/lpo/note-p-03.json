@@ -1,0 +1,21 @@
+{
+  "module": "lpo",
+  "key": "note-p-03",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 867,
+    "completion_tokens": 267,
+    "total_tokens": 1134,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 867
+  },
+  "latency_ms": 2703,
+  "created_at": "2026-11-19T05:55:38+00:00",
+  "system_sha": "75d45e2d9a8f59d0",
+  "prompt_sha": "8ad231c1a53078f3",
+  "text": "{\"subject\":\"Kestrel Ridge Venture Access Fund IV, LP: subscription packet status\",\"body\":\"Thank you for the subscription packet for Rowan Family Trust, received 2026-10-04. We are working through the final checks ahead of the closing date of 2026-10-30.\\n\\nOne item is outstanding. The wire instructions in your packet name Northline Bank, N.A., while our records show Morrow Trust as custodian. We cannot release the funding instruction until this is resolved. Please send either corrected wire instructions or written confirmation from the trust that the details as submitted are correct.\\n\\nWe are also confirming the international wire routing details and reconciling the commitment amount and entity name against the administrator record. Our compliance and counsel teams are reviewing the remaining items in parallel.\\n\\nOnce the wire confirmation is received, we will complete our internal checks and confirm next steps. This note is a status update only and does not confirm a closing or an allocation. The fund's final close is scheduled for 2027-06-30.\",\"asks\":[\"Send corrected wire instructions or written confirmation that the submitted bank details are correct.\",\"Confirm the custodian of record is Morrow Trust and identify the correct receiving bank.\",\"Reply to this note so we can route the confirmation to the right reviewer.\"]}"
+}

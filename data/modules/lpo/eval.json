@@ -1,0 +1,124 @@
+{
+  "name": "Subscription packet extraction",
+  "version": 1,
+  "module": "lpo",
+  "cases": 5,
+  "field_checks": 60,
+  "exception_checks": 5,
+  "checks": 65,
+  "correct": 63,
+  "accuracy": 0.9692,
+  "field_accuracy": 1.0,
+  "exception_accuracy": 0.6,
+  "exception_kind_accuracy": 1.0,
+  "severity_checks": 6,
+  "severity_correct": 4,
+  "severity_accuracy": 0.6667,
+  "failures": [
+    {
+      "case": "P-03",
+      "packet_id": "P-03",
+      "field": "exceptions.severity.bank_name_mismatch",
+      "field_label": "Exception severity: Bank name mismatch",
+      "expected": "Medium",
+      "actual": "High"
+    },
+    {
+      "case": "P-04",
+      "packet_id": "P-04",
+      "field": "exceptions.severity.date_anomaly",
+      "field_label": "Exception severity: Date anomaly",
+      "expected": "Medium",
+      "actual": "High"
+    }
+  ],
+  "failure_notes": [
+    "P-03 Exception severity: Bank name mismatch: expected Medium, model returned High.",
+    "P-04 Exception severity: Date anomaly: expected Medium, model returned High.",
+    "In-sample eval: the five packets were written for this test, so the score describes these documents, not the next subscription packet."
+  ],
+  "per_field": [
+    {
+      "field": "lp_name",
+      "label": "LP name",
+      "correct": 5,
+      "total": 5
+    },
+    {
+      "field": "entity_type",
+      "label": "Entity type",
+      "correct": 5,
+      "total": 5
+    },
+    {
+      "field": "commitment_amount",
+      "label": "Commitment",
+      "correct": 5,
+      "total": 5
+    },
+    {
+      "field": "qualified_status",
+      "label": "QP or accredited status",
+      "correct": 5,
+      "total": 5
+    },
+    {
+      "field": "custodian",
+      "label": "Custodian",
+      "correct": 5,
+      "total": 5
+    },
+    {
+      "field": "bank_details_present",
+      "label": "Bank details present",
+      "correct": 5,
+      "total": 5
+    },
+    {
+      "field": "signature_present",
+      "label": "Signature present",
+      "correct": 5,
+      "total": 5
+    },
+    {
+      "field": "tax_id_present",
+      "label": "Tax ID present",
+      "correct": 5,
+      "total": 5
+    },
+    {
+      "field": "side_letter",
+      "label": "Side letter",
+      "correct": 5,
+      "total": 5
+    },
+    {
+      "field": "subscription_date",
+      "label": "Subscription date",
+      "correct": 5,
+      "total": 5
+    },
+    {
+      "field": "closing_date",
+      "label": "Closing date",
+      "correct": 5,
+      "total": 5
+    },
+    {
+      "field": "wire_instructions",
+      "label": "Wire instructions",
+      "correct": 5,
+      "total": 5
+    }
+  ],
+  "models": [
+    "deepseek-flash"
+  ],
+  "recorded_packets": [
+    "P-01",
+    "P-02",
+    "P-03",
+    "P-04",
+    "P-05"
+  ]
+}

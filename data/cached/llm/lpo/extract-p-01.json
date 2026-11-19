@@ -1,0 +1,21 @@
+{
+  "module": "lpo",
+  "key": "extract-p-01",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 1143,
+    "completion_tokens": 111,
+    "total_tokens": 1254,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 1143
+  },
+  "latency_ms": 1386,
+  "created_at": "2026-11-19T05:55:13+00:00",
+  "system_sha": "574dd497280825fd",
+  "prompt_sha": "0bff5e577c63066d",
+  "text": "{\"fields\":{\"lp_name\":\"Ferraro Family Office LLC\",\"entity_type\":\"Family office LLC\",\"commitment_amount\":1500000,\"qualified_status\":\"Qualified purchaser\",\"custodian\":\"Morrow Trust\",\"bank_details_present\":\"Yes\",\"signature_present\":\"Yes\",\"tax_id_present\":\"Yes\",\"side_letter\":\"Yes\",\"subscription_date\":\"2026-09-18\",\"closing_date\":\"2026-09-30\",\"wire_instructions\":\"Domestic wire\"},\"exceptions\":[],\"confidence\":0.95}"
+}

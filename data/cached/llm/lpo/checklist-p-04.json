@@ -1,0 +1,21 @@
+{
+  "module": "lpo",
+  "key": "checklist-p-04",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 1154,
+    "completion_tokens": 362,
+    "total_tokens": 1516,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 1026
+  },
+  "latency_ms": 2650,
+  "created_at": "2026-11-19T05:55:28+00:00",
+  "system_sha": "402862e24a3a9b3a",
+  "prompt_sha": "88ce371b79fef4aa",
+  "text": "{\"status\":\"blocked\",\"summary\":\"The packet commitment of USD 975,000 conflicts with the administrator record of USD 750,000, and the closing date precedes the subscription date. Both must clear before funding.\",\"checklist\":[{\"item\":\"Resolve commitment mismatch: packet shows USD 975,000 vs administrator schedule USD 750,000; obtain corrected subscription agreement or administrator confirmation\",\"owner\":\"Ops\",\"due\":\"2026-11-06\",\"blocking\":true},{\"item\":\"Resolve date anomaly: closing date 2026-10-14 precedes subscription date 2026-10-28; obtain corrected dates or written confirmation\",\"owner\":\"Ops\",\"due\":\"2026-11-06\",\"blocking\":true},{\"item\":\"Confirm corrected commitment and closing date with Lindqvist Capital and re-run extraction\",\"owner\":\"Ops\",\"due\":\"2026-11-13\",\"blocking\":true},{\"item\":\"Review side letter at Exhibit C (reporting side letter) and confirm terms against fund documents\",\"owner\":\"Counsel\",\"due\":\"2026-12-04\",\"blocking\":false},{\"item\":\"Confirm KYC status (verified 2026-10-16) and TIN/W-9 on file match administrator record\",\"owner\":\"Compliance\",\"due\":\"2026-12-04\",\"blocking\":false},{\"item\":\"Validate wire instructions (Alder Clearing, ABA 011401533, account 6128-9930) against custodian record before funding\",\"owner\":\"Fund administrator\",\"due\":\"2026-12-18\",\"blocking\":false},{\"item\":\"Obtain fund administrator sign-off on revised packet and release funding once all blocking items clear\",\"owner\":\"Fund administrator\",\"due\":\"2027-06-30\",\"blocking\":false}]}"
+}

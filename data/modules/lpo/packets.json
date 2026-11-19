@@ -1,0 +1,282 @@
+{
+  "fund": {
+    "name": "Kestrel Ridge Venture Access Fund IV, LP",
+    "short_name": "Kestrel Ridge Venture IV",
+    "strategy": "Venture",
+    "vintage": 2026,
+    "target_usd": 40000000,
+    "first_close": "2026-09-30",
+    "final_close": "2027-06-30",
+    "administrator": "Ridgeline Fund Services",
+    "general_partner": "Kestrel Ridge Partners GP, LLC",
+    "retention_years": 7,
+    "retention_until": "2034-06-30"
+  },
+  "as_of": "2026-11-19",
+  "packets": [
+    {
+      "id": "P-01",
+      "lp_id": "LP-01",
+      "household_id": "H-1050",
+      "household_name": "Ferraro Household",
+      "consent_status": "received",
+      "fund": "Kestrel Ridge Venture Access Fund IV, LP",
+      "short_title": "Ferraro Family Office",
+      "title": "Ferraro Family Office, subscription packet",
+      "received": "2026-09-18",
+      "received_at": "2026-09-18 09:42 ET",
+      "channel": "Allocate portal upload",
+      "pages": 6,
+      "status": "closed",
+      "source_note": "Executed agreement, W-9, and signed side letter. Control case.",
+      "sha256": "b9b5d38a03548df3f0a6b89e9448eae51c16d1db662c6ebb49b41e855549db52",
+      "sha_short": "b9b5d38a0354",
+      "text": "From: Ferraro Family Office LLC <ops@ferrarofamily.example> (synthetic)\nTo: Private Markets Desk\nSubject: Subscription packet, Kestrel Ridge Venture Access Fund IV\nReceived: 2026-09-18 09:42 ET\nAttachments: Subscription Agreement (executed); W-9; Side Letter\nChannel: Allocate investor portal upload\n\nOps note: Qualified purchaser evidence is attached. The bank letter is on file\nwith the administrator. No open items from intake.\n\nINVESTOR\nLegal name of investor: Ferraro Family Office LLC\nEntity type: Family office LLC\nState of organization: Connecticut\n\nSUBSCRIPTION\nFund: Kestrel Ridge Venture Access Fund IV, LP\nCommitment: USD 1,500,000 (one million five hundred thousand dollars)\nSubscription date: 2026-09-18\nClosing date: 2026-09-30\n\nELIGIBILITY\nQualified purchaser: Yes. The entity owns more than USD 5,000,000 in investments.\nAccredited investor: not relied on.\nTax ID (TIN): 88-4419072. W-9 attached.\n\nCUSTODY AND WIRE\nCustodian of record: Morrow Trust\nBank name: Morrow Trust\nABA: 021000089\nAccount: 4471-8820-31\nWire instructions: domestic wire\nReference: KRV-IV / FERRARO\n\nSIDE LETTER\nSide letter: Yes. Fee discount schedule attached and signed by the general partner.\n\nSIGNATURE\nSigned by: A. Ferraro, Managing Member\nSignature: /s/ A. Ferraro\nDate: 2026-09-18\n\nCOMPLIANCE NOTE\nKYC: verified 2026-09-22.\n",
+      "administrator_record": {
+        "lp_name": "Ferraro Family Office LLC",
+        "commitment": 1500000,
+        "kyc_status": "verified",
+        "custodian": "Morrow Trust",
+        "fund": "Kestrel Ridge Venture Access Fund IV, LP",
+        "final_close": "2027-06-30"
+      },
+      "known_exceptions": [],
+      "known_exception_count": 0,
+      "expected_fields": {
+        "lp_name": "Ferraro Family Office LLC",
+        "entity_type": "Family office LLC",
+        "commitment_amount": 1500000,
+        "qualified_status": "Qualified purchaser",
+        "custodian": "Morrow Trust",
+        "bank_details_present": "Yes",
+        "signature_present": "Yes",
+        "tax_id_present": "Yes",
+        "side_letter": "Yes",
+        "subscription_date": "2026-09-18",
+        "closing_date": "2026-09-30",
+        "wire_instructions": "Domestic wire"
+      },
+      "expected_exceptions": []
+    },
+    {
+      "id": "P-02",
+      "lp_id": "LP-02",
+      "household_id": "H-1043",
+      "household_name": "Calloway Household",
+      "consent_status": "pending",
+      "fund": "Kestrel Ridge Venture Access Fund IV, LP",
+      "short_title": "Calloway Family Trust",
+      "title": "Calloway Family Irrevocable Trust, subscription packet",
+      "received": "2026-11-06",
+      "received_at": "2026-11-06 16:05 ET",
+      "channel": "Allocate portal upload",
+      "pages": 4,
+      "status": "in_queue",
+      "source_note": "Scanned form and trust certificate. No signature page in the upload.",
+      "sha256": "18957a5731380395a831723fd3a0ebb54e753ba078cdfff0bbc19e72b0a92f36",
+      "sha_short": "18957a573138",
+      "text": "ALLOCATE INVESTOR PORTAL - SUBSCRIPTION PACKET (synthetic)\nUploaded: 2026-11-06 16:05 ET\nInvestor: Calloway Family Irrevocable Trust\nPacket: scanned form, 4 pages; no signature page uploaded\n\nINVESTOR INFORMATION\nLegal name of investor: Calloway Family Irrevocable Trust\nForm of entity: Irrevocable trust\nJurisdiction: Connecticut\nTrust date: 2022-03-18\nTrustee: Devon Calloway\n\nSUBSCRIPTION\nFund: Kestrel Ridge Venture Access Fund IV, LP\nAggregate commitment: $1,000,000.00\nSubscription date: 11/06/2026\nAnticipated closing: December 12, 2026\n\nELIGIBILITY\nQualified purchaser: The trustee confirms the trust is a qualified purchaser.\nAccredited investor: not claimed.\nTIN box: blank.\nTrust EIN: pending. The application was filed with the IRS. No EIN on this packet.\n\nCUSTODY AND WIRE\nCustodian: Alder Clearing\nBank name: Alder Clearing\nABA: 011401533\nAccount: 7715-0042\nWire instructions: domestic wire\nReference: KRV-IV / CALLOWAY TRUST\n\nSIDE LETTER\nSide letter: None requested.\n\nSIGNATURE BLOCK\nTrustee: Devon Calloway\nSignature: ______________________\nDate: ____________\n\nINTERNAL INTAKE NOTE\nKYC review: not started. Trust certification and EIN are outstanding.\nPacket received without a signature page.\n",
+      "administrator_record": {
+        "lp_name": "Calloway Family Irrevocable Trust",
+        "commitment": 1000000,
+        "kyc_status": "pending",
+        "custodian": "Alder Clearing",
+        "fund": "Kestrel Ridge Venture Access Fund IV, LP",
+        "final_close": "2027-06-30"
+      },
+      "known_exceptions": [
+        {
+          "kind": "missing_signature",
+          "severity": "high",
+          "detail": "Trustee signature block is blank. The uploaded form has no executed signature page."
+        },
+        {
+          "kind": "missing_kyc",
+          "severity": "high",
+          "detail": "KYC review has not started. Trust certification and EIN are outstanding."
+        }
+      ],
+      "known_exception_count": 2,
+      "expected_fields": {
+        "lp_name": "Calloway Family Irrevocable Trust",
+        "entity_type": "Irrevocable trust",
+        "commitment_amount": 1000000,
+        "qualified_status": "Qualified purchaser",
+        "custodian": "Alder Clearing",
+        "bank_details_present": "Yes",
+        "signature_present": "No",
+        "tax_id_present": "No",
+        "side_letter": "No",
+        "subscription_date": "2026-11-06",
+        "closing_date": "2026-12-12",
+        "wire_instructions": "Domestic wire"
+      },
+      "expected_exceptions": [
+        "missing_kyc",
+        "missing_signature"
+      ]
+    },
+    {
+      "id": "P-03",
+      "lp_id": "LP-03",
+      "household_id": "H-1042",
+      "household_name": "Rowan Household",
+      "consent_status": "received",
+      "fund": "Kestrel Ridge Venture Access Fund IV, LP",
+      "short_title": "Rowan Family Trust",
+      "title": "Rowan Family Trust, subscription summary",
+      "received": "2026-10-04",
+      "received_at": "2026-10-04 11:22 ET",
+      "channel": "Allocate portal export",
+      "pages": 2,
+      "status": "in_queue",
+      "source_note": "Portal summary with investor-entered wire instructions.",
+      "sha256": "a246d771d563a48af3ff2709b6adbeff79612f54af225c32efd398bbf2562a58",
+      "sha_short": "a246d771d563",
+      "text": "ALLOCATE INVESTOR PORTAL - SUBSCRIPTION SUMMARY (synthetic export)\nExport time: 2026-10-04 11:22 ET\nInvestor: Rowan Family Trust\nHousehold: H-1042\nFund: Kestrel Ridge Venture Access Fund IV, LP\n\nWIRE INSTRUCTIONS (entered by investor)\nBank name: Northline Bank, N.A.\nABA: 026009593\nAccount: 3390-1187\nBeneficiary: Rowan Family Trust\nWire instructions: international wire\nReference: KRV-IV-ROWAN\n\nSUBSCRIPTION TERMS\nEntity type: Revocable trust\nCommitment: USD 1,250,000.00\nSubscription date: 2026-10-02\nClosing date: 2026-10-30\n\nCUSTODY\nCustodian of record: Morrow Trust\n\nTAX AND ELIGIBILITY\nTax ID: 06-3381244\nQualified purchaser: Yes, trust assets exceed USD 5,000,000.\nAccredited investor: not claimed.\nSide letter: No.\n\nSIGNATURE\nSignature: executed in portal, signature ID SIG-2026-10-02-4471.\nSigner: Jordan Rowan, trustee.\n\nCOMPLIANCE NOTE\nKYC: verified 2026-10-03.\n",
+      "administrator_record": {
+        "lp_name": "Rowan Family Trust",
+        "commitment": 1250000,
+        "kyc_status": "verified",
+        "custodian": "Morrow Trust",
+        "fund": "Kestrel Ridge Venture Access Fund IV, LP",
+        "final_close": "2027-06-30"
+      },
+      "known_exceptions": [
+        {
+          "kind": "bank_name_mismatch",
+          "severity": "medium",
+          "detail": "Wire bank Northline Bank, N.A. is not the custodian of record, Morrow Trust. Confirm before funding."
+        }
+      ],
+      "known_exception_count": 1,
+      "expected_fields": {
+        "lp_name": "Rowan Family Trust",
+        "entity_type": "Revocable trust",
+        "commitment_amount": 1250000,
+        "qualified_status": "Qualified purchaser",
+        "custodian": "Morrow Trust",
+        "bank_details_present": "Yes",
+        "signature_present": "Yes",
+        "tax_id_present": "Yes",
+        "side_letter": "No",
+        "subscription_date": "2026-10-02",
+        "closing_date": "2026-10-30",
+        "wire_instructions": "International wire"
+      },
+      "expected_exceptions": [
+        "bank_name_mismatch"
+      ]
+    },
+    {
+      "id": "P-04",
+      "lp_id": "LP-04",
+      "household_id": "H-1049",
+      "household_name": "Lindqvist Household",
+      "consent_status": "received",
+      "fund": "Kestrel Ridge Venture Access Fund IV, LP",
+      "short_title": "Lindqvist Capital",
+      "title": "Lindqvist Capital LLC, subscription agreement extract",
+      "received": "2026-10-30",
+      "received_at": "2026-10-30 14:10 ET",
+      "channel": "PDF text extract",
+      "pages": 7,
+      "status": "in_queue",
+      "source_note": "Seven-page agreement, text extract only. No page images.",
+      "sha256": "9f6b2e55a6e7606e0d687fd21b7bca2a1934209ddfc34af92303a3a521cd2a67",
+      "sha_short": "9f6b2e55a6e7",
+      "text": "[Page 1 of 7]\nSUBSCRIPTION AGREEMENT - TEXT EXTRACT (synthetic)\nKestrel Ridge Venture Access Fund IV, LP\n\nSECTION 1. INVESTOR\nName: Lindqvist Capital LLC\nEntity type: Limited liability company\nState of formation: Delaware\nPrincipal place of business: 12 Halden Way, Greenwich, CT 06830\n\nSECTION 2. SUBSCRIPTION\nThe Investor hereby subscribes for a capital commitment of\nUSD 975,000 (nine hundred seventy-five thousand dollars).\nSubscription date: 28 October 2026\nClosing date: 14 October 2026\nFund target: USD 40,000,000\nMinimum commitment: USD 500,000\n\n[Page 3 of 7]\nSECTION 4. ELIGIBILITY\nThe Investor represents that it is a qualified purchaser within the meaning\nof Section 2(a)(51) of the Investment Company Act.\nAccredited investor representation: not applicable.\n\n[Page 5 of 7]\nSECTION 7. CUSTODY AND PAYMENTS\nCustodian: Alder Clearing\nBank name: Alder Clearing\nABA: 011401533\nAccount: 6128-9930\nWire instructions: domestic wire\n\n[Page 6 of 7]\nSECTION 9. TAX AND SIDE LETTER\nTax ID (TIN): 81-2297044. W-9 attached.\nSide letter: Yes. Reporting side letter at Exhibit C.\nKYC: verified 2026-10-16.\n\n[Page 7 of 7]\nSIGNATURE\n/s/ E. Lindqvist, Managing Member\nDate: 2026-10-27\n",
+      "administrator_record": {
+        "lp_name": "Lindqvist Capital LLC",
+        "commitment": 750000,
+        "kyc_status": "verified",
+        "custodian": "Alder Clearing",
+        "fund": "Kestrel Ridge Venture Access Fund IV, LP",
+        "final_close": "2027-06-30"
+      },
+      "known_exceptions": [
+        {
+          "kind": "commitment_mismatch",
+          "severity": "high",
+          "detail": "Packet states USD 975,000. The administrator schedule is USD 750,000."
+        },
+        {
+          "kind": "date_anomaly",
+          "severity": "medium",
+          "detail": "Closing date 2026-10-14 is before the subscription date 2026-10-28."
+        }
+      ],
+      "known_exception_count": 2,
+      "expected_fields": {
+        "lp_name": "Lindqvist Capital LLC",
+        "entity_type": "Limited liability company",
+        "commitment_amount": 975000,
+        "qualified_status": "Qualified purchaser",
+        "custodian": "Alder Clearing",
+        "bank_details_present": "Yes",
+        "signature_present": "Yes",
+        "tax_id_present": "Yes",
+        "side_letter": "Yes",
+        "subscription_date": "2026-10-28",
+        "closing_date": "2026-10-14",
+        "wire_instructions": "Domestic wire"
+      },
+      "expected_exceptions": [
+        "commitment_mismatch",
+        "date_anomaly"
+      ]
+    },
+    {
+      "id": "P-05",
+      "lp_id": "LP-05",
+      "household_id": "H-1053",
+      "household_name": "Achterberg Household",
+      "consent_status": "not required",
+      "fund": "Kestrel Ridge Venture Access Fund IV, LP",
+      "short_title": "Achterberg Holdings",
+      "title": "Achterberg Holdings LLC, subscription packet",
+      "received": "2026-11-10",
+      "received_at": "2026-11-10 08:17 ET",
+      "channel": "Email attachment",
+      "pages": 3,
+      "status": "in_queue",
+      "source_note": "Cover email, form, and certificate of formation. Wire details deferred.",
+      "sha256": "2feae2eba9441d94b2218eee180ad9d18563a430a06f798ed42a1c4213a03599",
+      "sha_short": "2feae2eba944",
+      "text": "From: Achterberg Holdings LLC <ops@achterbergholdings.example> (synthetic)\nTo: Private Markets Desk\nSubject: Subscription packet, Kestrel Ridge Venture Access Fund IV\nReceived: 2026-11-10 08:17 ET\nAttachments: Subscription form (3 pages); certificate of formation\n\nHello,\nAttaching our subscription for the venture access fund. Our counsel is reviewing\nthe side letter question, so no side letter is included. We will send wire\ndetails once the bank account is opened.\n\nINVESTOR\nInvestor: Achterberg Holdings LLC\nEntity type: Limited liability company\nState of formation: Connecticut\n\nSUBSCRIPTION\nFund: Kestrel Ridge Venture Access Fund IV, LP\nCommitment: USD 500,000\nSubscription date: November 10, 2026\nClosing date: December 12, 2026\n\nELIGIBILITY\nQualified purchaser: [section left blank in the uploaded form]\nAccredited investor: [not completed]\nTax ID: 92-1187744\n\nCUSTODY\nCustodian: Alder Clearing\nBank details: not provided. Wire instructions to follow.\n\nSIDE LETTER\nSide letter: No.\n\nSIGNATURE\nSignature: [no signature page in the upload]\nDate: [blank]\n\nCOMPLIANCE NOTE\nKYC: in review as of 2026-11-12.\n",
+      "administrator_record": {
+        "lp_name": "Achterberg Holdings LLC",
+        "commitment": 500000,
+        "kyc_status": "in_review",
+        "custodian": "Alder Clearing",
+        "fund": "Kestrel Ridge Venture Access Fund IV, LP",
+        "final_close": "2027-06-30"
+      },
+      "known_exceptions": [
+        {
+          "kind": "missing_signature",
+          "severity": "high",
+          "detail": "Upload has no signature page. The subscription form is unsigned."
+        }
+      ],
+      "known_exception_count": 1,
+      "expected_fields": {
+        "lp_name": "Achterberg Holdings LLC",
+        "entity_type": "Limited liability company",
+        "commitment_amount": 500000,
+        "qualified_status": "Not stated",
+        "custodian": "Alder Clearing",
+        "bank_details_present": "No",
+        "signature_present": "No",
+        "tax_id_present": "Yes",
+        "side_letter": "No",
+        "subscription_date": "2026-11-10",
+        "closing_date": "2026-12-12",
+        "wire_instructions": "Not stated"
+      },
+      "expected_exceptions": [
+        "missing_signature"
+      ]
+    }
+  ]
+}

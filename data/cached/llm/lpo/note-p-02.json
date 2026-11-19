@@ -1,0 +1,21 @@
+{
+  "module": "lpo",
+  "key": "note-p-02",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 836,
+    "completion_tokens": 263,
+    "total_tokens": 1099,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 836
+  },
+  "latency_ms": 2311,
+  "created_at": "2026-11-19T05:55:35+00:00",
+  "system_sha": "75d45e2d9a8f59d0",
+  "prompt_sha": "0e3a3291bc62293d",
+  "text": "{\"subject\":\"Kestrel Ridge Venture Access Fund IV, LP: subscription packet P-02 status\",\"body\":\"We have received subscription packet P-02 for Calloway Family Irrevocable Trust, dated 2026-11-06. Two items are still outstanding before the packet can move forward. The trustee signature block on the subscription form is unexecuted, and the KYC review has not yet started because the trust certification and trust EIN have not been provided.\\n\\nOnce the signed signature page and the trust EIN are in hand, our operations team will re-extract the packet and clear the open exceptions. Compliance will then begin the KYC review. Counsel will also confirm trustee authority under the trust instrument, and the fund administrator will reconcile the commitment amount against its records.\\n\\nThe fund closing date is 2026-12-12. Completing the items above promptly helps keep the packet in order ahead of that date. This note is a status update only and does not confirm a closing or an allocation.\\n\\nPlease send the executed signature page and the trust EIN at your earliest convenience so we can continue processing.\",\"asks\":[\"Return the subscription form with the trustee signature page executed.\",\"Provide the trust certification and the trust EIN for KYC review.\"]}"
+}

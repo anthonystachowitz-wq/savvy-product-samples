@@ -1,0 +1,659 @@
+{% extends "suite_base.html" %}
+{% block title %}LP Ops, private markets operations{% endblock %}
+{% block head %}<link rel="stylesheet" href="/static/modules/lpo.css">{% endblock %}
+{% block content %}
+<div class="lpo-page">
+
+  <div class="mod-head">
+    <div class="lpo-head-main">
+      <div class="mod-kicker">Scale &middot; private markets operations</div>
+      <h1 class="mod-title">LP Ops</h1>
+      <p class="mod-sub">Subscription packets, funding exceptions, and capital calls for {{ summary.lps }} limited partners. The desk is {{ program.owner }}, {{ program.owner_role }}. Every amount comes from the synthetic Allocate export or the packet itself.</p>
+      <div class="lpo-head-chips">
+        <span class="chip chip--accent">{{ program.platform }}</span>
+        <span class="chip">{{ program.eligibility }}</span>
+        <span class="chip">{{ program.mandate }}</span>
+        <span class="chip">Synthetic data</span>
+      </div>
+    </div>
+    <div class="mod-actions lpo-head-right">
+      {% if provenance.recorded %}
+      <span class="chip chip--live">{{ provenance.model }}</span>
+      <span class="chip">Recorded live call</span>
+      {% else %}
+      <span class="chip chip--fail">Not recorded yet</span>
+      {% endif %}
+      <a class="text-link" href="/method">Method</a>
+      <span class="mod-note">As of {{ as_of|date_long }} &middot; {{ summary.lps }} LPs &middot; {{ summary.commitments|usd }} commitments</span>
+    </div>
+  </div>
+
+  {% if flash.message %}<div class="banner banner--ok" role="status">{{ flash.message }}</div>{% endif %}
+  {% if flash.error %}<div class="banner banner--fail" role="alert">{{ flash.error }}</div>{% endif %}
+
+  <div class="lpo-demo">
+    <span class="lpo-demo-label">What this demonstrates</span>
+    <span>One extraction call per packet with a closed exception vocabulary. A second call turns the extraction into an internal checklist. A third drafts the LP status note. A named operator approves every exception, and the LP-facing note is blocked on the server while household consent is pending.</span>
+  </div>
+
+  <section class="lpo-stats" aria-label="Program summary">
+    <div class="lpo-stat">
+      <span class="lpo-stat-label">Commitments</span>
+      <span class="lpo-stat-value">{{ summary.commitments|usd }}</span>
+      <span class="lpo-stat-sub">{{ summary.lps }} LPs &middot; {{ summary.fund_target_pct }}% of the {{ summary.fund_target|usd }} fund target</span>
+    </div>
+    <div class="lpo-stat">
+      <span class="lpo-stat-label">Called to date</span>
+      <span class="lpo-stat-value">{{ summary.called|usd }}</span>
+      <span class="lpo-stat-sub">{{ summary.called_pct }}% of commitments &middot; calls C-01 and C-02</span>
+    </div>
+    <div class="lpo-stat">
+      <span class="lpo-stat-label">Funded</span>
+      <span class="lpo-stat-value">{{ summary.funded|usd }}</span>
+      <span class="lpo-stat-sub">{{ summary.funded_pct_of_called }}% of called capital</span>
+    </div>
+    <div class="lpo-stat">
+      <span class="lpo-stat-label">Outstanding</span>
+      <span class="lpo-stat-value">{{ summary.outstanding|usd }}</span>
+      <span class="lpo-stat-sub">{{ summary.lps_behind }} LPs behind &middot; {{ summary.behind_ids }}</span>
+    </div>
+    <div class="lpo-stat">
+      <span class="lpo-stat-label">Open exceptions</span>
+      <span class="lpo-stat-value">{{ summary.open_exceptions }}</span>
+      <span class="lpo-stat-sub">Across {{ summary.packets_with_exceptions }} packets</span>
+    </div>
+    <div class="lpo-stat">
+      <span class="lpo-stat-label">Next event</span>
+      <span class="lpo-stat-value">{{ summary.next_event_date|date_long }}</span>
+      <span class="lpo-stat-sub">Call 2 balance &middot; {{ summary.next_event_outstanding|usd }} outstanding</span>
+    </div>
+  </section>
+  <p class="lpo-source">Source: {{ sources.pipeline }}. Called capital is the sum of call notices. Funded capital is paid-in cash. The fund target is a synthetic term sheet figure.</p>
+
+  <section class="section" id="pipeline">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">LP pipeline</p>
+        <h2>{{ summary.lps }} LPs, {{ summary.open_exceptions }} open exception{{ '' if summary.open_exceptions == 1 else 's' }}</h2>
+      </div>
+      <span class="section-note">Source: {{ sources.pipeline }}. Stage and exception counts update with demo approvals.</span>
+    </div>
+    <div class="lpo-filters">
+      <span class="filter-label">Stage</span>
+      <div class="seg">
+        <a href="/lpo?stage=all&amp;packet={{ selected.id }}#pipeline" class="{{ 'is-active' if stage == 'all' }}">All <span class="count">{{ stage_counts.all }}</span></a>
+        {% for key in stage_order %}
+        <a href="/lpo?stage={{ key }}&amp;packet={{ selected.id }}#pipeline" class="{{ 'is-active' if stage == key }}">{{ stage_labels[key] }} <span class="count">{{ stage_counts[key] }}</span></a>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="card card-flush">
+      {% if visible_lps %}
+      <div class="table-wrap lpo-board-wrap">
+        <table class="data-table lpo-board">
+          <thead>
+            <tr>
+              <th scope="col">LP</th>
+              <th scope="col" class="lpo-col-opt">Entity</th>
+              <th scope="col" class="num-cell">Commitment</th>
+              <th scope="col" class="num-cell">Funded</th>
+              <th scope="col">KYC</th>
+              <th scope="col">Documents</th>
+              <th scope="col" class="lpo-col-opt">Next event</th>
+              <th scope="col" class="num-cell">Exceptions</th>
+              <th scope="col">Stage</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for lp in visible_lps %}
+            <tr>
+              <td>
+                {% if lp.packet_ids %}
+                <a class="cell-main" href="/lpo?packet={{ lp.packet_ids[0] }}&amp;stage={{ stage }}#intake">{{ lp.short_name }}</a>
+                {% else %}
+                <span class="cell-main">{{ lp.short_name }}</span>
+                {% endif %}
+                <span class="cell-sub"><span class="mono">{{ lp.id }}</span> &middot; {{ lp.household_id }}</span>
+              </td>
+              <td class="lpo-col-opt">{{ lp.entity_type }}</td>
+              <td class="num-cell">{{ lp.commitment|usd }}</td>
+              <td class="num-cell">
+                {{ lp.funded|usd }}
+                <span class="lpo-funded"><span class="lpo-funded-track"><span class="lpo-funded-fill" style="width: {{ lp.funded_pct }}%"></span></span><span class="lpo-funded-pct">{{ lp.funded_pct }}%</span></span>
+              </td>
+              <td><span class="badge {{ 'badge-success' if lp.kyc_status == 'verified' else ('badge-warn' if lp.kyc_status == 'pending' else 'badge-accent') }}">{{ lp.kyc_label }}</span></td>
+              <td><span class="badge {{ 'badge-success' if lp.document_status == 'complete' else ('badge-warn' if lp.document_status == 'exception' else 'badge-accent') }}">{{ lp.document_label }}</span></td>
+              <td class="lpo-col-opt">
+                <span class="cell-main cell-main-small">{{ lp.next_event.date|date_long }}</span>
+                <span class="cell-sub">{{ lp.next_event.label }}</span>
+              </td>
+              <td class="num-cell">
+                {% if lp.open_exceptions and lp.packet_ids %}
+                <a class="lpo-exc-link" href="/lpo?packet={{ lp.packet_ids[0] }}&amp;stage={{ stage }}#exceptions">{{ lp.open_exceptions }}</a>
+                {% else %}
+                <span class="muted">0</span>
+                {% endif %}
+              </td>
+              <td><span class="badge {{ 'badge-success' if lp.stage == 'funded' else ('badge-accent' if lp.stage == 'ready_to_fund' else ('badge-warn' if lp.stage == 'exception_review' else 'badge-neutral')) }}">{{ lp.stage_label }}</span></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <div class="empty"><h3>No LPs in this stage</h3><p>Clear the stage filter to see all {{ summary.lps }} LPs.</p></div>
+      {% endif %}
+    </div>
+  </section>
+
+  <section class="section" id="calendar">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Capital calls and distributions</p>
+        <h2>Six events, next due {{ next_event.date|date_long }}</h2>
+      </div>
+      <span class="section-note">Source: {{ sources.calendar }}. Call percentages apply to {{ summary.commitments|usd }} of client commitments.</span>
+    </div>
+    <div class="lpo-cal">
+      {% for event in calendar %}
+      <div class="lpo-cal-card{{ ' is-next' if event.is_next }}{{ ' is-past' if event.is_past }}">
+        <div class="lpo-cal-top">
+          <span class="chip {{ 'chip--accent' if event.is_next }}">{{ event.kind_label }} {{ event.number }}</span>
+          <span class="lpo-cal-status">{{ event.status_label }}</span>
+        </div>
+        <span class="lpo-cal-date">{{ event.date|date_long }}</span>
+        <span class="lpo-cal-amount">{{ event.amount|usd }}</span>
+        <span class="lpo-cal-meta">{{ event.pct_label }}</span>
+        <span class="lpo-cal-meta">{{ event.meta }}</span>
+        <span class="lpo-cal-notice">{% if event.notice_date %}Notice {{ event.notice_date|date_long }}{% else %}No notice date{% endif %}</span>
+      </div>
+      {% endfor %}
+    </div>
+    <p class="lpo-source">Called to date is C-01, 20% and settled, plus C-02, 10% and partially funded. C-02 outstanding is {{ summary.outstanding|usd }} from {{ summary.behind_ids }}.</p>
+  </section>
+
+  <section class="section" id="intake">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Document intake</p>
+        <h2>Subscription packet {{ selected.id }}</h2>
+      </div>
+      <span class="section-note">5 synthetic packets. Text intake only, no OCR. Choose a packet to replay its recorded extraction.</span>
+    </div>
+
+    <div class="lpo-tabs" role="tablist" aria-label="Subscription packets">
+      {% for packet in packets %}
+      <a class="lpo-tab{{ ' is-active' if packet.id == selected.id }}" href="/lpo?packet={{ packet.id }}&amp;stage={{ stage }}#intake" role="tab" aria-selected="{{ 'true' if packet.id == selected.id else 'false' }}">
+        <span class="lpo-tab-top">
+          <span class="lpo-tab-id">{{ packet.id }}</span>
+          {% if packet.status == 'closed' %}<span class="chip chip--live">Control</span>{% elif packet.consent_status == 'pending' %}<span class="chip chip--build">Consent pending</span>{% endif %}
+        </span>
+        <span class="lpo-tab-title">{{ packet.short_title }}</span>
+        <span class="lpo-tab-meta">{{ packet.received|date_long }} &middot; {{ packet.pages }} pages &middot; {{ packet.known_exception_count }} issue{{ '' if packet.known_exception_count == 1 else 's' }}</span>
+      </a>
+      {% endfor %}
+    </div>
+
+    <div class="mod-grid lpo-intake-grid">
+      <div class="lpo-intake-main">
+        <section class="mod-panel lpo-packet-panel">
+          <div class="card-head">
+            <div>
+              <p class="card-kicker">Packet {{ selected.id }} &middot; {{ selected.channel }}</p>
+              <h3 class="card-title">{{ selected.title }}</h3>
+              <p class="card-note">Received {{ selected.received_at }} &middot; {{ selected.pages }} pages &middot; {{ selected.source_note }}</p>
+            </div>
+            <div class="head-badges"><span class="chip">{{ selected.status_label }}</span></div>
+          </div>
+          <pre class="lpo-packet-text" aria-label="Subscription packet text">{{ selected.text }}</pre>
+          <div class="lpo-packet-foot">
+            <span class="mono lpo-hash" title="{{ selected.sha256 }}">SHA-256 {{ selected.sha_short }}...</span>
+            <form method="post" action="/lpo/extract" class="lpo-run-form">
+              <input type="hidden" name="packet" value="{{ selected.id }}">
+              <button type="submit" class="btn btn-primary btn-sm">Run extraction</button>
+            </form>
+          </div>
+          <p class="mod-note">The button replays the recorded call. A live call happens only when no recording exists and the deployment is in live mode. No document is stored or filed.</p>
+        </section>
+
+        <section class="mod-panel" id="fields">
+          <div class="card-head">
+            <div>
+              <p class="card-kicker">Recorded extraction</p>
+              <h3 class="card-title">Funding fields</h3>
+            </div>
+            <div class="head-badges">
+              {% if extraction and extraction.ok %}<span class="badge badge-accent">Confidence {{ extraction.confidence_pct }}</span>{% endif %}
+              {% if extraction_meta %}<span class="chip">{{ extraction_meta.model }}</span>{% endif %}
+            </div>
+          </div>
+          {% if not extraction_meta %}
+          <div class="empty">
+            <h3>Not recorded yet</h3>
+            <p>No extraction recording for {{ selected.id }}. Run <span class="mono">SAVVY_LLM_MODE=live python3 scripts/record_lpo.py</span>, then reload this page. The page will not fall back to a live call.</p>
+          </div>
+          {% elif not extraction.ok %}
+          <div class="banner banner--fail">The recording could not be parsed: {{ extraction.error }}. The raw output is below. No fields are shown.</div>
+          <pre class="lpo-raw">{{ extraction.raw }}</pre>
+          {% else %}
+          {% if extraction.warning %}<div class="banner banner--warn">{{ extraction.warning }}</div>{% endif %}
+          <div class="lpo-fields">
+            {% for row in field_rows %}
+            <div class="lpo-field">
+              <span class="lpo-field-label">{{ row.label }}</span>
+              <span class="lpo-field-value{{ ' mono' if row.mono }}">{{ row.display }}</span>
+              <span class="lpo-field-flag{{ ' is-missing' if not row.evidence }}">{% if row.evidence %}line {{ row.evidence.line }}{% else %}no line{% endif %}</span>
+              <span class="lpo-field-evidence">{% if row.evidence %}{{ row.evidence.text }}{% else %}No matching line in the packet text. Check the value against the source.{% endif %}</span>
+            </div>
+            {% endfor %}
+          </div>
+          <p class="mod-note">Evidence spans are located in the packet text by string match after the call. The model does not return character offsets. One confidence value covers the whole extraction.</p>
+          <details class="lpo-details">
+            <summary>Raw model output</summary>
+            <pre class="lpo-raw">{{ extraction.raw }}</pre>
+          </details>
+          <p class="lpo-prov">Recorded {{ extraction_meta.created_at_label }} &middot; {{ extraction_meta.latency_ms }} ms &middot; {{ extraction_meta.prompt_tokens }} prompt + {{ extraction_meta.completion_tokens }} completion tokens &middot; <a href="/method">model method</a></p>
+          {% endif %}
+        </section>
+      </div>
+
+      <div class="lpo-intake-side">
+        <section class="mod-panel" id="exceptions">
+          <div class="card-head">
+            <div>
+              <p class="card-kicker">Exception review</p>
+              <h3 class="card-title">{{ exceptions.open_count }} open, {{ exceptions.matched }} of {{ exceptions.known_total }} matched</h3>
+            </div>
+            <div class="head-badges">
+              {% if exceptions.extra %}<span class="badge badge-warn">{{ exceptions.extra }} model only</span>{% endif %}
+            </div>
+          </div>
+          <p class="mod-note">Source: {{ sources.exceptions }}, compared with the recorded extraction. Approving an issue writes an evidence record and a shared audit event.</p>
+          {% if not exceptions.model_available %}
+          <div class="banner banner--warn">The extraction recording is missing or unparsed, so model match status is unknown. The administrator log below still drives the approval.</div>
+          {% endif %}
+          {% for row in exceptions.rows %}
+          <div class="lpo-exc lpo-exc--{{ row.severity }}{{ ' is-approved' if row.status == 'approved' }}">
+            <div class="lpo-exc-head">
+              <span class="badge {{ 'badge-danger' if row.severity == 'high' else ('badge-warn' if row.severity == 'medium' else 'badge-neutral') }}">{{ row.label }}</span>
+              <span class="chip">{{ row.severity_label }}</span>
+              {% if row.origin == 'model' %}
+              <span class="chip chip--fail">Model only</span>
+              {% elif row.model == 'matched' %}
+              <span class="chip chip--accent">Model flagged</span>
+              {% elif row.model == 'missed' %}
+              <span class="chip chip--build">Model missed</span>
+              {% endif %}
+              {% if row.status == 'approved' %}<span class="badge badge-success">Approved</span>{% endif %}
+            </div>
+            <p class="lpo-exc-detail">{{ row.detail }}</p>
+            {% if row.model_detail and row.origin == 'log' and row.model == 'matched' %}<p class="lpo-exc-model">Model: {{ row.model_detail }}</p>{% endif %}
+            {% if row.status == 'approved' %}<p class="lpo-exc-approved">Approved by {{ row.approved_by }} on {{ row.approved_at|datetime_short }} &middot; {{ row.evidence_id }}</p>{% endif %}
+          </div>
+          {% endfor %}
+          {% if not exceptions.rows %}<p class="mod-note">No seeded issues. This packet is the clean control.</p>{% endif %}
+          {% if open_exceptions %}
+          <form method="post" action="/lpo/approve" class="lpo-form">
+            <input type="hidden" name="packet" value="{{ selected.id }}">
+            <div class="lpo-form-grid">
+              <label class="lpo-label">Approver
+                <select name="actor" class="select" required>
+                  {% for member in team %}<option value="{{ member.name }}|{{ member.role }}">{{ member.name }}, {{ member.role }}</option>{% endfor %}
+                </select>
+              </label>
+              <label class="lpo-label">Scope
+                <select name="scope" class="select">
+                  {% if open_exceptions|length > 1 %}<option value="all">All open ({{ open_exceptions|length }})</option>{% endif %}
+                  {% for issue in open_exceptions %}<option value="{{ issue.kind }}">{{ exception_labels[issue.kind] }}</option>{% endfor %}
+                </select>
+              </label>
+            </div>
+            <label class="lpo-label">Note <span class="muted">optional</span>
+              <input class="input" type="text" name="note" maxlength="240" placeholder="e.g. Trustee confirmed the signature page is in transit">
+            </label>
+            <div class="btn-row">
+              <button type="submit" class="btn btn-primary btn-sm">Approve exception</button>
+              <span class="mod-note">No document is filed and no wire is sent.</span>
+            </div>
+          </form>
+          {% else %}
+          <p class="banner banner--ok">Every seeded exception on this packet is approved. The pipeline count is updated.</p>
+          {% endif %}
+        </section>
+
+        <section class="mod-panel" id="checklist">
+          <div class="card-head">
+            <div>
+              <p class="card-kicker">Second model call</p>
+              <h3 class="card-title">Internal ops checklist</h3>
+            </div>
+            <div class="head-badges">
+              {% if checklist and checklist.ok %}<span class="chip {{ 'chip--fail' if checklist.status == 'blocked' else ('chip--accent' if checklist.status == 'ready_for_review' else 'chip--live') }}">{{ checklist.status_label }}</span>{% endif %}
+            </div>
+          </div>
+          {% if not checklist_meta %}
+          <div class="empty"><h3>Not recorded yet</h3><p>No checklist recording for {{ selected.id }}. The recorder writes one per packet.</p></div>
+          {% elif not checklist.ok %}
+          <div class="banner banner--fail">The checklist recording could not be parsed: {{ checklist.error }}</div>
+          <pre class="lpo-raw">{{ checklist.raw }}</pre>
+          {% else %}
+          {% if checklist.summary %}<p class="lpo-summary">{{ checklist.summary }}</p>{% endif %}
+          <div class="lpo-table-scroll">
+            <table class="mod-table lpo-check-table">
+              <thead><tr><th>Item</th><th>Owner</th><th>Due</th><th class="num">Blocking</th></tr></thead>
+              <tbody>
+                {% for item in checklist.steps %}
+                <tr>
+                  <td>{{ item.item }}</td>
+                  <td>{{ item.owner }}</td>
+                  <td class="mono">{{ item.due }}</td>
+                  <td class="num">{% if item.blocking %}<span class="badge badge-warn">Blocking</span>{% else %}<span class="muted">No</span>{% endif %}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <p class="lpo-prov">Recorded {{ checklist_meta.created_at_label }} &middot; {{ checklist_meta.latency_ms }} ms &middot; {{ checklist_meta.prompt_tokens }} prompt + {{ checklist_meta.completion_tokens }} completion tokens</p>
+          {% endif %}
+        </section>
+
+        <section class="mod-panel" id="note">
+          <div class="card-head">
+            <div>
+              <p class="card-kicker">Client-facing draft</p>
+              <h3 class="card-title">LP status note</h3>
+            </div>
+            <div class="head-badges"><span class="chip">Internal draft, not sent</span></div>
+          </div>
+          {% if not note_meta %}
+          <div class="empty"><h3>No note for this packet</h3><p>Two recordings exist: P-02, blocked by consent, and P-03, approvable. Open one of those packets to see the approval gate.</p></div>
+          {% elif not note.ok %}
+          <div class="banner banner--fail">The note recording could not be parsed: {{ note.error }}</div>
+          <pre class="lpo-raw">{{ note.raw }}</pre>
+          {% else %}
+          <p class="lpo-note-subject">{{ note.subject }}</p>
+          {% for paragraph in note.paragraphs %}<p class="lpo-note-body">{{ paragraph }}</p>{% endfor %}
+          {% if note.asks %}
+          <div class="lpo-asks">
+            <span class="lpo-label">Asks</span>
+            <ul class="mod-list">{% for ask in note.asks %}<li>{{ ask }}</li>{% endfor %}</ul>
+          </div>
+          {% endif %}
+          <div class="lpo-note-meta">
+            <span class="chip {{ 'chip--fail' if note_flags else 'chip--live' }}">{% if note_flags %}Advice-language scan: {{ note_flags|join(', ') }}{% else %}Advice-language scan: clear{% endif %}</span>
+            <span class="mod-note">Household {{ selected.household_id }} consent: {{ selected.consent_label }}</span>
+          </div>
+          {% if note_date_flag %}<div class="banner banner--warn">Draft date check: {{ note_date_flag }}</div>{% endif %}
+          {% if note_blocked %}
+          <div class="banner banner--fail">Household consent is pending. The server rejects an approval attempt for {{ selected.household_id }}. No LP-facing note can leave this sample.</div>
+          <button type="button" class="btn btn-primary btn-sm" disabled title="Consent is pending for this household">Approve and seal</button>
+          {% elif note_decision %}
+          <div class="banner {{ 'banner--ok' if note_decision.decision == 'approved' else 'banner--warn' }}">
+            {{ 'Approved' if note_decision.decision == 'approved' else 'Rejected' }} by {{ note_decision.actor }} ({{ note_decision.role }}) on {{ note_decision.at|datetime_short }}. {{ note_decision.evidence_id }}.
+            {% if note_decision.reason %}<br>Reason: {{ note_decision.reason }}{% endif %}
+          </div>
+          {% else %}
+          <form method="post" action="/lpo/note" class="lpo-form">
+            <input type="hidden" name="packet" value="{{ selected.id }}">
+            <label class="lpo-label">Approver
+              <select name="actor" class="select" required>
+                {% for member in team %}<option value="{{ member.name }}|{{ member.role }}">{{ member.name }}, {{ member.role }}</option>{% endfor %}
+              </select>
+            </label>
+            <label class="lpo-label">Rejection reason <span class="muted">8 characters, only used to reject</span>
+              <input class="input" type="text" name="reason" maxlength="200" placeholder="e.g. Closing date is stale">
+            </label>
+            <div class="btn-row">
+              <button type="submit" name="decision" value="approve" class="btn btn-primary btn-sm">Approve and seal</button>
+              <button type="submit" name="decision" value="reject" class="btn btn-danger btn-sm">Reject draft</button>
+            </div>
+          </form>
+          <p class="mod-note">Approval writes an evidence record. Nothing is sent, filed, or delivered.</p>
+          {% endif %}
+          <p class="lpo-prov">Recorded {{ note_meta.created_at_label }} &middot; {{ note_meta.latency_ms }} ms &middot; {{ note_meta.prompt_tokens }} prompt + {{ note_meta.completion_tokens }} completion tokens</p>
+          {% endif %}
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="review">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Review and evidence</p>
+        <h2>Advance an LP, seal a record</h2>
+      </div>
+      <span class="section-note">Source: demo state and the shared audit table. Approvals are server checked, not just button checked.</span>
+    </div>
+    <div class="mod-grid lpo-review-grid">
+      <div class="mod-panel">
+        <p class="mod-kicker-sm">Selected LP</p>
+        <h3 class="lpo-review-name">{{ selected_lp.name }}</h3>
+        <dl class="kv lpo-kv">
+          <dt>Stage</dt><dd>{{ selected_lp.stage_label }}</dd>
+          <dt>Commitment</dt><dd>{{ selected_lp.commitment|usd }}</dd>
+          <dt>Called</dt><dd>{{ selected_lp.called|usd }}</dd>
+          <dt>Funded</dt><dd>{{ selected_lp.funded|usd }}</dd>
+          <dt>Outstanding</dt><dd>{{ selected_lp.outstanding|usd }}</dd>
+          <dt>Open exceptions</dt><dd>{{ selected_lp.open_exceptions }}</dd>
+          <dt>KYC</dt><dd>{{ selected_lp.kyc_label }} &middot; {{ selected_lp.kyc_detail }}</dd>
+          <dt>Consent</dt><dd>{{ selected_lp.consent_label }}</dd>
+        </dl>
+        {% if selected_lp.status_note %}<p class="lpo-lp-note">{{ selected_lp.status_note }}</p>{% endif %}
+        {% if advance_allowed %}
+        <form method="post" action="/lpo/advance" class="lpo-form">
+          <input type="hidden" name="lp" value="{{ selected_lp.id }}">
+          <input type="hidden" name="packet" value="{{ selected.id }}">
+          <label class="lpo-label">Approver
+            <select name="actor" class="select" required>
+              {% for member in team %}<option value="{{ member.name }}|{{ member.role }}">{{ member.name }}, {{ member.role }}</option>{% endfor %}
+            </select>
+          </label>
+          <label class="lpo-label">Note <span class="muted">optional</span>
+            <input class="input" type="text" name="note" maxlength="240" placeholder="e.g. All documents checked with the administrator">
+          </label>
+          <div class="btn-row">
+            <button type="submit" class="btn btn-primary btn-sm">Advance to {{ advance_next_label }}</button>
+            <span class="mod-note">{{ selected_lp.open_exceptions }} open exception{{ '' if selected_lp.open_exceptions == 1 else 's' }} must be cleared first.</span>
+          </div>
+        </form>
+        {% elif selected_lp.stage == 'funded' %}
+        <p class="banner banner--ok">Funded. Paid-in capital is recorded by the fund administrator.</p>
+        {% else %}
+        <p class="banner banner--warn">At ready to fund. Funding is recorded by the fund administrator, not by this desk.</p>
+        {% endif %}
+      </div>
+
+      <div class="mod-panel" id="evidence">
+        <div class="card-head">
+          <div>
+            <p class="card-kicker">Evidence record</p>
+            <h3 class="card-title">{{ evidence.id if evidence else 'Not yet sealed' }}</h3>
+          </div>
+          {% if evidence %}<span class="badge badge-success">{{ evidence.decision_label }}</span>{% endif %}
+        </div>
+        {% if evidence %}
+        <dl class="lpo-ev-grid">
+          <dt>Record</dt><dd class="mono">{{ evidence.id }}</dd>
+          <dt>Decision</dt><dd>{{ evidence.decision_label }}</dd>
+          <dt>Entity</dt><dd>{{ evidence.packet_id or 'n/a' }} &middot; {{ evidence.lp_id }}</dd>
+          <dt>Scope</dt><dd>{{ evidence.scope_label }}</dd>
+          <dt>Approver</dt><dd>{{ evidence.actor }} ({{ evidence.role }})</dd>
+          <dt>Recorded</dt><dd>{{ evidence.created_at|datetime_short }}</dd>
+          <dt>Basis</dt><dd>{{ evidence.basis }}</dd>
+          <dt>Packet hash</dt><dd class="mono lpo-hash" title="{{ evidence.packet_sha }}">{{ evidence.packet_sha_short }}...</dd>
+          <dt>Retention</dt><dd>{{ evidence.retention }} ({{ evidence.retention_until|date_long }})</dd>
+          <dt>Model</dt><dd>{{ evidence.model or 'n/a' }}{% if evidence.recording_key %} &middot; <span class="mono">{{ evidence.recording_key }}</span>{% endif %}</dd>
+        </dl>
+        <p class="mod-note">Demo state record. The audit event is in the shared SQLite log below. Nothing is sent.</p>
+        {% else %}
+        <div class="empty"><h3>No decision for {{ selected.id }} yet</h3><p>Approve an exception, advance the LP, or decide the status note to write the first evidence record.</p></div>
+        {% endif %}
+        {% if evidence_recent %}
+        <div class="lpo-table-scroll">
+          <table class="mod-table lpo-ev-table">
+            <thead><tr><th>Record</th><th>Decision</th><th>Entity</th><th>Approver</th><th>Time</th></tr></thead>
+            <tbody>
+              {% for item in evidence_recent %}
+              <tr>
+                <td class="mono">{{ item.id }}</td>
+                <td>{{ item.decision_label }}</td>
+                <td>{{ item.packet_id or 'n/a' }}</td>
+                <td>{{ item.actor }}</td>
+                <td class="mono">{{ item.created_at|datetime_short }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="audit">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Audit trail</p>
+        <h2>{{ audit_count }} events for this module</h2>
+      </div>
+      <span class="section-note">platform.audit.recent("lpo") &middot; shared SQLite table suite_audit</span>
+    </div>
+    <div class="card card-flush">
+      {% if audit %}
+      <div class="table-wrap lpo-audit-wrap">
+        <table class="data-table lpo-audit-table">
+          <thead><tr><th>Time</th><th>Action</th><th>Entity</th><th>Actor</th><th>Detail</th></tr></thead>
+          <tbody>
+            {% for event in audit %}
+            <tr>
+              <td class="mono lpo-nowrap">{{ event.created_at|datetime_short }}</td>
+              <td><span class="lpo-audit-action">{{ event.action }}</span></td>
+              <td class="mono">{{ event.entity_type }} {{ event.entity_id }}</td>
+              <td>{{ event.actor }}</td>
+              <td>{{ event.detail }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <div class="empty"><h3>No audit events yet</h3><p>Approve an exception, advance an LP, or decide the status note to write the first event.</p></div>
+      {% endif %}
+    </div>
+  </section>
+
+  <section class="section" id="eval">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Evaluation and provenance</p>
+        <h2>What the model got right, and what it did not</h2>
+      </div>
+      <span class="section-note">Source: {{ sources.eval }} and data/cached/llm/lpo. Every call is a real recorded call.</span>
+    </div>
+    <div class="mod-grid lpo-eval-grid">
+      <div class="mod-panel">
+        <div class="card-head">
+          <div>
+            <p class="card-kicker">Field eval</p>
+            <h3 class="card-title">{{ eval.name if eval else 'Not run yet' }}</h3>
+          </div>
+          <span class="badge badge-accent">{{ eval.accuracy_pct if eval else 'n/a' }}%</span>
+        </div>
+        {% if eval %}
+        <div class="lpo-score">
+          <span class="lpo-score-value">{{ eval.accuracy_pct }}%</span>
+          <span class="lpo-score-label">{{ eval.correct }} of {{ eval.checks }} checks &middot; {{ eval.cases }} packets</span>
+        </div>
+        <p class="mod-note">Field cells {{ (eval.field_accuracy * 100)|round(1) }}% &middot; exception kind sets {{ (eval.exception_kind_accuracy * 100)|round(1) }}% &middot; severity {{ (eval.severity_accuracy * 100)|round(1) }}% ({{ eval.severity_correct }} of {{ eval.severity_checks }}).</p>
+        <div class="lpo-table-scroll">
+          <table class="mod-table lpo-eval-table">
+            <thead><tr><th>Field</th><th class="num">Correct</th><th class="num">Checks</th></tr></thead>
+            <tbody>
+              {% for row in eval.per_field %}
+              <tr><td>{{ row.label }}</td><td class="num">{{ row.correct }}</td><td class="num">{{ row.total }}</td></tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <div class="empty"><h3>Eval not run yet</h3><p>Run <span class="mono">python3 scripts/eval_lpo.py</span>, then reload this page.</p></div>
+        {% endif %}
+      </div>
+      <div class="mod-panel">
+        <div class="card-head">
+          <div>
+            <p class="card-kicker">What failed</p>
+            <h3 class="card-title">{{ eval.failure_count if eval else 0 }} failures</h3>
+          </div>
+        </div>
+        {% if eval and eval.failures %}
+        <div class="lpo-failures">
+          {% for failure in eval.failures[:6] %}
+          <div class="lpo-failure">
+            <span class="mono">{{ failure.case }}</span>
+            <span>{{ failure.field_label }}</span>
+            <span class="lpo-failure-delta">expected <strong>{{ failure.expected }}</strong>, got <strong>{{ failure.actual }}</strong></span>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <p class="mod-note">No field or exception kind failures in this run. The caveat is below.</p>
+        {% endif %}
+        {% if eval and eval.failure_notes %}
+        <ul class="mod-list lpo-notes">{% for item in eval.failure_notes[:4] %}<li>{{ item }}</li>{% endfor %}</ul>
+        {% endif %}
+        <div class="lpo-build">
+          <p class="mod-kicker-sm">How this is built</p>
+          <p>{{ build_note.pattern }}</p>
+          <p>{{ build_note.eval }}</p>
+          <ul class="mod-list">{% for item in build_note.limits %}<li>{{ item }}</li>{% endfor %}</ul>
+          <p class="mod-note">Observed in these recordings: the P-03 checklist treated a medium bank mismatch as high and blocked funding. The P-05 checklist dates every item at the 2027-06-30 final close, not the 2026-12-12 packet close. The P-03 status note cites a 2026-10-30 closing date that is already past on the 2026-11-19 as-of date. These are visible in the recordings above.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mod-grid lpo-lower">
+    <div class="mod-panel">
+      <p class="mod-kicker-sm">Model provenance</p>
+      <dl class="kv lpo-kv">
+        <dt>Model</dt><dd>{{ provenance.model }}</dd>
+        <dt>Mode</dt><dd>{{ provenance.mode }}</dd>
+        <dt>Selected packet</dt><dd>{{ provenance.created_at_label if provenance.created_at else 'Not recorded' }}</dd>
+        <dt>Latency</dt><dd>{{ provenance.latency_ms }} ms</dd>
+        <dt>Tokens</dt><dd>{{ provenance.prompt_tokens }} prompt / {{ provenance.completion_tokens }} completion</dd>
+        <dt>Recorded calls</dt><dd>{{ provenance.count }} across {{ provenance.models }}</dd>
+        <dt>Mean latency</dt><dd>{{ provenance.mean_latency_ms }} ms</dd>
+        <dt>All tokens</dt><dd>{{ provenance.prompt_tokens_total }} prompt / {{ provenance.completion_tokens_total }} completion</dd>
+      </dl>
+      <p class="mod-note">All model output on this page is replayed from data/cached/llm/lpo. The recorder made 12 live calls. <a href="/method">Method and provider</a>.</p>
+    </div>
+    <div class="mod-panel">
+      <p class="mod-kicker-sm">Business case</p>
+      <div class="lpo-metric">
+        <span class="lpo-metric-value">{{ metric.per_lp_hours }}</span>
+        <span class="lpo-metric-label">hours returned per LP per year, modelled</span>
+      </div>
+      <table class="mod-table lpo-metric-table">
+        <thead><tr><th>Task</th><th>Formula</th><th class="num">Hours</th></tr></thead>
+        <tbody>
+          {% for line in metric.task_lines %}
+          <tr><td>{{ line.name }}</td><td class="mono">{{ line.formula }}</td><td class="num">{{ line.hours }}</td></tr>
+          {% endfor %}
+          <tr class="lpo-total"><td>Baseline per LP</td><td class="mono">Sum of the task lines</td><td class="num">{{ metric.baseline_hours }}</td></tr>
+        </tbody>
+      </table>
+      <p class="lpo-math">{{ metric.math }}</p>
+      <div class="lpo-metric-rows">
+        <div><span>Current book</span><strong>{{ metric.current_lps }} LPs x {{ metric.per_lp_hours }} = {{ metric.current_hours }} hours</strong></div>
+        <div><span>60-LP target</span><strong>{{ metric.target_lps }} LPs x {{ metric.per_lp_hours }} = {{ metric.target_hours }} hours, {{ metric.target_fte }} FTE</strong></div>
+      </div>
+      <p class="mod-note">Source: {{ sources.metric }}. {{ metric.caveat }}</p>
+    </div>
+  </section>
+
+  <p class="lpo-disclaimer">Synthetic data only. No real LP, fund, bank, or custodian data. This sample does not send, file, trade, or wire anything, and it is not affiliated with Savvy. Model output is generated text, not advice.</p>
+
+</div>
+{% endblock %}
