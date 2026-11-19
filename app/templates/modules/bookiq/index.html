@@ -1,0 +1,607 @@
+{% extends "suite_base.html" %}
+{% block title %}Book IQ · Savvy product samples{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="/static/modules/bookiq.css">
+{% endblock %}
+{% block content %}
+
+<div class="mod-head">
+  <div>
+    <div class="mod-kicker"><span class="chip chip--accent">Grow</span> <span>Book IQ</span></div>
+    <h1 class="mod-title">Next-best-action queue</h1>
+    <p class="mod-sub">A ranked queue for {{ book.advisor_name }}'s {{ book.household_count }}-household book. Every row pairs a recommendation with the household record behind it, a modelled asset opportunity at the {{ assumptions.fee_rate_display }} fee, and a draft outreach that waits for a named approval. The user is the adviser or growth lead who reviews the queue.</p>
+    <p class="biq-demonstrates"><strong>What this demonstrates:</strong> one batched ranking call over the 12 household records, then one drafting call per household. The model proposes a play and a draft. The adviser approves or rejects. The guardrail re-checks every number, and nothing is sent.</p>
+  </div>
+  <div class="mod-actions biq-actions">
+    <div class="biq-prov">
+      {% if rank.present %}
+      <span class="chip chip--live" title="Recorded live call">{{ rank.mode }}</span>
+      <span class="mono biq-model">{{ rank.model }}</span>
+      <span class="muted">{{ rank.created_at|timestamp_label }}</span>
+      {% else %}
+      <span class="chip chip--build">Not recorded</span>
+      {% endif %}
+      <a href="/method">How this is built</a>
+    </div>
+    {% if availability.mode == 'live' %}
+    <form method="post" action="/bookiq/run-live" class="biq-live-form">
+      <button class="btn btn-sm" type="submit">Run live ranking</button>
+      <span class="mod-note">One call. {{ availability.used_today }} of {{ availability.daily_limit }} live calls today.</span>
+    </form>
+    {% else %}
+    <span class="mod-note">Replaying recorded calls. Live refresh is off in this deployment.</span>
+    {% endif %}
+  </div>
+</div>
+
+{% if flash.message %}<div class="banner banner--ok" role="status">{{ flash.message }}</div>{% endif %}
+{% if flash.error %}<div class="banner banner--fail" role="alert">{{ flash.error }}</div>{% endif %}
+
+{% if not rank.present %}
+<div class="banner banner--warn" role="status">
+  The ranking is not recorded yet. The table shows the deterministic rule check, not model output. Run
+  <span class="mono">SAVVY_LLM_MODE=live python3 scripts/record_bookiq.py</span>.
+</div>
+{% elif rank.error %}
+<div class="banner banner--fail" role="alert">
+  The recorded ranking could not be parsed: {{ rank.error }}. The raw text stays in
+  <span class="mono">{{ rank.key }}</span>, and the table falls back to the rule check.
+</div>
+{% endif %}
+
+<section class="biq-summary" aria-label="Book summary">
+  <div class="biq-stat biq-stat--wide">
+    <span class="biq-stat-label">Modelled net new assets</span>
+    <span class="biq-stat-value">{{ summary.total_assets_display }}</span>
+    <span class="biq-stat-sub">{{ summary.share_of_book }} of the {{ summary.book_aum_display }} book. {{ summary.growth_plays }} of {{ summary.households }} households have a growth play.</span>
+    <span class="biq-stat-sub">Largest: {{ summary.largest_name }}, {{ summary.largest_play }}, {{ summary.largest_display }}. Average per growth household: {{ summary.average_growth_display }}.</span>
+  </div>
+  <div class="biq-stat">
+    <span class="biq-stat-label">Annual fee at {{ assumptions.fee_rate_display }}</span>
+    <span class="biq-stat-value">{{ summary.total_fee_display }}</span>
+    <span class="biq-stat-sub">Fee on the modelled assets. Not a forecast.</span>
+  </div>
+  <div class="biq-stat">
+    <span class="biq-stat-label">Plays by type</span>
+    <ul class="biq-play-counts">
+      {% for item in summary.by_play %}
+      <li><span>{{ item.label }}</span><b>{{ item.count }}</b></li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="biq-stat">
+    <span class="biq-stat-label">Review status</span>
+    <div class="biq-review-counts">
+      <span><b>{{ summary.statuses.get('in_review', 0) }}</b> in review</span>
+      <span><b>{{ summary.statuses.get('approved', 0) }}</b> approved</span>
+      <span><b>{{ summary.statuses.get('rejected', 0) }}</b> rejected</span>
+    </div>
+    <span class="biq-stat-sub">{{ summary.consent_pending }} households with consent pending cannot be approved.</span>
+  </div>
+</section>
+
+<details class="biq-assumptions" id="assumptions">
+  <summary>Modelled assumptions and the arithmetic behind every opportunity</summary>
+  <div class="biq-assumptions-body">
+    <table class="mod-table">
+      <thead><tr><th>Play</th><th>Required signal</th><th>Modelled net new assets</th></tr></thead>
+      <tbody>
+        {% for play in assumptions.plays %}
+        <tr>
+          <td>{{ play.label }}</td>
+          <td class="mono">{{ play.required_signal or 'none' }}</td>
+          <td>{{ play.basis }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <dl class="kv biq-kv-params">
+      <dt>Fee rate</dt><dd>{{ assumptions.fee_rate_display }} a year, applied to modelled net new assets</dd>
+      <dt>Cash target</dt><dd>{{ (assumptions.parameters.cash_target_pct * 100)|round(0)|int }}% of household AUM</dd>
+      <dt>Review cadence</dt><dd>{{ assumptions.parameters.review_cadence_days }} days</dd>
+      <dt>RMD factor</dt><dd>{{ assumptions.parameters.rmd_factor_age_73 }} at age 73, Uniform Lifetime Table</dd>
+      <dt>Data</dt><dd>data/book.json plus the synthetic enrichment in scripts/generate_bookiq.py</dd>
+    </dl>
+    <ul class="mod-list">
+      {% for note in assumptions.notes %}<li>{{ note }}</li>{% endfor %}
+    </ul>
+  </div>
+</details>
+
+<section class="mod-panel biq-table-panel" id="book">
+  <div class="biq-toolbar">
+    <div class="biq-filters" aria-label="Filter by play">
+      <a class="chip {{ 'chip--accent' if play_filter == 'all' }}" href="/bookiq?play=all{% if selected %}&h={{ selected.row.id }}{% endif %}#book">All plays <span>{{ summary.households }}</span></a>
+      {% for item in summary.by_play %}
+      <a class="chip {{ 'chip--accent' if play_filter == item.key }}" href="/bookiq?play={{ item.key }}{% if selected %}&h={{ selected.row.id }}{% endif %}#book">{{ item.label }} <span>{{ item.count }}</span></a>
+      {% endfor %}
+    </div>
+    <span class="mod-note">{{ rows|length }} of {{ summary.households }} rows in view. Sorted by modelled net new assets, highest first.</span>
+  </div>
+
+  <div class="biq-table-wrap">
+    <table class="mod-table biq-table">
+      <thead>
+        <tr>
+          <th scope="col">Household</th>
+          <th scope="col" class="num">AUM</th>
+          <th scope="col" class="biq-col-signals">Signals</th>
+          <th scope="col">Recommended play</th>
+          <th scope="col" class="num">Modelled net new assets</th>
+          <th scope="col">Review</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in rows %}
+        <tr class="biq-row {{ 'biq-row--approved' if row.status == 'approved' }} {{ 'biq-row--rejected' if row.status == 'rejected' }}">
+          <td>
+            <a class="biq-hh" href="/bookiq?play={{ play_filter }}&h={{ row.id }}#detail">{{ row.name }}</a>
+            <span class="biq-sub"><span class="mono">{{ row.id }}</span> &middot; {{ row.relationship }}</span>
+            <span class="biq-sub">{{ row.household.account_count }} account{{ '' if row.household.account_count == 1 else 's' }} &middot; consent {{ row.consent_status }}</span>
+          </td>
+          <td class="num biq-aum">{{ row.aum_display }}</td>
+          <td class="biq-col-signals">
+            <span class="biq-signals">
+              {% for signal in row.signals %}
+              <span class="chip biq-sig biq-sig--{{ signal.strength }}" title="{{ signal.display }}">{{ signal.label }}</span>
+              {% endfor %}
+            </span>
+            {% if row.flags %}<span class="biq-flag" title="{{ row.flags|join(' ') }}">Check</span>{% endif %}
+          </td>
+          <td>
+            <span class="biq-play">{{ row.play_label }}</span>
+            <span class="biq-sub">
+              {% if row.model_ranked %}
+              {{ row.confidence_display }} {{ row.confidence_label }} confidence
+              <span class="biq-conf" aria-hidden="true"><span style="width: {{ row.confidence_display }}"></span></span>
+              {% else %}
+              Rule check, no model row
+              {% endif %}
+            </span>
+            <span class="biq-sub biq-rule">Rule check: {{ row.rule_play_label }}</span>
+          </td>
+          <td class="num">
+            <span class="biq-opp">{{ row.opportunity.assets_usd|usd }}</span>
+            <span class="biq-sub">{{ row.opportunity.formula }}</span>
+          </td>
+          <td>
+            {% if row.status == 'approved' %}
+            <span class="chip chip--live">Approved</span>
+            {% elif row.status == 'rejected' %}
+            <span class="chip chip--fail">Rejected</span>
+            {% else %}
+            <span class="chip">In review</span>
+            {% endif %}
+            {% if row.consent_status == 'pending' %}<span class="chip chip--build">Consent pending</span>{% endif %}
+            <a class="biq-review-link" href="/bookiq?play={{ play_filter }}&h={{ row.id }}#detail">Review</a>
+          </td>
+        </tr>
+        {% endfor %}
+        {% if not rows %}
+        <tr><td colspan="6"><p class="empty">No households have this play in the current ranking.</p></td></tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+  <p class="mod-note biq-table-note">Opportunity is modelled net new assets, not measured or forecast. The fee line is {{ assumptions.fee_rate_display }} of that figure. Confidence is the model's own estimate.</p>
+</section>
+
+{% if selected %}
+{% set row = selected.row %}
+{% set hh = selected.household %}
+<section class="mod-panel biq-detail" id="detail">
+  <div class="biq-detail-head">
+    <div>
+      <div class="mod-kicker">Household detail</div>
+      <h2 class="biq-detail-title">{{ hh.name }}</h2>
+      <p class="biq-detail-sub"><span class="mono">{{ hh.id }}</span> &middot; {{ hh.relationship }} &middot; {{ hh.account_count }} account{{ '' if hh.account_count == 1 else 's' }} &middot; {{ hh.notes }}</p>
+    </div>
+    <div class="biq-detail-status">
+      {% if selected.status == 'approved' %}<span class="chip chip--live">Approved</span>
+      {% elif selected.status == 'rejected' %}<span class="chip chip--fail">Rejected</span>
+      {% else %}<span class="chip">In review</span>{% endif %}
+      {% if hh.consent_status == 'pending' %}<span class="chip chip--build">Consent pending</span>{% endif %}
+      <a class="biq-close" href="/bookiq?play={{ play_filter }}#book">Back to the queue</a>
+    </div>
+  </div>
+
+  {% if selected.status == 'approved' and selected.evidence %}
+  <div class="banner banner--ok">
+    Approved by {{ selected.evidence.approver }} ({{ selected.evidence.role }}) on {{ selected.evidence.approved_at|timestamp_label }}.
+    Evidence record <span class="mono">{{ selected.evidence.id }}</span>. Nothing was sent.
+  </div>
+  {% elif selected.status == 'rejected' %}
+  <div class="banner banner--fail">
+    Rejected by {{ selected.decision.approver }} ({{ selected.decision.role }}) on {{ selected.decision.decided_at|timestamp_label }}.
+    Reason: {{ selected.decision.reason }}
+  </div>
+  {% endif %}
+  {% if selected.consent_blocked %}
+  <div class="banner banner--warn">
+    Approval is blocked while consent is pending for {{ hh.name }}. The draft stays visible for internal review.
+    Record consent in the transition workflow before any client outreach can be approved.
+  </div>
+  {% elif selected.approval_block == 'guardrail' %}
+  <div class="banner banner--fail">
+    Approval is blocked by a failing guardrail check. Edit the draft and save a new version, or reject it.
+  </div>
+  {% elif selected.approval_block == 'nodraft' %}
+  <div class="banner banner--warn">
+    No draft is available for this household. The evidence and the opportunity are still shown. Run the recorder to draft the outreach.
+  </div>
+  {% endif %}
+  {% if selected.evidence_stale %}
+  <div class="banner banner--warn">The draft changed after approval. Seal a new evidence record before relying on this one.</div>
+  {% endif %}
+
+  <div class="biq-detail-grid">
+    <div class="biq-detail-left">
+      <section class="biq-subpanel">
+        <h3>Why this play</h3>
+        <p class="biq-reason">{{ row.reason or 'No ranking reason is recorded.' }}</p>
+        <dl class="kv biq-kv">
+          <dt>Play</dt><dd>{{ row.play_label }}</dd>
+          <dt>Signal</dt><dd>{{ row.signal_label or 'Not recorded' }}</dd>
+          <dt>Confidence</dt><dd>{{ row.confidence_display }}{% if row.model_ranked %} ({{ row.confidence_label }}){% endif %}</dd>
+          <dt>Ranked by</dt><dd>{{ 'Model ranking' if row.model_ranked else 'Rule check, model row missing' }}</dd>
+          <dt>Rule check</dt><dd>{{ row.rule_play_label }}</dd>
+        </dl>
+        <p class="mod-note">Confidence is the model's own estimate, not a calibrated probability. The rule check is the same arithmetic the page shows, applied to the record.</p>
+        {% if row.flags %}
+        <ul class="biq-flags">
+          {% for flag in row.flags %}<li>{{ flag }}</li>{% endfor %}
+        </ul>
+        {% endif %}
+      </section>
+
+      <section class="biq-subpanel">
+        <h3>Evidence from the record</h3>
+        <table class="mod-table biq-evidence">
+          <thead><tr><th>Field</th><th>Value</th><th>Source field</th></tr></thead>
+          <tbody>
+            {% for item in hh.evidence %}
+            <tr>
+              <td>{{ item.label }}<span class="biq-source">{{ item.source }}</span></td>
+              <td>{{ item.value }}<span class="biq-detail-text">{{ item.detail }}</span></td>
+              <td class="mono">{{ item.source_field }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </section>
+
+      <section class="biq-subpanel">
+        <h3>Modelled opportunity</h3>
+        <table class="mod-table biq-math">
+          <tbody>
+            <tr><td>Source value</td><td>{{ row.opportunity.input_usd|usd }} <span class="mod-note mono">{{ row.opportunity.input_field or 'no input' }}</span></td></tr>
+            <tr><td>Modelled net new assets</td><td><strong>{{ row.opportunity.assets_usd|usd }}</strong><span class="biq-detail-text">{{ row.opportunity.formula }}</span></td></tr>
+            <tr><td>Annual fee at {{ assumptions.fee_rate_display }}</td><td>{{ row.opportunity.fee_usd|usd }}</td></tr>
+          </tbody>
+        </table>
+        <p class="mod-note">{{ row.opportunity.note }} <a href="#assumptions">Read the assumptions</a>.</p>
+      </section>
+    </div>
+
+    <div class="biq-detail-right">
+      <section class="biq-subpanel biq-draft-panel">
+        <div class="biq-draft-head">
+          <div>
+            <h3>Adviser outreach draft</h3>
+            <p class="mod-note">Version {{ selected.version }}. {{ 'Edited by ' + selected.decision.edit.editor if selected.edited else 'Model draft, not edited' }}.</p>
+          </div>
+          <span class="chip">{{ 'Edited' if selected.edited else 'Model draft' }}</span>
+        </div>
+
+        {% if selected.draft %}
+        <p class="biq-subject"><span class="biq-subject-label">Subject</span>{{ selected.draft.subject }}</p>
+        <div class="biq-draft-body">{{ selected.draft.body }}</div>
+        <p class="biq-provenance">
+          <span class="mono">{{ selected.meta.model }}</span>
+          <span>{{ selected.meta.mode }}</span>
+          <span>{{ selected.meta.created_at|timestamp_label }}</span>
+          <span>{{ selected.meta.latency_ms }} ms</span>
+          <span>{{ selected.meta.usage.get('total_tokens', 0) }} tokens</span>
+          <span class="mono">key {{ selected.meta.key }}</span>
+        </p>
+
+        <div class="biq-guardrail-head">
+          <h4>Claims and guardrail</h4>
+          {% if selected.guardrail.ok %}
+          <span class="chip chip--live">All checks pass</span>
+          {% else %}
+          <span class="chip chip--fail">{{ selected.guardrail.blocking|length }} blocking</span>
+          {% endif %}
+        </div>
+        {% if selected.edited %}<p class="mod-note">Claims below come from the model draft. The number trace and the checks reflect the edited text.</p>{% endif %}
+        <table class="mod-table biq-claims">
+          <thead><tr><th>Claim</th><th>Source field</th><th>Record value</th><th>Status</th></tr></thead>
+          <tbody>
+            {% for claim in selected.guardrail.claims %}
+            <tr>
+              <td>{{ claim.text }}{% if claim.note %}<span class="biq-detail-text">{{ claim.note }}</span>{% endif %}</td>
+              <td class="mono">{{ claim.source_field }}{% if claim.source_raw and claim.source_raw != claim.source_field %}<span class="biq-detail-text">from {{ claim.source_raw }}</span>{% endif %}</td>
+              <td>{{ claim.source_value or 'Not in the record' }}</td>
+              <td><span class="chip {{ 'chip--fail' if claim.status in ('unknown_field', 'mismatch') else ('chip--live' if claim.status == 'verified' else '') }}">{{ claim.status|status_label }}</span></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+        <details class="biq-checks-wrap" {% if not selected.guardrail.ok %}open{% endif %}>
+          <summary>{{ selected.guardrail.checks|length }} guardrail checks and {{ selected.guardrail.trace|length }} numbers</summary>
+          <ul class="biq-checks">
+            {% for check in selected.guardrail.checks %}
+            <li class="biq-check biq-check--{{ check.status }}">
+              <span class="biq-check-status">{{ check.status|status_label }}</span>
+              <span><strong>{{ check.label }}</strong> {{ check.detail }}</span>
+            </li>
+            {% endfor %}
+          </ul>
+          <table class="mod-table biq-trace">
+            <thead><tr><th>Number in the draft</th><th>Field</th><th>Status</th></tr></thead>
+            <tbody>
+              {% for item in selected.guardrail.trace %}
+              <tr>
+                <td class="mono">{{ item.number }}</td>
+                <td>{{ item.label or 'Not traced' }}{% if item.field %}<span class="mono biq-detail-text">{{ item.field }}</span>{% endif %}</td>
+                <td><span class="chip {{ 'chip--live' if item.status == 'traced' else 'chip--fail' }}">{{ item.status|status_label }}</span></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </details>
+
+        {% if selected.status == 'approved' %}
+        <div class="biq-review-locked">
+          <p class="mod-note">This draft is approved and the evidence record is sealed. Editing reopens it for review and clears the seal.</p>
+        </div>
+        {% else %}
+        <div class="biq-review">
+          <h4>Review and approve</h4>
+          <p class="mod-note">A named person approves. Approval writes an evidence record and an audit event. Nothing is sent, filed, or traded.</p>
+          <form method="post" action="/bookiq/approve" class="biq-form">
+            <input type="hidden" name="h" value="{{ hh.id }}">
+            <div class="form-row">
+              <input class="input" type="text" name="approver" placeholder="Approver name" aria-label="Approver name" autocomplete="off">
+              <select class="select" name="role" aria-label="Approver role">
+                <option value="">Role</option>
+                <option value="Adviser">Adviser</option>
+                <option value="Supervising principal">Supervising principal</option>
+                <option value="Operations">Operations</option>
+              </select>
+              <button class="btn btn-primary" type="submit" {% if not selected.can_approve %}disabled{% endif %}>Approve and seal evidence</button>
+            </div>
+            <textarea class="textarea" name="note" placeholder="Approval note (optional)" aria-label="Approval note"></textarea>
+          </form>
+          {% if not selected.can_approve %}
+          <p class="mod-note">Approval is disabled for this household. The reason is in the banner above.</p>
+          {% endif %}
+          <details class="biq-reject">
+            <summary>Reject this draft</summary>
+            <form method="post" action="/bookiq/reject" class="biq-form">
+              <input type="hidden" name="h" value="{{ hh.id }}">
+              <div class="form-row">
+                <input class="input" type="text" name="approver" placeholder="Reviewer name" aria-label="Reviewer name" autocomplete="off">
+                <select class="select" name="role" aria-label="Reviewer role">
+                  <option value="">Role</option>
+                  <option value="Adviser">Adviser</option>
+                  <option value="Supervising principal">Supervising principal</option>
+                  <option value="Operations">Operations</option>
+                </select>
+              </div>
+              <textarea class="textarea" name="reason" placeholder="Reason for rejection" aria-label="Rejection reason"></textarea>
+              <button class="btn btn-sm" type="submit">Reject with reason</button>
+            </form>
+          </details>
+        </div>
+        {% endif %}
+
+        <details class="biq-edit" {% if selected.status == 'rejected' %}open{% endif %}>
+          <summary>Edit this draft</summary>
+          <form method="post" action="/bookiq/save" class="biq-form">
+            <input type="hidden" name="h" value="{{ hh.id }}">
+            <div class="form-row">
+              <input class="input biq-wide" type="text" name="subject" value="{{ selected.draft.subject }}" aria-label="Draft subject">
+            </div>
+            <textarea class="textarea biq-body-input" name="body" aria-label="Draft body">{{ selected.draft.body }}</textarea>
+            <div class="form-row">
+              <input class="input" type="text" name="editor" placeholder="Your name" aria-label="Editor name" autocomplete="off">
+              <button class="btn btn-sm" type="submit">Save as a new version</button>
+              <span class="mod-note">The guardrail re-runs on the edited text at approval.</span>
+            </div>
+          </form>
+        </details>
+
+        {% if availability.mode == 'live' and selected.status != 'approved' %}
+        <form method="post" action="/bookiq/run-live/draft?h={{ hh.id }}" class="biq-live-form">
+          <button class="btn btn-sm" type="submit">Run a live draft</button>
+          <span class="mod-note">Replaces the recording for this household. One live call.</span>
+        </form>
+        {% endif %}
+
+        {% if selected.evidence %}
+        <section class="biq-evidence-record" id="evidence">
+          <h4>Evidence record</h4>
+          <dl class="kv biq-kv biq-kv-wide">
+            <dt>Record</dt><dd class="mono">{{ selected.evidence.id }}</dd>
+            <dt>Approved by</dt><dd>{{ selected.evidence.approver }} ({{ selected.evidence.role }})</dd>
+            <dt>Approved at</dt><dd>{{ selected.evidence.approved_at|timestamp_label }}</dd>
+            <dt>Version</dt><dd>{{ selected.evidence.version }}</dd>
+            <dt>Audience</dt><dd>{{ selected.evidence.audience }} &middot; {{ selected.evidence.channel }}</dd>
+            <dt>Model</dt><dd>{{ selected.evidence.model }} &middot; {{ selected.evidence.model_mode }}</dd>
+            <dt>Draft hash</dt><dd class="mono">{{ selected.evidence.draft_hash }}</dd>
+            <dt>Claims</dt><dd>{{ selected.evidence.claims_verified }} of {{ selected.evidence.claims_total }} verified</dd>
+            <dt>Numbers</dt><dd>{{ selected.evidence.numbers_traced }} of {{ selected.evidence.numbers_total }} traced</dd>
+            <dt>Checks</dt><dd>{{ selected.evidence.checks_passed }} of {{ selected.evidence.checks_total }} passed</dd>
+            <dt>Retention</dt><dd>Until {{ selected.evidence.retention_until|date_long }}</dd>
+            <dt>Note</dt><dd>{{ selected.evidence.note or 'None' }}</dd>
+          </dl>
+          <p class="mod-note">Synthetic evidence record. Nothing was sent, filed, or delivered.</p>
+        </section>
+        {% endif %}
+
+        {% else %}
+        <div class="empty">
+          {% if selected.draft_raw %}
+          <p>The outreach recording could not be parsed.</p>
+          {% else %}
+          <p>This outreach is not recorded yet.</p>
+          {% endif %}
+          {% if selected.draft_error and selected.draft_raw %}<p class="mod-note">{{ selected.draft_error }}</p>{% endif %}
+          <p class="mod-note">Run <span class="mono">SAVVY_LLM_MODE=live python3 scripts/record_bookiq.py</span> to record it. The key is <span class="mono">{{ selected.meta.key }}</span>.</p>
+          {% if selected.draft_raw %}
+          <p class="mod-note">The raw model text was kept so the failure is visible. A new recording replaces it.</p>
+          <pre class="biq-raw">{{ selected.draft_raw }}</pre>
+          {% endif %}
+        </div>
+        {% endif %}
+      </section>
+    </div>
+  </div>
+
+</section>
+{% endif %}
+
+<div class="biq-bottom-grid">
+  <section class="mod-panel biq-eval" id="eval">
+    <div class="biq-section-head">
+      <div>
+        <h3>Evaluation: play and signal accuracy</h3>
+        <p class="mod-note">{{ eval.report.name or 'Play and signal accuracy' }}. A case passes when the play matches the label or an accepted alternative, and the cited signal matches that play.</p>
+      </div>
+      {% if eval.present %}<span class="chip chip--live">{{ eval.accuracy_pct }}</span>{% endif %}
+    </div>
+    {% if eval.present %}
+    <div class="biq-eval-strip">
+      <div><span class="biq-stat-label">Accuracy</span><span class="biq-stat-value">{{ eval.accuracy_pct }}</span></div>
+      <div><span class="biq-stat-label">Cases</span><span class="biq-stat-value">{{ eval.report.cases }}</span></div>
+      <div><span class="biq-stat-label">Coverage</span><span class="biq-stat-value">{{ eval.report.coverage }} of {{ eval.report.cases }}</span></div>
+      <div><span class="biq-stat-label">Rule agreement</span><span class="biq-stat-value">{{ eval.report.rule_agreement }}</span></div>
+    </div>
+    <p class="biq-provenance">
+      <span class="mono">{{ eval.report.model }}</span>
+      <span>{{ eval.report.mode }}</span>
+      <span>{{ eval.report.recorded_at|timestamp_label }}</span>
+      <span class="mono">key {{ eval.report.recording_key }}</span>
+    </p>
+    {% if eval.failures %}
+    <table class="mod-table">
+      <thead><tr><th>Case</th><th>Expected</th><th>Actual</th></tr></thead>
+      <tbody>
+        {% for failure in eval.failures %}
+        <tr><td>{{ failure.case }}</td><td class="mono">{{ failure.expected }}</td><td class="mono">{{ failure.actual }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% if eval.notes %}<ul class="mod-list biq-failure-notes">{% for note in eval.notes %}<li>{{ note }}</li>{% endfor %}</ul>{% endif %}
+    {% else %}
+    <div class="banner banner--ok">No failures in this run. The first draft pass did fail the guardrail; the build note below lists what changed.</div>
+    {% endif %}
+    <details class="biq-eval-details">
+      <summary>All {{ eval.report.cases }} labelled cases and the model's answer</summary>
+      <table class="mod-table">
+        <thead><tr><th>Case</th><th>Expected</th><th>Model</th><th>Status</th></tr></thead>
+        <tbody>
+          {% for result in eval.results %}
+          <tr>
+            <td>{{ result.household_id }} {{ result.household }}</td>
+            <td class="mono">{{ result.expected }}</td>
+            <td class="mono">{{ result.actual }}</td>
+            <td><span class="chip {{ 'chip--live' if result.status == 'pass' else 'chip--fail' }}">{{ 'Pass' if result.status == 'pass' else 'Fail' }}</span></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <p class="mod-note">{{ eval.report.scoring }}</p>
+      <ul class="mod-list">{% for note in eval.report.notes %}<li>{{ note }}</li>{% endfor %}</ul>
+    </details>
+    <p class="mod-note">Written to <span class="mono">data/modules/bookiq/eval.json</span> by <span class="mono">python3 scripts/eval_bookiq.py</span>.</p>
+    {% else %}
+    <p class="empty">Not evaluated yet. Run <span class="mono">python3 scripts/eval_bookiq.py</span>.</p>
+    {% endif %}
+  </section>
+
+  <section class="mod-panel biq-audit" id="audit">
+    <div class="biq-section-head">
+      <div>
+        <h3>Audit trail</h3>
+        <p class="mod-note">The shared suite audit table, filtered to this module. Approvals, rejections, edits, and live runs write here.</p>
+      </div>
+      <span class="chip">{{ audit_events|length }} recent</span>
+    </div>
+    {% if audit_events %}
+    <div class="biq-table-wrap">
+      <table class="mod-table">
+        <thead><tr><th>When</th><th>Actor</th><th>Action</th><th>Entity</th><th>Detail</th></tr></thead>
+        <tbody>
+          {% for event in audit_events %}
+          <tr>
+            <td>{{ event.created_at|timestamp_label }}</td>
+            <td>{{ event.actor }}</td>
+            <td>{{ event.action|action_label }}</td>
+            <td class="mono">{{ event.entity_id }}</td>
+            <td class="mod-note">{{ event.detail }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <p class="empty">No decisions recorded yet. Approving or rejecting a draft writes the first event.</p>
+    {% endif %}
+    <div class="btn-row biq-reset">
+      <form method="post" action="/bookiq/reset">
+        <button class="btn btn-sm" type="submit">Reset demo decisions</button>
+      </form>
+      <span class="mod-note">Clears approvals and edits. Data files and recordings stay.</span>
+    </div>
+  </section>
+</div>
+
+<section class="mod-panel biq-how" id="how">
+  <div class="biq-section-head">
+    <div>
+      <h3>How this is built</h3>
+      <p class="mod-note">{{ book.advisor_name }}'s book is one synthetic book of {{ book.household_count }} households. The queue is one page, the detail is a query string, and every decision is a form post.</p>
+    </div>
+    <span class="chip">Synthetic data</span>
+  </div>
+  <div class="biq-how-grid">
+    <div>
+      <p class="mod-kicker-sm">Prompt pattern</p>
+      <p>One batched ranking call sends all 12 household records with their signals and asks for strict JSON: a play, a confidence, a one-sentence reason, and the exact signal key per household. One drafting call per household sends only that household's facts and asks for strict JSON: a subject, a body, and 2 to 5 claims, each with a source field. The internal ranking reason and the opportunity arithmetic are kept out of the draft prompt. Temperature is 0.2 for ranking and 0.35 for drafting.</p>
+      <p class="mod-note">Parsing is defensive. A fenced or noisy reply is stripped to its JSON. A parse failure keeps the raw text, shows a warning, and falls back to the rule check. It never crashes the page.</p>
+    </div>
+    <div>
+      <p class="mod-kicker-sm">Evaluation</p>
+      <p>Twelve labelled households, one per row. A case passes when the top play matches the label, or an accepted alternative, and the model cites the required signal. The run scores the recorded ranking, so the number is stable between page views.</p>
+      <p class="mod-note">This is an in-sample set from one synthetic book. A perfect score describes this book, not the next one. Rule agreement is shown because it is a different question from model accuracy.</p>
+    </div>
+    <div>
+      <p class="mod-kicker-sm">What failed on the way here</p>
+      <ul class="mod-list">
+        <li>The first drafting pass failed the guardrail on five of twelve drafts. Two quoted the internal 5 percent cash target, one quoted the GP restriction date, one cited a claim field that did not exist, and one attached a date to the wrong field. The prompt and the verifier changed; the failures are the reason the checks exist.</li>
+        <li>One draft cited a claim field called <span class="mono">accounts</span>, which is not in the record. The verifier maps that alias to <span class="mono">account_count</span>, and a claim that an edit removes no longer blocks.</li>
+        <li>The first H-1048 draft addressed the email to Dana instead of the household. The prompt now states the sender and the audience.</li>
+        <li>The play eval has no failures in this run. Twelve cases from one book is a small in-sample test, and the labels are the builder's, not an adviser's.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="biq-how-foot">
+    <div>
+      <p class="mod-kicker-sm">Model provenance</p>
+      {% if rank.present %}
+      <p class="mod-note">{{ rank.model }} &middot; recorded live call &middot; {{ rank.created_at|timestamp_label }} &middot; {{ rank.latency_ms }} ms &middot; {{ rank.usage.get('total_tokens', 0) }} tokens &middot; key <span class="mono">{{ rank.key }}</span>. <a href="/method">How the recordings work</a>.</p>
+      {% else %}
+      <p class="mod-note">No ranking recording yet. <a href="/method">How the recordings work</a>.</p>
+      {% endif %}
+    </div>
+    <div>
+      <p class="mod-kicker-sm">Boundary</p>
+      <p class="mod-note">All data is synthetic. Model output is generated text, not advice. Every client-facing draft needs a named human approval and an evidence record, and a household with consent pending is blocked on the server. Nothing is sent, filed, or traded.</p>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

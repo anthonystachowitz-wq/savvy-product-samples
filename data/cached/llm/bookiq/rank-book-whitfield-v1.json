@@ -1,0 +1,21 @@
+{
+  "module": "bookiq",
+  "key": "rank-book-whitfield-v1",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 2814,
+    "completion_tokens": 703,
+    "total_tokens": 3517,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 2814
+  },
+  "latency_ms": 3262,
+  "created_at": "2026-11-19T05:53:51+00:00",
+  "system_sha": "f15715c40f0ec6ab",
+  "prompt_sha": "5e2a9b3c2ee45008",
+  "text": "[{\"household_id\":\"H-1042\",\"play\":\"consolidate_held_away\",\"confidence\":0.9,\"reason\":\"USD 1,840,000 sits at Halden Private Client, about 30% of household assets, with no transfer paperwork on file.\",\"signal\":\"held_away\"},{\"household_id\":\"H-1043\",\"play\":\"referral\",\"confidence\":0.85,\"reason\":\"Two introductions but no referral ask logged since Apr 18, 2025, now 19 months without an ask.\",\"signal\":\"referral_source\"},{\"household_id\":\"H-1044\",\"play\":\"no_action\",\"confidence\":0.9,\"reason\":\"Inherited IRA transfer in flight with no funded managed account and no growth signal in the record.\",\"signal\":\"transfer_hold\"},{\"household_id\":\"H-1045\",\"play\":\"life_event\",\"confidence\":0.8,\"reason\":\"Annuity income election due January 2027 ahead of April 2027 retirement, with USD 1,944,160 in non-transferable holdings.\",\"signal\":\"life_event\"},{\"household_id\":\"H-1046\",\"play\":\"reinvest_cash\",\"confidence\":0.9,\"reason\":\"USD 54,295 sits above the 5 percent cash target with no auto-invest instruction.\",\"signal\":\"cash_drag\"},{\"household_id\":\"H-1047\",\"play\":\"consolidate_held_away\",\"confidence\":0.85,\"reason\":\"USD 1,150,000 at Northline Retirement Services, roughly 40% of assets, with rollover approval pending since September 2026.\",\"signal\":\"held_away\"},{\"household_id\":\"H-1048\",\"play\":\"schedule_review\",\"confidence\":0.85,\"reason\":\"Last meeting Sep 12, 2025, 433 days ago, 68 days past the 365 day cadence.\",\"signal\":\"overdue_review\"},{\"household_id\":\"H-1049\",\"play\":\"referral\",\"confidence\":0.75,\"reason\":\"One introduction but no formal ask logged since Feb 11, 2025, now 21 months without an ask.\",\"signal\":\"referral_source\"},{\"household_id\":\"H-1050\",\"play\":\"reduce_concentration\",\"confidence\":0.9,\"reason\":\"Kestrel Ridge Value Fund II, LP is USD 3,150,000, 42.2% of AUM, and assignment needs GP consent through June 30, 2027.\",\"signal\":\"concentration\"},{\"household_id\":\"H-1051\",\"play\":\"reinvest_cash\",\"confidence\":0.9,\"reason\":\"USD 104,190 sits above the 5 percent cash target with no auto-invest instruction.\",\"signal\":\"cash_drag\"},{\"household_id\":\"H-1052\",\"play\":\"rmd_plan\",\"confidence\":0.95,\"reason\":\"First RMD due Dec 31, 2026, estimated USD 124,906, with no distribution plan recorded.\",\"signal\":\"rmd_window\"},{\"household_id\":\"H-1053\",\"play\":\"consolidate_held_away\",\"confidence\":0.85,\"reason\":\"USD 1,350,000 at Alcott Retirement Services, over half of household assets, with no rollover paperwork started.\",\"signal\":\"held_away\"}]"
+}

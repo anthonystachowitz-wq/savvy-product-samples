@@ -1,0 +1,126 @@
+{
+  "module": "bookiq",
+  "name": "Play and signal accuracy",
+  "as_of": "2026-11-19",
+  "scoring": "Pass when the top play equals the expected play (or an accepted alternative) and the cited signal matches that play's required signal.",
+  "cases": 12,
+  "items": [
+    {
+      "household_id": "H-1042",
+      "household": "Rowan Household",
+      "expected_play": "consolidate_held_away",
+      "required_signal": "held_away",
+      "alternatives": [],
+      "rationale": "USD 1,840,000 sits at Halden Private Client. The review is 26 days past due and is a smaller play."
+    },
+    {
+      "household_id": "H-1043",
+      "household": "Calloway Household",
+      "expected_play": "referral",
+      "required_signal": "referral_source",
+      "alternatives": [],
+      "rationale": "Two introductions and no ask in 19 months, on a 17 year relationship."
+    },
+    {
+      "household_id": "H-1044",
+      "household": "Barrett Household",
+      "expected_play": "no_action",
+      "required_signal": "transfer_hold",
+      "alternatives": [],
+      "rationale": "The only account is an inherited IRA in transfer. No growth signal clears."
+    },
+    {
+      "household_id": "H-1045",
+      "household": "Voss Household",
+      "expected_play": "life_event",
+      "required_signal": "life_event",
+      "alternatives": [
+        {
+          "play": "reduce_concentration",
+          "signals": [
+            "concentration"
+          ]
+        }
+      ],
+      "rationale": "Retirement in April 2027 and the annuity election are dated. The restricted holdings are a real secondary play."
+    },
+    {
+      "household_id": "H-1046",
+      "household": "Sato Household",
+      "expected_play": "reinvest_cash",
+      "required_signal": "cash_drag",
+      "alternatives": [],
+      "rationale": "Cash is 9.3 percent of assets after a contribution and has no auto-invest instruction."
+    },
+    {
+      "household_id": "H-1047",
+      "household": "Delgado Household",
+      "expected_play": "consolidate_held_away",
+      "required_signal": "held_away",
+      "alternatives": [
+        {
+          "play": "reinvest_cash",
+          "signals": [
+            "cash_drag"
+          ]
+        }
+      ],
+      "rationale": "USD 1,150,000 sits in a former employer plan. Cash drag is close behind."
+    },
+    {
+      "household_id": "H-1048",
+      "household": "Okafor Household",
+      "expected_play": "schedule_review",
+      "required_signal": "overdue_review",
+      "alternatives": [],
+      "rationale": "The last meeting was 433 days ago. No other signal clears."
+    },
+    {
+      "household_id": "H-1049",
+      "household": "Lindqvist Household",
+      "expected_play": "referral",
+      "required_signal": "referral_source",
+      "alternatives": [],
+      "rationale": "One introduction and no ask in 21 months. The review is 20 days past due."
+    },
+    {
+      "household_id": "H-1050",
+      "household": "Ferraro Household",
+      "expected_play": "reduce_concentration",
+      "required_signal": "concentration",
+      "alternatives": [],
+      "rationale": "The Kestrel Ridge fund is 42.2 percent of assets and restricted through June 2027."
+    },
+    {
+      "household_id": "H-1051",
+      "household": "Nakamura Household",
+      "expected_play": "reinvest_cash",
+      "required_signal": "cash_drag",
+      "alternatives": [],
+      "rationale": "Cash is 10.3 percent of assets with no auto-invest instruction."
+    },
+    {
+      "household_id": "H-1052",
+      "household": "Petrov Household",
+      "expected_play": "rmd_plan",
+      "required_signal": "rmd_window",
+      "alternatives": [],
+      "rationale": "The first required distribution is due December 31, 2026 and no plan is recorded."
+    },
+    {
+      "household_id": "H-1053",
+      "household": "Achterberg Household",
+      "expected_play": "consolidate_held_away",
+      "required_signal": "held_away",
+      "alternatives": [
+        {
+          "play": "reinvest_cash",
+          "signals": [
+            "cash_drag"
+          ]
+        }
+      ],
+      "rationale": "USD 1,350,000 sits in a former employer plan. Cash is a smaller secondary play."
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "module": "bookiq",
+  "key": "draft-outreach-H-1050-v1",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 720,
+    "completion_tokens": 365,
+    "total_tokens": 1085,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 720
+  },
+  "latency_ms": 2422,
+  "created_at": "2026-11-19T05:56:05+00:00",
+  "system_sha": "84250f2446526cc9",
+  "prompt_sha": "1c326dfe570ee9d1",
+  "text": "{\"subject\": \"Reviewing your largest holding and cash position\", \"body\": \"Dear Ferraro Household,\\n\\nI am writing to suggest a conversation about concentration in your portfolio. Your largest holding, Kestrel Ridge Value Fund II, LP (KRVF2), represents 42.2% of AUM. This position is a restricted holding valued at USD 3,150,000, with the restriction ending Jun 30, 2027.\\n\\nYour cash position is USD 450,670, or 6.0% of AUM. With 2 accounts and a client relationship since 2007, now 19 years, I think a review is timely. Our last meeting was Sep 9, 2026, 71 days ago, and your next review is due Sep 9, 2027.\\n\\nPlease let me know if you would like to discuss these points.\\n\\nSincerely,\\nDana Whitfield\", \"claims\": [{\"text\": \"Kestrel Ridge Value Fund II, LP (KRVF2), represents 42.2% of AUM\", \"source_field\": \"top_holding_pct\"}, {\"text\": \"This position is a restricted holding valued at USD 3,150,000\", \"source_field\": \"restricted_usd\"}, {\"text\": \"Your cash position is USD 450,670, or 6.0% of AUM\", \"source_field\": \"cash_usd\"}, {\"text\": \"Our last meeting was Sep 9, 2026, 71 days ago\", \"source_field\": \"last_meeting_date\"}, {\"text\": \"your next review is due Sep 9, 2027\", \"source_field\": \"next_review_date\"}]}"
+}

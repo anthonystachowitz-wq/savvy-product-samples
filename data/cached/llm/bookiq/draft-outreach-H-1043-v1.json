@@ -1,0 +1,21 @@
+{
+  "module": "bookiq",
+  "key": "draft-outreach-H-1043-v1",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 675,
+    "completion_tokens": 364,
+    "total_tokens": 1039,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 675
+  },
+  "latency_ms": 2158,
+  "created_at": "2026-11-19T05:55:48+00:00",
+  "system_sha": "84250f2446526cc9",
+  "prompt_sha": "f2a92b3c144baf19",
+  "text": "{\"subject\": \"Checking in ahead of your next review\", \"body\": \"Dear Calloway Household,\\n\\nI am writing as your adviser to check in. You have been a client since 2009, and our last meeting was Sep 22, 2026, with your next review due Sep 22, 2027. Your household holds USD 4,250,000 across 1 account, and your largest holding is the Total market ETF (VTI) at 45.7% of AUM. Cash stands at USD 129,720, or 3.1% of AUM.\\n\\nOver the years you have kindly made 2 introductions, the most recent ask being Apr 18, 2025. If you know someone who might value a conversation about their finances, I would welcome an introduction. I would also be glad to set up a review to talk through your trust account at Alder Clearing, which is waiting on you.\\n\\nSincerely,\\nDana Whitfield\", \"claims\": [{\"text\": \"You have been a client since 2009\", \"source_field\": \"client_since_year\"}, {\"text\": \"our last meeting was Sep 22, 2026\", \"source_field\": \"last_meeting_date\"}, {\"text\": \"your next review due Sep 22, 2027\", \"source_field\": \"next_review_date\"}, {\"text\": \"your largest holding is the Total market ETF (VTI) at 45.7% of AUM\", \"source_field\": \"top_holding_pct\"}, {\"text\": \"you have kindly made 2 introductions, the most recent ask being Apr 18, 2025\", \"source_field\": \"referral_count\"}]}"
+}

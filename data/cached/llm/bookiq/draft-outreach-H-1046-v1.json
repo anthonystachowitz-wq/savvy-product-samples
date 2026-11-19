@@ -1,0 +1,21 @@
+{
+  "module": "bookiq",
+  "key": "draft-outreach-H-1046-v1",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 634,
+    "completion_tokens": 340,
+    "total_tokens": 974,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 634
+  },
+  "latency_ms": 2417,
+  "created_at": "2026-11-19T05:55:55+00:00",
+  "system_sha": "84250f2446526cc9",
+  "prompt_sha": "1cd3c97c668aa801",
+  "text": "{\"subject\": \"Reviewing cash in the Sato Household account\", \"body\": \"Hi Sato Household,\\n\\nI am writing as your adviser to suggest a review of the cash held in your account. As of our last meeting on Jul 30, 2026, your cash position was USD 117,295, or 9.3% of AUM. With USD 54,295 identified as excess cash, it may be worth discussing how that balance fits your plan.\\n\\nYour household has been a client since 2019, and your largest holding is the Total market ETF (VTI) at 47.7% of AUM. I would like to talk through your cash needs and any upcoming plans before we consider next steps.\\n\\nYour next review is due Jul 30, 2027. Please let me know a convenient time for a conversation.\\n\\nDana Whitfield\", \"claims\": [{\"text\": \"your cash position was USD 117,295, or 9.3% of AUM\", \"source_field\": \"cash_usd\"}, {\"text\": \"USD 54,295 identified as excess cash\", \"source_field\": \"excess_cash_usd\"}, {\"text\": \"Your household has been a client since 2019\", \"source_field\": \"client_since_year\"}, {\"text\": \"your largest holding is the Total market ETF (VTI) at 47.7% of AUM\", \"source_field\": \"top_holding_pct\"}, {\"text\": \"Your next review is due Jul 30, 2027\", \"source_field\": \"next_review_date\"}]}"
+}

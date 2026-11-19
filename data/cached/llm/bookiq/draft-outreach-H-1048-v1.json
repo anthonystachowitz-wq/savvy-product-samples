@@ -1,0 +1,21 @@
+{
+  "module": "bookiq",
+  "key": "draft-outreach-H-1048-v1",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 652,
+    "completion_tokens": 305,
+    "total_tokens": 957,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 652
+  },
+  "latency_ms": 2182,
+  "created_at": "2026-11-19T05:56:00+00:00",
+  "system_sha": "84250f2446526cc9",
+  "prompt_sha": "ed0e35dc1c225b2f",
+  "text": "{\"subject\": \"Overdue review for the Okafor Household\", \"body\": \"Dear Okafor Household, I am writing to schedule a review of your accounts, which is now overdue. Our last meeting was on Sep 12, 2025, and the next review date was Sep 12, 2026. You have been a client since 2018, and your household includes 2 accounts at Alder Clearing. Your largest holding is Total market ETF (VTI) at 51.6% of AUM, and your cash position is USD 87,775, or 6.1% of AUM. I would like to set up a conversation to review these details together. Please let me know a time that works for you. Sincerely, Dana Whitfield\", \"claims\": [{\"text\": \"Our last meeting was on Sep 12, 2025\", \"source_field\": \"last_meeting_date\"}, {\"text\": \"the next review date was Sep 12, 2026\", \"source_field\": \"next_review_date\"}, {\"text\": \"You have been a client since 2018\", \"source_field\": \"client_since_year\"}, {\"text\": \"your household includes 2 accounts at Alder Clearing\", \"source_field\": \"account_count\"}, {\"text\": \"your cash position is USD 87,775, or 6.1% of AUM\", \"source_field\": \"cash_usd\"}]}"
+}

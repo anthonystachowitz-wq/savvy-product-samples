@@ -1,0 +1,21 @@
+{
+  "module": "bookiq",
+  "key": "draft-outreach-H-1049-v1",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 719,
+    "completion_tokens": 362,
+    "total_tokens": 1081,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 719
+  },
+  "latency_ms": 2794,
+  "created_at": "2026-11-19T05:56:03+00:00",
+  "system_sha": "84250f2446526cc9",
+  "prompt_sha": "77d0684dfb269270",
+  "text": "{\"subject\": \"Checking in ahead of your Oct 30, 2026 review\", \"body\": \"Dear Lindqvist Household,\\n\\nI hope you are well. As your adviser, I am writing ahead of your review due on Oct 30, 2026. Our last meeting was Oct 30, 2025, and you have been a client since 2010.\\n\\nYour household holds USD 5,120,000 across 1 account, with cash of USD 108,560, or 2.1% of AUM. Your largest holding is a Total market ETF (VTI) at 64.1% of AUM. I would like to confirm these details with you before the review.\\n\\nI also wanted to ask whether you know anyone who might benefit from a conversation with me. You have made 1 introduction in the past, and I am grateful for that trust. If someone comes to mind, I would welcome an introduction.\\n\\nPlease let me know a convenient time to talk.\\n\\nSincerely,\\nDana Whitfield\", \"claims\": [{\"text\": \"Our last meeting was Oct 30, 2025\", \"source_field\": \"last_meeting_date\"}, {\"text\": \"you have been a client since 2010\", \"source_field\": \"client_since_year\"}, {\"text\": \"Your household holds USD 5,120,000 across 1 account\", \"source_field\": \"aum\"}, {\"text\": \"cash of USD 108,560, or 2.1% of AUM\", \"source_field\": \"cash_usd\"}, {\"text\": \"You have made 1 introduction in the past\", \"source_field\": \"referral_count\"}]}"
+}

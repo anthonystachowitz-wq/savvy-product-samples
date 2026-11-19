@@ -1,0 +1,21 @@
+{
+  "module": "bookiq",
+  "key": "draft-outreach-H-1052-v1",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 688,
+    "completion_tokens": 369,
+    "total_tokens": 1057,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 688
+  },
+  "latency_ms": 2420,
+  "created_at": "2026-11-19T05:56:10+00:00",
+  "system_sha": "84250f2446526cc9",
+  "prompt_sha": "c79883736334a454",
+  "text": "{\"subject\": \"Required distribution planning for the Petrov Household\", \"body\": \"Dear Petrov Household,\\n\\nI am writing to plan for your required distribution. You are 73 in 2026, and the estimated RMD is USD 124,906, due Dec 31, 2026. Your Traditional IRA at Alder Clearing is currently waiting on custodian, so I would like to review the timing with you well before the due date.\\n\\nWe last met on Oct 8, 2026, 42 days ago, and your next review is due Oct 8, 2027. Your household AUM is USD 3,310,000 across 1 account, with USD 202,295 in cash, or 6.1% of AUM. Your largest holding is Total market ETF (VTI) at 44.6% of AUM.\\n\\nPlease let me know a convenient time for a conversation to review the distribution plan.\\n\\nDana Whitfield\", \"claims\": [{\"text\": \"the estimated RMD is USD 124,906, due Dec 31, 2026\", \"source_field\": \"rmd_amount_usd\"}, {\"text\": \"Your Traditional IRA at Alder Clearing is currently waiting on custodian\", \"source_field\": \"account_count\"}, {\"text\": \"We last met on Oct 8, 2026, 42 days ago\", \"source_field\": \"last_meeting_date\"}, {\"text\": \"Your household AUM is USD 3,310,000 across 1 account\", \"source_field\": \"aum\"}, {\"text\": \"with USD 202,295 in cash, or 6.1% of AUM\", \"source_field\": \"cash_usd\"}]}"
+}

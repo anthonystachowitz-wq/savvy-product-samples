@@ -1,0 +1,21 @@
+{
+  "module": "bookiq",
+  "key": "draft-outreach-H-1047-v1",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 698,
+    "completion_tokens": 319,
+    "total_tokens": 1017,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 698
+  },
+  "latency_ms": 2619,
+  "created_at": "2026-11-19T05:55:58+00:00",
+  "system_sha": "84250f2446526cc9",
+  "prompt_sha": "b485d4514aab72ea",
+  "text": "{\"subject\": \"Reviewing your held-away assets at Northline\", \"body\": \"Dear Delgado Household,\\n\\nThank you for your continued relationship with us since 2012. At our last meeting on Oct 16, 2026, we discussed your accounts and your held-away assets at Northline Retirement Services.\\n\\nI would like to set up a review to talk through your held-away assets, which total USD 1,150,000, alongside your two accounts at Morrow Trust. Your Traditional IRA is in flight and your Rollover IRA is waiting on you. We can also revisit your cash position of USD 377,820 and your largest holding, Total market ETF (VTI), at 49.2% of AUM.\\n\\nThere is no action required right now. Please let me know a time that works for a conversation before your review due on Oct 16, 2027.\\n\\nSincerely,\\nDana Whitfield\", \"claims\": [{\"text\": \"Client since 2012\", \"source_field\": \"client_since_year\"}, {\"text\": \"held-away assets at Northline Retirement Services\", \"source_field\": \"held_away_custodian\"}, {\"text\": \"USD 1,150,000\", \"source_field\": \"held_away_usd\"}, {\"text\": \"USD 377,820\", \"source_field\": \"cash_usd\"}, {\"text\": \"49.2% of AUM\", \"source_field\": \"top_holding_pct\"}]}"
+}

@@ -1,0 +1,21 @@
+{
+  "module": "bookiq",
+  "key": "draft-outreach-H-1053-v1",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 691,
+    "completion_tokens": 344,
+    "total_tokens": 1035,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 691
+  },
+  "latency_ms": 2708,
+  "created_at": "2026-11-19T05:56:13+00:00",
+  "system_sha": "84250f2446526cc9",
+  "prompt_sha": "ab7eadea734ab9c9",
+  "text": "{\"subject\": \"Reviewing your held-away assets at Alcott Retirement Services\", \"body\": \"Dear Achterberg Household,\\n\\nThank you for your time at our last meeting on Nov 5, 2026. As we look ahead to your review due Nov 5, 2027, I wanted to raise one item for a conversation.\\n\\nYou have held-away assets of USD 1,350,000 at Alcott Retirement Services. Your household also includes 2 accounts and a largest holding, Total market ETF (VTI), at 47.2% of AUM. Cash stands at USD 225,800, or 8.7% of AUM.\\n\\nI would like to discuss how these held-away assets fit alongside your accounts with us. There is no action needed now. If you would like to talk it through, please let me know and we can arrange a review.\\n\\nSincerely,\\nDana Whitfield\", \"claims\": [{\"text\": \"held-away assets of USD 1,350,000 at Alcott Retirement Services\", \"source_field\": \"held_away_usd\"}, {\"text\": \"2 accounts\", \"source_field\": \"account_count\"}, {\"text\": \"Total market ETF (VTI), at 47.2% of AUM\", \"source_field\": \"top_holding_pct\"}, {\"text\": \"Cash stands at USD 225,800, or 8.7% of AUM\", \"source_field\": \"cash_pct\"}, {\"text\": \"review due Nov 5, 2027\", \"source_field\": \"next_review_date\"}]}"
+}

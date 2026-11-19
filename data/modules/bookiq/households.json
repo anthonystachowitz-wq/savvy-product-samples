@@ -1,0 +1,2447 @@
+{
+  "module": "bookiq",
+  "as_of": "2026-11-19",
+  "source": "data/book.json plus the fixed enrichment tables in scripts/generate_bookiq.py",
+  "book": {
+    "id": "book-whitfield",
+    "advisor_name": "Dana Whitfield",
+    "firm_from": "Meridian Private Wealth",
+    "aum_total": 42300000,
+    "household_count": 12,
+    "signed_at": "2026-11-03",
+    "custodians": [
+      "Alder Clearing",
+      "Morrow Trust"
+    ]
+  },
+  "households": [
+    {
+      "id": "H-1042",
+      "name": "Rowan Household",
+      "aum": 6180000,
+      "relationship": "Client since 2016",
+      "notes": "Two generations of accounts",
+      "consent_status": "received",
+      "accounts": [
+        {
+          "id": "A-2201",
+          "custodian": "Alder Clearing",
+          "type": "Joint brokerage",
+          "registration": "JTWROS",
+          "masked": "xxxx-4471",
+          "status": "in flight"
+        },
+        {
+          "id": "A-2202",
+          "custodian": "Morrow Trust",
+          "type": "Revocable living trust",
+          "registration": "Revocable trust",
+          "masked": "xxxx-3390",
+          "status": "waiting on client"
+        }
+      ],
+      "account_count": 2,
+      "custodians": [
+        "Alder Clearing",
+        "Morrow Trust"
+      ],
+      "signals": [
+        {
+          "key": "held_away",
+          "label": "Held-away assets",
+          "strength": "high",
+          "display": "USD 1,840,000 at Halden Private Client",
+          "source_field": "held_away_usd",
+          "detail": "Next-generation accounts are held at the family's former adviser. Two accounts, no transfer paperwork on file.",
+          "value_usd": 1840000
+        },
+        {
+          "key": "overdue_review",
+          "label": "Overdue review",
+          "strength": "medium",
+          "display": "Last meeting Oct 24, 2025, 391 days ago",
+          "source_field": "days_since_meeting",
+          "detail": "The review cadence is 365 days. It is 26 days past due.",
+          "value": 391
+        }
+      ],
+      "fields": {
+        "aum": {
+          "label": "Household AUM",
+          "value": 6180000,
+          "display": "USD 6,180,000",
+          "source": "Seeded book"
+        },
+        "account_count": {
+          "label": "Accounts",
+          "value": 2,
+          "display": "2 accounts",
+          "source": "Seeded book"
+        },
+        "client_since_year": {
+          "label": "Client since",
+          "value": 2016,
+          "display": "2016 (10 years)",
+          "source": "Seeded book"
+        },
+        "top_holding_name": {
+          "label": "Largest holding",
+          "value": "Total market ETF (VTI)",
+          "display": "Total market ETF (VTI)",
+          "source": "Seeded book positions"
+        },
+        "top_holding_pct": {
+          "label": "Largest holding share",
+          "value": 42.1,
+          "display": "42.1% of AUM",
+          "source": "Computed from seeded positions"
+        },
+        "top_holding_usd": {
+          "label": "Largest holding value",
+          "value": 2603244,
+          "display": "USD 2,603,244",
+          "source": "Computed from seeded positions"
+        },
+        "cash_usd": {
+          "label": "Cash",
+          "value": 367426,
+          "display": "USD 367,426",
+          "source": "Seeded book positions"
+        },
+        "cash_pct": {
+          "label": "Cash share",
+          "value": 5.9,
+          "display": "5.9% of AUM",
+          "source": "Computed from seeded positions"
+        },
+        "excess_cash_usd": {
+          "label": "Excess cash",
+          "value": 58426,
+          "display": "USD 58,426",
+          "source": "Cash above the 5 percent target"
+        },
+        "last_meeting_date": {
+          "label": "Last meeting",
+          "value": "2025-10-24",
+          "display": "Oct 24, 2025",
+          "source": "Synthetic enrichment"
+        },
+        "days_since_meeting": {
+          "label": "Days since the last meeting",
+          "value": 391,
+          "display": "391 days",
+          "source": "Computed from the last meeting date"
+        },
+        "next_review_date": {
+          "label": "Review due",
+          "value": "2026-10-24",
+          "display": "Oct 24, 2026",
+          "source": "Last meeting plus 365 days"
+        },
+        "held_away_usd": {
+          "label": "Held-away assets",
+          "value": 1840000,
+          "display": "USD 1,840,000",
+          "source": "Synthetic enrichment"
+        },
+        "held_away_custodian": {
+          "label": "Held-away custodian",
+          "value": "Halden Private Client",
+          "display": "Halden Private Client",
+          "source": "Synthetic enrichment"
+        }
+      },
+      "evidence": [
+        {
+          "label": "Household AUM",
+          "value": "USD 6,180,000",
+          "source_field": "aum",
+          "source": "Seeded book",
+          "detail": "H-1042 in client since 2016."
+        },
+        {
+          "label": "Accounts",
+          "value": "2 accounts at Alder Clearing, Morrow Trust",
+          "source_field": "account_count",
+          "source": "Seeded book",
+          "detail": "Joint brokerage (in flight); Revocable living trust (waiting on client)"
+        },
+        {
+          "label": "Consent",
+          "value": "Received",
+          "source_field": "consent_status",
+          "source": "Seeded book",
+          "detail": "Client outreach needs recorded consent before approval."
+        },
+        {
+          "label": "Last meeting",
+          "value": "Oct 24, 2025, 391 days ago",
+          "source_field": "last_meeting_date",
+          "source": "Synthetic enrichment",
+          "detail": "Review due Oct 24, 2026 on a 365 day cadence."
+        },
+        {
+          "label": "Cash",
+          "value": "USD 367,426, 5.9% of AUM",
+          "source_field": "cash_usd",
+          "source": "Seeded book positions",
+          "detail": "USD 58,426 above the 5 percent target."
+        },
+        {
+          "label": "Largest holding",
+          "value": "Total market ETF (VTI), 42.1% of AUM",
+          "source_field": "top_holding_pct",
+          "source": "Computed from seeded positions",
+          "detail": "USD 2,603,244 in one position."
+        },
+        {
+          "label": "Held-away assets",
+          "value": "USD 1,840,000 at Halden Private Client",
+          "source_field": "held_away_usd",
+          "source": "Synthetic enrichment",
+          "detail": "Next-generation accounts are held at the family's former adviser. Two accounts, no transfer paperwork on file."
+        }
+      ],
+      "review": {
+        "last_meeting": "2025-10-24",
+        "next_due": "2026-10-24",
+        "days_since": 391,
+        "overdue_days": 26
+      },
+      "held_away": {
+        "usd": 1840000,
+        "custodian": "Halden Private Client",
+        "note": "Next-generation accounts are held at the family's former adviser. Two accounts, no transfer paperwork on file."
+      },
+      "referral": null,
+      "rmd": null,
+      "life_event": null,
+      "concentration": {
+        "restricted_usd": 0,
+        "restricted_pct": 0.0,
+        "holdings": []
+      },
+      "cash": {
+        "usd": 367426,
+        "pct": 5.9,
+        "excess_usd": 58426,
+        "target_usd": 309000
+      }
+    },
+    {
+      "id": "H-1043",
+      "name": "Calloway Household",
+      "aum": 4250000,
+      "relationship": "Client since 2009",
+      "notes": "Brother is trustee; EIN pending",
+      "consent_status": "pending",
+      "accounts": [
+        {
+          "id": "A-2203",
+          "custodian": "Alder Clearing",
+          "type": "Irrevocable trust",
+          "registration": "Irrevocable trust",
+          "masked": "xxxx-7715",
+          "status": "waiting on client"
+        }
+      ],
+      "account_count": 1,
+      "custodians": [
+        "Alder Clearing"
+      ],
+      "signals": [
+        {
+          "key": "referral_source",
+          "label": "Referral source",
+          "strength": "high",
+          "display": "2 introductions, last ask Apr 18, 2025",
+          "source_field": "referral_count",
+          "detail": "No ask logged in 19 months. Introduced two households in 2024 and 2025. No referral ask is logged in 19 months.",
+          "value": 2
+        }
+      ],
+      "fields": {
+        "aum": {
+          "label": "Household AUM",
+          "value": 4250000,
+          "display": "USD 4,250,000",
+          "source": "Seeded book"
+        },
+        "account_count": {
+          "label": "Accounts",
+          "value": 1,
+          "display": "1 account",
+          "source": "Seeded book"
+        },
+        "client_since_year": {
+          "label": "Client since",
+          "value": 2009,
+          "display": "2009 (17 years)",
+          "source": "Seeded book"
+        },
+        "top_holding_name": {
+          "label": "Largest holding",
+          "value": "Total market ETF (VTI)",
+          "display": "Total market ETF (VTI)",
+          "source": "Seeded book positions"
+        },
+        "top_holding_pct": {
+          "label": "Largest holding share",
+          "value": 45.7,
+          "display": "45.7% of AUM",
+          "source": "Computed from seeded positions"
+        },
+        "top_holding_usd": {
+          "label": "Largest holding value",
+          "value": 1941495,
+          "display": "USD 1,941,495",
+          "source": "Computed from seeded positions"
+        },
+        "cash_usd": {
+          "label": "Cash",
+          "value": 129720,
+          "display": "USD 129,720",
+          "source": "Seeded book positions"
+        },
+        "cash_pct": {
+          "label": "Cash share",
+          "value": 3.1,
+          "display": "3.1% of AUM",
+          "source": "Computed from seeded positions"
+        },
+        "excess_cash_usd": {
+          "label": "Excess cash",
+          "value": 0,
+          "display": "USD 0",
+          "source": "Cash above the 5 percent target"
+        },
+        "last_meeting_date": {
+          "label": "Last meeting",
+          "value": "2026-09-22",
+          "display": "Sep 22, 2026",
+          "source": "Synthetic enrichment"
+        },
+        "days_since_meeting": {
+          "label": "Days since the last meeting",
+          "value": 58,
+          "display": "58 days",
+          "source": "Computed from the last meeting date"
+        },
+        "next_review_date": {
+          "label": "Review due",
+          "value": "2027-09-22",
+          "display": "Sep 22, 2027",
+          "source": "Last meeting plus 365 days"
+        },
+        "referral_count": {
+          "label": "Referral history",
+          "value": 2,
+          "display": "2 introductions",
+          "source": "Synthetic enrichment"
+        },
+        "referral_last_ask": {
+          "label": "Last referral ask",
+          "value": "2025-04-18",
+          "display": "Apr 18, 2025",
+          "source": "Synthetic enrichment"
+        }
+      },
+      "evidence": [
+        {
+          "label": "Household AUM",
+          "value": "USD 4,250,000",
+          "source_field": "aum",
+          "source": "Seeded book",
+          "detail": "H-1043 in client since 2009."
+        },
+        {
+          "label": "Accounts",
+          "value": "1 account at Alder Clearing",
+          "source_field": "account_count",
+          "source": "Seeded book",
+          "detail": "Irrevocable trust (waiting on client)"
+        },
+        {
+          "label": "Consent",
+          "value": "Pending",
+          "source_field": "consent_status",
+          "source": "Seeded book",
+          "detail": "Client outreach needs recorded consent before approval."
+        },
+        {
+          "label": "Last meeting",
+          "value": "Sep 22, 2026, 58 days ago",
+          "source_field": "last_meeting_date",
+          "source": "Synthetic enrichment",
+          "detail": "Review due Sep 22, 2027 on a 365 day cadence."
+        },
+        {
+          "label": "Cash",
+          "value": "USD 129,720, 3.1% of AUM",
+          "source_field": "cash_usd",
+          "source": "Seeded book positions",
+          "detail": "No cash above the 5 percent target."
+        },
+        {
+          "label": "Largest holding",
+          "value": "Total market ETF (VTI), 45.7% of AUM",
+          "source_field": "top_holding_pct",
+          "source": "Computed from seeded positions",
+          "detail": "USD 1,941,495 in one position."
+        },
+        {
+          "label": "Referral source",
+          "value": "2 introductions, last ask Apr 18, 2025",
+          "source_field": "referral_count",
+          "source": "Synthetic enrichment",
+          "detail": "No ask logged in 19 months. Introduced two households in 2024 and 2025. No referral ask is logged in 19 months."
+        }
+      ],
+      "review": {
+        "last_meeting": "2026-09-22",
+        "next_due": "2027-09-22",
+        "days_since": 58,
+        "overdue_days": 0
+      },
+      "held_away": null,
+      "referral": {
+        "count": 2,
+        "last_ask": "2025-04-18",
+        "note": "Introduced two households in 2024 and 2025. No referral ask is logged in 19 months."
+      },
+      "rmd": null,
+      "life_event": null,
+      "concentration": {
+        "restricted_usd": 0,
+        "restricted_pct": 0.0,
+        "holdings": []
+      },
+      "cash": {
+        "usd": 129720,
+        "pct": 3.1,
+        "excess_usd": 0,
+        "target_usd": 212500
+      }
+    },
+    {
+      "id": "H-1044",
+      "name": "Barrett Household",
+      "aum": 1875000,
+      "relationship": "Client since 2021",
+      "notes": "Inherited from a parent in 2021",
+      "consent_status": "pending",
+      "accounts": [
+        {
+          "id": "A-2204",
+          "custodian": "Morrow Trust",
+          "type": "Inherited IRA",
+          "registration": "Inherited IRA",
+          "masked": "xxxx-2084",
+          "status": "in flight"
+        }
+      ],
+      "account_count": 1,
+      "custodians": [
+        "Morrow Trust"
+      ],
+      "signals": [
+        {
+          "key": "transfer_hold",
+          "label": "Transfer hold",
+          "strength": "high",
+          "display": "Inherited IRA transfer in flight",
+          "source_field": "account_count",
+          "detail": "No funded managed account yet. The only open item is the transfer.",
+          "value": 1
+        }
+      ],
+      "fields": {
+        "aum": {
+          "label": "Household AUM",
+          "value": 1875000,
+          "display": "USD 1,875,000",
+          "source": "Seeded book"
+        },
+        "account_count": {
+          "label": "Accounts",
+          "value": 1,
+          "display": "1 account",
+          "source": "Seeded book"
+        },
+        "client_since_year": {
+          "label": "Client since",
+          "value": 2021,
+          "display": "2021 (5 years)",
+          "source": "Seeded book"
+        },
+        "top_holding_name": {
+          "label": "Largest holding",
+          "value": "Total market ETF (VTI)",
+          "display": "Total market ETF (VTI)",
+          "source": "Seeded book positions"
+        },
+        "top_holding_pct": {
+          "label": "Largest holding share",
+          "value": 52.5,
+          "display": "52.5% of AUM",
+          "source": "Computed from seeded positions"
+        },
+        "top_holding_usd": {
+          "label": "Largest holding value",
+          "value": 984420,
+          "display": "USD 984,420",
+          "source": "Computed from seeded positions"
+        },
+        "cash_usd": {
+          "label": "Cash",
+          "value": 129410,
+          "display": "USD 129,410",
+          "source": "Seeded book positions"
+        },
+        "cash_pct": {
+          "label": "Cash share",
+          "value": 6.9,
+          "display": "6.9% of AUM",
+          "source": "Computed from seeded positions"
+        },
+        "excess_cash_usd": {
+          "label": "Excess cash",
+          "value": 35660,
+          "display": "USD 35,660",
+          "source": "Cash above the 5 percent target"
+        },
+        "last_meeting_date": {
+          "label": "Last meeting",
+          "value": "2026-10-02",
+          "display": "Oct 2, 2026",
+          "source": "Synthetic enrichment"
+        },
+        "days_since_meeting": {
+          "label": "Days since the last meeting",
+          "value": 48,
+          "display": "48 days",
+          "source": "Computed from the last meeting date"
+        },
+        "next_review_date": {
+          "label": "Review due",
+          "value": "2027-10-02",
+          "display": "Oct 2, 2027",
+          "source": "Last meeting plus 365 days"
+        }
+      },
+      "evidence": [
+        {
+          "label": "Household AUM",
+          "value": "USD 1,875,000",
+          "source_field": "aum",
+          "source": "Seeded book",
+          "detail": "H-1044 in client since 2021."
+        },
+        {
+          "label": "Accounts",
+          "value": "1 account at Morrow Trust",
+          "source_field": "account_count",
+          "source": "Seeded book",
+          "detail": "Inherited IRA (in flight)"
+        },
+        {
+          "label": "Consent",
+          "value": "Pending",
+          "source_field": "consent_status",
+          "source": "Seeded book",
+          "detail": "Client outreach needs recorded consent before approval."
+        },
+        {
+          "label": "Last meeting",
+          "value": "Oct 2, 2026, 48 days ago",
+          "source_field": "last_meeting_date",
+          "source": "Synthetic enrichment",
+          "detail": "Review due Oct 2, 2027 on a 365 day cadence."
+        },
+        {
+          "label": "Cash",
+          "value": "USD 129,410, 6.9% of AUM",
+          "source_field": "cash_usd",
+          "source": "Seeded book positions",
+          "detail": "USD 35,660 above the 5 percent target."
+        },
+        {
+          "label": "Largest holding",
+          "value": "Total market ETF (VTI), 52.5% of AUM",
+          "source_field": "top_holding_pct",
+          "source": "Computed from seeded positions",
+          "detail": "USD 984,420 in one position."
+        }
+      ],
+      "review": {
+        "last_meeting": "2026-10-02",
+        "next_due": "2027-10-02",
+        "days_since": 48,
+        "overdue_days": 0
+      },
+      "held_away": null,
+      "referral": null,
+      "rmd": null,
+      "life_event": null,
+      "concentration": {
+        "restricted_usd": 0,
+        "restricted_pct": 0.0,
+        "holdings": []
+      },
+      "cash": {
+        "usd": 129410,
+        "pct": 6.9,
+        "excess_usd": 35660,
+        "target_usd": 93750
+      }
+    },
+    {
+      "id": "H-1045",
+      "name": "Voss Household",
+      "aum": 3940000,
+      "relationship": "Client since 2014",
+      "notes": "TOD brokerage plus a non-qualified annuity",
+      "consent_status": "pending",
+      "accounts": [
+        {
+          "id": "A-2205",
+          "custodian": "Alder Clearing",
+          "type": "Individual brokerage (TOD)",
+          "registration": "TOD",
+          "masked": "xxxx-6128",
+          "status": "in flight"
+        },
+        {
+          "id": "A-2206",
+          "custodian": "Morrow Trust",
+          "type": "Variable annuity",
+          "registration": "Individual",
+          "masked": "xxxx-8820",
+          "status": "waiting on client"
+        }
+      ],
+      "account_count": 2,
+      "custodians": [
+        "Alder Clearing",
+        "Morrow Trust"
+      ],
+      "signals": [
+        {
+          "key": "concentration",
+          "label": "Concentration",
+          "strength": "high",
+          "display": "USD 1,944,160, 49.3% of AUM",
+          "source_field": "restricted_pct",
+          "detail": "Meridian Select Growth Fund, Class C and Halden annuity subaccounts. The holding is not transferable in kind.",
+          "value_usd": 1944160
+        },
+        {
+          "key": "life_event",
+          "label": "Life event",
+          "strength": "high",
+          "display": "Retires Apr 30, 2027; annuity election due January 2027",
+          "source_field": "life_event_value_usd",
+          "detail": "Retiring April 2027. The annuity income election is due January 2027.",
+          "value_usd": 1300000
+        }
+      ],
+      "fields": {
+        "aum": {
+          "label": "Household AUM",
+          "value": 3940000,
+          "display": "USD 3,940,000",
+          "source": "Seeded book"
+        },
+        "account_count": {
+          "label": "Accounts",
+          "value": 2,
+          "display": "2 accounts",
+          "source": "Seeded book"
+        },
+        "client_since_year": {
+          "label": "Client since",
+          "value": 2014,
+          "display": "2014 (12 years)",
+          "source": "Seeded book"
+        },
+        "top_holding_name": {
+          "label": "Largest holding",
+          "value": "Total market ETF (VTI)",
+          "display": "Total market ETF (VTI)",
+          "source": "Seeded book positions"
+        },
+        "top_holding_pct": {
+          "label": "Largest holding share",
+          "value": 28.5,
+          "display": "28.5% of AUM",
+          "source": "Computed from seeded positions"
+        },
+        "top_holding_usd": {
+          "label": "Largest holding value",
+          "value": 1121145,
+          "display": "USD 1,121,145",
+          "source": "Computed from seeded positions"
+        },
+        "cash_usd": {
+          "label": "Cash",
+          "value": 125075,
+          "display": "USD 125,075",
+          "source": "Seeded book positions"
+        },
+        "cash_pct": {
+          "label": "Cash share",
+          "value": 3.2,
+          "display": "3.2% of AUM",
+          "source": "Computed from seeded positions"
+        },
+        "excess_cash_usd": {
+          "label": "Excess cash",
+          "value": 0,
+          "display": "USD 0",
+          "source": "Cash above the 5 percent target"
+        },
+        "last_meeting_date": {
+          "label": "Last meeting",
+          "value": "2026-06-11",
+          "display": "Jun 11, 2026",
+          "source": "Synthetic enrichment"
+        },
+        "days_since_meeting": {
+          "label": "Days since the last meeting",
+          "value": 161,
+          "display": "161 days",
+          "source": "Computed from the last meeting date"
+        },
+        "next_review_date": {
+          "label": "Review due",
+          "value": "2027-06-11",
+          "display": "Jun 11, 2027",
+          "source": "Last meeting plus 365 days"
+        },
+        "restricted_holding": {
+          "label": "Restricted holding",
+          "value": "Meridian Select Growth Fund, Class C and Halden annuity subaccounts",
+          "display": "Meridian Select Growth Fund, Class C and Halden annuity subaccounts",
+          "source": "Seeded book positions"
+        },
+        "restricted_usd": {
+          "label": "Restricted position value",
+          "value": 1944160,
+          "display": "USD 1,944,160",
+          "source": "Seeded book positions"
+        },
+        "restricted_pct": {
+          "label": "Restricted share",
+          "value": 49.3,
+          "display": "49.3% of AUM",
+          "source": "Computed from seeded positions"
+        },
+        "life_event_type": {
+          "label": "Life event",
+          "value": "Retirement",
+          "display": "Retirement",
+          "source": "Synthetic enrichment"
+        },
+        "life_event_date": {
+          "label": "Life event date",
+          "value": "2027-04-30",
+          "display": "Apr 30, 2027",
+          "source": "Synthetic enrichment"
+        },
+        "life_event_value_usd": {
+          "label": "Assets tied to the event",
+          "value": 1300000,
+          "display": "USD 1,300,000",
+          "source": "Seeded book positions"
+        }
+      },
+      "evidence": [
+        {
+          "label": "Household AUM",
+          "value": "USD 3,940,000",
+          "source_field": "aum",
+          "source": "Seeded book",
+          "detail": "H-1045 in client since 2014."
+        },
+        {
+          "label": "Accounts",
+          "value": "2 accounts at Alder Clearing, Morrow Trust",
+          "source_field": "account_count",
+          "source": "Seeded book",
+          "detail": "Individual brokerage (TOD) (in flight); Variable annuity (waiting on client)"
+        },
+        {
+          "label": "Consent",
+          "value": "Pending",
+          "source_field": "consent_status",
+          "source": "Seeded book",
+          "detail": "Client outreach needs recorded consent before approval."
+        },
+        {
+          "label": "Last meeting",
+          "value": "Jun 11, 2026, 161 days ago",
+          "source_field": "last_meeting_date",
+          "source": "Synthetic enrichment",
+          "detail": "Review due Jun 11, 2027 on a 365 day cadence."
+        },
+        {
+          "label": "Cash",
+          "value": "USD 125,075, 3.2% of AUM",
+          "source_field": "cash_usd",
+          "source": "Seeded book positions",
+          "detail": "No cash above the 5 percent target."
+        },
+        {
+          "label": "Largest holding",
+          "value": "Total market ETF (VTI), 28.5% of AUM",
+          "source_field": "top_holding_pct",
+          "source": "Computed from seeded positions",
+          "detail": "USD 1,121,145 in one position."
+        },
+        {
+          "label": "Concentration",
+          "value": "USD 1,944,160, 49.3% of AUM",
+          "source_field": "restricted_pct",
+          "source": "Seeded book positions",
+          "detail": "Meridian Select Growth Fund, Class C and Halden annuity subaccounts. The holding is not transferable in kind."
+        },
+        {
+          "label": "Life event",
+          "value": "Retires Apr 30, 2027; annuity election due January 2027",
+          "source_field": "life_event_value_usd",
+          "source": "Synthetic enrichment",
+          "detail": "Retiring April 2027. The annuity income election is due January 2027."
+        }
+      ],
+      "review": {
+        "last_meeting": "2026-06-11",
+        "next_due": "2027-06-11",
+        "days_since": 161,
+        "overdue_days": 0
+      },
+      "held_away": null,
+      "referral": null,
+      "rmd": null,
+      "life_event": {
+        "type": "Retirement",
+        "date": "2027-04-30",
+        "value_usd": 1300000,
+        "note": "Retiring April 2027. The annuity income election is due January 2027."
+      },
+      "concentration": {
+        "restricted_usd": 1944160,
+        "restricted_pct": 49.3,
+        "holdings": [
+          "Halden Balanced Subaccount",
+          "Halden Core Bond Subaccount",
+          "Halden Equity Index Subaccount",
+          "Halden Fixed Account",
+          "Halden International Subaccount",
+          "Meridian Select Growth Fund, Class C"
+        ]
+      },
+      "cash": {
+        "usd": 125075,
+        "pct": 3.2,
+        "excess_usd": 0,
+        "target_usd": 197000
+      }
+    },
+    {
+      "id": "H-1046",
+      "name": "Sato Household",
+      "aum": 1260000,
+      "relationship": "Client since 2019",
+      "notes": "Single Roth IRA",
+      "consent_status": "received",
+      "accounts": [
+        {
+          "id": "A-2207",
+          "custodian": "Alder Clearing",
+          "type": "Roth IRA",
+          "registration": "Roth IRA",
+          "masked": "xxxx-5540",
+          "status": "not started"
+        }
+      ],
+      "account_count": 1,
+      "custodians": [
+        "Alder Clearing"
+      ],
+      "signals": [
+        {
+          "key": "cash_drag",
+          "label": "Cash drag",
+          "strength": "high",
+          "display": "USD 117,295, 9.3% of AUM in cash",
+          "source_field": "excess_cash_usd",
+          "detail": "USD 54,295 sits above the 5 percent target with no auto-invest instruction.",
+          "value_usd": 54295
+        }
+      ],
+      "fields": {
+        "aum": {
+          "label": "Household AUM",
+          "value": 1260000,
+          "display": "USD 1,260,000",
+          "source": "Seeded book"
+        },
+        "account_count": {
+          "label": "Accounts",
+          "value": 1,
+          "display": "1 account",
+          "source": "Seeded book"
+        },
+        "client_since_year": {
+          "label": "Client since",
+          "value": 2019,
+          "display": "2019 (7 years)",
+          "source": "Seeded book"
+        },
+        "top_holding_name": {
+          "label": "Largest holding",
+          "value": "Total market ETF (VTI)",
+          "display": "Total market ETF (VTI)",
+          "source": "Seeded book positions"
+        },
+        "top_holding_pct": {
+          "label": "Largest holding share",
+          "value": 47.7,
+          "display": "47.7% of AUM",
+          "source": "Computed from seeded positions"
+        },
+        "top_holding_usd": {
+          "label": "Largest holding value",
+          "value": 601590,
+          "display": "USD 601,590",
+          "source": "Computed from seeded positions"
+        },
+        "cash_usd": {
+          "label": "Cash",
+          "value": 117295,
+          "display": "USD 117,295",
+          "source": "Seeded book positions"
+        },
+        "cash_pct": {
+          "label": "Cash share",
+          "value": 9.3,
+          "display": "9.3% of AUM",
+          "source": "Computed from seeded positions"
+        },
+        "excess_cash_usd": {
+          "label": "Excess cash",
+          "value": 54295,
+          "display": "USD 54,295",
+          "source": "Cash above the 5 percent target"
+        },
+        "last_meeting_date": {
+          "label": "Last meeting",
+          "value": "2026-07-30",
+          "display": "Jul 30, 2026",
+          "source": "Synthetic enrichment"
+        },
+        "days_since_meeting": {
+          "label": "Days since the last meeting",
+          "value": 112,
+          "display": "112 days",
+          "source": "Computed from the last meeting date"
+        },
+        "next_review_date": {
+          "label": "Review due",
+          "value": "2027-07-30",
+          "display": "Jul 30, 2027",
+          "source": "Last meeting plus 365 days"
+        }
+      },
+      "evidence": [
+        {
+          "label": "Household AUM",
+          "value": "USD 1,260,000",
+          "source_field": "aum",
+          "source": "Seeded book",
+          "detail": "H-1046 in client since 2019."
+        },
+        {
+          "label": "Accounts",
+          "value": "1 account at Alder Clearing",
+          "source_field": "account_count",
+          "source": "Seeded book",
+          "detail": "Roth IRA (not started)"
+        },
+        {
+          "label": "Consent",
+          "value": "Received",
+          "source_field": "consent_status",
+          "source": "Seeded book",
+          "detail": "Client outreach needs recorded consent before approval."
+        },
+        {
+          "label": "Last meeting",
+          "value": "Jul 30, 2026, 112 days ago",
+          "source_field": "last_meeting_date",
+          "source": "Synthetic enrichment",
+          "detail": "Review due Jul 30, 2027 on a 365 day cadence."
+        },
+        {
+          "label": "Cash",
+          "value": "USD 117,295, 9.3% of AUM",
+          "source_field": "cash_usd",
+          "source": "Seeded book positions",
+          "detail": "USD 54,295 above the 5 percent target."
+        },
+        {
+          "label": "Largest holding",
+          "value": "Total market ETF (VTI), 47.7% of AUM",
+          "source_field": "top_holding_pct",
+          "source": "Computed from seeded positions",
+          "detail": "USD 601,590 in one position."
+        }
+      ],
+      "review": {
+        "last_meeting": "2026-07-30",
+        "next_due": "2027-07-30",
+        "days_since": 112,
+        "overdue_days": 0
+      },
+      "held_away": null,
+      "referral": null,
+      "rmd": null,
+      "life_event": null,
+      "concentration": {
+        "restricted_usd": 0,
+        "restricted_pct": 0.0,
+        "holdings": []
+      },
+      "cash": {
+        "usd": 117295,
+        "pct": 9.3,
+        "excess_usd": 54295,
+        "target_usd": 63000
+      }
+    },
+    {
+      "id": "H-1047",
+      "name": "Delgado Household",
+      "aum": 2890000,
+      "relationship": "Client since 2012",
+      "notes": "Former employer plan rollover in progress",
+      "consent_status": "received",
+      "accounts": [
+        {
+          "id": "A-2208",
+          "custodian": "Morrow Trust",
+          "type": "Traditional IRA",
+          "registration": "IRA",
+          "masked": "xxxx-9187",
+          "status": "in flight"
+        },
+        {
+          "id": "A-2209",
+          "custodian": "Morrow Trust",
+          "type": "Rollover IRA (held-away 401k)",
+          "registration": "IRA",
+          "masked": "xxxx-9246",
+          "status": "waiting on client"
+        }
+      ],
+      "account_count": 2,
+      "custodians": [
+        "Morrow Trust"
+      ],
+      "signals": [
+        {
+          "key": "held_away",
+          "label": "Held-away assets",
+          "strength": "high",
+          "display": "USD 1,150,000 at Northline Retirement Services",
+          "source_field": "held_away_usd",
+          "detail": "Former employer 401k. Rollover approval is pending since September 2026.",
+          "value_usd": 1150000
+        },
+        {
+          "key": "cash_drag",
+          "label": "Cash drag",
+          "strength": "high",
+          "display": "USD 377,820, 13.1% of AUM in cash",
+          "source_field": "excess_cash_usd",
+          "detail": "USD 233,320 sits above the 5 percent target with no auto-invest instruction.",
+          "value_usd": 233320
+        }
+      ],
+      "fields": {
+        "aum": {
+          "label": "Household AUM",
+          "value": 2890000,
+          "display": "USD 2,890,000",
+          "source": "Seeded book"
+        },
+        "account_count": {
+          "label": "Accounts",
+          "value": 2,
+          "display": "2 accounts",
+          "source": "Seeded book"
+        },
+        "client_since_year": {
+          "label": "Client since",
+          "value": 2012,
+          "display": "2012 (14 years)",
+          "source": "Seeded book"
+        },
+        "top_holding_name": {
+          "label": "Largest holding",
+          "value": "Total market ETF (VTI)",
+          "display": "Total market ETF (VTI)",
+          "source": "Seeded book positions"
+        },
+        "top_holding_pct": {
+          "label": "Largest holding share",
+          "value": 49.2,
+          "display": "49.2% of AUM",
+          "source": "Computed from seeded positions"
+        },
+        "top_holding_usd": {
+          "label": "Largest holding value",
+          "value": 1421940,
+          "display": "USD 1,421,940",
+          "source": "Computed from seeded positions"
+        },
+        "cash_usd": {
+          "label": "Cash",
+          "value": 377820,
+          "display": "USD 377,820",
+          "source": "Seeded book positions"
+        },
+        "cash_pct": {
+          "label": "Cash share",
+          "value": 13.1,
+          "display": "13.1% of AUM",
+          "source": "Computed from seeded positions"
+        },
+        "excess_cash_usd": {
+          "label": "Excess cash",
+          "value": 233320,
+          "display": "USD 233,320",
+          "source": "Cash above the 5 percent target"
+        },
+        "last_meeting_date": {
+          "label": "Last meeting",
+          "value": "2026-10-16",
+          "display": "Oct 16, 2026",
+          "source": "Synthetic enrichment"
+        },
+        "days_since_meeting": {
+          "label": "Days since the last meeting",
+          "value": 34,
+          "display": "34 days",
+          "source": "Computed from the last meeting date"
+        },
+        "next_review_date": {
+          "label": "Review due",
+          "value": "2027-10-16",
+          "display": "Oct 16, 2027",
+          "source": "Last meeting plus 365 days"
+        },
+        "held_away_usd": {
+          "label": "Held-away assets",
+          "value": 1150000,
+          "display": "USD 1,150,000",
+          "source": "Synthetic enrichment"
+        },
+        "held_away_custodian": {
+          "label": "Held-away custodian",
+          "value": "Northline Retirement Services",
+          "display": "Northline Retirement Services",
+          "source": "Synthetic enrichment"
+        }
+      },
+      "evidence": [
+        {
+          "label": "Household AUM",
+          "value": "USD 2,890,000",
+          "source_field": "aum",
+          "source": "Seeded book",
+          "detail": "H-1047 in client since 2012."
+        },
+        {
+          "label": "Accounts",
+          "value": "2 accounts at Morrow Trust",
+          "source_field": "account_count",
+          "source": "Seeded book",
+          "detail": "Traditional IRA (in flight); Rollover IRA (held-away 401k) (waiting on client)"
+        },
+        {
+          "label": "Consent",
+          "value": "Received",
+          "source_field": "consent_status",
+          "source": "Seeded book",
+          "detail": "Client outreach needs recorded consent before approval."
+        },
+        {
+          "label": "Last meeting",
+          "value": "Oct 16, 2026, 34 days ago",
+          "source_field": "last_meeting_date",
+          "source": "Synthetic enrichment",
+          "detail": "Review due Oct 16, 2027 on a 365 day cadence."
+        },
+        {
+          "label": "Cash",
+          "value": "USD 377,820, 13.1% of AUM",
+          "source_field": "cash_usd",
+          "source": "Seeded book positions",
+          "detail": "USD 233,320 above the 5 percent target."
+        },
+        {
+          "label": "Largest holding",
+          "value": "Total market ETF (VTI), 49.2% of AUM",
+          "source_field": "top_holding_pct",
+          "source": "Computed from seeded positions",
+          "detail": "USD 1,421,940 in one position."
+        },
+        {
+          "label": "Held-away assets",
+          "value": "USD 1,150,000 at Northline Retirement Services",
+          "source_field": "held_away_usd",
+          "source": "Synthetic enrichment",
+          "detail": "Former employer 401k. Rollover approval is pending since September 2026."
+        }
+      ],
+      "review": {
+        "last_meeting": "2026-10-16",
+        "next_due": "2027-10-16",
+        "days_since": 34,
+        "overdue_days": 0
+      },
+      "held_away": {
+        "usd": 1150000,
+        "custodian": "Northline Retirement Services",
+        "note": "Former employer 401k. Rollover approval is pending since September 2026."
+      },
+      "referral": null,
+      "rmd": null,
+      "life_event": null,
+      "concentration": {
+        "restricted_usd": 0,
+        "restricted_pct": 0.0,
+        "holdings": []
+      },
+      "cash": {
+        "usd": 377820,
+        "pct": 13.1,
+        "excess_usd": 233320,
+        "target_usd": 144500
+      }
+    },
+    {
+      "id": "H-1048",
+      "name": "Okafor Household",
+      "aum": 1430000,
+      "relationship": "Client since 2018",
+      "notes": "Parent is custodian for one minor",
+      "consent_status": "received",
+      "accounts": [
+        {
+          "id": "A-2210",
+          "custodian": "Alder Clearing",
+          "type": "UTMA custodial",
+          "registration": "UTMA",
+          "masked": "xxxx-3372",
+          "status": "waiting on custodian"
+        },
+        {
+          "id": "A-2211",
+          "custodian": "Alder Clearing",
+          "type": "Individual brokerage",
+          "registration": "Individual",
+          "masked": "xxxx-3418",
+          "status": "not started"
+        }
+      ],
+      "account_count": 2,
+      "custodians": [
+        "Alder Clearing"
+      ],
+      "signals": [
+        {
+          "key": "overdue_review",
+          "label": "Overdue review",
+          "strength": "high",
+          "display": "Last meeting Sep 12, 2025, 433 days ago",
+          "source_field": "days_since_meeting",
+          "detail": "The review cadence is 365 days. It is 68 days past due.",
+          "value": 433
+        }
+      ],
+      "fields": {
+        "aum": {
+          "label": "Household AUM",
+          "value": 1430000,
+          "display": "USD 1,430,000",
+          "source": "Seeded book"
+        },
+        "account_count": {
+          "label": "Accounts",
+          "value": 2,
+          "display": "2 accounts",
+          "source": "Seeded book"
+        },
+        "client_since_year": {
+          "label": "Client since",
+          "value": 2018,
+          "display": "2018 (8 years)",
+          "source": "Seeded book"
+        },
+        "top_holding_name": {
+          "label": "Largest holding",
+          "value": "Total market ETF (VTI)",
+          "display": "Total market ETF (VTI)",
+          "source": "Seeded book positions"
+        },
+        "top_holding_pct": {
+          "label": "Largest holding share",
+          "value": 51.6,
+          "display": "51.6% of AUM",
+          "source": "Computed from seeded positions"
+        },
+        "top_holding_usd": {
+          "label": "Largest holding value",
+          "value": 738315,
+          "display": "USD 738,315",
+          "source": "Computed from seeded positions"
+        },
+        "cash_usd": {
+          "label": "Cash",
+          "value": 87775,
+          "display": "USD 87,775",
+          "source": "Seeded book positions"
+        },
+        "cash_pct": {
+          "label": "Cash share",
+          "value": 6.1,
+          "display": "6.1% of AUM",
+          "source": "Computed from seeded positions"
+        },
+        "excess_cash_usd": {
+          "label": "Excess cash",
+          "value": 16275,
+          "display": "USD 16,275",
+          "source": "Cash above the 5 percent target"
+        },
+        "last_meeting_date": {
+          "label": "Last meeting",
+          "value": "2025-09-12",
+          "display": "Sep 12, 2025",
+          "source": "Synthetic enrichment"
+        },
+        "days_since_meeting": {
+          "label": "Days since the last meeting",
+          "value": 433,
+          "display": "433 days",
+          "source": "Computed from the last meeting date"
+        },
+        "next_review_date": {
+          "label": "Review due",
+          "value": "2026-09-12",
+          "display": "Sep 12, 2026",
+          "source": "Last meeting plus 365 days"
+        }
+      },
+      "evidence": [
+        {
+          "label": "Household AUM",
+          "value": "USD 1,430,000",
+          "source_field": "aum",
+          "source": "Seeded book",
+          "detail": "H-1048 in client since 2018."
+        },
+        {
+          "label": "Accounts",
+          "value": "2 accounts at Alder Clearing",
+          "source_field": "account_count",
+          "source": "Seeded book",
+          "detail": "UTMA custodial (waiting on custodian); Individual brokerage (not started)"
+        },
+        {
+          "label": "Consent",
+          "value": "Received",
+          "source_field": "consent_status",
+          "source": "Seeded book",
+          "detail": "Client outreach needs recorded consent before approval."
+        },
+        {
+          "label": "Last meeting",
+          "value": "Sep 12, 2025, 433 days ago",
+          "source_field": "last_meeting_date",
+          "source": "Synthetic enrichment",
+          "detail": "Review due Sep 12, 2026 on a 365 day cadence."
+        },
+        {
+          "label": "Cash",
+          "value": "USD 87,775, 6.1% of AUM",
+          "source_field": "cash_usd",
+          "source": "Seeded book positions",
+          "detail": "USD 16,275 above the 5 percent target."
+        },
+        {
+          "label": "Largest holding",
+          "value": "Total market ETF (VTI), 51.6% of AUM",
+          "source_field": "top_holding_pct",
+          "source": "Computed from seeded positions",
+          "detail": "USD 738,315 in one position."
+        }
+      ],
+      "review": {
+        "last_meeting": "2025-09-12",
+        "next_due": "2026-09-12",
+        "days_since": 433,
+        "overdue_days": 68
+      },
+      "held_away": null,
+      "referral": null,
+      "rmd": null,
+      "life_event": null,
+      "concentration": {
+        "restricted_usd": 0,
+        "restricted_pct": 0.0,
+        "holdings": []
+      },
+      "cash": {
+        "usd": 87775,
+        "pct": 6.1,
+        "excess_usd": 16275,
+        "target_usd": 71500
+      }
+    },
+    {
+      "id": "H-1049",
+      "name": "Lindqvist Household",
+      "aum": 5120000,
+      "relationship": "Client since 2010",
+      "notes": "Margin account with listed options",
+      "consent_status": "received",
+      "accounts": [
+        {
+          "id": "A-2212",
+          "custodian": "Alder Clearing",
+          "type": "Joint brokerage (margin)",
+          "registration": "JTWROS",
+          "masked": "xxxx-7780",
+          "status": "blocked"
+        }
+      ],
+      "account_count": 1,
+      "custodians": [
+        "Alder Clearing"
+      ],
+      "signals": [
+        {
+          "key": "overdue_review",
+          "label": "Overdue review",
+          "strength": "medium",
+          "display": "Last meeting Oct 30, 2025, 385 days ago",
+          "source_field": "days_since_meeting",
+          "detail": "The review cadence is 365 days. It is 20 days past due.",
+          "value": 385
+        },
+        {
+          "key": "referral_source",
+          "label": "Referral source",
+          "strength": "high",
+          "display": "1 introduction, last ask Feb 11, 2025",
+          "source_field": "referral_count",
+          "detail": "No ask logged in 21 months. Introduced a business partner in 2025. No formal ask since.",
+          "value": 1
+        }
+      ],
+      "fields": {
+        "aum": {
+          "label": "Household AUM",
+          "value": 5120000,
+          "display": "USD 5,120,000",
+          "source": "Seeded book"
+        },
+        "account_count": {
+          "label": "Accounts",
+          "value": 1,
+          "display": "1 account",
+          "source": "Seeded book"
+        },
+        "client_since_year": {
+          "label": "Client since",
+          "value": 2010,
+          "display": "2010 (16 years)",
+          "source": "Seeded book"
+        },
+        "top_holding_name": {
+          "label": "Largest holding",
+          "value": "Total market ETF (VTI)",
+          "display": "Total market ETF (VTI)",
+          "source": "Seeded book positions"
+        },
+        "top_holding_pct": {
+          "label": "Largest holding share",
+          "value": 64.1,
+          "display": "64.1% of AUM",
+          "source": "Computed from seeded positions"
+        },
+        "top_holding_usd": {
+          "label": "Largest holding value",
+          "value": 3281400,
+          "display": "USD 3,281,400",
+          "source": "Computed from seeded positions"
+        },
+        "cash_usd": {
+          "label": "Cash",
+          "value": 108560,
+          "display": "USD 108,560",
+          "source": "Seeded book positions"
+        },
+        "cash_pct": {
+          "label": "Cash share",
+          "value": 2.1,
+          "display": "2.1% of AUM",
+          "source": "Computed from seeded positions"
+        },
+        "excess_cash_usd": {
+          "label": "Excess cash",
+          "value": 0,
+          "display": "USD 0",
+          "source": "Cash above the 5 percent target"
+        },
+        "last_meeting_date": {
+          "label": "Last meeting",
+          "value": "2025-10-30",
+          "display": "Oct 30, 2025",
+          "source": "Synthetic enrichment"
+        },
+        "days_since_meeting": {
+          "label": "Days since the last meeting",
+          "value": 385,
+          "display": "385 days",
+          "source": "Computed from the last meeting date"
+        },
+        "next_review_date": {
+          "label": "Review due",
+          "value": "2026-10-30",
+          "display": "Oct 30, 2026",
+          "source": "Last meeting plus 365 days"
+        },
+        "referral_count": {
+          "label": "Referral history",
+          "value": 1,
+          "display": "1 introduction",
+          "source": "Synthetic enrichment"
+        },
+        "referral_last_ask": {
+          "label": "Last referral ask",
+          "value": "2025-02-11",
+          "display": "Feb 11, 2025",
+          "source": "Synthetic enrichment"
+        },
+        "restricted_holding": {
+          "label": "Restricted holding",
+          "value": "VTI Jan 2027 280 call",
+          "display": "VTI Jan 2027 280 call",
+          "source": "Seeded book positions"
+        },
+        "restricted_usd": {
+          "label": "Restricted position value",
+          "value": 36500,
+          "display": "USD 36,500",
+          "source": "Seeded book positions"
+        },
+        "restricted_pct": {
+          "label": "Restricted share",
+          "value": 0.7,
+          "display": "0.7% of AUM",
+          "source": "Computed from seeded positions"
+        },
+        "restricted_until": {
+          "label": "Restriction ends",
+          "value": "2027-01-15",
+          "display": "Jan 15, 2027",
+          "source": "Seeded book positions"
+        }
+      },
+      "evidence": [
+        {
+          "label": "Household AUM",
+          "value": "USD 5,120,000",
+          "source_field": "aum",
+          "source": "Seeded book",
+          "detail": "H-1049 in client since 2010."
+        },
+        {
+          "label": "Accounts",
+          "value": "1 account at Alder Clearing",
+          "source_field": "account_count",
+          "source": "Seeded book",
+          "detail": "Joint brokerage (margin) (blocked)"
+        },
+        {
+          "label": "Consent",
+          "value": "Received",
+          "source_field": "consent_status",
+          "source": "Seeded book",
+          "detail": "Client outreach needs recorded consent before approval."
+        },
+        {
+          "label": "Last meeting",
+          "value": "Oct 30, 2025, 385 days ago",
+          "source_field": "last_meeting_date",
+          "source": "Synthetic enrichment",
+          "detail": "Review due Oct 30, 2026 on a 365 day cadence."
+        },
+        {
+          "label": "Cash",
+          "value": "USD 108,560, 2.1% of AUM",
+          "source_field": "cash_usd",
+          "source": "Seeded book positions",
+          "detail": "No cash above the 5 percent target."
+        },
+        {
+          "label": "Largest holding",
+          "value": "Total market ETF (VTI), 64.1% of AUM",
+          "source_field": "top_holding_pct",
+          "source": "Computed from seeded positions",
+          "detail": "USD 3,281,400 in one position."
+        },
+        {
+          "label": "Referral source",
+          "value": "1 introduction, last ask Feb 11, 2025",
+          "source_field": "referral_count",
+          "source": "Synthetic enrichment",
+          "detail": "No ask logged in 21 months. Introduced a business partner in 2025. No formal ask since."
+        }
+      ],
+      "review": {
+        "last_meeting": "2025-10-30",
+        "next_due": "2026-10-30",
+        "days_since": 385,
+        "overdue_days": 20
+      },
+      "held_away": null,
+      "referral": {
+        "count": 1,
+        "last_ask": "2025-02-11",
+        "note": "Introduced a business partner in 2025. No formal ask since."
+      },
+      "rmd": null,
+      "life_event": null,
+      "concentration": {
+        "restricted_usd": 36500,
+        "restricted_pct": 0.7,
+        "holdings": [
+          "VTI Jan 2027 280 call"
+        ]
+      },
+      "cash": {
+        "usd": 108560,
+        "pct": 2.1,
+        "excess_usd": 0,
+        "target_usd": 256000
+      }
+    },
+    {
+      "id": "H-1050",
+      "name": "Ferraro Household",
+      "aum": 7460000,
+      "relationship": "Client since 2007",
+      "notes": "LP interest plus a brokerage account",
+      "consent_status": "received",
+      "accounts": [
+        {
+          "id": "A-2213",
+          "custodian": "Morrow Trust",
+          "type": "Limited partnership interest",
+          "registration": "Individual",
+          "masked": "xxxx-4450",
+          "status": "blocked"
+        },
+        {
+          "id": "A-2214",
+          "custodian": "Morrow Trust",
+          "type": "Individual brokerage",
+          "registration": "Individual",
+          "masked": "xxxx-4519",
+          "status": "not started"
+        }
+      ],
+      "account_count": 2,
+      "custodians": [
+        "Morrow Trust"
+      ],
+      "signals": [
+        {
+          "key": "concentration",
+          "label": "Concentration",
+          "strength": "high",
+          "display": "USD 3,150,000, 42.2% of AUM",
+          "source_field": "restricted_pct",
+          "detail": "Kestrel Ridge Value Fund II, LP. Assignment needs general partner consent through June 30, 2027.",
+          "value_usd": 3150000
+        }
+      ],
+      "fields": {
+        "aum": {
+          "label": "Household AUM",
+          "value": 7460000,
+          "display": "USD 7,460,000",
+          "source": "Seeded book"
+        },
+        "account_count": {
+          "label": "Accounts",
+          "value": 2,
+          "display": "2 accounts",
+          "source": "Seeded book"
+        },
+        "client_since_year": {
+          "label": "Client since",
+          "value": 2007,
+          "display": "2007 (19 years)",
+          "source": "Seeded book"
+        },
+        "top_holding_name": {
+          "label": "Largest holding",
+          "value": "Kestrel Ridge Value Fund II, LP (KRVF2)",
+          "display": "Kestrel Ridge Value Fund II, LP (KRVF2)",
+          "source": "Seeded book positions"
+        },
+        "top_holding_pct": {
+          "label": "Largest holding share",
+          "value": 42.2,
+          "display": "42.2% of AUM",
+          "source": "Computed from seeded positions"
+        },
+        "top_holding_usd": {
+          "label": "Largest holding value",
+          "value": 3150000,
+          "display": "USD 3,150,000",
+          "source": "Computed from seeded positions"
+        },
+        "cash_usd": {
+          "label": "Cash",
+          "value": 450670,
+          "display": "USD 450,670",
+          "source": "Seeded book positions"
+        },
+        "cash_pct": {
+          "label": "Cash share",
+          "value": 6.0,
+          "display": "6.0% of AUM",
+          "source": "Computed from seeded positions"
+        },
+        "excess_cash_usd": {
+          "label": "Excess cash",
+          "value": 77670,
+          "display": "USD 77,670",
+          "source": "Cash above the 5 percent target"
+        },
+        "last_meeting_date": {
+          "label": "Last meeting",
+          "value": "2026-09-09",
+          "display": "Sep 9, 2026",
+          "source": "Synthetic enrichment"
+        },
+        "days_since_meeting": {
+          "label": "Days since the last meeting",
+          "value": 71,
+          "display": "71 days",
+          "source": "Computed from the last meeting date"
+        },
+        "next_review_date": {
+          "label": "Review due",
+          "value": "2027-09-09",
+          "display": "Sep 9, 2027",
+          "source": "Last meeting plus 365 days"
+        },
+        "restricted_holding": {
+          "label": "Restricted holding",
+          "value": "Kestrel Ridge Value Fund II, LP",
+          "display": "Kestrel Ridge Value Fund II, LP",
+          "source": "Seeded book positions"
+        },
+        "restricted_usd": {
+          "label": "Restricted position value",
+          "value": 3150000,
+          "display": "USD 3,150,000",
+          "source": "Seeded book positions"
+        },
+        "restricted_pct": {
+          "label": "Restricted share",
+          "value": 42.2,
+          "display": "42.2% of AUM",
+          "source": "Computed from seeded positions"
+        },
+        "restricted_until": {
+          "label": "Restriction ends",
+          "value": "2027-06-30",
+          "display": "Jun 30, 2027",
+          "source": "Seeded book positions"
+        }
+      },
+      "evidence": [
+        {
+          "label": "Household AUM",
+          "value": "USD 7,460,000",
+          "source_field": "aum",
+          "source": "Seeded book",
+          "detail": "H-1050 in client since 2007."
+        },
+        {
+          "label": "Accounts",
+          "value": "2 accounts at Morrow Trust",
+          "source_field": "account_count",
+          "source": "Seeded book",
+          "detail": "Limited partnership interest (blocked); Individual brokerage (not started)"
+        },
+        {
+          "label": "Consent",
+          "value": "Received",
+          "source_field": "consent_status",
+          "source": "Seeded book",
+          "detail": "Client outreach needs recorded consent before approval."
+        },
+        {
+          "label": "Last meeting",
+          "value": "Sep 9, 2026, 71 days ago",
+          "source_field": "last_meeting_date",
+          "source": "Synthetic enrichment",
+          "detail": "Review due Sep 9, 2027 on a 365 day cadence."
+        },
+        {
+          "label": "Cash",
+          "value": "USD 450,670, 6.0% of AUM",
+          "source_field": "cash_usd",
+          "source": "Seeded book positions",
+          "detail": "USD 77,670 above the 5 percent target."
+        },
+        {
+          "label": "Largest holding",
+          "value": "Kestrel Ridge Value Fund II, LP (KRVF2), 42.2% of AUM",
+          "source_field": "top_holding_pct",
+          "source": "Computed from seeded positions",
+          "detail": "USD 3,150,000 in one position."
+        },
+        {
+          "label": "Concentration",
+          "value": "USD 3,150,000, 42.2% of AUM",
+          "source_field": "restricted_pct",
+          "source": "Seeded book positions",
+          "detail": "Kestrel Ridge Value Fund II, LP. Assignment needs general partner consent through June 30, 2027."
+        }
+      ],
+      "review": {
+        "last_meeting": "2026-09-09",
+        "next_due": "2027-09-09",
+        "days_since": 71,
+        "overdue_days": 0
+      },
+      "held_away": null,
+      "referral": null,
+      "rmd": null,
+      "life_event": null,
+      "concentration": {
+        "restricted_usd": 3150000,
+        "restricted_pct": 42.2,
+        "holdings": [
+          "Kestrel Ridge Value Fund II, LP"
+        ]
+      },
+      "cash": {
+        "usd": 450670,
+        "pct": 6.0,
+        "excess_usd": 77670,
+        "target_usd": 373000
+      }
+    },
+    {
+      "id": "H-1051",
+      "name": "Nakamura Household",
+      "aum": 1980000,
+      "relationship": "Client since 2020",
+      "notes": "TOD registration; beneficiary on file",
+      "consent_status": "received",
+      "accounts": [
+        {
+          "id": "A-2215",
+          "custodian": "Alder Clearing",
+          "type": "Individual brokerage (TOD)",
+          "registration": "TOD",
+          "masked": "xxxx-6635",
+          "status": "not started"
+        }
+      ],
+      "account_count": 1,
+      "custodians": [
+        "Alder Clearing"
+      ],
+      "signals": [
+        {
+          "key": "cash_drag",
+          "label": "Cash drag",
+          "strength": "high",
+          "display": "USD 203,190, 10.3% of AUM in cash",
+          "source_field": "excess_cash_usd",
+          "detail": "USD 104,190 sits above the 5 percent target with no auto-invest instruction.",
+          "value_usd": 104190
+        }
+      ],
+      "fields": {
+        "aum": {
+          "label": "Household AUM",
+          "value": 1980000,
+          "display": "USD 1,980,000",
+          "source": "Seeded book"
+        },
+        "account_count": {
+          "label": "Accounts",
+          "value": 1,
+          "display": "1 account",
+          "source": "Seeded book"
+        },
+        "client_since_year": {
+          "label": "Client since",
+          "value": 2020,
+          "display": "2020 (6 years)",
+          "source": "Seeded book"
+        },
+        "top_holding_name": {
+          "label": "Largest holding",
+          "value": "Total market ETF (VTI)",
+          "display": "Total market ETF (VTI)",
+          "source": "Seeded book positions"
+        },
+        "top_holding_pct": {
+          "label": "Largest holding share",
+          "value": 55.2,
+          "display": "55.2% of AUM",
+          "source": "Computed from seeded positions"
+        },
+        "top_holding_usd": {
+          "label": "Largest holding value",
+          "value": 1093800,
+          "display": "USD 1,093,800",
+          "source": "Computed from seeded positions"
+        },
+        "cash_usd": {
+          "label": "Cash",
+          "value": 203190,
+          "display": "USD 203,190",
+          "source": "Seeded book positions"
+        },
+        "cash_pct": {
+          "label": "Cash share",
+          "value": 10.3,
+          "display": "10.3% of AUM",
+          "source": "Computed from seeded positions"
+        },
+        "excess_cash_usd": {
+          "label": "Excess cash",
+          "value": 104190,
+          "display": "USD 104,190",
+          "source": "Cash above the 5 percent target"
+        },
+        "last_meeting_date": {
+          "label": "Last meeting",
+          "value": "2026-06-18",
+          "display": "Jun 18, 2026",
+          "source": "Synthetic enrichment"
+        },
+        "days_since_meeting": {
+          "label": "Days since the last meeting",
+          "value": 154,
+          "display": "154 days",
+          "source": "Computed from the last meeting date"
+        },
+        "next_review_date": {
+          "label": "Review due",
+          "value": "2027-06-18",
+          "display": "Jun 18, 2027",
+          "source": "Last meeting plus 365 days"
+        }
+      },
+      "evidence": [
+        {
+          "label": "Household AUM",
+          "value": "USD 1,980,000",
+          "source_field": "aum",
+          "source": "Seeded book",
+          "detail": "H-1051 in client since 2020."
+        },
+        {
+          "label": "Accounts",
+          "value": "1 account at Alder Clearing",
+          "source_field": "account_count",
+          "source": "Seeded book",
+          "detail": "Individual brokerage (TOD) (not started)"
+        },
+        {
+          "label": "Consent",
+          "value": "Received",
+          "source_field": "consent_status",
+          "source": "Seeded book",
+          "detail": "Client outreach needs recorded consent before approval."
+        },
+        {
+          "label": "Last meeting",
+          "value": "Jun 18, 2026, 154 days ago",
+          "source_field": "last_meeting_date",
+          "source": "Synthetic enrichment",
+          "detail": "Review due Jun 18, 2027 on a 365 day cadence."
+        },
+        {
+          "label": "Cash",
+          "value": "USD 203,190, 10.3% of AUM",
+          "source_field": "cash_usd",
+          "source": "Seeded book positions",
+          "detail": "USD 104,190 above the 5 percent target."
+        },
+        {
+          "label": "Largest holding",
+          "value": "Total market ETF (VTI), 55.2% of AUM",
+          "source_field": "top_holding_pct",
+          "source": "Computed from seeded positions",
+          "detail": "USD 1,093,800 in one position."
+        }
+      ],
+      "review": {
+        "last_meeting": "2026-06-18",
+        "next_due": "2027-06-18",
+        "days_since": 154,
+        "overdue_days": 0
+      },
+      "held_away": null,
+      "referral": null,
+      "rmd": null,
+      "life_event": null,
+      "concentration": {
+        "restricted_usd": 0,
+        "restricted_pct": 0.0,
+        "holdings": []
+      },
+      "cash": {
+        "usd": 203190,
+        "pct": 10.3,
+        "excess_usd": 104190,
+        "target_usd": 99000
+      }
+    },
+    {
+      "id": "H-1052",
+      "name": "Petrov Household",
+      "aum": 3310000,
+      "relationship": "Client since 2015",
+      "notes": "Retirement assets only",
+      "consent_status": "received",
+      "accounts": [
+        {
+          "id": "A-2216",
+          "custodian": "Alder Clearing",
+          "type": "Traditional IRA",
+          "registration": "IRA",
+          "masked": "xxxx-2814",
+          "status": "waiting on custodian"
+        }
+      ],
+      "account_count": 1,
+      "custodians": [
+        "Alder Clearing"
+      ],
+      "signals": [
+        {
+          "key": "rmd_window",
+          "label": "RMD window",
+          "strength": "high",
+          "display": "Age 73 in 2026, first RMD due Dec 31, 2026",
+          "source_field": "rmd_amount_usd",
+          "detail": "Estimated USD 124,906 at the Uniform Lifetime Table factor of 26.5.",
+          "value_usd": 124906
+        }
+      ],
+      "fields": {
+        "aum": {
+          "label": "Household AUM",
+          "value": 3310000,
+          "display": "USD 3,310,000",
+          "source": "Seeded book"
+        },
+        "account_count": {
+          "label": "Accounts",
+          "value": 1,
+          "display": "1 account",
+          "source": "Seeded book"
+        },
+        "client_since_year": {
+          "label": "Client since",
+          "value": 2015,
+          "display": "2015 (11 years)",
+          "source": "Seeded book"
+        },
+        "top_holding_name": {
+          "label": "Largest holding",
+          "value": "Total market ETF (VTI)",
+          "display": "Total market ETF (VTI)",
+          "source": "Seeded book positions"
+        },
+        "top_holding_pct": {
+          "label": "Largest holding share",
+          "value": 44.6,
+          "display": "44.6% of AUM",
+          "source": "Computed from seeded positions"
+        },
+        "top_holding_usd": {
+          "label": "Largest holding value",
+          "value": 1476630,
+          "display": "USD 1,476,630",
+          "source": "Computed from seeded positions"
+        },
+        "cash_usd": {
+          "label": "Cash",
+          "value": 202295,
+          "display": "USD 202,295",
+          "source": "Seeded book positions"
+        },
+        "cash_pct": {
+          "label": "Cash share",
+          "value": 6.1,
+          "display": "6.1% of AUM",
+          "source": "Computed from seeded positions"
+        },
+        "excess_cash_usd": {
+          "label": "Excess cash",
+          "value": 36795,
+          "display": "USD 36,795",
+          "source": "Cash above the 5 percent target"
+        },
+        "last_meeting_date": {
+          "label": "Last meeting",
+          "value": "2026-10-08",
+          "display": "Oct 8, 2026",
+          "source": "Synthetic enrichment"
+        },
+        "days_since_meeting": {
+          "label": "Days since the last meeting",
+          "value": 42,
+          "display": "42 days",
+          "source": "Computed from the last meeting date"
+        },
+        "next_review_date": {
+          "label": "Review due",
+          "value": "2027-10-08",
+          "display": "Oct 8, 2027",
+          "source": "Last meeting plus 365 days"
+        },
+        "rmd_age": {
+          "label": "Age in 2026",
+          "value": 73,
+          "display": "73",
+          "source": "Synthetic enrichment"
+        },
+        "rmd_amount_usd": {
+          "label": "Estimated RMD",
+          "value": 124906,
+          "display": "USD 124,906",
+          "source": "AUM divided by the Uniform Lifetime Table factor"
+        },
+        "rmd_due_date": {
+          "label": "RMD due",
+          "value": "2026-12-31",
+          "display": "Dec 31, 2026",
+          "source": "Synthetic enrichment"
+        }
+      },
+      "evidence": [
+        {
+          "label": "Household AUM",
+          "value": "USD 3,310,000",
+          "source_field": "aum",
+          "source": "Seeded book",
+          "detail": "H-1052 in client since 2015."
+        },
+        {
+          "label": "Accounts",
+          "value": "1 account at Alder Clearing",
+          "source_field": "account_count",
+          "source": "Seeded book",
+          "detail": "Traditional IRA (waiting on custodian)"
+        },
+        {
+          "label": "Consent",
+          "value": "Received",
+          "source_field": "consent_status",
+          "source": "Seeded book",
+          "detail": "Client outreach needs recorded consent before approval."
+        },
+        {
+          "label": "Last meeting",
+          "value": "Oct 8, 2026, 42 days ago",
+          "source_field": "last_meeting_date",
+          "source": "Synthetic enrichment",
+          "detail": "Review due Oct 8, 2027 on a 365 day cadence."
+        },
+        {
+          "label": "Cash",
+          "value": "USD 202,295, 6.1% of AUM",
+          "source_field": "cash_usd",
+          "source": "Seeded book positions",
+          "detail": "USD 36,795 above the 5 percent target."
+        },
+        {
+          "label": "Largest holding",
+          "value": "Total market ETF (VTI), 44.6% of AUM",
+          "source_field": "top_holding_pct",
+          "source": "Computed from seeded positions",
+          "detail": "USD 1,476,630 in one position."
+        },
+        {
+          "label": "RMD window",
+          "value": "Age 73 in 2026, first RMD due Dec 31, 2026",
+          "source_field": "rmd_amount_usd",
+          "source": "Seeded book positions",
+          "detail": "Estimated USD 124,906 at the Uniform Lifetime Table factor of 26.5."
+        }
+      ],
+      "review": {
+        "last_meeting": "2026-10-08",
+        "next_due": "2027-10-08",
+        "days_since": 42,
+        "overdue_days": 0
+      },
+      "held_away": null,
+      "referral": null,
+      "rmd": {
+        "birth_year": 1953,
+        "age": 73,
+        "first_year": 2026,
+        "factor": 26.5,
+        "due": "2026-12-31",
+        "amount_usd": 124906
+      },
+      "life_event": null,
+      "concentration": {
+        "restricted_usd": 0,
+        "restricted_pct": 0.0,
+        "holdings": []
+      },
+      "cash": {
+        "usd": 202295,
+        "pct": 6.1,
+        "excess_usd": 36795,
+        "target_usd": 165500
+      }
+    },
+    {
+      "id": "H-1053",
+      "name": "Achterberg Household",
+      "aum": 2605000,
+      "relationship": "Client since 2024",
+      "notes": "New account opening in wave 2",
+      "consent_status": "not required",
+      "accounts": [
+        {
+          "id": "A-2217",
+          "custodian": "Alder Clearing",
+          "type": "Individual brokerage",
+          "registration": "Individual",
+          "masked": "xxxx-5906",
+          "status": "not started"
+        },
+        {
+          "id": "A-2218",
+          "custodian": "Morrow Trust",
+          "type": "Individual brokerage",
+          "registration": "Individual",
+          "masked": "xxxx-6401",
+          "status": "not started"
+        }
+      ],
+      "account_count": 2,
+      "custodians": [
+        "Alder Clearing",
+        "Morrow Trust"
+      ],
+      "signals": [
+        {
+          "key": "held_away",
+          "label": "Held-away assets",
+          "strength": "high",
+          "display": "USD 1,350,000 at Alcott Retirement Services",
+          "source_field": "held_away_usd",
+          "detail": "Former employer plan. No rollover paperwork has started.",
+          "value_usd": 1350000
+        },
+        {
+          "key": "cash_drag",
+          "label": "Cash drag",
+          "strength": "medium",
+          "display": "USD 225,800, 8.7% of AUM in cash",
+          "source_field": "excess_cash_usd",
+          "detail": "USD 95,550 sits above the 5 percent target with no auto-invest instruction.",
+          "value_usd": 95550
+        }
+      ],
+      "fields": {
+        "aum": {
+          "label": "Household AUM",
+          "value": 2605000,
+          "display": "USD 2,605,000",
+          "source": "Seeded book"
+        },
+        "account_count": {
+          "label": "Accounts",
+          "value": 2,
+          "display": "2 accounts",
+          "source": "Seeded book"
+        },
+        "client_since_year": {
+          "label": "Client since",
+          "value": 2024,
+          "display": "2024 (2 years)",
+          "source": "Seeded book"
+        },
+        "top_holding_name": {
+          "label": "Largest holding",
+          "value": "Total market ETF (VTI)",
+          "display": "Total market ETF (VTI)",
+          "source": "Seeded book positions"
+        },
+        "top_holding_pct": {
+          "label": "Largest holding share",
+          "value": 47.2,
+          "display": "47.2% of AUM",
+          "source": "Computed from seeded positions"
+        },
+        "top_holding_usd": {
+          "label": "Largest holding value",
+          "value": 1230525,
+          "display": "USD 1,230,525",
+          "source": "Computed from seeded positions"
+        },
+        "cash_usd": {
+          "label": "Cash",
+          "value": 225800,
+          "display": "USD 225,800",
+          "source": "Seeded book positions"
+        },
+        "cash_pct": {
+          "label": "Cash share",
+          "value": 8.7,
+          "display": "8.7% of AUM",
+          "source": "Computed from seeded positions"
+        },
+        "excess_cash_usd": {
+          "label": "Excess cash",
+          "value": 95550,
+          "display": "USD 95,550",
+          "source": "Cash above the 5 percent target"
+        },
+        "last_meeting_date": {
+          "label": "Last meeting",
+          "value": "2026-11-05",
+          "display": "Nov 5, 2026",
+          "source": "Synthetic enrichment"
+        },
+        "days_since_meeting": {
+          "label": "Days since the last meeting",
+          "value": 14,
+          "display": "14 days",
+          "source": "Computed from the last meeting date"
+        },
+        "next_review_date": {
+          "label": "Review due",
+          "value": "2027-11-05",
+          "display": "Nov 5, 2027",
+          "source": "Last meeting plus 365 days"
+        },
+        "held_away_usd": {
+          "label": "Held-away assets",
+          "value": 1350000,
+          "display": "USD 1,350,000",
+          "source": "Synthetic enrichment"
+        },
+        "held_away_custodian": {
+          "label": "Held-away custodian",
+          "value": "Alcott Retirement Services",
+          "display": "Alcott Retirement Services",
+          "source": "Synthetic enrichment"
+        }
+      },
+      "evidence": [
+        {
+          "label": "Household AUM",
+          "value": "USD 2,605,000",
+          "source_field": "aum",
+          "source": "Seeded book",
+          "detail": "H-1053 in client since 2024."
+        },
+        {
+          "label": "Accounts",
+          "value": "2 accounts at Alder Clearing, Morrow Trust",
+          "source_field": "account_count",
+          "source": "Seeded book",
+          "detail": "Individual brokerage (not started); Individual brokerage (not started)"
+        },
+        {
+          "label": "Consent",
+          "value": "Not required",
+          "source_field": "consent_status",
+          "source": "Seeded book",
+          "detail": "Client outreach needs recorded consent before approval."
+        },
+        {
+          "label": "Last meeting",
+          "value": "Nov 5, 2026, 14 days ago",
+          "source_field": "last_meeting_date",
+          "source": "Synthetic enrichment",
+          "detail": "Review due Nov 5, 2027 on a 365 day cadence."
+        },
+        {
+          "label": "Cash",
+          "value": "USD 225,800, 8.7% of AUM",
+          "source_field": "cash_usd",
+          "source": "Seeded book positions",
+          "detail": "USD 95,550 above the 5 percent target."
+        },
+        {
+          "label": "Largest holding",
+          "value": "Total market ETF (VTI), 47.2% of AUM",
+          "source_field": "top_holding_pct",
+          "source": "Computed from seeded positions",
+          "detail": "USD 1,230,525 in one position."
+        },
+        {
+          "label": "Held-away assets",
+          "value": "USD 1,350,000 at Alcott Retirement Services",
+          "source_field": "held_away_usd",
+          "source": "Synthetic enrichment",
+          "detail": "Former employer plan. No rollover paperwork has started."
+        }
+      ],
+      "review": {
+        "last_meeting": "2026-11-05",
+        "next_due": "2027-11-05",
+        "days_since": 14,
+        "overdue_days": 0
+      },
+      "held_away": {
+        "usd": 1350000,
+        "custodian": "Alcott Retirement Services",
+        "note": "Former employer plan. No rollover paperwork has started."
+      },
+      "referral": null,
+      "rmd": null,
+      "life_event": null,
+      "concentration": {
+        "restricted_usd": 0,
+        "restricted_pct": 0.0,
+        "holdings": []
+      },
+      "cash": {
+        "usd": 225800,
+        "pct": 8.7,
+        "excess_usd": 95550,
+        "target_usd": 130250
+      }
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "module": "bookiq",
+  "as_of": "2026-11-19",
+  "currency": "USD",
+  "fee_rate": 0.009,
+  "fee_rate_display": "0.90%",
+  "plays": [
+    {
+      "key": "consolidate_held_away",
+      "label": "Consolidate held-away assets",
+      "short": "Consolidate held-away",
+      "required_signal": "held_away",
+      "input_field": "held_away_usd",
+      "share": 0.25,
+      "share_display": "25%",
+      "basis": "25 percent of held-away assets, the modelled share that moves in the first year."
+    },
+    {
+      "key": "reinvest_cash",
+      "label": "Reinvest excess cash",
+      "short": "Reinvest cash",
+      "required_signal": "cash_drag",
+      "input_field": "excess_cash_usd",
+      "share": 1.0,
+      "share_display": "100%",
+      "basis": "All cash above the 5 percent target, modelled as invested."
+    },
+    {
+      "key": "schedule_review",
+      "label": "Schedule an overdue review",
+      "short": "Schedule review",
+      "required_signal": "overdue_review",
+      "input_field": "aum",
+      "share": 0.025,
+      "share_display": "2.5%",
+      "basis": "AUM x 10 percent modelled at risk x 25 percent protected by a review."
+    },
+    {
+      "key": "rmd_plan",
+      "label": "Plan for a required distribution",
+      "short": "RMD plan",
+      "required_signal": "rmd_window",
+      "input_field": "rmd_amount_usd",
+      "share": 0.35,
+      "share_display": "35%",
+      "basis": "35 percent of the estimated RMD, modelled as retained and reinvested."
+    },
+    {
+      "key": "reduce_concentration",
+      "label": "Reduce concentration",
+      "short": "Reduce concentration",
+      "required_signal": "concentration",
+      "input_field": "restricted_usd",
+      "share": 0.2,
+      "share_display": "20%",
+      "basis": "20 percent of the restricted position value, modelled as diversified over time."
+    },
+    {
+      "key": "referral",
+      "label": "Ask for a referral",
+      "short": "Referral",
+      "required_signal": "referral_source",
+      "input_field": "aum",
+      "share": 0.2,
+      "share_display": "20%",
+      "basis": "One new household at 20 percent of the referrer's assets, the modelled size of a qualified introduction."
+    },
+    {
+      "key": "life_event",
+      "label": "Act on a life event",
+      "short": "Life event",
+      "required_signal": "life_event",
+      "input_field": "life_event_value_usd",
+      "share": 0.5,
+      "share_display": "50%",
+      "basis": "50 percent of the assets tied to the event, modelled as repositioned."
+    },
+    {
+      "key": "no_action",
+      "label": "No action this cycle",
+      "short": "No action",
+      "required_signal": null,
+      "input_field": null,
+      "share": 0.0,
+      "share_display": "n/a",
+      "basis": "No growth play clears the record this cycle."
+    }
+  ],
+  "parameters": {
+    "cash_target_pct": 0.05,
+    "review_cadence_days": 365,
+    "review_at_risk_pct": 0.1,
+    "review_saved_pct": 0.25,
+    "rmd_factor_age_73": 26.5,
+    "rmd_retained_pct": 0.35,
+    "held_away_target_pct": 0.25,
+    "concentration_target_pct": 0.2,
+    "referral_size_pct": 0.2,
+    "life_event_moved_pct": 0.5
+  },
+  "notes": [
+    "Every figure is modelled from the seeded book plus the fixed enrichment tables in scripts/generate_bookiq.py. Nothing here is measured.",
+    "Modelled net new assets is an annual opportunity, not a forecast. The fee line applies the 0.90 percent standard rate to that opportunity.",
+    "Held-away balances, meeting dates, referral history, RMD age, and the life event are synthetic enrichment. Cash, holdings, restricted positions, and AUM come from data/book.json.",
+    "The queue sorts by modelled net new assets. Confidence is the model's own estimate and is not a calibrated probability."
+  ]
+}

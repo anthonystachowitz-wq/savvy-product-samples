@@ -1,0 +1,21 @@
+{
+  "module": "bookiq",
+  "key": "draft-outreach-H-1044-v1",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 687,
+    "completion_tokens": 320,
+    "total_tokens": 1007,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 687
+  },
+  "latency_ms": 2314,
+  "created_at": "2026-11-19T05:55:51+00:00",
+  "system_sha": "84250f2446526cc9",
+  "prompt_sha": "9f8c002225e9b161",
+  "text": "{\"subject\": \"Barrett Household account review note\", \"body\": \"Dear Barrett Household, I am writing as your adviser with a short service note. You have been a client since 2021, and your household AUM is USD 1,875,000 across 1 account. Your largest holding is Total market ETF (VTI) at 52.5% of AUM, and cash is USD 129,410, or 6.9% of AUM. One item remains open: the Inherited IRA at Morrow Trust is in flight. No action is needed from the household this month. Our last meeting was Oct 2, 2026, and the next review is due Oct 2, 2027. I am happy to talk through the open item whenever helpful. Sincerely, Dana Whitfield\", \"claims\": [{\"text\": \"You have been a client since 2021\", \"source_field\": \"client_since_year\"}, {\"text\": \"your household AUM is USD 1,875,000 across 1 account\", \"source_field\": \"aum\"}, {\"text\": \"Your largest holding is Total market ETF (VTI) at 52.5% of AUM\", \"source_field\": \"top_holding_pct\"}, {\"text\": \"cash is USD 129,410, or 6.9% of AUM\", \"source_field\": \"cash_usd\"}, {\"text\": \"the Inherited IRA at Morrow Trust is in flight\", \"source_field\": \"account_count\"}]}"
+}

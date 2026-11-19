@@ -1,0 +1,140 @@
+{
+  "name": "Play and signal accuracy",
+  "module": "bookiq",
+  "cases": 12,
+  "accuracy": 1.0,
+  "failures": [],
+  "failure_notes": [],
+  "results": [
+    {
+      "household_id": "H-1042",
+      "household": "Rowan Household",
+      "expected": "consolidate_held_away + held_away",
+      "actual": "consolidate_held_away + held_away",
+      "status": "pass",
+      "alternatives": []
+    },
+    {
+      "household_id": "H-1043",
+      "household": "Calloway Household",
+      "expected": "referral + referral_source",
+      "actual": "referral + referral_source",
+      "status": "pass",
+      "alternatives": []
+    },
+    {
+      "household_id": "H-1044",
+      "household": "Barrett Household",
+      "expected": "no_action + transfer_hold",
+      "actual": "no_action + transfer_hold",
+      "status": "pass",
+      "alternatives": []
+    },
+    {
+      "household_id": "H-1045",
+      "household": "Voss Household",
+      "expected": "life_event + life_event",
+      "actual": "life_event + life_event",
+      "status": "pass",
+      "alternatives": [
+        {
+          "play": "reduce_concentration",
+          "signals": [
+            "concentration"
+          ]
+        }
+      ]
+    },
+    {
+      "household_id": "H-1046",
+      "household": "Sato Household",
+      "expected": "reinvest_cash + cash_drag",
+      "actual": "reinvest_cash + cash_drag",
+      "status": "pass",
+      "alternatives": []
+    },
+    {
+      "household_id": "H-1047",
+      "household": "Delgado Household",
+      "expected": "consolidate_held_away + held_away",
+      "actual": "consolidate_held_away + held_away",
+      "status": "pass",
+      "alternatives": [
+        {
+          "play": "reinvest_cash",
+          "signals": [
+            "cash_drag"
+          ]
+        }
+      ]
+    },
+    {
+      "household_id": "H-1048",
+      "household": "Okafor Household",
+      "expected": "schedule_review + overdue_review",
+      "actual": "schedule_review + overdue_review",
+      "status": "pass",
+      "alternatives": []
+    },
+    {
+      "household_id": "H-1049",
+      "household": "Lindqvist Household",
+      "expected": "referral + referral_source",
+      "actual": "referral + referral_source",
+      "status": "pass",
+      "alternatives": []
+    },
+    {
+      "household_id": "H-1050",
+      "household": "Ferraro Household",
+      "expected": "reduce_concentration + concentration",
+      "actual": "reduce_concentration + concentration",
+      "status": "pass",
+      "alternatives": []
+    },
+    {
+      "household_id": "H-1051",
+      "household": "Nakamura Household",
+      "expected": "reinvest_cash + cash_drag",
+      "actual": "reinvest_cash + cash_drag",
+      "status": "pass",
+      "alternatives": []
+    },
+    {
+      "household_id": "H-1052",
+      "household": "Petrov Household",
+      "expected": "rmd_plan + rmd_window",
+      "actual": "rmd_plan + rmd_window",
+      "status": "pass",
+      "alternatives": []
+    },
+    {
+      "household_id": "H-1053",
+      "household": "Achterberg Household",
+      "expected": "consolidate_held_away + held_away",
+      "actual": "consolidate_held_away + held_away",
+      "status": "pass",
+      "alternatives": [
+        {
+          "play": "reinvest_cash",
+          "signals": [
+            "cash_drag"
+          ]
+        }
+      ]
+    }
+  ],
+  "coverage": 12,
+  "rule_agreement": "12 of 12",
+  "model": "deepseek-flash",
+  "mode": "live model, recorded",
+  "recorded_at": "2026-11-19T05:53:51+00:00",
+  "recording_key": "rank-book-whitfield-v1",
+  "parse_error": "",
+  "scoring": "Pass when the top play equals the expected play (or an accepted alternative) and the cited signal matches that play's required signal.",
+  "notes": [
+    "Scored against the recorded ranking, so the number is stable between page views.",
+    "The set is 12 households from one synthetic book. A perfect score describes this book, not the next one.",
+    "The rule check uses the same opportunity arithmetic that the page shows. Agreement with the rule is not the same as agreement with a human adviser."
+  ]
+}

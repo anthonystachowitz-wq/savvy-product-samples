@@ -1,0 +1,21 @@
+{
+  "module": "bookiq",
+  "key": "draft-outreach-H-1045-v1",
+  "mode": "live model, recorded",
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 766,
+    "completion_tokens": 327,
+    "total_tokens": 1093,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 766
+  },
+  "latency_ms": 2195,
+  "created_at": "2026-11-19T05:55:53+00:00",
+  "system_sha": "84250f2446526cc9",
+  "prompt_sha": "2ba8040892f741b4",
+  "text": "{\"subject\": \"Retirement planning conversation for the Voss Household\", \"body\": \"Dear Voss Household,\\n\\nI am writing as your adviser to suggest a conversation about your upcoming retirement on Apr 30, 2027, when USD 1,300,000 in assets tied to the event may come into play. You have been a client since 2014, and our last meeting was Jun 11, 2026, with your next review due Jun 11, 2027.\\n\\nYour household holds USD 3,940,000 across 2 accounts, including USD 125,075 in cash, or 3.2% of AUM. Your largest holding is Total market ETF (VTI) at 28.5% of AUM, and restricted positions total USD 1,944,160, or 49.3% of AUM.\\n\\nI would welcome a review to discuss how these pieces fit together ahead of the event. Please let me know a convenient time.\\n\\nDana Whitfield\", \"claims\": [{\"text\": \"Apr 30, 2027\", \"source_field\": \"life_event_date\"}, {\"text\": \"USD 1,300,000\", \"source_field\": \"life_event_value_usd\"}, {\"text\": \"USD 3,940,000\", \"source_field\": \"aum\"}, {\"text\": \"USD 125,075\", \"source_field\": \"cash_usd\"}, {\"text\": \"USD 1,944,160\", \"source_field\": \"restricted_usd\"}]}"
+}
