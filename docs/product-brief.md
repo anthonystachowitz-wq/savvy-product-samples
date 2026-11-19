@@ -104,6 +104,6 @@ Savvy's advantage is not features. It is that Savvy is the customer, can prove h
 
 No custodian or CRM integration, no delivery or filing, no advice, no real client data, and no pricing page. This is an outside-in argument built to start a conversation, not a plan. The two-page version of that argument is in the brief, and the code is in the repository.
 
-Demo: https://savvy-suite.3-236-129-20.sslip.io. Code: https://github.com/anthonystachowitz-wq/savvy-product-samples.
+Demo: https://savvydemo.officeinference.com. Code: https://github.com/anthonystachowitz-wq/savvy-product-samples.
 
 This is a work sample, not a proposal for Savvy's roadmap. Savvy may already have some of this internally. If so, the useful part is the method: what I noticed, what I chose, how fast it came together, and how the controls are built.
