@@ -63,22 +63,42 @@
     <span class="mod-note">Source: data/book.json plus a synthetic record extension. As of {{ as_of }}.</span>
   </div>
 
-  <div class="cq-tabs" role="navigation" aria-label="Households">
-    {% for item in households %}
-    <a class="cq-tab{{ ' is-active' if item.id == household.id }}" href="/concierge?h={{ item.id }}#ask">
-      <span class="cq-tab-name">{{ item.display_name }}</span>
-      <span class="cq-tab-meta">{{ item.id }} &middot; {{ item.total_value }}</span>
-      <span class="chip {{ 'chip--live' if item.consent_status == 'received' else 'chip--build' }}">consent {{ item.consent_status }}</span>
-    </a>
-    {% endfor %}
-  </div>
+  <div class="focus-scene focus-scene--mint">
+    <div class="focus-intro">
+      <div>
+        <h2 class="focus-title">Households</h2>
+        <p class="focus-sub">Pick one household. The rest stay as rows so a reviewer can move between them.</p>
+      </div>
+      <span class="focus-hint">Open one record at a time</span>
+    </div>
+
+    <div class="focus-list" data-focus-list data-focus-param="h">
+      {% set open_id = household.id %}
+      {# The loop variable shadows the page-level household so the record panels below stay unchanged. #}
+      {% for household in households %}
+      {% set is_open = household.id == open_id %}
+      {% set words = household.display_name.split() %}
+      <article class="focus-card{{ ' is-open' if is_open }}" data-focus-card data-focus-id="{{ household.id }}">
+        <a class="focus-summary" href="/concierge?h={{ household.id }}#record" data-focus-toggle aria-expanded="{{ 'true' if is_open else 'false' }}" aria-controls="focus-body-{{ household.id }}">
+          <span class="focus-avatar" aria-hidden="true">{{ words[0][0] }}{{ words[1][0] if words|length > 1 else '' }}</span>
+          <span>
+            <span class="focus-name">{{ household.display_name }}</span>
+            <span class="focus-meta">{{ household.id }} &middot; {{ household.accounts|length }} account{{ 's' if household.accounts|length != 1 }} &middot; client since {{ household.relationship.split()[-1] }}</span>
+            <span class="focus-badges">
+              <span class="chip {{ 'chip--live' if household.consent_status == 'received' else 'chip--build' }}">consent {{ household.consent_status }}</span>
+            </span>
+          </span>
+          <span class="focus-stat">{{ household.total_value }}<small>total value</small></span>
+          <span class="focus-chevron" aria-hidden="true">&#9662;</span>
+        </a>
+        <div class="focus-body cq-card-body" id="focus-body-{{ household.id }}" data-focus-body{% if not is_open %} hidden{% endif %}>
 
   <div class="mod-grid mod-grid--wide">
     <div>
       <div class="mod-panel">
         <div class="cq-panel-head">
           <h3>Accounts</h3>
-          <span class="mod-note">{{ household.accounts|length }} accounts, {{ household.fields|length }} field paths in the prompt</span>
+          <span class="mod-note">{{ household.accounts|length }} account{{ '' if household.accounts|length == 1 else 's' }}, {{ household.fields|length }} field paths in the prompt</span>
         </div>
         <div class="table-wrap">
           <table class="mod-table">
@@ -182,19 +202,16 @@
       </div>
     </div>
   </div>
-</section>
 
-<section class="cq-section" id="ask">
-  <div class="cq-section-head">
-    <div>
-      <p class="mod-kicker-sm">Question</p>
-      <h2 class="cq-h2">Ask about this record</h2>
-    </div>
-    <span class="mod-note">{{ key_count }} recorded question and household pairs. Five presets, plus free text matched to a recording.</span>
-  </div>
-
-  <div class="mod-panel cq-ask">
-    <form method="post" action="/concierge/ask" class="cq-ask-form">
+    <div class="mod-panel cq-ask cq-card-ask" id="{{ 'ask' if is_open else 'ask-' ~ household.id }}">
+      <div class="cq-panel-head cq-ask-head">
+        <div>
+          <p class="mod-kicker-sm">Question</p>
+          <h3 class="cq-h2">Ask about this record</h3>
+        </div>
+        <span class="mod-note">{{ key_count }} recorded question and household pairs. Five presets, plus free text matched to a recording.</span>
+      </div>
+      <form method="post" action="/concierge/ask" class="cq-ask-form">
       <input type="hidden" name="household" value="{{ household.id }}">
       <div class="cq-presets">
         {% for preset in presets %}
@@ -206,25 +223,24 @@
         {% endfor %}
       </div>
       <div class="cq-free">
-        <label class="cq-free-label" for="free_text">Or type a client question</label>
+        <label class="cq-free-label" for="free_text-{{ household.id }}">Or type a client question</label>
         <div class="btn-row">
-          <input class="input cq-free-input" id="free_text" name="free_text" maxlength="220" placeholder="e.g. How much am I paying in fees?">
+          <input class="input cq-free-input" id="free_text-{{ household.id }}" name="free_text" maxlength="220" placeholder="e.g. How much am I paying in fees?">
           <button class="btn btn-primary" type="submit" name="action" value="ask">Ask</button>
           <button class="btn" type="submit" name="action" value="live">Ask live</button>
         </div>
         <p class="mod-note">Free text is matched to the closest recorded question by keyword. If nothing matches, the page shows the recording gap instead of an invented answer.</p>
       </div>
-    </form>
-  </div>
-</section>
-
-{% if bundle %}
-<section class="cq-section" id="answer">
-  <div class="cq-section-head">
-    <div>
-      <p class="mod-kicker-sm">Answer</p>
-      <h2 class="cq-h2">{{ household.display_name }}</h2>
+      </form>
     </div>
+
+    {% if bundle and is_open %}
+    <div class="cq-card-answer" id="answer">
+      <div class="cq-section-head cq-answer-head">
+        <div>
+          <p class="mod-kicker-sm">Answer</p>
+          <h3 class="cq-h2">{{ household.display_name }}</h3>
+        </div>
     <div class="cq-head-chips">
       {% set intent_class = 'badge-accent' if bundle.intent == 'explain' else ('badge-neutral' if bundle.intent == 'unsupported' else 'badge-warn') %}
       <span class="badge {{ intent_class }}">intent: {{ bundle.intent }}</span>
@@ -378,12 +394,12 @@
       </div>
     </aside>
   </div>
-</section>
-{% endif %}
+    </div>
+    {% endif %}
 
-{% if not bundle %}
-<section class="cq-section" id="answer">
-  <div class="mod-panel cq-gap">
+    {% if not bundle and is_open %}
+    <div class="cq-card-answer" id="answer">
+      <div class="mod-panel cq-gap">
     <h3>No answer loaded</h3>
     {% if gap_text %}
     <p class="cq-question">You asked: {{ gap_text }}</p>
@@ -391,9 +407,16 @@
     <p class="mod-note">{{ answer_error if answer_error else "Pick a preset question above, or type one and press Ask. The page does not call the model on a plain page load." }}</p>
     <p class="mod-note">{{ questions.free_text_note }}</p>
     <p class="mod-note">Recorded pairs: {% for item in keys.values() %}<span class="mono cq-key">{{ item.key }}</span>{% endfor %}</p>
+      </div>
+    </div>
+    {% endif %}
+
+        </div>
+      </article>
+      {% endfor %}
+    </div>
   </div>
 </section>
-{% endif %}
 
 <section class="cq-section" id="queue">
   <div class="cq-section-head">

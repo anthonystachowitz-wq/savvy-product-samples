@@ -59,8 +59,10 @@ def _redirect(url: str) -> RedirectResponse:
     return RedirectResponse(url=url, status_code=303)
 
 
-def _back(packet_id: str = "", msg: str = "", error: str = "", ev: str = "", anchor: str = "intake") -> str:
+def _back(packet_id: str = "", msg: str = "", error: str = "", ev: str = "", anchor: str = "intake", lp_id: str = "") -> str:
     params: dict[str, str] = {}
+    if lp_id:
+        params["lp"] = lp_id
     if packet_id:
         params["packet"] = packet_id
     if msg:
@@ -204,6 +206,29 @@ def _lps_with_labels(records: dict[str, Any], packet_list: list[dict[str, Any]],
     return lps
 
 
+def _initials(name: Any) -> str:
+    parts = [part for part in str(name or "").split() if part]
+    return "".join(part[0] for part in parts[:3]).upper() or "LP"
+
+
+def _decorate_approvals(rows: list[dict[str, Any]], packet_id: str, state_payload: dict[str, Any]) -> None:
+    """Attach the approver, time, and evidence id to rows already marked approved."""
+    for row in rows:
+        if row.get("status") != "approved":
+            continue
+        match = None
+        for item in state_payload.get("approvals", []):
+            if item.get("packet_id") != packet_id:
+                continue
+            if row.get("kind") in (item.get("resolved_kinds") or []):
+                match = item
+                break
+        if match:
+            row["approved_by"] = match.get("actor", "")
+            row["approved_at"] = match.get("created_at", "")
+            row["evidence_id"] = match.get("id", "")
+
+
 def _context(request: Request, stage: str, packet_id: str, lp_id: str) -> dict[str, Any]:
     records = data.load_records()
     packet_payload = data.load_packets()
@@ -262,20 +287,7 @@ def _context(request: Request, stage: str, packet_id: str, lp_id: str) -> dict[s
     resolved = data.resolved_for(state_payload, selected["id"])
     exception_view = logic.merge_exceptions(selected, extraction, resolved)
     exception_view["model_available"] = extraction is not None and extraction.get("ok", False)
-    for row in exception_view["rows"]:
-        if row.get("status") != "approved":
-            continue
-        match = None
-        for item in state_payload.get("approvals", []):
-            if item.get("packet_id") != selected["id"]:
-                continue
-            if row.get("kind") in (item.get("resolved_kinds") or []):
-                match = item
-                break
-        if match:
-            row["approved_by"] = match.get("actor", "")
-            row["approved_at"] = match.get("created_at", "")
-            row["evidence_id"] = match.get("id", "")
+    _decorate_approvals(exception_view["rows"], selected["id"], state_payload)
 
     open_exceptions = [
         row for row in exception_view["rows"] if row.get("origin") == "log" and row.get("status") == "open"
@@ -288,6 +300,63 @@ def _context(request: Request, stage: str, packet_id: str, lp_id: str) -> dict[s
     summary["lps_behind"] = len(behind)
     summary["behind_ids"] = ", ".join(str(item.get("id")) for item in behind)
     stage_map = data.stage_counts(lps)
+
+    visible_ids = {str(item.get("id")) for item in visible_lps}
+    requested_lp = next((item for item in lps if str(item.get("id")) == lp_id), None) if lp_id else None
+    if requested_lp is not None and str(requested_lp.get("id")) in visible_ids:
+        open_lp = requested_lp
+    elif str(selected_lp.get("id")) in visible_ids:
+        open_lp = selected_lp
+    elif visible_lps:
+        open_lp = visible_lps[0]
+    else:
+        open_lp = None
+
+    packets_by_lp: dict[str, list[dict[str, Any]]] = {}
+    for packet in packet_list:
+        packets_by_lp.setdefault(str(packet.get("lp_id") or ""), []).append(packet)
+
+    severity_rank = {"high": 0, "medium": 1, "low": 2}
+    cards: list[dict[str, Any]] = []
+    for item in visible_lps:
+        lp_value = str(item.get("id"))
+        lp_packets = packets_by_lp.get(lp_value) or []
+        packet = lp_packets[0] if lp_packets else None
+        card: dict[str, Any] = {
+            "lp": item,
+            "packet": packet,
+            "initials": _initials(item.get("short_name") or item.get("name")),
+            "is_open": open_lp is not None and lp_value == str(open_lp.get("id")),
+            "exceptions": None,
+            "open_rows": [],
+            "exception_severity": "",
+            "note_meta": None,
+            "note_decision": None,
+            "note_blocked": False,
+        }
+        if packet is not None:
+            extraction_result = llm.recorded(MODULE, logic.extraction_key(str(packet["id"])))
+            extraction = logic.parse_extraction(extraction_result.text) if extraction_result else None
+            resolved = data.resolved_for(state_payload, str(packet["id"]))
+            view = logic.merge_exceptions(packet, extraction, resolved)
+            view["model_available"] = extraction is not None and extraction.get("ok", False)
+            _decorate_approvals(view["rows"], str(packet["id"]), state_payload)
+            open_rows = [
+                row for row in view["rows"] if row.get("origin") == "log" and row.get("status") == "open"
+            ]
+            card["exceptions"] = view
+            card["open_rows"] = open_rows
+            if open_rows:
+                top = min(open_rows, key=lambda row: severity_rank.get(str(row.get("severity")), 3))
+                card["exception_severity"] = str(top.get("severity") or "")
+            note_result = llm.recorded(MODULE, logic.note_key(str(packet["id"])))
+            card["note_meta"] = _meta(note_result)
+            card["note_decision"] = data.note_decision(state_payload, str(packet["id"]))
+            card["note_blocked"] = data.household_consent(str(packet.get("household_id"))) == "pending"
+        next_stage = logic.stage_next(str(item.get("stage")))
+        card["advance_allowed"] = str(item.get("stage")) in {"document_intake", "exception_review"}
+        card["advance_next_label"] = records.get("stage_labels", {}).get(next_stage, "") if next_stage else ""
+        cards.append(card)
 
     calendar = data.calendar(records)
     next_event = next((item for item in calendar if item.get("is_next")), calendar[0] if calendar else {})
@@ -323,6 +392,8 @@ def _context(request: Request, stage: str, packet_id: str, lp_id: str) -> dict[s
         "summary": summary,
         "lps": lps,
         "visible_lps": visible_lps,
+        "cards": cards,
+        "open_lp": open_lp,
         "selected": selected,
         "selected_lp": selected_lp,
         "packets": packet_list,
@@ -381,7 +452,7 @@ async def extract(request: Request):
         result = logic.run_extraction(packet)
     except RuntimeError as exc:
         audit.record("lpo", "System", "extraction.failed", "packet", packet["id"], str(exc)[:200])
-        return _redirect(_back(packet["id"], error="missing", anchor="fields"))
+        return _redirect(_back(packet["id"], error="missing", anchor="fields", lp_id=str(packet.get("lp_id") or "")))
     if result.is_live:
         usage = result.usage or {}
         detail = (
@@ -390,7 +461,7 @@ async def extract(request: Request):
         )
         audit.record("lpo", "System", "extraction.live", "packet", packet["id"], detail)
     message = "extracted_live" if result.is_live else "extracted"
-    return _redirect(_back(packet["id"], msg=message, anchor="fields"))
+    return _redirect(_back(packet["id"], msg=message, anchor="fields", lp_id=str(packet.get("lp_id") or "")))
 
 
 @router.post("/approve")
@@ -399,24 +470,25 @@ async def approve(request: Request):
     packet = data.packet_by_id(form.get("packet", ""))
     if packet is None:
         return _redirect(_back(error="notfound", anchor="exceptions"))
+    lp_param = str(packet.get("lp_id") or "")
     team = data.team()
     actor, role = logic.parse_actor(form.get("actor", ""), team)
     if not actor:
-        return _redirect(_back(packet["id"], error="actor", anchor="exceptions"))
+        return _redirect(_back(packet["id"], error="actor", anchor="exceptions", lp_id=lp_param))
     records = data.load_records()
     state_payload = data.load_state()
     known = data.known_exceptions(packet)
     resolved = data.resolved_for(state_payload, packet["id"])
     open_kinds = [str(item.get("kind")) for item in known if item.get("kind") not in resolved]
     if not open_kinds:
-        return _redirect(_back(packet["id"], error="resolved", anchor="exceptions"))
+        return _redirect(_back(packet["id"], error="resolved", anchor="exceptions", lp_id=lp_param))
     scope = form.get("scope", "all").strip() or "all"
     if scope == "all":
         chosen = open_kinds
     elif scope in open_kinds:
         chosen = [scope]
     else:
-        return _redirect(_back(packet["id"], error="scope", anchor="exceptions"))
+        return _redirect(_back(packet["id"], error="scope", anchor="exceptions", lp_id=lp_param))
     note = form.get("note", "")[:240]
 
     recording = llm.recorded(MODULE, logic.extraction_key(packet["id"]))
@@ -461,7 +533,7 @@ async def approve(request: Request):
         packet["id"],
         f"{role}. Approved {', '.join(chosen)} for {packet.get('lp_id')}. Evidence {evidence['id']}. {note}".strip(),
     )
-    return _redirect(_back(packet["id"], msg="approved", ev=evidence["id"], anchor="evidence"))
+    return _redirect(_back(packet["id"], msg="approved", ev=evidence["id"], anchor="evidence", lp_id=lp_param))
 
 
 @router.post("/advance")
@@ -478,7 +550,7 @@ async def advance(request: Request):
     team = data.team()
     actor, role = logic.parse_actor(form.get("actor", ""), team)
     if not actor:
-        return _redirect(_back(current_packet["id"] if current_packet else "", error="actor", anchor="review"))
+        return _redirect(_back(current_packet["id"] if current_packet else "", error="actor", anchor="pipeline", lp_id=lp_id))
     state_payload = data.load_state()
     stage = str(state_payload.get("stages", {}).get(lp_id) or lp.get("stage"))
     open_items: list[dict[str, Any]] = []
@@ -496,10 +568,10 @@ async def advance(request: Request):
             lp_id,
             f"{role}. {len(open_items)} open exception{suffix}: {kinds}. Note: {note}".strip(),
         )
-        return _redirect(_back(current_packet["id"] if current_packet else "", error="open", anchor="review"))
+        return _redirect(_back(current_packet["id"] if current_packet else "", error="open", anchor="pipeline", lp_id=lp_id))
     next_stage = logic.stage_next(stage)
     if not next_stage:
-        return _redirect(_back(current_packet["id"] if current_packet else "", error=logic.stage_advance_error(stage), anchor="review"))
+        return _redirect(_back(current_packet["id"] if current_packet else "", error=logic.stage_advance_error(stage), anchor="pipeline", lp_id=lp_id))
     evidence = _evidence_record(
         records,
         current_packet,
@@ -526,7 +598,7 @@ async def advance(request: Request):
         lp_id,
         f"{role}. {stage} to {next_stage}. Evidence {evidence['id']}. {note}".strip(),
     )
-    return _redirect(_back(current_packet["id"] if current_packet else "", msg="advanced", ev=evidence["id"], anchor="evidence"))
+    return _redirect(_back(current_packet["id"] if current_packet else "", msg="advanced", ev=evidence["id"], anchor="evidence", lp_id=lp_id))
 
 
 @router.post("/note")
@@ -535,18 +607,19 @@ async def note_decision(request: Request):
     packet = data.packet_by_id(form.get("packet", ""))
     if packet is None:
         return _redirect(_back(error="notfound", anchor="note"))
+    lp_param = str(packet.get("lp_id") or "")
     team = data.team()
     actor, role = logic.parse_actor(form.get("actor", ""), team)
     if not actor:
-        return _redirect(_back(packet["id"], error="actor", anchor="note"))
+        return _redirect(_back(packet["id"], error="actor", anchor="note", lp_id=lp_param))
     decision = form.get("decision", "")
     if decision not in {"approve", "reject"}:
-        return _redirect(_back(packet["id"], error="notfound", anchor="note"))
+        return _redirect(_back(packet["id"], error="notfound", anchor="note", lp_id=lp_param))
     reason = form.get("reason", "")[:200]
     records = data.load_records()
     state_payload = data.load_state()
     if data.note_decision(state_payload, packet["id"]):
-        return _redirect(_back(packet["id"], error="already", anchor="note"))
+        return _redirect(_back(packet["id"], error="already", anchor="note", lp_id=lp_param))
     consent_status = data.household_consent(packet["household_id"])
     if decision == "approve" and consent_status == "pending":
         audit.record(
@@ -557,12 +630,12 @@ async def note_decision(request: Request):
             packet["id"],
             f"{role}. Consent pending for {packet['household_id']}. Server rejected the approval attempt.",
         )
-        return _redirect(_back(packet["id"], error="consent", anchor="note"))
+        return _redirect(_back(packet["id"], error="consent", anchor="note", lp_id=lp_param))
     if decision == "reject" and len(reason) < 8:
-        return _redirect(_back(packet["id"], error="reason", anchor="note"))
+        return _redirect(_back(packet["id"], error="reason", anchor="note", lp_id=lp_param))
     recording = llm.recorded(MODULE, logic.note_key(packet["id"]))
     if recording is None:
-        return _redirect(_back(packet["id"], error="missing", anchor="note"))
+        return _redirect(_back(packet["id"], error="missing", anchor="note", lp_id=lp_param))
     note = logic.parse_note(recording.text)
     extraction_recording = llm.recorded(MODULE, logic.extraction_key(packet["id"]))
     extraction = logic.parse_extraction(extraction_recording.text) if extraction_recording else None
@@ -605,7 +678,7 @@ async def note_decision(request: Request):
         detail = detail + " " + reason
     audit.record("lpo", actor, action, "packet", packet["id"], detail.strip())
     message = "note_approved" if decision == "approve" else "note_rejected"
-    return _redirect(_back(packet["id"], msg=message, ev=evidence["id"], anchor="evidence"))
+    return _redirect(_back(packet["id"], msg=message, ev=evidence["id"], anchor="evidence", lp_id=lp_param))
 
 
 @router.post("/reset")

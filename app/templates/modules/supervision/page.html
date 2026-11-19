@@ -32,7 +32,7 @@
 {% if flash.message %}<div class="banner banner--ok">{{ flash.message }}</div>{% endif %}
 {% if flash.error %}<div class="banner banner--fail">{{ flash.error }}</div>{% endif %}
 
-<div class="stat-strip">
+<div class="stat-strip sup-stats">
   {% for stat in stats %}
   <div class="stat">
     <span class="stat-label">{{ stat.label }}</span>
@@ -42,407 +42,419 @@
   {% endfor %}
 </div>
 
-<div class="sup-briefs" aria-label="Brief picker">
-  {% for item in briefs %}
-  <a class="sup-brief{% if item.id == selected.id %} is-active{% endif %}" href="/supervision?brief={{ item.id }}"{% if item.id == selected.id %} aria-current="page"{% endif %}>
-    <div class="sup-brief-top">
-      <span class="sup-brief-id">{{ item.id }}</span>
-      <span class="badge badge-{{ item.status.tone }}">{{ item.status.label }}</span>
+<div class="focus-scene focus-scene--blue sup-focus">
+  <div class="focus-intro">
+    <div>
+      <h2 class="focus-title">Briefs</h2>
+      <p class="focus-sub">Pick one brief. The rest stay as rows so a reviewer can move between them.</p>
     </div>
-    <span class="sup-brief-title">{{ item.title }}</span>
-    <span class="sup-brief-meta">{{ item.channel }} · {{ item.cadence }}</span>
-    <span class="sup-brief-foot">
-      {% if item.draft.ok %}{{ item.draft.word_count }} words{% else %}No draft recorded{% endif %}
-      · {{ item.claims|length }} claims · v{{ item.version }}
-    </span>
-    {% if item.status.key == 'blocked' %}<span class="sup-brief-block">Approval blocked by a failing check</span>{% endif %}
-    {% if item.revision %}<span class="sup-brief-block sup-brief-revision">Revision v2 applied from the recording</span>{% endif %}
-  </a>
-  {% endfor %}
-</div>
-
-<div class="sup-grid">
-  <div class="sup-main">
-    <section class="mod-panel sup-panel">
-      <div class="sup-panel-head">
-        <div>
-          <p class="mod-kicker-sm">Brief {{ selected.id }}</p>
-          <h3>{{ selected.title }}</h3>
-        </div>
-        <span class="chip">{{ selected.channel }}</span>
-      </div>
-      <div class="sup-panel-body">
-        <p class="sup-objective">{{ selected.objective }}</p>
-        <div class="sup-split">
-          <div>
-            <p class="mini-label">Key points</p>
-            <ol class="sup-points">
-              {% for point in selected.key_points %}<li>{{ point }}</li>{% endfor %}
-            </ol>
-          </div>
-          <div>
-            <p class="mini-label">Constraints</p>
-            <dl class="kv sup-kv">
-              <dt>Audience</dt><dd>{{ selected.audience_label }}</dd>
-              <dt>Length</dt><dd>{{ selected.word_limit }}</dd>
-              <dt>Tone</dt><dd>{{ selected.tone }}</dd>
-              <dt>Disclosures</dt><dd>{% for item in selected.required_disclosures %}{{ item.id }}{% if not loop.last %}, {% endif %}{% endfor %}</dd>
-              <dt>Fact sheet</dt><dd>{{ fact_sheet.id }} · v{{ fact_sheet.version }}</dd>
-            </dl>
-          </div>
-        </div>
-        {% if selected.must_use %}
-        <div class="sup-supplied">
-          <p class="mini-label">Adviser-supplied line, to be used word for word</p>
-          {% for line in selected.must_use %}<p class="sup-quote">{{ line }}</p>{% endfor %}
-          <p class="mod-note">Not on the fact sheet. The classifier should type it, and the gate should refuse it.</p>
-        </div>
-        {% endif %}
-        {% if selected.seeded_risk %}<p class="mod-note sup-seeded">{{ selected.seeded_risk }}</p>{% endif %}
-      </div>
-    </section>
-
-    <section class="mod-panel sup-panel" id="draft">
-      <div class="sup-panel-head">
-        <div>
-          <p class="mod-kicker-sm">Draft</p>
-          <h3>{{ 'Recorded model output' if selected.draft.ok else 'Not recorded yet' }}</h3>
-        </div>
-        <div class="head-badges">
-          <span class="badge badge-neutral">v{{ selected.version }}</span>
-          {% if selected.draft.ok and selected.draft.limit %}
-          <span class="badge badge-{{ selected.draft.limit.tone }}">{{ selected.draft.limit.text }}</span>
-          {% endif %}
-        </div>
-      </div>
-      {% if selected.draft.ok %}
-      <div class="sup-panel-body">
-        {% if selected.draft.headline %}<p class="sup-headline">{{ selected.draft.headline }}</p>{% endif %}
-        <div class="sup-body">
-          {% for paragraph in selected.draft.paragraphs %}<p>{{ paragraph|safe }}</p>{% endfor %}
-        </div>
-        {% if selected.draft.revision_note %}
-        <p class="mod-note sup-revision-note">Revision note: {{ selected.draft.revision_note }}</p>
-        {% endif %}
-      </div>
-      <div class="sup-disc-attached">
-        <p class="mini-label">Disclosures attached, text is added from the fact sheet</p>
-        {% if selected.draft.disclosures %}
-        {% for item in selected.draft.disclosures %}
-        <p><span class="sup-source">{{ item.id }}</span> {{ item.text }}{% if not item.known %} <span class="badge badge-danger">Unknown id</span>{% endif %}</p>
-        {% endfor %}
-        {% else %}
-        <p class="mod-note">No disclosures returned with this draft.</p>
-        {% endif %}
-      </div>
-      <div class="sup-draft-meta">
-        <span>Generated text, not advice. Nothing is sent.</span>
-        {% if selected.draft.provenance %}
-        <span>{{ selected.draft.provenance.model }} · {{ selected.draft.provenance.mode }} · {{ selected.draft.provenance.created_display }}</span>
-        {% endif %}
-        <span class="mono">{{ selected.draft.key }}</span>
-      </div>
-      {% else %}
-      <div class="sup-panel-body">
-        <div class="banner banner--warn">
-          <strong>No recording for this draft.</strong>
-          <p>{{ selected.draft.error }}</p>
-        </div>
-        <p class="mod-note">Run <code>SAVVY_LLM_MODE=live python3 scripts/record_supervision.py</code> from the repository root. The page never invents copy when a recording is missing.</p>
-      </div>
-      {% endif %}
-    </section>
-
-    <section class="mod-panel sup-panel" id="claims">
-      <div class="sup-panel-head">
-        <div>
-          <p class="mod-kicker-sm">Claims</p>
-          <h3>Claim, type, support, source</h3>
-        </div>
-        <div class="head-badges">
-          <span class="badge badge-neutral">{{ selected.claims|length }} claims</span>
-          {% if selected.claims_risk != 'unknown' %}<span class="badge badge-outline">model risk {{ selected.claims_risk }}</span>{% endif %}
-        </div>
-      </div>
-      {% if selected.claims %}
-      <div class="sup-claims-wrap">
-        <table class="sup-claims">
-          <thead>
-            <tr>
-              <th scope="col" class="c-num">#</th>
-              <th scope="col">Claim</th>
-              <th scope="col" class="c-type">Type</th>
-              <th scope="col" class="c-support">Support</th>
-              <th scope="col" class="c-source">Source</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for claim in selected.claims %}
-            <tr>
-              <td class="c-num"><span class="sup-claim-id">{{ claim.label }}</span></td>
-              <td>
-                <span class="sup-claim-text">{{ claim.text }}</span>
-                {% if claim.note %}<span class="sup-claim-note">{{ claim.note }}</span>{% endif %}
-              </td>
-              <td><span class="badge badge-{{ claim.type_tone }}">{{ claim.type_label }}</span></td>
-              <td><span class="badge badge-{{ claim.support_tone }}">{{ claim.support_label }}</span></td>
-              <td>
-                <span class="sup-source"{% if claim.source_statement %} title="{{ claim.source_statement }}"{% endif %}>{{ claim.source_label }}</span>
-                {% if claim.source_kind == 'disclosure' %}<span class="sup-source-kind">disclosure</span>{% elif claim.source_kind == 'none' and claim.support == 'unsupported' %}<span class="sup-source-kind sup-source-kind--none">no source</span>{% endif %}
-              </td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-      <div class="sup-panel-foot">
-        Every percentage and currency figure is checked against the cited fact in code. A supported label that the source does not carry is downgraded before the policy checks run.
-      </div>
-      {% else %}
-      <div class="sup-panel-body">
-        <p class="empty">{{ selected.claims_error or 'No claim classification is recorded for this version.' }}</p>
-      </div>
-      {% endif %}
-    </section>
-
-    <section class="mod-panel sup-panel" id="checks">
-      <div class="sup-panel-head">
-        <div>
-          <p class="mod-kicker-sm">Policy checks</p>
-          <h3>{{ selected.policy.counts.pass }} pass, {{ selected.policy.counts.warn }} warn, {{ selected.policy.counts.fail }} fail</h3>
-        </div>
-        <span class="badge badge-{{ 'danger' if selected.policy.blocked else ('warn' if selected.policy.counts.warn else 'success') }}">{{ 'Blocked' if selected.policy.blocked else 'Not blocked' }}</span>
-      </div>
-      <div class="sup-panel-body">
-        <div class="sup-checks">
-          {% for check in selected.policy.checks %}
-          <div class="sup-check">
-            <span class="badge badge-{{ 'danger' if check.result == 'fail' else ('warn' if check.result == 'warn' else 'success') }}">{{ check.result|capitalize }}</span>
-            <div>
-              <span class="sup-check-name">{{ check.name }}</span>
-              <span class="sup-check-detail">{{ check.detail }}</span>
-            </div>
-          </div>
-          {% endfor %}
-        </div>
-      </div>
-      <div class="sup-panel-foot">
-        A fail blocks the approval POST on the server, not only the button. Warnings do not block. Calculated risk: {{ selected.policy.risk_computed }}. Model risk: {{ selected.policy.risk_model }}.
-      </div>
-    </section>
+    <span class="focus-hint">Open one brief at a time</span>
   </div>
+  <div class="focus-list" data-focus-list data-focus-param="brief">
+    {% for brief in briefs %}
+    <article class="focus-card{% if brief.id == selected.id %} is-open{% endif %}" data-focus-card data-focus-id="{{ brief.id }}">
+      <a class="focus-summary" href="/supervision?brief={{ brief.id }}" data-focus-toggle data-focus-scroll aria-expanded="{{ 'true' if brief.id == selected.id else 'false' }}" aria-controls="focus-body-{{ brief.id }}">
+        <span class="focus-avatar sup-focus-id">{{ brief.id }}</span>
+        <span>
+          <span class="focus-name">{{ brief.title }}</span>
+          <span class="focus-meta">{{ brief.channel }} &middot; {{ brief.cadence }} &middot; {{ brief.claims|length }} claims &middot; v{{ brief.version }}</span>
+          <span class="focus-badges">
+            <span class="badge badge-{{ brief.status.tone }}">{{ brief.status.label }}</span>
+            {% if brief.status.key == 'blocked' %}<span class="sup-flag sup-flag--block">Approval blocked by a failing check</span>{% endif %}
+            {% if brief.revision %}<span class="sup-flag sup-flag--revision">Revision v2 applied from the recording</span>{% endif %}
+          </span>
+        </span>
+        <span class="focus-stat">{% if brief.draft.ok %}{{ brief.draft.word_count }}<small>words</small>{% else %}No draft<small>recorded</small>{% endif %}</span>
+        <span class="focus-chevron" aria-hidden="true">&#9662;</span>
+      </a>
+      <div class="focus-body" id="focus-body-{{ brief.id }}" data-focus-body{% if brief.id != selected.id %} hidden{% endif %}>
+          <div class="sup-grid">
+            <div class="sup-main">
+              <section class="mod-panel sup-panel">
+                <div class="sup-panel-head">
+                  <div>
+                    <p class="mod-kicker-sm">Brief {{ brief.id }}</p>
+                    <h3>{{ brief.title }}</h3>
+                  </div>
+                  <span class="chip">{{ brief.channel }}</span>
+                </div>
+                <div class="sup-panel-body">
+                  <p class="sup-objective">{{ brief.objective }}</p>
+                  <div class="sup-split">
+                    <div>
+                      <p class="mini-label">Key points</p>
+                      <ol class="sup-points">
+                        {% for point in brief.key_points %}<li>{{ point }}</li>{% endfor %}
+                      </ol>
+                    </div>
+                    <div>
+                      <p class="mini-label">Constraints</p>
+                      <dl class="kv sup-kv">
+                        <dt>Audience</dt><dd>{{ brief.audience_label }}</dd>
+                        <dt>Length</dt><dd>{{ brief.word_limit }}</dd>
+                        <dt>Tone</dt><dd>{{ brief.tone }}</dd>
+                        <dt>Disclosures</dt><dd>{% for item in brief.required_disclosures %}{{ item.id }}{% if not loop.last %}, {% endif %}{% endfor %}</dd>
+                        <dt>Fact sheet</dt><dd>{{ fact_sheet.id }} · v{{ fact_sheet.version }}</dd>
+                      </dl>
+                    </div>
+                  </div>
+                  {% if brief.must_use %}
+                  <div class="sup-supplied">
+                    <p class="mini-label">Adviser-supplied line, to be used word for word</p>
+                    {% for line in brief.must_use %}<p class="sup-quote">{{ line }}</p>{% endfor %}
+                    <p class="mod-note">Not on the fact sheet. The classifier should type it, and the gate should refuse it.</p>
+                  </div>
+                  {% endif %}
+                  {% if brief.seeded_risk %}<p class="mod-note sup-seeded">{{ brief.seeded_risk }}</p>{% endif %}
+                </div>
+              </section>
 
-  <aside class="sup-side">
-    <section class="mod-panel sup-panel sup-evidence" id="evidence">
-      <div class="sup-panel-head">
-        <div>
-          <p class="mod-kicker-sm">Evidence file</p>
-          <h3>{{ 'Sealed record' if selected.status.key == 'approved' else ('Rejected record' if selected.status.key == 'rejected' else 'Not yet sealed') }}</h3>
-        </div>
-        <span class="badge badge-{{ selected.status.tone }}">{{ selected.status.label }}</span>
-      </div>
+              <section class="mod-panel sup-panel" id="draft-{{ brief.id }}">
+                <div class="sup-panel-head">
+                  <div>
+                    <p class="mod-kicker-sm">Draft</p>
+                    <h3>{{ 'Recorded model output' if brief.draft.ok else 'Not recorded yet' }}</h3>
+                  </div>
+                  <div class="head-badges">
+                    <span class="badge badge-neutral">v{{ brief.version }}</span>
+                    {% if brief.draft.ok and brief.draft.limit %}
+                    <span class="badge badge-{{ brief.draft.limit.tone }}">{{ brief.draft.limit.text }}</span>
+                    {% endif %}
+                  </div>
+                </div>
+                {% if brief.draft.ok %}
+                <div class="sup-panel-body">
+                  {% if brief.draft.headline %}<p class="sup-headline">{{ brief.draft.headline }}</p>{% endif %}
+                  <div class="sup-body">
+                    {% for paragraph in brief.draft.paragraphs %}<p>{{ paragraph|safe }}</p>{% endfor %}
+                  </div>
+                  {% if brief.draft.revision_note %}
+                  <p class="mod-note sup-revision-note">Revision note: {{ brief.draft.revision_note }}</p>
+                  {% endif %}
+                </div>
+                <div class="sup-disc-attached">
+                  <p class="mini-label">Disclosures attached, text is added from the fact sheet</p>
+                  {% if brief.draft.disclosures %}
+                  {% for item in brief.draft.disclosures %}
+                  <p><span class="sup-source">{{ item.id }}</span> {{ item.text }}{% if not item.known %} <span class="badge badge-danger">Unknown id</span>{% endif %}</p>
+                  {% endfor %}
+                  {% else %}
+                  <p class="mod-note">No disclosures returned with this draft.</p>
+                  {% endif %}
+                </div>
+                <div class="sup-draft-meta">
+                  <span>Generated text, not advice. Nothing is sent.</span>
+                  {% if brief.draft.provenance %}
+                  <span>{{ brief.draft.provenance.model }} · {{ brief.draft.provenance.mode }} · {{ brief.draft.provenance.created_display }}</span>
+                  {% endif %}
+                  <span class="mono">{{ brief.draft.key }}</span>
+                </div>
+                {% else %}
+                <div class="sup-panel-body">
+                  <div class="banner banner--warn">
+                    <strong>No recording for this draft.</strong>
+                    <p>{{ brief.draft.error }}</p>
+                  </div>
+                  <p class="mod-note">Run <code>SAVVY_LLM_MODE=live python3 scripts/record_supervision.py</code> from the repository root. The page never invents copy when a recording is missing.</p>
+                </div>
+                {% endif %}
+              </section>
 
-      {% if selected.status.key == 'approved' %}
-      {% set e = selected.evidence %}
-      <dl class="kv sup-evidence-grid">
-        <dt>Approver</dt><dd>{{ e.approver }}</dd>
-        <dt>Role</dt><dd>{{ e.role }}</dd>
-        <dt>Timestamp</dt><dd>{{ e.approved_display }}</dd>
-        <dt>Version</dt><dd>v{{ e.version }}</dd>
-        <dt>Audience</dt><dd>{{ e.audience }}</dd>
-        <dt>Channel</dt><dd>{{ e.channel }}</dd>
-        <dt>Disclosures</dt><dd>{% for item in e.disclosures %}{{ item.id }}{% if not loop.last %}, {% endif %}{% endfor %}</dd>
-        <dt>Retention</dt><dd>{{ e.retention_display }} (5 years)</dd>
-        <dt>Artifact hash</dt><dd class="mono sup-hash" title="{{ e.artifact_hash }}">{{ e.hash_short }}...</dd>
-        <dt>Model</dt><dd>{{ e.model }} · {{ e.model_mode }}</dd>
-        {% if e.note %}<dt>Note</dt><dd>{{ e.note }}</dd>{% endif %}
-      </dl>
-      <div class="sup-evidence-foot">
-        <span class="badge badge-success">Sealed</span>
-        <a class="text-link" href="/supervision/evidence/{{ selected.id }}.json" target="_blank" rel="noopener">Open the evidence JSON</a>
-      </div>
-      {% elif selected.status.key == 'rejected' %}
-      {% set e = selected.evidence %}
-      <dl class="kv sup-evidence-grid">
-        <dt>Approver</dt><dd>{{ e.approver }}</dd>
-        <dt>Role</dt><dd>{{ e.role }}</dd>
-        <dt>Timestamp</dt><dd>{{ e.rejected_display }}</dd>
-        <dt>Version</dt><dd>v{{ e.version }}</dd>
-        <dt>Reason</dt><dd>{{ e.reason }}</dd>
-      </dl>
-      <div class="sup-panel-foot">A rejected brief is closed. Reset the demo state to review it again.</div>
-      {% elif selected.draft.ok %}
-      <dl class="kv sup-evidence-grid">
-        <dt>Approver</dt><dd class="muted">Pending</dd>
-        <dt>Role</dt><dd class="muted">Pending</dd>
-        <dt>Timestamp</dt><dd class="muted">Written on approval</dd>
-        <dt>Version</dt><dd>v{{ selected.version }}</dd>
-        <dt>Audience</dt><dd>{{ selected.audience_label }}</dd>
-        <dt>Channel</dt><dd>{{ selected.channel }}</dd>
-        <dt>Disclosures</dt><dd>{% for item in selected.draft.disclosures %}{{ item.id }}{% if not loop.last %}, {% endif %}{% endfor %}</dd>
-        {% if selected.preview %}
-        <dt>Retention</dt><dd>{{ selected.preview.retention_display }} <span class="muted">(target)</span></dd>
-        <dt>Artifact hash</dt><dd class="mono sup-hash" title="{{ selected.preview.hash }}">{{ selected.preview.hash_short }}... <span class="muted">(preview)</span></dd>
-        {% endif %}
-      </dl>
+              <section class="mod-panel sup-panel" id="claims-{{ brief.id }}">
+                <div class="sup-panel-head">
+                  <div>
+                    <p class="mod-kicker-sm">Claims</p>
+                    <h3>Claim, type, support, source</h3>
+                  </div>
+                  <div class="head-badges">
+                    <span class="badge badge-neutral">{{ brief.claims|length }} claims</span>
+                    {% if brief.claims_risk != 'unknown' %}<span class="badge badge-outline">model risk {{ brief.claims_risk }}</span>{% endif %}
+                  </div>
+                </div>
+                {% if brief.claims %}
+                <div class="sup-claims-wrap">
+                  <table class="sup-claims">
+                    <thead>
+                      <tr>
+                        <th scope="col" class="c-num">#</th>
+                        <th scope="col">Claim</th>
+                        <th scope="col" class="c-type">Type</th>
+                        <th scope="col" class="c-support">Support</th>
+                        <th scope="col" class="c-source">Source</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for claim in brief.claims %}
+                      <tr>
+                        <td class="c-num"><span class="sup-claim-id">{{ claim.label }}</span></td>
+                        <td>
+                          <span class="sup-claim-text">{{ claim.text }}</span>
+                          {% if claim.note %}<span class="sup-claim-note">{{ claim.note }}</span>{% endif %}
+                        </td>
+                        <td><span class="badge badge-{{ claim.type_tone }}">{{ claim.type_label }}</span></td>
+                        <td><span class="badge badge-{{ claim.support_tone }}">{{ claim.support_label }}</span></td>
+                        <td>
+                          <span class="sup-source"{% if claim.source_statement %} title="{{ claim.source_statement }}"{% endif %}>{{ claim.source_label }}</span>
+                          {% if claim.source_kind == 'disclosure' %}<span class="sup-source-kind">disclosure</span>{% elif claim.source_kind == 'none' and claim.support == 'unsupported' %}<span class="sup-source-kind sup-source-kind--none">no source</span>{% endif %}
+                        </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+                <div class="sup-panel-foot">
+                  Every percentage and currency figure is checked against the cited fact in code. A supported label that the source does not carry is downgraded before the policy checks run.
+                </div>
+                {% else %}
+                <div class="sup-panel-body">
+                  <p class="empty">{{ brief.claims_error or 'No claim classification is recorded for this version.' }}</p>
+                </div>
+                {% endif %}
+              </section>
 
-      {% if selected.policy.blocked %}
-      <div class="sup-panel-body sup-blocked">
-        <div class="banner banner--fail">
-          <strong>Approval blocked on the server</strong>
-          <p>{% for check in selected.policy.blocking %}{{ check.name }}{% if not loop.last %}, {% endif %}{% endfor %}. The approve route runs the same checks and refuses the request.</p>
-        </div>
-        <form method="post" action="/supervision/revise" class="sup-form">
-          <input type="hidden" name="brief" value="{{ selected.id }}">
-          <div class="sup-field">
-            <label for="revise-approver">Approver <span class="sup-req">required</span></label>
-            <select id="revise-approver" name="approver" required>
-              <option value="" selected disabled>Select an approver</option>
-              {% for person in approvers %}
-              <option value="{{ person.id }}"{% if not person.selectable %} disabled{% endif %}>{{ person.label }}{% if not person.selectable %} (self-review refused){% endif %}</option>
-              {% endfor %}
-            </select>
-          </div>
-          <div class="btn-row">
-            {% if selected.has_revision and not selected.revision %}
-            <button type="submit" class="btn btn-primary">Apply recorded revision (v2)</button>
-            <button type="submit" class="btn" formaction="/supervision/return">Return to adviser</button>
-            {% else %}
-            <button type="submit" class="btn" formaction="/supervision/return">Return to adviser</button>
-            {% endif %}
-          </div>
-          <p class="form-hint">The revision was recorded in a live call. Applying it replaces v1 with v2 and re-runs the claim classifier on the new text. Returning writes an audit event and leaves the draft blocked.</p>
-        </form>
-      </div>
-      {% else %}
-      <form method="post" action="/supervision/approve" class="sup-form">
-        <input type="hidden" name="brief" value="{{ selected.id }}">
-        <div class="sup-field">
-          <label for="approve-approver">Approver <span class="sup-req">required</span></label>
-          <select id="approve-approver" name="approver" required>
-            <option value="" selected disabled>Select an approver</option>
-            {% for person in approvers %}
-            <option value="{{ person.id }}"{% if not person.selectable %} disabled{% endif %}>{{ person.label }}{% if not person.selectable %} (self-review refused){% endif %}</option>
-            {% endfor %}
-          </select>
-          <p class="form-hint">The drafting adviser cannot approve. The server refuses that approval even if the form is edited.</p>
-        </div>
-        <div class="sup-field">
-          <label for="approve-audience">Audience</label>
-          <select id="approve-audience" name="audience">
-            {% for option in selected.audience_options %}
-            <option value="{{ option.id }}"{% if option.id == selected.default_audience.id %} selected{% endif %}{% if not option.selectable %} disabled{% endif %}>{{ option.label }}{% if not option.selectable %} (refused){% endif %}</option>
-            {% endfor %}
-          </select>
-          <p class="form-hint">{{ selected.audience_note }}</p>
-        </div>
-        <div class="sup-field">
-          <label for="approve-note">Approval note <span class="muted">(optional)</span></label>
-          <input id="approve-note" name="note" type="text" maxlength="200" placeholder="What you checked">
-        </div>
-        <button type="submit" class="btn btn-primary btn-block">Approve and seal evidence</button>
-      </form>
-
-      <form method="post" action="/supervision/reject" class="sup-form sup-form--reject">
-        <input type="hidden" name="brief" value="{{ selected.id }}">
-        <div class="sup-field">
-          <label for="reject-approver">Reject as <span class="sup-req">required</span></label>
-          <select id="reject-approver" name="approver" required>
-            <option value="" selected disabled>Select an approver</option>
-            {% for person in approvers %}
-            <option value="{{ person.id }}"{% if not person.selectable %} disabled{% endif %}>{{ person.label }}{% if not person.selectable %} (self-review refused){% endif %}</option>
-            {% endfor %}
-          </select>
-        </div>
-        <div class="sup-field">
-          <label for="reject-reason">Reason <span class="sup-req">required</span></label>
-          <input id="reject-reason" name="reason" type="text" maxlength="200" required placeholder="Why this is not ready">
-        </div>
-        <button type="submit" class="btn btn-danger btn-block">Reject and record</button>
-      </form>
-      {% endif %}
-
-      {% else %}
-      <div class="sup-panel-body">
-        <div class="banner banner--warn">
-          <strong>Nothing to approve yet.</strong>
-          <p>The draft and its claim classification have to be recorded before an evidence file can be sealed.</p>
-        </div>
-      </div>
-      {% endif %}
-    </section>
-
-    <section class="mod-panel sup-panel" id="facts">
-      <div class="sup-panel-head">
-        <div>
-          <p class="mod-kicker-sm">Source</p>
-          <h3>Approved fact sheet</h3>
-        </div>
-        <span class="chip">{{ fact_sheet.as_of }}</span>
-      </div>
-      <div class="sup-panel-body sup-fact-intro">
-        <p class="mod-note">{{ fact_sheet.title }} · v{{ fact_sheet.version }} · approved by {{ fact_sheet.approved_by }}. Review due {{ fact_sheet.review_due }}.</p>
-      </div>
-      <div class="sup-facts">
-        {% for fact in fact_sheet.facts %}
-        <div class="sup-fact">
-          <span class="sup-fact-id">{{ fact.id }}</span>
-          <div>
-            <span class="sup-fact-label">{{ fact.label }}</span>
-            <span class="sup-fact-text">{{ fact.statement }}</span>
-            <span class="sup-fact-values">source: {{ fact.source }} · {{ fact.as_of }}</span>
-          </div>
-        </div>
-        {% endfor %}
-      </div>
-      <details class="sup-details">
-        <summary>Disclosure requirements ({{ disclosures|length }})</summary>
-        <div class="sup-disc-list">
-          {% for item in disclosures %}
-          <div class="sup-disc">
-            <div class="sup-disc-head">
-              <span class="sup-source">{{ item.id }}</span>
-              <span class="sup-disc-label">{{ item.label }}</span>
-              {% if item.id in selected.required_disclosures|map(attribute='id')|list %}<span class="badge badge-accent">Required</span>{% endif %}
-              {% if item.id in selected.draft.disclosures|map(attribute='id')|list %}<span class="badge badge-success">Attached</span>{% endif %}
+              <section class="mod-panel sup-panel" id="checks-{{ brief.id }}">
+                <div class="sup-panel-head">
+                  <div>
+                    <p class="mod-kicker-sm">Policy checks</p>
+                    <h3>{{ brief.policy.counts.pass }} pass, {{ brief.policy.counts.warn }} warn, {{ brief.policy.counts.fail }} fail</h3>
+                  </div>
+                  <span class="badge badge-{{ 'danger' if brief.policy.blocked else ('warn' if brief.policy.counts.warn else 'success') }}">{{ 'Blocked' if brief.policy.blocked else 'Not blocked' }}</span>
+                </div>
+                <div class="sup-panel-body">
+                  <div class="sup-checks">
+                    {% for check in brief.policy.checks %}
+                    <div class="sup-check">
+                      <span class="badge badge-{{ 'danger' if check.result == 'fail' else ('warn' if check.result == 'warn' else 'success') }}">{{ check.result|capitalize }}</span>
+                      <div>
+                        <span class="sup-check-name">{{ check.name }}</span>
+                        <span class="sup-check-detail">{{ check.detail }}</span>
+                      </div>
+                    </div>
+                    {% endfor %}
+                  </div>
+                </div>
+                <div class="sup-panel-foot">
+                  A fail blocks the approval POST on the server, not only the button. Warnings do not block. Calculated risk: {{ brief.policy.risk_computed }}. Model risk: {{ brief.policy.risk_model }}.
+                </div>
+              </section>
             </div>
-            <p>{{ item.text }}</p>
-          </div>
-          {% endfor %}
-        </div>
-      </details>
-      <div class="sup-panel-foot">{{ fact_sheet.note }}</div>
-    </section>
 
-    <section class="mod-panel sup-panel" id="audience">
-      <div class="sup-panel-head">
-        <div>
-          <p class="mod-kicker-sm">Consent</p>
-          <h3>Audience and consent</h3>
-        </div>
-        <span class="chip">{{ selected.default_audience.count }} of {{ household_total }}</span>
+            <aside class="sup-side">
+              <section class="mod-panel sup-panel sup-evidence" id="evidence-{{ brief.id }}">
+                <div class="sup-panel-head">
+                  <div>
+                    <p class="mod-kicker-sm">Evidence file</p>
+                    <h3>{{ 'Sealed record' if brief.status.key == 'approved' else ('Rejected record' if brief.status.key == 'rejected' else 'Not yet sealed') }}</h3>
+                  </div>
+                  <span class="badge badge-{{ brief.status.tone }}">{{ brief.status.label }}</span>
+                </div>
+
+                {% if brief.status.key == 'approved' %}
+                {% set e = brief.evidence %}
+                <dl class="kv sup-evidence-grid">
+                  <dt>Approver</dt><dd>{{ e.approver }}</dd>
+                  <dt>Role</dt><dd>{{ e.role }}</dd>
+                  <dt>Timestamp</dt><dd>{{ e.approved_display }}</dd>
+                  <dt>Version</dt><dd>v{{ e.version }}</dd>
+                  <dt>Audience</dt><dd>{{ e.audience }}</dd>
+                  <dt>Channel</dt><dd>{{ e.channel }}</dd>
+                  <dt>Disclosures</dt><dd>{% for item in e.disclosures %}{{ item.id }}{% if not loop.last %}, {% endif %}{% endfor %}</dd>
+                  <dt>Retention</dt><dd>{{ e.retention_display }} (5 years)</dd>
+                  <dt>Artifact hash</dt><dd class="mono sup-hash" title="{{ e.artifact_hash }}">{{ e.hash_short }}...</dd>
+                  <dt>Model</dt><dd>{{ e.model }} · {{ e.model_mode }}</dd>
+                  {% if e.note %}<dt>Note</dt><dd>{{ e.note }}</dd>{% endif %}
+                </dl>
+                <div class="sup-evidence-foot">
+                  <span class="badge badge-success">Sealed</span>
+                  <a class="text-link" href="/supervision/evidence/{{ brief.id }}.json" target="_blank" rel="noopener">Open the evidence JSON</a>
+                </div>
+                {% elif brief.status.key == 'rejected' %}
+                {% set e = brief.evidence %}
+                <dl class="kv sup-evidence-grid">
+                  <dt>Approver</dt><dd>{{ e.approver }}</dd>
+                  <dt>Role</dt><dd>{{ e.role }}</dd>
+                  <dt>Timestamp</dt><dd>{{ e.rejected_display }}</dd>
+                  <dt>Version</dt><dd>v{{ e.version }}</dd>
+                  <dt>Reason</dt><dd>{{ e.reason }}</dd>
+                </dl>
+                <div class="sup-panel-foot">A rejected brief is closed. Reset the demo state to review it again.</div>
+                {% elif brief.draft.ok %}
+                <dl class="kv sup-evidence-grid">
+                  <dt>Approver</dt><dd class="muted">Pending</dd>
+                  <dt>Role</dt><dd class="muted">Pending</dd>
+                  <dt>Timestamp</dt><dd class="muted">Written on approval</dd>
+                  <dt>Version</dt><dd>v{{ brief.version }}</dd>
+                  <dt>Audience</dt><dd>{{ brief.audience_label }}</dd>
+                  <dt>Channel</dt><dd>{{ brief.channel }}</dd>
+                  <dt>Disclosures</dt><dd>{% for item in brief.draft.disclosures %}{{ item.id }}{% if not loop.last %}, {% endif %}{% endfor %}</dd>
+                  {% if brief.preview %}
+                  <dt>Retention</dt><dd>{{ brief.preview.retention_display }} <span class="muted">(target)</span></dd>
+                  <dt>Artifact hash</dt><dd class="mono sup-hash" title="{{ brief.preview.hash }}">{{ brief.preview.hash_short }}... <span class="muted">(preview)</span></dd>
+                  {% endif %}
+                </dl>
+
+                {% if brief.policy.blocked %}
+                <div class="sup-panel-body sup-blocked">
+                  <div class="banner banner--fail">
+                    <strong>Approval blocked on the server</strong>
+                    <p>{% for check in brief.policy.blocking %}{{ check.name }}{% if not loop.last %}, {% endif %}{% endfor %}. The approve route runs the same checks and refuses the request.</p>
+                  </div>
+                  <form method="post" action="/supervision/revise" class="sup-form">
+                    <input type="hidden" name="brief" value="{{ brief.id }}">
+                    <div class="sup-field">
+                      <label for="revise-approver-{{ brief.id }}">Approver <span class="sup-req">required</span></label>
+                      <select id="revise-approver-{{ brief.id }}" name="approver" required>
+                        <option value="" selected disabled>Select an approver</option>
+                        {% for person in approvers %}
+                        <option value="{{ person.id }}"{% if not person.selectable %} disabled{% endif %}>{{ person.label }}{% if not person.selectable %} (self-review refused){% endif %}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                    <div class="btn-row">
+                      {% if brief.has_revision and not brief.revision %}
+                      <button type="submit" class="btn btn-primary">Apply recorded revision (v2)</button>
+                      <button type="submit" class="btn" formaction="/supervision/return">Return to adviser</button>
+                      {% else %}
+                      <button type="submit" class="btn" formaction="/supervision/return">Return to adviser</button>
+                      {% endif %}
+                    </div>
+                    <p class="form-hint">The revision was recorded in a live call. Applying it replaces v1 with v2 and re-runs the claim classifier on the new text. Returning writes an audit event and leaves the draft blocked.</p>
+                  </form>
+                </div>
+                {% else %}
+                <form method="post" action="/supervision/approve" class="sup-form">
+                  <input type="hidden" name="brief" value="{{ brief.id }}">
+                  <div class="sup-field">
+                    <label for="approve-approver-{{ brief.id }}">Approver <span class="sup-req">required</span></label>
+                    <select id="approve-approver-{{ brief.id }}" name="approver" required>
+                      <option value="" selected disabled>Select an approver</option>
+                      {% for person in approvers %}
+                      <option value="{{ person.id }}"{% if not person.selectable %} disabled{% endif %}>{{ person.label }}{% if not person.selectable %} (self-review refused){% endif %}</option>
+                      {% endfor %}
+                    </select>
+                    <p class="form-hint">The drafting adviser cannot approve. The server refuses that approval even if the form is edited.</p>
+                  </div>
+                  <div class="sup-field">
+                    <label for="approve-audience-{{ brief.id }}">Audience</label>
+                    <select id="approve-audience-{{ brief.id }}" name="audience">
+                      {% for option in brief.audience_options %}
+                      <option value="{{ option.id }}"{% if option.id == brief.default_audience.id %} selected{% endif %}{% if not option.selectable %} disabled{% endif %}>{{ option.label }}{% if not option.selectable %} (refused){% endif %}</option>
+                      {% endfor %}
+                    </select>
+                    <p class="form-hint">{{ brief.audience_note }}</p>
+                  </div>
+                  <div class="sup-field">
+                    <label for="approve-note-{{ brief.id }}">Approval note <span class="muted">(optional)</span></label>
+                    <input id="approve-note-{{ brief.id }}" name="note" type="text" maxlength="200" placeholder="What you checked">
+                  </div>
+                  <button type="submit" class="btn btn-primary btn-block">Approve and seal evidence</button>
+                </form>
+
+                <form method="post" action="/supervision/reject" class="sup-form sup-form--reject">
+                  <input type="hidden" name="brief" value="{{ brief.id }}">
+                  <div class="sup-field">
+                    <label for="reject-approver-{{ brief.id }}">Reject as <span class="sup-req">required</span></label>
+                    <select id="reject-approver-{{ brief.id }}" name="approver" required>
+                      <option value="" selected disabled>Select an approver</option>
+                      {% for person in approvers %}
+                      <option value="{{ person.id }}"{% if not person.selectable %} disabled{% endif %}>{{ person.label }}{% if not person.selectable %} (self-review refused){% endif %}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                  <div class="sup-field">
+                    <label for="reject-reason-{{ brief.id }}">Reason <span class="sup-req">required</span></label>
+                    <input id="reject-reason-{{ brief.id }}" name="reason" type="text" maxlength="200" required placeholder="Why this is not ready">
+                  </div>
+                  <button type="submit" class="btn btn-danger btn-block">Reject and record</button>
+                </form>
+                {% endif %}
+
+                {% else %}
+                <div class="sup-panel-body">
+                  <div class="banner banner--warn">
+                    <strong>Nothing to approve yet.</strong>
+                    <p>The draft and its claim classification have to be recorded before an evidence file can be sealed.</p>
+                  </div>
+                </div>
+                {% endif %}
+              </section>
+
+              <section class="mod-panel sup-panel" id="facts-{{ brief.id }}">
+                <div class="sup-panel-head">
+                  <div>
+                    <p class="mod-kicker-sm">Source</p>
+                    <h3>Approved fact sheet</h3>
+                  </div>
+                  <span class="chip">{{ fact_sheet.as_of }}</span>
+                </div>
+                <div class="sup-panel-body sup-fact-intro">
+                  <p class="mod-note">{{ fact_sheet.title }} · v{{ fact_sheet.version }} · approved by {{ fact_sheet.approved_by }}. Review due {{ fact_sheet.review_due }}.</p>
+                </div>
+                <div class="sup-facts">
+                  {% for fact in fact_sheet.facts %}
+                  <div class="sup-fact">
+                    <span class="sup-fact-id">{{ fact.id }}</span>
+                    <div>
+                      <span class="sup-fact-label">{{ fact.label }}</span>
+                      <span class="sup-fact-text">{{ fact.statement }}</span>
+                      <span class="sup-fact-values">source: {{ fact.source }} · {{ fact.as_of }}</span>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+                <details class="sup-details">
+                  <summary>Disclosure requirements ({{ disclosures|length }})</summary>
+                  <div class="sup-disc-list">
+                    {% for item in disclosures %}
+                    <div class="sup-disc">
+                      <div class="sup-disc-head">
+                        <span class="sup-source">{{ item.id }}</span>
+                        <span class="sup-disc-label">{{ item.label }}</span>
+                        {% if item.id in brief.required_disclosures|map(attribute='id')|list %}<span class="badge badge-accent">Required</span>{% endif %}
+                        {% if item.id in brief.draft.disclosures|map(attribute='id')|list %}<span class="badge badge-success">Attached</span>{% endif %}
+                      </div>
+                      <p>{{ item.text }}</p>
+                    </div>
+                    {% endfor %}
+                  </div>
+                </details>
+                <div class="sup-panel-foot">{{ fact_sheet.note }}</div>
+              </section>
+
+              <section class="mod-panel sup-panel" id="audience-{{ brief.id }}">
+                <div class="sup-panel-head">
+                  <div>
+                    <p class="mod-kicker-sm">Consent</p>
+                    <h3>Audience and consent</h3>
+                  </div>
+                  <span class="chip">{{ brief.default_audience.count }} of {{ household_total }}</span>
+                </div>
+                <div class="sup-panel-body">
+                  <p class="mod-note">{{ brief.audience_note }}</p>
+                  {% if brief.audience_type == 'households' %}
+                  <p class="mini-label sup-people-label">Cleared for marketing</p>
+                  <div class="sup-people">
+                    {% for person in brief.included %}
+                    <span class="sup-person" title="{{ person.id }}"><span>{{ person.name }}</span><span class="sup-person-id">{{ person.id }}</span></span>
+                    {% endfor %}
+                  </div>
+                  <p class="mini-label sup-people-label">Excluded from this audience</p>
+                  <ul class="sup-excluded">
+                    {% for person in brief.excluded %}
+                    <li><span>{{ person.name }} <span class="muted mono">{{ person.id }}</span></span><span class="badge badge-{{ person.tone }}">{{ person.status }}</span></li>
+                    {% endfor %}
+                  </ul>
+                  {% else %}
+                  <p class="mod-note">A public post has no household list, so household consent status does not apply. The content checks and the named approval still do.</p>
+                  {% endif %}
+                </div>
+              </section>
+            </aside>
+          </div>
       </div>
-      <div class="sup-panel-body">
-        <p class="mod-note">{{ selected.audience_note }}</p>
-        {% if selected.audience_type == 'households' %}
-        <p class="mini-label sup-people-label">Cleared for marketing</p>
-        <div class="sup-people">
-          {% for person in selected.included %}
-          <span class="sup-person" title="{{ person.id }}"><span>{{ person.name }}</span><span class="sup-person-id">{{ person.id }}</span></span>
-          {% endfor %}
-        </div>
-        <p class="mini-label sup-people-label">Excluded from this audience</p>
-        <ul class="sup-excluded">
-          {% for person in selected.excluded %}
-          <li><span>{{ person.name }} <span class="muted mono">{{ person.id }}</span></span><span class="badge badge-{{ person.tone }}">{{ person.status }}</span></li>
-          {% endfor %}
-        </ul>
-        {% else %}
-        <p class="mod-note">A public post has no household list, so household consent status does not apply. The content checks and the named approval still do.</p>
-        {% endif %}
-      </div>
-    </section>
-  </aside>
+    </article>
+    {% endfor %}
+  </div>
 </div>
 
 <div class="sup-bottom">
