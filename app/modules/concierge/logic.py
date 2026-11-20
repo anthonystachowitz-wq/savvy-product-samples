@@ -294,7 +294,7 @@ def ask(
         key,
         SYSTEM,
         build_prompt(household, question),
-        max_tokens=700,
+        max_tokens=3000,
         temperature=0.2,
         refresh=refresh,
     )

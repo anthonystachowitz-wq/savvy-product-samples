@@ -133,6 +133,21 @@ def recorded(module: str, key: str) -> Optional[LLMResult]:
     )
 
 
+def snapshot(module: str, key: str) -> Optional[dict[str, Any]]:
+    """Return the raw recorded payload, for restoring after a failed live refresh."""
+    return _read_json(_cache_path(module, key))
+
+
+def restore(payload: Optional[dict[str, Any]]) -> None:
+    """Put a previously snapshot payload back on disk."""
+    if not payload:
+        return
+    module = str(payload.get("module") or "")
+    key = str(payload.get("key") or "")
+    if module and key and isinstance(payload.get("text"), str):
+        _write_json(_cache_path(module, key), payload)
+
+
 def run(
     module: str,
     key: str,

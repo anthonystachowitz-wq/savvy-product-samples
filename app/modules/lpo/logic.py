@@ -273,7 +273,7 @@ def run_extraction(packet: dict[str, Any], *, refresh: bool = False) -> llm.LLMR
         extraction_key(str(packet.get("id"))),
         EXTRACT_SYSTEM,
         extraction_prompt(packet),
-        max_tokens=900,
+        max_tokens=3000,
         temperature=0.1,
         refresh=refresh,
     )
@@ -285,7 +285,7 @@ def run_checklist(packet: dict[str, Any], extraction: dict[str, Any] | None, *, 
         checklist_key(str(packet.get("id"))),
         CHECKLIST_SYSTEM,
         checklist_prompt(packet, extraction),
-        max_tokens=900,
+        max_tokens=3000,
         temperature=0.2,
         refresh=refresh,
     )
@@ -303,7 +303,7 @@ def run_status_note(
         note_key(str(packet.get("id"))),
         NOTE_SYSTEM,
         status_note_prompt(packet, extraction, checklist),
-        max_tokens=600,
+        max_tokens=2000,
         temperature=0.3,
         refresh=refresh,
     )

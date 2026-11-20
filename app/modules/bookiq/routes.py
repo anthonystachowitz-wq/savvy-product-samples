@@ -78,6 +78,7 @@ ERRORS = {
     "liveoff": "This deployment replays recordings. Start it with SAVVY_LLM_MODE=live to allow a fresh call.",
     "budget": "The daily live-call budget is used up. The recorded version is still in use.",
     "llm": "The live call failed. The recorded version is still in use.",
+    "rankparse": "The live ranking call returned no usable output. The recorded ranking is still in use. Try again.",
     "locked": "This draft is approved. Reopen it with an edit before recording a decision.",
     "state": "The action could not be recorded. Try again.",
 }
@@ -464,13 +465,14 @@ def run_live(request: Request):
         return _redirect("/bookiq?error=liveoff")
     payload = data.households_payload()
     system, prompt = logic.build_rank_prompt(payload)
+    previous = llm.snapshot(logic.MODULE, logic.RANK_KEY)
     try:
         result = llm.run(
             logic.MODULE,
             logic.RANK_KEY,
             system,
             prompt,
-            max_tokens=2400,
+            max_tokens=8000,
             temperature=0.2,
             refresh=True,
         )
@@ -480,6 +482,8 @@ def run_live(request: Request):
         return _redirect("/bookiq?error=llm")
     rows, meta = logic.parse_ranking(result.text)
     usage = result.usage or {}
+    if meta.get("error"):
+        llm.restore(previous)
     audit.record(
         logic.MODULE,
         "Dana Whitfield (adviser)",
@@ -493,6 +497,8 @@ def run_live(request: Request):
             + "."
         ),
     )
+    if meta.get("error"):
+        return _redirect("/bookiq?error=rankparse")
     return _redirect("/bookiq?msg=ranked")
 
 
@@ -527,7 +533,7 @@ def run_live_draft(request: Request):
             logic.draft_key(household_id),
             system,
             prompt,
-            max_tokens=900,
+            max_tokens=3000,
             temperature=0.35,
             refresh=True,
         )
