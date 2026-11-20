@@ -31,9 +31,6 @@
 }
 .focus-card:hover { border-color: #CBD5E1; box-shadow: 0 6px 18px rgba(17, 24, 39, 0.05); }
 .focus-card.is-open { border-color: var(--accent-border); box-shadow: 0 12px 30px rgba(29, 78, 216, 0.07); }
-.focus-list.has-open .focus-card:not(.is-open) { opacity: 0.78; transform: scale(0.996); transition-duration: 0.3s; }
-.focus-list.has-open .focus-card:not(.is-open):hover { opacity: 0.95; }
-.focus-list.has-open .focus-card:not(.is-open) .focus-summary { padding-top: 8px; padding-bottom: 8px; }
 .focus-card.is-hidden { display: none; }
 
 .focus-summary {
@@ -89,5 +86,4 @@
   .focus-card.is-open .focus-stat { grid-column: 2; grid-row: 3; }
   .focus-chevron { grid-column: 3; grid-row: 1 / span 2; }
   .focus-body { padding: 2px 12px 14px; }
-  .focus-list.has-open .focus-card:not(.is-open) .focus-stat { display: none; }
-}
+  }

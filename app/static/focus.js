@@ -67,33 +67,7 @@
     window.setTimeout(function () { card.classList.remove("is-fresh"); }, 1400);
   }
 
-  function pinSummary(card) {
-    var summary = toggleOf(card);
-    if (!summary || reduceMotion) { return; }
-    var target = window.innerWidth <= 980 ? 12 : 96;
-    var start = window.performance.now();
-    function tick(now) {
-      var top = summary.getBoundingClientRect().top;
-      var delta = top - target;
-      if (Math.abs(delta) > 1) { window.scrollBy(0, delta); }
-      if (now - start < DURATION + 140) { window.requestAnimationFrame(tick); }
-    }
-    window.requestAnimationFrame(tick);
-  }
-
-  function openCard(list, card) {
-    var cards = Array.prototype.slice.call(list.querySelectorAll("[data-focus-card]"));
-    var current = cards.filter(function (item) { return item.classList.contains("is-open"); })[0] || null;
-    if (current && current !== card) { collapse(current, !reduceMotion); }
-    if (current !== card) {
-      expand(card);
-      flash(card);
-      list.classList.add("has-open");
-      pinSummary(card);
-    } else {
-      collapse(card, !reduceMotion);
-      list.classList.remove("has-open");
-    }
+  function updateUrl(list, card) {
     var param = list.getAttribute("data-focus-param") || "h";
     var value = card.getAttribute("data-focus-id");
     if (value && window.history && window.history.replaceState) {
@@ -106,6 +80,16 @@
     }
   }
 
+  function toggleCard(list, card) {
+    if (card.classList.contains("is-open")) {
+      collapse(card, !reduceMotion);
+    } else {
+      expand(card);
+      flash(card);
+    }
+    updateUrl(list, card);
+  }
+
   function init() {
     Array.prototype.slice.call(document.querySelectorAll("[data-focus-list]")).forEach(function (list) {
       var cards = Array.prototype.slice.call(list.querySelectorAll("[data-focus-card]"));
@@ -116,12 +100,11 @@
         toggle.addEventListener("click", function (event) {
           if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) { return; }
           event.preventDefault();
-          openCard(list, card);
+          toggleCard(list, card);
         });
       });
       var serverOpen = list.querySelector("[data-focus-card].is-open");
       if (serverOpen) {
-        list.classList.add("has-open");
         var openToggle = toggleOf(serverOpen);
         if (openToggle) { openToggle.setAttribute("aria-expanded", "true"); }
       }

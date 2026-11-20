@@ -2,6 +2,7 @@
 {% block title %}Book IQ · Savvy product samples{% endblock %}
 {% block head %}
 <link rel="stylesheet" href="/static/modules/bookiq.css">
+<script defer src="/static/bookiq.js"></script>
 {% endblock %}
 {% block content %}
 
@@ -133,9 +134,9 @@
       </thead>
       <tbody>
         {% for row in rows %}
-        <tr class="biq-row {{ 'biq-row--approved' if row.status == 'approved' }} {{ 'biq-row--rejected' if row.status == 'rejected' }}">
+        <tr class="biq-row {{ 'biq-row--approved' if row.status == 'approved' }} {{ 'biq-row--rejected' if row.status == 'rejected' }}" data-biq-row="{{ row.id }}">
           <td>
-            <a class="biq-hh" href="/bookiq?play={{ play_filter }}&h={{ row.id }}#detail">{{ row.name }}</a>
+            <a class="biq-hh" href="/bookiq?play={{ play_filter }}&h={{ row.id }}#detail" data-biq-open>{{ row.name }}</a>
             <span class="biq-sub"><span class="mono">{{ row.id }}</span> &middot; {{ row.relationship }}</span>
             <span class="biq-sub">{{ row.household.account_count }} account{{ '' if row.household.account_count == 1 else 's' }} &middot; consent {{ row.consent_status }}</span>
           </td>
@@ -173,7 +174,7 @@
             <span class="chip">In review</span>
             {% endif %}
             {% if row.consent_status == 'pending' %}<span class="chip chip--build">Consent pending</span>{% endif %}
-            <a class="biq-review-link" href="/bookiq?play={{ play_filter }}&h={{ row.id }}#detail">Review</a>
+            <a class="biq-review-link" href="/bookiq?play={{ play_filter }}&h={{ row.id }}#detail" data-biq-open>Review</a>
           </td>
         </tr>
         {% endfor %}

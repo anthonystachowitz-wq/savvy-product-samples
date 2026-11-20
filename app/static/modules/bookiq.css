@@ -452,3 +452,9 @@
   .biq-detail-title { font-size: 18px; }
   .biq-filters { gap: 4px; }
 }
+/* Inline detail row, opened under the clicked queue row without moving the page. */
+.biq-expand-row > td { padding: 0 !important; border-top: 0; background: transparent; }
+.biq-expand-row .biq-detail { margin: 10px 0 14px; }
+.biq-row.is-expanded > td { background: var(--panel); }
+.biq-row.is-expanded .biq-hh { color: var(--accent-strong); }
+@media print { .biq-expand-row { display: none; } }
