@@ -112,9 +112,9 @@
 <section class="mod-panel biq-table-panel" id="book">
   <div class="biq-toolbar">
     <div class="biq-filters" aria-label="Filter by play">
-      <a class="chip {{ 'chip--accent' if play_filter == 'all' }}" href="/bookiq?play=all{% if selected %}&h={{ selected.row.id }}{% endif %}#book">All plays <span>{{ summary.households }}</span></a>
+      <a class="chip {{ 'chip--accent' if play_filter == 'all' }}" href="/bookiq?play=all{% if selected %}&h={{ selected.row.id }}{% endif %}#book" data-biq-filter>All plays <span>{{ summary.households }}</span></a>
       {% for item in summary.by_play %}
-      <a class="chip {{ 'chip--accent' if play_filter == item.key }}" href="/bookiq?play={{ item.key }}{% if selected %}&h={{ selected.row.id }}{% endif %}#book">{{ item.label }} <span>{{ item.count }}</span></a>
+      <a class="chip {{ 'chip--accent' if play_filter == item.key }}" href="/bookiq?play={{ item.key }}{% if selected %}&h={{ selected.row.id }}{% endif %}#book" data-biq-filter>{{ item.label }} <span>{{ item.count }}</span></a>
       {% endfor %}
     </div>
     <span class="mod-note">{{ rows|length }} of {{ summary.households }} rows in view. Sorted by modelled net new assets, highest first.</span>

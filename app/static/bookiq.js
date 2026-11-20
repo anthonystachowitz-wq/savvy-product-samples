@@ -55,15 +55,41 @@
       .catch(function () { window.location.href = href; });
   }
 
+  function loadFilter(link) {
+    var href = link.getAttribute("href");
+    var panel = document.getElementById("book");
+    fetch(href, { credentials: "same-origin" })
+      .then(function (response) { return response.text(); })
+      .then(function (html) {
+        var doc = new DOMParser().parseFromString(html, "text/html");
+        var fresh = doc.getElementById("book");
+        if (!fresh || !panel) { window.location.href = href; return; }
+        panel.innerHTML = fresh.innerHTML;
+        currentRow = null;
+        var url = new URL(window.location.href);
+        url.search = new URL(href, window.location.href).search;
+        url.hash = "";
+        window.history.replaceState(null, "", url.toString());
+      })
+      .catch(function () { window.location.href = href; });
+  }
+
   function init() {
     var tbl = table();
     if (!tbl) { return; }
-    tbl.addEventListener("click", function (event) {
+    document.addEventListener("click", function (event) {
       var closeLink = event.target.closest(".biq-close");
       if (closeLink && document.querySelector(".biq-expand-row")) {
         event.preventDefault();
         closeInline();
         setUrl("");
+        return;
+      }
+      var filter = event.target.closest("a[data-biq-filter]");
+      if (filter) {
+        if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) { return; }
+        event.preventDefault();
+        loadFilter(filter);
         return;
       }
       var link = event.target.closest("a[data-biq-open]");
