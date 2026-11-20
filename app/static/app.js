@@ -267,11 +267,14 @@
     });
   }
 
-  onReady(function () {
+  function initPage() {
     initIntake();
     initFieldSearch();
     initRisks();
     initForms();
     initTour();
-  });
+  }
+
+  window.transitionInitPage = initPage;
+  onReady(initPage);
 })();

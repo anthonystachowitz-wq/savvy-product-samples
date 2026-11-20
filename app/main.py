@@ -709,7 +709,7 @@ def overview(request: Request):
                 "sit beside the record instead of in a spreadsheet tab."
             ),
             "proof": f"{stats['documents']} documents · {stats['fields']} fields · {stats['findings']} findings",
-            "href": "/intake#viewer",
+            "href": "/intake",
             "link": "Open intake",
         },
         {
@@ -722,7 +722,7 @@ def overview(request: Request):
                 "artifact that clears them."
             ),
             "proof": f"{stats['accounts']} accounts · {stats['tasks']} tasks · {stats['risks']} risks",
-            "href": "/plan#accounts",
+            "href": "/plan",
             "link": "Open plan",
         },
         {
@@ -735,7 +735,7 @@ def overview(request: Request):
                 "event. A client draft with pending consent stays blocked."
             ),
             "proof": f"{stats['drafts']} drafts · {stats['audit']} audit events · {stats['evidence']} {evidence_word}",
-            "href": "/review/draft-1#evidence",
+            "href": "/review",
             "link": "Open review",
         },
     ]
