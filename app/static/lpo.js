@@ -4,7 +4,15 @@
 (function () {
   "use strict";
 
-  function loadInPlace(url) {
+  function findLink(href) {
+    var links = document.querySelectorAll("a[href]");
+    for (var i = 0; i < links.length; i += 1) {
+      if (links[i].getAttribute("href") === href) { return links[i]; }
+    }
+    return null;
+  }
+
+  function loadInPlace(url, clickedHref, clickedTop) {
     var target = new URL(url, window.location.href);
     target.hash = "";
     var requestUrl = target.pathname + target.search;
@@ -21,6 +29,12 @@
         if (typeof window.focusInit === "function") {
           window.focusInit();
         }
+        // Keep the control the user clicked at exactly the same viewport spot.
+        var next = findLink(clickedHref);
+        if (next && typeof clickedTop === "number") {
+          var delta = next.getBoundingClientRect().top - clickedTop;
+          if (Math.abs(delta) > 0.5) { window.scrollBy(0, delta); }
+        }
       })
       .catch(function () { window.location.href = target.toString(); });
   }
@@ -35,6 +49,6 @@
     try { target = new URL(href, window.location.href); } catch (err) { return; }
     if (target.origin !== window.location.origin || target.pathname !== "/lpo") { return; }
     event.preventDefault();
-    loadInPlace(href);
+    loadInPlace(href, href, link.getBoundingClientRect().top);
   });
 })();
