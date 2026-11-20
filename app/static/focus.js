@@ -3,35 +3,106 @@
 (function () {
   "use strict";
 
-  function setOpen(list, card) {
-    var cards = Array.prototype.slice.call(list.querySelectorAll("[data-focus-card]"));
-    var opening = card && !card.classList.contains("is-open");
-    cards.forEach(function (item) {
-      var isTarget = opening && item === card;
-      item.classList.toggle("is-open", isTarget);
-      var toggle = item.querySelector("[data-focus-toggle]");
-      if (toggle) { toggle.setAttribute("aria-expanded", isTarget ? "true" : "false"); }
-      var body = item.querySelector("[data-focus-body]");
-      if (body) {
-        if (isTarget) { body.removeAttribute("hidden"); } else { body.setAttribute("hidden", ""); }
-      }
+  var DURATION = 520;
+  var EASE = "cubic-bezier(.2,.7,.2,1)";
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function bodyOf(card) { return card.querySelector("[data-focus-body]"); }
+  function toggleOf(card) { return card.querySelector("[data-focus-toggle]"); }
+
+  function setExpanded(card, open) {
+    var toggle = toggleOf(card);
+    if (toggle) { toggle.setAttribute("aria-expanded", open ? "true" : "false"); }
+    card.classList.toggle("is-open", open);
+  }
+
+  function collapse(card, animate) {
+    var body = bodyOf(card);
+    setExpanded(card, false);
+    if (!body) { return; }
+    if (!animate || reduceMotion) { body.hidden = true; return; }
+    body.style.overflow = "hidden";
+    body.style.transition = "none";
+    body.style.maxHeight = body.scrollHeight + "px";
+    body.style.opacity = "1";
+    void body.offsetHeight;
+    body.style.transition = "max-height " + DURATION + "ms " + EASE + ", opacity " + Math.round(DURATION * 0.7) + "ms ease";
+    body.style.maxHeight = "0px";
+    body.style.opacity = "0";
+    window.setTimeout(function () {
+      if (card.classList.contains("is-open")) { return; }
+      body.hidden = true;
+      body.style.cssText = "";
+    }, DURATION + 40);
+  }
+
+  function expand(card) {
+    var body = bodyOf(card);
+    if (!body) { setExpanded(card, true); return; }
+    body.hidden = false;
+    body.style.overflow = "hidden";
+    body.style.transition = "none";
+    body.style.maxHeight = "0px";
+    body.style.opacity = "0";
+    void body.offsetHeight;
+    setExpanded(card, true);
+    body.style.transition = "max-height " + DURATION + "ms " + EASE + ", opacity 240ms ease";
+    window.requestAnimationFrame(function () {
+      body.style.maxHeight = body.scrollHeight + "px";
+      body.style.opacity = "1";
     });
-    list.classList.toggle("has-open", !!opening);
-    if (opening) {
-      var param = list.getAttribute("data-focus-param") || "h";
-      var value = card.getAttribute("data-focus-id");
-      if (value && window.history && window.history.replaceState) {
-        var url = new URL(window.location.href);
-        url.searchParams.delete("q");
-        url.searchParams.delete("msg");
-        url.searchParams.delete("error");
-        url.searchParams.set(param, value);
-        window.history.replaceState(null, "", url.toString());
-      }
-      var scrollTarget = card.querySelector("[data-focus-scroll]") || card;
-      if (scrollTarget && scrollTarget.scrollIntoView) {
-        scrollTarget.scrollIntoView({ block: "nearest", behavior: "smooth" });
-      }
+    window.setTimeout(function () {
+      if (!card.classList.contains("is-open")) { return; }
+      body.style.maxHeight = "none";
+      body.style.overflow = "";
+      body.style.transition = "";
+      body.style.opacity = "";
+    }, DURATION + 60);
+  }
+
+  function flash(card) {
+    card.classList.remove("is-fresh");
+    void card.offsetHeight;
+    card.classList.add("is-fresh");
+    window.setTimeout(function () { card.classList.remove("is-fresh"); }, 1400);
+  }
+
+  function pinSummary(card) {
+    var summary = toggleOf(card);
+    if (!summary || reduceMotion) { return; }
+    var target = window.innerWidth <= 980 ? 12 : 96;
+    var start = window.performance.now();
+    function tick(now) {
+      var top = summary.getBoundingClientRect().top;
+      var delta = top - target;
+      if (Math.abs(delta) > 1) { window.scrollBy(0, delta); }
+      if (now - start < DURATION + 140) { window.requestAnimationFrame(tick); }
+    }
+    window.requestAnimationFrame(tick);
+  }
+
+  function openCard(list, card) {
+    var cards = Array.prototype.slice.call(list.querySelectorAll("[data-focus-card]"));
+    var current = cards.filter(function (item) { return item.classList.contains("is-open"); })[0] || null;
+    if (current && current !== card) { collapse(current, !reduceMotion); }
+    if (current !== card) {
+      expand(card);
+      flash(card);
+      list.classList.add("has-open");
+      pinSummary(card);
+    } else {
+      collapse(card, !reduceMotion);
+      list.classList.remove("has-open");
+    }
+    var param = list.getAttribute("data-focus-param") || "h";
+    var value = card.getAttribute("data-focus-id");
+    if (value && window.history && window.history.replaceState) {
+      var url = new URL(window.location.href);
+      url.searchParams.delete("q");
+      url.searchParams.delete("msg");
+      url.searchParams.delete("error");
+      url.searchParams.set(param, value);
+      window.history.replaceState(null, "", url.toString());
     }
   }
 
@@ -40,19 +111,18 @@
       var cards = Array.prototype.slice.call(list.querySelectorAll("[data-focus-card]"));
       if (!cards.length) { return; }
       cards.forEach(function (card) {
-        var toggle = card.querySelector("[data-focus-toggle]");
+        var toggle = toggleOf(card);
         if (!toggle) { return; }
         toggle.addEventListener("click", function (event) {
           if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) { return; }
           event.preventDefault();
-          setOpen(list, card.classList.contains("is-open") ? null : card);
+          openCard(list, card);
         });
       });
-      var openCard = list.querySelector("[data-focus-card].is-open");
-      if (openCard) {
-        // Server already rendered one open. Set the surrounding state without animating.
+      var serverOpen = list.querySelector("[data-focus-card].is-open");
+      if (serverOpen) {
         list.classList.add("has-open");
-        var openToggle = openCard.querySelector("[data-focus-toggle]");
+        var openToggle = toggleOf(serverOpen);
         if (openToggle) { openToggle.setAttribute("aria-expanded", "true"); }
       }
     });
